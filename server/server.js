@@ -16,6 +16,15 @@ const PORT     = 4747;
 const DATA_DIR = process.env.DATA_DIR || path.join('E:\\', 'ResumePortal', 'data');
 const PDF_DIR  = path.join(DATA_DIR, 'pdfs');
 
+// ── LinkedIn OAuth credentials ───────────────────────────────────────────────
+// 1. Go to https://www.linkedin.com/developers/apps/new and create a free app
+// 2. Under "Auth" tab → add redirect URL: http://localhost:4747/auth/linkedin/callback
+// 3. Under "Products" → request "Sign In with LinkedIn using OpenID Connect"
+// 4. Paste your Client ID and Secret below:
+const LINKEDIN_CLIENT_ID     = process.env.LINKEDIN_CLIENT_ID     || 'YOUR_LINKEDIN_CLIENT_ID';
+const LINKEDIN_CLIENT_SECRET = process.env.LINKEDIN_CLIENT_SECRET || 'YOUR_LINKEDIN_CLIENT_SECRET';
+const PORTAL_URL             = process.env.PORTAL_URL             || 'https://purnappc8.github.io/resume-portal/login.html';
+
 // Ensure data directories exist
 [DATA_DIR, PDF_DIR].forEach(d => {
   if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
@@ -262,6 +271,103 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, { ok: true });
   }
 
+  // ── GET /auth/linkedin ────────────────────────────────────────────────────
+  // Redirects browser to LinkedIn OAuth consent page
+  if (req.method === 'GET' && url === '/auth/linkedin') {
+    if (LINKEDIN_CLIENT_ID === 'YOUR_LINKEDIN_CLIENT_ID') {
+      res.writeHead(200, {'Content-Type':'text/html'});
+      return res.end(`<h2>LinkedIn not configured</h2>
+        <p>Edit <code>server.js</code> and set <b>LINKEDIN_CLIENT_ID</b> and <b>LINKEDIN_CLIENT_SECRET</b>.</p>
+        <p><a href="https://www.linkedin.com/developers/apps/new">Create LinkedIn App →</a></p>`);
+    }
+    const state = crypto.randomBytes(16).toString('hex');
+    const redirectUri = `http://localhost:${PORT}/auth/linkedin/callback`;
+    const liUrl = 'https://www.linkedin.com/oauth/v2/authorization?' + new URLSearchParams({
+      response_type: 'code',
+      client_id:     LINKEDIN_CLIENT_ID,
+      redirect_uri:  redirectUri,
+      state,
+      scope:         'openid profile email'
+    });
+    // Store state + next URL in a temp file (valid 10 min)
+    const pending = readJson('li_pending.json', {});
+    pending[state] = { next: qs.next || PORTAL_URL, ts: Date.now() };
+    writeJson('li_pending.json', pending);
+    res.writeHead(302, { Location: liUrl });
+    return res.end();
+  }
+
+  // ── GET /auth/linkedin/callback ───────────────────────────────────────────
+  // LinkedIn redirects here after user grants access
+  if (req.method === 'GET' && url === '/auth/linkedin/callback') {
+    const { code, state, error } = qs;
+    const pending = readJson('li_pending.json', {});
+    const entry = pending[state];
+
+    // Clean up old pending entries (>10 min)
+    Object.keys(pending).forEach(k => { if (Date.now() - pending[k].ts > 600000) delete pending[k]; });
+    if (state) delete pending[state];
+    writeJson('li_pending.json', pending);
+
+    if (error || !code || !entry) {
+      res.writeHead(302, { Location: `${PORTAL_URL}?li_error=${encodeURIComponent(error||'cancelled')}` });
+      return res.end();
+    }
+
+    try {
+      const redirectUri = `http://localhost:${PORT}/auth/linkedin/callback`;
+      // Exchange code for token
+      const tokenRes = await fetch('https://www.linkedin.com/oauth/v2/accessToken', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          grant_type:    'authorization_code',
+          code,
+          redirect_uri:  redirectUri,
+          client_id:     LINKEDIN_CLIENT_ID,
+          client_secret: LINKEDIN_CLIENT_SECRET
+        })
+      });
+      const tokenData = await tokenRes.json();
+      const accessToken = tokenData.access_token;
+      if (!accessToken) throw new Error('No access token: ' + JSON.stringify(tokenData));
+
+      // Fetch profile via OpenID Connect userinfo
+      const profileRes = await fetch('https://api.linkedin.com/v2/userinfo', {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      });
+      const profile = await profileRes.json();
+      const liName   = profile.name || [profile.given_name, profile.family_name].filter(Boolean).join(' ') || 'LinkedIn User';
+      const liEmail  = profile.email || '';
+      const liAvatar = profile.picture || '';
+
+      // Create/update user in local users.json
+      const users = readJson('users.json', []);
+      let user = users.find(u => u.email === liEmail && liEmail);
+      if (!user) {
+        user = { id: 'li_' + Date.now().toString(36), name: liName, email: liEmail, linkedin: true, createdAt: new Date().toISOString() };
+        users.push(user);
+        writeJson('users.json', users);
+      }
+      console.log(`  → LinkedIn login: ${liName} (${liEmail})`);
+
+      // Redirect back to portal with session token in hash
+      const token = 'li_' + crypto.randomBytes(16).toString('hex');
+      const dest = (entry.next || PORTAL_URL) + '#' + new URLSearchParams({
+        li_token:  token,
+        li_name:   liName,
+        li_email:  liEmail,
+        li_avatar: liAvatar
+      });
+      res.writeHead(302, { Location: dest });
+      return res.end();
+    } catch (err) {
+      console.error('LinkedIn callback error:', err.message);
+      res.writeHead(302, { Location: `${PORTAL_URL}?li_error=${encodeURIComponent('auth_failed')}` });
+      return res.end();
+    }
+  }
+
   // ── 404 ───────────────────────────────────────────────────────────────────
   json(res, 404, { error: 'Not found' });
 });
@@ -283,7 +389,14 @@ server.listen(PORT, '127.0.0.1', () => {
   console.log('  POST /jobs            — Post a new job listing');
   console.log('  DELETE /jobs/:id      — Remove a job listing');
   console.log('  POST /contact         — Recruiter contact form');
-  console.log('  GET  /stats           — Portal statistics\n');
+  console.log('  GET  /stats           — Portal statistics');
+  console.log('  GET  /auth/linkedin   — LinkedIn OAuth start');
+  console.log('  GET  /auth/linkedin/callback — LinkedIn OAuth callback\n');
+  if (LINKEDIN_CLIENT_ID === 'YOUR_LINKEDIN_CLIENT_ID') {
+    console.log('⚠️  LinkedIn login NOT configured. Edit server.js to set LINKEDIN_CLIENT_ID / LINKEDIN_CLIENT_SECRET.\n');
+  } else {
+    console.log('✅ LinkedIn OAuth ready.\n');
+  }
   console.log('Press Ctrl+C to stop.\n');
 
   // Log current data counts
