@@ -103,10 +103,9 @@ footer a{color:rgba(255,255,255,.9);}
     <a href="jobs.html" class="active">Freelance Jobs</a>
     <a href="submit.html">Post Resume</a>
     <a href="dashboard.html" id="nav-dashboard" style="display:none">My Dashboard</a>
-    <a href="#" onclick="openAuth('signup')" id="nav-signup" class="btn-outline" style="border:1px solid rgba(255,255,255,.5);border-radius:6px">Sign Up</a>
-    <a href="#" onclick="openAuth('login')" id="nav-login" class="btn-primary">Login</a>
+    <a href="login.html#signup" id="nav-signup" class="btn-outline" style="border:1px solid rgba(255,255,255,.5);border-radius:6px">Sign Up</a>
+    <a href="login.html" id="nav-login" class="btn-primary">Sign In</a>
     <a href="#" onclick="doLogout()" id="nav-logout" style="display:none">Logout</a>
-  <a href="login.html" class="btn-primary" style="margin-left:8px">Sign In</a>
 </div>
 </nav>
 
@@ -405,6 +404,17 @@ document.getElementById('authModal').addEventListener('click',e=>{if(e.target===
 
 updateNav();
 loadJobs();
+</script>
+
+<script>
+(function(){
+  var sess; try{ sess=JSON.parse(sessionStorage.getItem('ttp_session')||localStorage.getItem('ttp_session')||'null'); }catch{}
+  var btn=document.getElementById('navAuthBtn');
+  if(btn && sess && sess.token && sess.token!=='guest'){
+    btn.textContent='My Dashboard';
+    btn.href='dashboard.html';
+  }
+})();
 </script>
 </body>
 </html>
