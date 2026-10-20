@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profile — TechTalent Portal</title>
+<style>
+:root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--light:#e8f0fe;--text:#1a1a1a;--muted:#555;--border:#c5d5e8;--bg:#f7f9fc;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;}
+.topnav{background:var(--blue);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:56px;}
+.topnav .logo{color:#fff;font-size:1.2rem;font-weight:700;text-decoration:none;}
+.topnav .logo span{color:#7ec8f7;}
+.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.9rem;}
+.nav-links a:hover{background:rgba(255,255,255,.15);color:#fff;}
+
+.hero-profile{background:linear-gradient(135deg,var(--blue),var(--accent));color:#fff;padding:40px 20px;text-align:center;}
+.avatar-lg{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;margin:0 auto 14px;}
+.hero-profile h1{font-size:1.8rem;font-weight:800;}
+.hero-profile .role{opacity:.9;font-size:1rem;margin:4px 0;}
+.hero-profile .meta{opacity:.8;font-size:.88rem;}
+.badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;}
+.badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;}
+
+.wrap{max-width:860px;margin:0 auto;padding:28px 20px 60px;display:grid;grid-template-columns:1fr 280px;gap:24px;}
+@media(max-width:680px){.wrap{grid-template-columns:1fr;}}
+
+section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-bottom:18px;}
+section h2{font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var(--blue);border-left:4px solid var(--accent);padding-left:10px;margin-bottom:16px;}
+.bullets{padding-left:18px;}
+.bullets li{margin:4px 0;font-size:.93rem;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.skill-tag{background:var(--light);color:var(--blue);font-size:.82rem;padding:5px 13px;border-radius:20px;font-weight:600;}
+.cert-list{list-style:none;padding:0;}
+.cert-list li{padding:7px 0 7px 24px;position:relative;border-bottom:1px dashed var(--border);font-size:.92rem;}
+.cert-list li:before{content:"✅";position:absolute;left:0;}
+.cert-list li:last-child{border-bottom:none;}
+
+.sidebar-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:16px;}
+.sidebar-card h3{font-size:.85rem;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin-bottom:12px;}
+.info-row{display:flex;flex-direction:column;gap:2px;padding:6px 0;border-bottom:1px solid var(--bg);}
+.info-row .lbl{font-size:.78rem;color:var(--muted);}
+.info-row .val{font-size:.9rem;font-weight:600;}
+.btn-contact{display:block;background:var(--accent);color:#fff;text-align:center;padding:11px;border-radius:8px;text-decoration:none;font-weight:700;margin-top:14px;}
+.btn-contact:hover{background:#0d47a1;}
+.btn-pdf{display:block;background:#fff;color:var(--blue);text-align:center;padding:11px;border-radius:8px;text-decoration:none;font-weight:700;border:1px solid var(--border);margin-top:8px;}
+.btn-pdf:hover{background:var(--light);}
+
+.loading{text-align:center;padding:60px;color:var(--muted);}
+
+/* Contact modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:#fff;border-radius:14px;padding:28px;max-width:420px;width:100%;}
+.modal h2{color:var(--blue);margin-bottom:14px;}
+.form-group{margin-bottom:12px;}
+.form-group label{display:block;font-size:.85rem;font-weight:600;color:var(--blue);margin-bottom:4px;}
+.form-group input,.form-group textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:.92rem;font-family:inherit;background:var(--bg);}
+.form-group textarea{resize:vertical;min-height:80px;}
+.modal-btns{display:flex;gap:8px;margin-top:14px;}
+.modal-btns button{flex:1;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;border:none;font-size:.93rem;}
+.btn-submit{background:var(--accent);color:#fff;}
+.btn-cancel{background:var(--bg);color:var(--muted);}
+.success-msg{background:#d4edda;color:var(--green);border-radius:8px;padding:10px;margin-bottom:12px;display:none;font-size:.9rem;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="logo">Tech<span>Talent</span> Portal</a>
+  <div class="nav-links">
+    <a href="index.html">← Browse All Profiles</a>
+  </div>
+</nav>
+
+<div id="heroSection" class="hero-profile">
+  <div class="avatar-lg" id="heroAvatar">?</div>
+  <h1 id="heroName">Loading…</h1>
+  <p class="role" id="heroRole"></p>
+  <p class="meta" id="heroMeta"></p>
+  <div class="badges" id="heroBadges"></div>
+</div>
+
+<div class="wrap">
+  <div>
+    <section>
+      <h2>Profile Summary</h2>
+      <p id="summaryText" style="color:var(--muted);font-size:.95rem;line-height:1.7"></p>
+    </section>
+    <section id="expSection">
+      <h2>Work Experience</h2>
+      <div id="expContent"></div>
+    </section>
+    <section>
+      <h2>Technical Skills</h2>
+      <div class="skill-tags" id="skillTags"></div>
+    </section>
+    <section id="certsSection" style="display:none">
+      <h2>Certifications</h2>
+      <ul class="cert-list" id="certList"></ul>
+    </section>
+  </div>
+
+  <aside>
+    <div class="sidebar-card">
+      <h3>Quick Info</h3>
+      <div id="quickInfo"></div>
+      <a href="#" class="btn-contact" onclick="openContact(); return false">📩 Contact Candidate</a>
+      <a href="#" class="btn-pdf" id="pdfLink">⬇ Download Resume PDF</a>
+    </div>
+    <div class="sidebar-card">
+      <h3>Open To</h3>
+      <div id="availability" style="font-size:.9rem;color:var(--green);font-weight:600"></div>
+    </div>
+  </aside>
+</div>
+
+<!-- Contact Modal -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal">
+    <h2>Contact Candidate</h2>
+    <div id="c-success" class="success-msg"></div>
+    <div class="form-group"><label>Your Name</label><input type="text" id="c-name" placeholder="Your name"></div>
+    <div class="form-group"><label>Your Email</label><input type="email" id="c-email" placeholder="your@email.com"></div>
+    <div class="form-group"><label>Company / Role</label><input type="text" id="c-co" placeholder="e.g. Infosys – Recruiter"></div>
+    <div class="form-group"><label>Message</label><textarea id="c-msg" placeholder="Tell them about the opportunity…"></textarea></div>
+    <div class="modal-btns">
+      <button class="btn-submit" onclick="sendContact()">Send</button>
+      <button class="btn-cancel" onclick="closeContact()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:4747';
+
+// Default (Purna's) profile shown when no id param
+const DEFAULT = {
+  id: 'purna001',
+  name: 'Purnachandar Padishala',
+  initials: 'PP',
+  role: 'IT Analyst / Salesforce Developer',
+  company: 'Tata Consultancy Services (TCS)',
+  location: 'Hyderabad / Warangal, Telangana',
+  exp: '5+ years',
+  tech: ['Salesforce','Revenue Cloud Advanced','Apex','LWC','SOQL','Azure DevOps','Salesforce DX','Flow Builder','Sales Cloud','CPQ','Data Cloud'],
+  certs: ['Platform Developer I','Platform App Builder','Administrator','Data Cloud Consultant','AI Associate'],
+  availability: 'Open to Remote, Freelance & Contract',
+  open: true,
+  summary: 'IT Analyst and Salesforce Developer with 5+ years at TCS and Evoke Technologies. Currently working on Salesforce Revenue Cloud Advanced (RCA) for Abcam — configuring pricing procedures, Decision Tables, and building a custom Apex Contract Approval Platform. 5× Salesforce Certified. Trailhead Double Star Ranger. Agentblazer Champion.',
+  experience: [
+    { title: 'IT Analyst / Salesforce Developer', company: 'Tata Consultancy Services (TCS)', date: 'Jun 2026 – Present', points: ['Salesforce Revenue Cloud Advanced (RCA) for Abcam','Built Contract Approval Platform (CAP) — custom Apex approval engine','Fixed production governor-limit failures with chained Batch Apex','Rebuilt LWC pricing wizard fixing SOQL/DML limit crashes'] },
+    { title: 'Salesforce Technical Associate | Team Lead', company: 'Evoke Technologies', date: 'Apr 2022 – Jun 2026', points: ['Led 5-member team supporting 130+ users across 5 client regions','Designed CI/CD pipelines from scratch in Azure DevOps','Migrated Oracle CPQ → Salesforce CPQ for Carmeuse (25% efficiency gain)','Integrated Salesforce with Oracle CPQ for Hyster-Yale'] }
+  ],
+  pdf: 'Purnachandar_Padishala_Salesforce_Developer_Resume.pdf',
+  linkedin: 'https://linkedin.com/in/purnappc'
+};
+
+async function loadProfile() {
+  const id = new URLSearchParams(location.search).get('id') || 'purna001';
+  let profile = DEFAULT;
+  if (id !== 'purna001') {
+    try {
+      const r = await fetch(`${API}/profiles`, {signal:AbortSignal.timeout(3000)});
+      const all = await r.json();
+      profile = all.find(p=>p.id===id) || DEFAULT;
+    } catch {}
+  }
+  renderProfile(profile);
+}
+
+function renderProfile(p) {
+  const initials = p.initials || p.name.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
+  document.title = p.name + ' — TechTalent Portal';
+  document.getElementById('heroAvatar').textContent = initials;
+  document.getElementById('heroName').textContent = p.name;
+  document.getElementById('heroRole').textContent = p.role;
+  document.getElementById('heroMeta').textContent = `📍 ${p.location} · ${p.exp} experience · ${p.company}`;
+  document.getElementById('heroBadges').innerHTML = [
+    p.open && '<span class="badge">✅ Open to Work</span>',
+    p.certs?.length && `<span class="badge">🏆 ${p.certs.length}× Certified</span>`,
+    p.linkedin && '<span class="badge">LinkedIn</span>'
+  ].filter(Boolean).join('');
+
+  document.getElementById('summaryText').textContent = p.summary || '';
+
+  // Experience
+  if (p.experience?.length) {
+    document.getElementById('expContent').innerHTML = p.experience.map(e=>`
+      <div style="margin-bottom:20px">
+        <div style="font-weight:700;color:var(--blue)">${e.title}</div>
+        <div style="color:var(--accent);font-size:.9rem">${e.company} · ${e.date}</div>
+        <ul class="bullets" style="margin-top:6px">${(e.points||[]).map(pt=>`<li>${pt}</li>`).join('')}</ul>
+      </div>`).join('');
+  }
+
+  // Skills
+  document.getElementById('skillTags').innerHTML = (p.tech||[]).map(t=>`<span class="skill-tag">${t}</span>`).join('');
+
+  // Certs
+  if (p.certs?.length) {
+    document.getElementById('certsSection').style.display='';
+    document.getElementById('certList').innerHTML = p.certs.map(c=>`<li>${c}</li>`).join('');
+  }
+
+  // Quick info
+  document.getElementById('quickInfo').innerHTML = [
+    {lbl:'Location',val:p.location},
+    {lbl:'Experience',val:p.exp},
+    {lbl:'Current Company',val:p.company},
+    p.linkedin && {lbl:'LinkedIn',val:`<a href="${p.linkedin}" target="_blank" style="color:var(--accent)">${p.linkedin.replace('https://','')}</a>`}
+  ].filter(Boolean).map(r=>`<div class="info-row"><span class="lbl">${r.lbl}</span><span class="val">${r.val}</span></div>`).join('');
+
+  document.getElementById('availability').textContent = p.availability || 'Not specified';
+  if (p.pdf) document.getElementById('pdfLink').href = p.pdf;
+  window._profileId = p.id;
+  window._profileName = p.name;
+}
+
+function openContact(){document.getElementById('contactModal').classList.add('open');}
+function closeContact(){document.getElementById('contactModal').classList.remove('open');}
+async function sendContact(){
+  const name=document.getElementById('c-name').value.trim();
+  const email=document.getElementById('c-email').value.trim();
+  const msg=document.getElementById('c-msg').value.trim();
+  if(!name||!email||!msg){alert('Please fill name, email and message.');return;}
+  try{await fetch(`${API}/contact`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({from:{name,email,company:document.getElementById('c-co').value},target:window._profileId+'|'+window._profileName,message:msg,sentAt:new Date().toISOString()}),signal:AbortSignal.timeout(5000)});}catch{}
+  const s=document.getElementById('c-success');s.textContent='Message sent!';s.style.display='block';
+  setTimeout(closeContact,1800);
+}
+document.getElementById('contactModal').addEventListener('click',e=>{if(e.target===document.getElementById('contactModal'))closeContact();});
+
+loadProfile();
+</script>
+</body>
+</html>
