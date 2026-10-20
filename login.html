@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign In — TechTalent Portal</title>
+<style>
+:root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--light:#e8f0fe;--text:#1a1a1a;--muted:#666;--border:#c5d5e8;--bg:#f7f9fc;--red:#c62828;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;min-height:100vh;display:flex;flex-direction:column;}
+.topnav{background:var(--blue);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:56px;}
+.topnav .logo{color:#fff;font-size:1.2rem;font-weight:700;text-decoration:none;}
+.topnav .logo span{color:#7ec8f7;}
+.topnav a.back{color:rgba(255,255,255,.8);text-decoration:none;font-size:.9rem;}
+.topnav a.back:hover{color:#fff;}
+
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 20px;}
+
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:36px 40px;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,.06);}
+@media(max-width:480px){.card{padding:28px 22px;}}
+
+.card-header{text-align:center;margin-bottom:28px;}
+.card-header .icon{font-size:2.4rem;margin-bottom:10px;}
+.card-header h1{font-size:1.5rem;font-weight:800;color:var(--blue);}
+.card-header p{color:var(--muted);font-size:.9rem;margin-top:4px;}
+
+.tabs{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:22px;}
+.tab{flex:1;padding:10px;text-align:center;font-weight:600;font-size:.9rem;cursor:pointer;background:#fff;border:none;color:var(--muted);transition:.15s;}
+.tab.active{background:var(--accent);color:#fff;}
+
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:.85rem;font-weight:600;color:var(--blue);margin-bottom:5px;}
+.form-group input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.93rem;font-family:inherit;background:var(--bg);transition:border .15s;}
+.form-group input:focus{outline:none;border-color:var(--accent);background:#fff;}
+
+.remember{display:flex;align-items:center;gap:8px;font-size:.87rem;color:var(--muted);margin-bottom:16px;cursor:pointer;}
+.remember input{width:auto;margin:0;cursor:pointer;}
+
+.btn{width:100%;padding:12px;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#0d47a1;}
+.btn-primary:disabled{opacity:.6;cursor:not-allowed;}
+
+.error-box{background:#fff3f3;border:1px solid #ffcdd2;border-radius:8px;padding:10px 14px;color:var(--red);font-size:.88rem;margin-bottom:14px;display:none;}
+.success-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;color:var(--green);font-size:.88rem;margin-bottom:14px;display:none;}
+
+.divider{text-align:center;font-size:.8rem;color:var(--muted);margin:18px 0;position:relative;}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--border);}
+.divider::before{left:0;} .divider::after{right:0;}
+
+.guest-btn{width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;background:#fff;color:var(--blue);font-family:inherit;transition:.15s;}
+.guest-btn:hover{background:var(--light);}
+
+footer-note{display:block;text-align:center;font-size:.8rem;color:var(--muted);margin-top:20px;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="logo">Tech<span>Talent</span> Portal</a>
+  <a href="index.html" class="back">← Browse Profiles</a>
+</nav>
+
+<main>
+  <div class="card">
+    <div class="card-header">
+      <div class="icon">🔐</div>
+      <h1>Welcome Back</h1>
+      <p>Sign in to access your dashboard and submit your resume</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+      <button class="tab" id="tabSignup" onclick="switchTab('signup')">Create Account</button>
+    </div>
+
+    <!-- Error / Success -->
+    <div id="errorBox" class="error-box"></div>
+    <div id="successBox" class="success-box"></div>
+
+    <!-- LOGIN FORM -->
+    <div id="formLogin">
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="loginEmail" placeholder="you@email.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPwd" placeholder="Your password" autocomplete="current-password">
+      </div>
+      <label class="remember">
+        <input type="checkbox" id="rememberMe" checked> Keep me signed in
+      </label>
+      <button class="btn btn-primary" id="btnLogin" onclick="doLogin()">Sign In</button>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div id="formSignup" style="display:none">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="signupName" placeholder="Purnachandar Padishala" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="signupEmail" placeholder="you@email.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="signupPwd" placeholder="Create a password" autocomplete="new-password">
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" id="signupPwd2" placeholder="Repeat password" autocomplete="new-password">
+      </div>
+      <button class="btn btn-primary" id="btnSignup" onclick="doSignup()">Create Account</button>
+    </div>
+
+    <div class="divider">or</div>
+    <button class="guest-btn" onclick="guestAccess()">👀 Browse as Guest (read-only)</button>
+    <footer-note>Guests can browse profiles and jobs but cannot submit or apply.</footer-note>
+  </div>
+</main>
+
+<script>
+const API = 'http://localhost:4747';
+const KEY = 'ttp_session';
+
+// Where to go after login
+const params = new URLSearchParams(location.search);
+const next = params.get('next') || 'dashboard.html';
+
+function switchTab(tab) {
+  document.getElementById('formLogin').style.display = tab==='login' ? '' : 'none';
+  document.getElementById('formSignup').style.display = tab==='signup' ? '' : 'none';
+  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
+  document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
+  clearMessages();
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorBox');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('successBox').style.display = 'none';
+}
+function showSuccess(msg) {
+  const el = document.getElementById('successBox');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('errorBox').style.display = 'none';
+}
+function clearMessages() {
+  document.getElementById('errorBox').style.display = 'none';
+  document.getElementById('successBox').style.display = 'none';
+}
+
+function saveSession(data) {
+  const remember = document.getElementById('rememberMe')?.checked !== false;
+  const json = JSON.stringify(data);
+  try { sessionStorage.setItem(KEY, json); } catch {}
+  if (remember) { try { localStorage.setItem(KEY, json); } catch {} }
+}
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pwd = document.getElementById('loginPwd').value;
+  if (!email || !pwd) { showError('Please enter your email and password.'); return; }
+
+  const btn = document.getElementById('btnLogin');
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  clearMessages();
+
+  try {
+    const r = await fetch(`${API}/login`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({email, password: pwd}),
+      signal: AbortSignal.timeout(5000)
+    });
+    const data = await r.json();
+    if (!r.ok) { showError(data.error || 'Invalid email or password.'); return; }
+    saveSession({token: data.token || 'local_' + Date.now(), email, name: data.name || email.split('@')[0], userId: data.userId});
+    showSuccess('Signed in! Redirecting…');
+    setTimeout(() => location.href = decodeURIComponent(next), 800);
+  } catch {
+    // Server offline — try localStorage users as fallback
+    offlineLogin(email, pwd);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }
+}
+
+function offlineLogin(email, pwd) {
+  try {
+    const users = JSON.parse(localStorage.getItem('ttp_users') || '[]');
+    const user = users.find(u => u.email === email && u.pwd === hashSimple(pwd));
+    if (user) {
+      saveSession({token: 'offline_' + Date.now(), email, name: user.name, userId: user.id});
+      showSuccess('Signed in (offline mode)! Redirecting…');
+      setTimeout(() => location.href = decodeURIComponent(next), 800);
+    } else {
+      showError('Invalid email or password. (Server offline — using offline mode)');
+    }
+  } catch {
+    showError('Server is offline. Start the local server and try again.');
+  }
+}
+
+async function doSignup() {
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const pwd = document.getElementById('signupPwd').value;
+  const pwd2 = document.getElementById('signupPwd2').value;
+  if (!name || !email || !pwd) { showError('Please fill in all fields.'); return; }
+  if (pwd !== pwd2) { showError('Passwords do not match.'); return; }
+  if (pwd.length < 6) { showError('Password must be at least 6 characters.'); return; }
+
+  const btn = document.getElementById('btnSignup');
+  btn.disabled = true; btn.textContent = 'Creating account…';
+  clearMessages();
+
+  try {
+    const r = await fetch(`${API}/signup`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({name, email, password: pwd}),
+      signal: AbortSignal.timeout(5000)
+    });
+    const data = await r.json();
+    if (!r.ok) { showError(data.error || 'Could not create account.'); return; }
+    saveSession({token: data.token || 'local_' + Date.now(), email, name, userId: data.userId});
+    showSuccess('Account created! Redirecting…');
+    setTimeout(() => location.href = decodeURIComponent(next), 800);
+  } catch {
+    // Offline fallback — store locally
+    offlineSignup(name, email, pwd);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Create Account';
+  }
+}
+
+function offlineSignup(name, email, pwd) {
+  try {
+    const users = JSON.parse(localStorage.getItem('ttp_users') || '[]');
+    if (users.find(u => u.email === email)) { showError('Email already registered.'); return; }
+    const user = {id: 'u_' + Date.now(), name, email, pwd: hashSimple(pwd)};
+    users.push(user);
+    localStorage.setItem('ttp_users', JSON.stringify(users));
+    saveSession({token: 'offline_' + Date.now(), email, name, userId: user.id});
+    showSuccess('Account created (offline mode)! Redirecting…');
+    setTimeout(() => location.href = decodeURIComponent(next), 800);
+  } catch {
+    showError('Could not create account. Server offline.');
+  }
+}
+
+function hashSimple(s) {
+  // Very basic hash for offline-only fallback; server uses proper SHA256
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+  return h.toString(16);
+}
+
+function guestAccess() {
+  try {
+    sessionStorage.setItem(KEY, JSON.stringify({token:'guest', email:'', name:'Guest', guest:true}));
+  } catch {}
+  location.href = 'index.html';
+}
+
+// Allow Enter key to submit
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const tab = document.getElementById('tabLogin').classList.contains('active') ? 'login' : 'signup';
+    tab === 'login' ? doLogin() : doSignup();
+  }
+});
+</script>
+</body>
+</html>

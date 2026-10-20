@@ -3,6 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="auth.js"></script>
+<script>
+// Logout helper (after auth.js loads)
+function ttpLogout() {
+  if (window.TTP_AUTH) window.TTP_AUTH.clearSession();
+  else { try{sessionStorage.removeItem('ttp_session'); localStorage.removeItem('ttp_session');}catch{} }
+  location.href = 'login.html';
+}
+// Show user name in nav if session exists
+(function(){
+  const sess = window.TTP_AUTH ? window.TTP_AUTH.getSession() : null;
+  const el = document.getElementById('navUserName');
+  if (el && sess) el.textContent = sess.name || sess.email || 'Account';
+})();
+</script>
+
 <title>My Dashboard — TechTalent Portal</title>
 <style>
 :root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--orange:#e65100;--light:#e8f0fe;--text:#1a1a1a;--muted:#555;--border:#c5d5e8;--bg:#f7f9fc;}
@@ -100,7 +116,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
     <a href="jobs.html">Freelance Jobs</a>
     <a href="submit.html">Post Resume</a>
     <a href="dashboard.html" class="active">My Dashboard</a>
-    <a href="#" onclick="doLogout()">Logout</a>
+    <a href="#" onclick="ttpLogout(); return false">Sign Out</a>
   </div>
 </nav>
 
