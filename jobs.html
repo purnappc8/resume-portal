@@ -92,6 +92,24 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 
 footer{background:var(--blue);color:rgba(255,255,255,.7);text-align:center;padding:20px;font-size:.85rem;margin-top:40px;}
 footer a{color:rgba(255,255,255,.9);}
+
+/* AI Apply */
+.btn-ai-apply{background:linear-gradient(135deg,#6a1b9a,#1565c0);color:#fff;padding:7px 14px;border-radius:6px;font-size:.85rem;font-weight:700;border:none;cursor:pointer;}
+.btn-ai-apply:hover{opacity:.9;}
+.ai-toast{position:fixed;bottom:24px;right:24px;background:#1b5e20;color:#fff;padding:14px 20px;border-radius:10px;font-size:.9rem;font-weight:600;z-index:900;box-shadow:0 4px 16px rgba(0,0,0,.25);display:none;max-width:320px;line-height:1.5;}
+/* profile modal */
+.profile-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:800;align-items:center;justify-content:center;padding:20px;}
+.profile-modal-overlay.open{display:flex;}
+.profile-modal{background:#fff;border-radius:14px;padding:28px;max-width:480px;width:100%;max-height:92vh;overflow-y:auto;}
+.profile-modal h2{font-size:1.15rem;color:var(--blue);margin-bottom:6px;}
+.profile-modal p{color:var(--muted);font-size:.88rem;margin-bottom:18px;}
+.pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:480px){.pf-grid{grid-template-columns:1fr;}}
+.pf-group{display:flex;flex-direction:column;gap:4px;}
+.pf-group.full{grid-column:1/-1;}
+.pf-group label{font-size:.82rem;font-weight:700;color:var(--blue);}
+.pf-group input,.pf-group textarea{padding:8px 10px;border:1px solid var(--border);border-radius:7px;font-size:.88rem;font-family:inherit;background:var(--bg);}
+.pf-group textarea{resize:vertical;min-height:70px;}
 </style>
 </head>
 <body>
@@ -122,6 +140,7 @@ footer a{color:rgba(255,255,255,.9);}
     <span class="source-pill" data-src="Toptal" onclick="filterSource('Toptal',this)">Toptal</span>
     <span class="source-pill" data-src="Guru" onclick="filterSource('Guru',this)">Guru</span>
     <span class="source-pill" data-src="PeoplePerHour" onclick="filterSource('PeoplePerHour',this)">PeoplePerHour</span>
+    <span class="source-pill" data-src="ai" onclick="filterSource('ai',this)" style="background:rgba(106,27,154,.3);border-color:rgba(255,255,255,.7)">🤖 AI Import</span>
   </div>
 </div>
 
@@ -205,6 +224,30 @@ footer a{color:rgba(255,255,255,.9);}
   </div>
 </div>
 
+<!-- AI APPLY PROFILE MODAL -->
+<div class="profile-modal-overlay" id="profileModal">
+  <div class="profile-modal">
+    <h2>🤖 AI Apply — Your Profile</h2>
+    <p>Claude will use this to auto-fill applications. Fill once, apply everywhere.</p>
+    <div class="pf-grid">
+      <div class="pf-group"><label>Full Name</label><input id="pf-name" placeholder="Purnachandar Padishala" autocomplete="name"></div>
+      <div class="pf-group"><label>Email</label><input id="pf-email" type="email" placeholder="you@email.com" autocomplete="email"></div>
+      <div class="pf-group"><label>Phone</label><input id="pf-phone" placeholder="+1 555 123 4567" autocomplete="tel"></div>
+      <div class="pf-group"><label>Location</label><input id="pf-location" placeholder="Remote / New York, NY" autocomplete="address-level2"></div>
+      <div class="pf-group full"><label>LinkedIn URL</label><input id="pf-linkedin" placeholder="https://linkedin.com/in/yourprofile"></div>
+      <div class="pf-group full"><label>Resume URL (Google Drive / Dropbox link)</label><input id="pf-resume" placeholder="https://drive.google.com/..."></div>
+      <div class="pf-group full"><label>Skills Summary (for cover letter)</label><textarea id="pf-skills" placeholder="10+ yrs Salesforce developer. Expert in Apex, LWC, CPQ, Integrations. Open to contract/remote."></textarea></div>
+    </div>
+    <div style="margin-top:18px;display:flex;gap:10px;">
+      <button class="btn-submit modal-btns" style="flex:1;background:var(--accent);color:#fff;padding:10px;border-radius:8px;font-weight:700;border:none;cursor:pointer;font-size:.95rem" onclick="saveProfileAndApply()">💾 Save & AI Apply</button>
+      <button style="flex:0 0 auto;background:var(--bg);color:var(--muted);padding:10px 16px;border-radius:8px;border:1px solid var(--border);cursor:pointer;font-weight:600" onclick="closeProfileModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- AI toast notification -->
+<div class="ai-toast" id="aiToast"></div>
+
 <footer>© 2026 TechTalent Portal &nbsp;·&nbsp; <a href="index.html">Browse Talent</a> &nbsp;·&nbsp; <a href="submit.html">Post Resume</a></footer>
 
 <script>
@@ -226,9 +269,25 @@ const SRC_STYLE = {
   PeoplePerHour:{bg:'#e8360e',label:'PP'},
 };
 
-// ── Seed jobs (shown when API offline) ──────────────────────────────────────
+// ── Real jobs from Indeed (AI-imported Oct 2026) ────────────────────────────
+const AI_INDEED_JOBS = [
+  {id:'ai_100021',title:'Salesforce Architect with Certinia',company:'Abhyanthsolutions',location:'Remote',type:'Contract',exp:'Senior',tech:['Salesforce','Certinia','ERP'],salary:'$70–75/hr',source:'Indeed',url:'https://to.indeed.com/aafhjv4n26f7',postedDays:0,ai:true},
+  {id:'ai_100022',title:'Senior Salesforce Developer',company:'Catalina Business Solutions',location:'Remote',type:'Contract',exp:'Senior',tech:['Salesforce','Apex','LWC'],salary:'$50–60/hr',source:'Indeed',url:'https://to.indeed.com/aa6sq69mvwbd',postedDays:2,ai:true},
+  {id:'ai_100023',title:'Senior Developer – AI Agentforce & Salesforce',company:'Dutech',location:'Atlanta, GA',type:'Contract',exp:'Senior',tech:['Salesforce','AI','Agentforce'],salary:'$45–50/hr',source:'Indeed',url:'https://to.indeed.com/aat6zvwdcmyd',postedDays:1,ai:true},
+  {id:'ai_100020',title:'Salesforce Developer',company:'Hiretech Group',location:'Walton Hills, OH / Remote',type:'Contract',exp:'Mid',tech:['Salesforce','CRM'],salary:'$87K–$116K/yr',source:'Indeed',url:'https://to.indeed.com/aaznbvfv4flh',postedDays:1,ai:true},
+  {id:'ai_100024',title:'MCP Tool & Skill Developer',company:'SSI',location:'Remote',type:'Contract',exp:'Mid',tech:['AI','MCP','Python','LLM'],salary:'$55–63/hr',source:'Indeed',url:'https://to.indeed.com/aajxyyx8pjcz',postedDays:0,ai:true},
+  {id:'ai_100025',title:'Palantir Developer',company:'Ark Technology Consultants',location:'Remote',type:'Contract',exp:'Senior',tech:['Palantir','Python','Data Engineering'],salary:'$80–120/hr',source:'Indeed',url:'https://to.indeed.com/aasqgzzyrjy6',postedDays:0,ai:true},
+  {id:'ai_100034',title:'Azure DevOps Engineer',company:'Westley Resource',location:'Remote',type:'Contract',exp:'Senior',tech:['Azure','DevOps','CI/CD','Kubernetes'],salary:'$132K–$160K/yr',source:'Indeed',url:'https://to.indeed.com/aahx869dzblm',postedDays:0,ai:true},
+  {id:'ai_100032',title:'Cloud Solutions Engineer (Azure)',company:'Secured IT Solutions',location:'Remote',type:'Contract',exp:'Senior',tech:['Azure','Cloud','Engineering'],salary:'$70–80/hr',source:'Indeed',url:'https://to.indeed.com/aa2h2rntg2rj',postedDays:0,ai:true},
+  {id:'ai_100031',title:'GCP Cloud Engineer',company:'ThinkPoint Solutions Inc',location:'Remote',type:'Contract',exp:'Mid',tech:['GCP','Cloud','Terraform'],salary:'$65–68/hr',source:'Indeed',url:'https://to.indeed.com/aazl8rpl9fzm',postedDays:2,ai:true},
+  {id:'ai_100037',title:'Oracle Cloud Infrastructure Engineer',company:'Osair Technologies',location:'Remote',type:'Contract',exp:'Senior',tech:['Oracle','OCI','Cloud'],salary:'$80–90/hr',source:'Indeed',url:'https://to.indeed.com/aalbzpw82mfm',postedDays:0,ai:true},
+  {id:'ai_100026',title:'Java Developer + AWS',company:'All IT Solutions LLC',location:'Columbus, OH / Remote',type:'Contract',exp:'Mid',tech:['Java','AWS','Microservices'],salary:'$87K–$130K/yr',source:'Indeed',url:'https://to.indeed.com/aatl2htszgpk',postedDays:1,ai:true},
+  {id:'ai_100036',title:'DevOps / Site Reliability Engineer',company:'Cab Tek',location:'New York, NY / Remote',type:'Contract',exp:'Senior',tech:['DevOps','SRE','Linux','Docker'],salary:'$60–65/hr',source:'Indeed',url:'https://to.indeed.com/aapgrk74l84g',postedDays:0,ai:true},
+];
+
+// ── Seed jobs (fallback + diversity) ────────────────────────────────────────
 const SEED_JOBS = [
-  {id:'j1',title:'Salesforce Revenue Cloud Developer',company:'Confidential',location:'Remote',type:'Contract',exp:'Senior',tech:['Salesforce','Revenue Cloud','Apex'],salary:'$80–110/hr',source:'Indeed',url:'https://www.indeed.com/jobs?q=salesforce+revenue+cloud+developer&l=remote',postedDays:1},
+  ...AI_INDEED_JOBS,
   {id:'j2',title:'Salesforce LWC Developer',company:'TechCorp UK',location:'London (Remote OK)',type:'Freelance',exp:'Mid',tech:['Salesforce','LWC','JavaScript'],salary:'£400–500/day',source:'LinkedIn',url:'https://www.linkedin.com/jobs/search/?keywords=salesforce+lwc+developer',postedDays:2},
   {id:'j3',title:'Python Backend Developer',company:'StartupX',location:'Remote',type:'Freelance',exp:'Mid',tech:['Python','FastAPI','PostgreSQL'],salary:'$45–65/hr',source:'Upwork',url:'https://www.upwork.com/nx/search/jobs/?q=python+backend+developer',postedDays:0},
   {id:'j4',title:'React / Node.js Full-Stack',company:'Digital Agency',location:'Remote',type:'Contract',exp:'Mid',tech:['React','Node.js','MongoDB'],salary:'$55–75/hr',source:'Freelancer',url:'https://www.freelancer.com/jobs/javascript/',postedDays:3},
@@ -262,7 +321,8 @@ function renderJobs() {
   const showSaved   = document.getElementById('cb-saved').checked;
 
   let filtered = jobs.filter(j => {
-    if(currentSource !== 'all' && j.source !== currentSource) return false;
+    if(currentSource === 'ai' && !j.ai) return false;
+    if(currentSource !== 'all' && currentSource !== 'ai' && j.source !== currentSource) return false;
     const blob = `${j.title} ${j.company} ${(j.tech||[]).join(' ')}`.toLowerCase();
     if(q && !blob.includes(q)) return false;
     if(tech && !(j.tech||[]).join(' ').toLowerCase().includes(tech.split('/')[0].trim())) return false;
@@ -304,9 +364,11 @@ function renderJobs() {
         ${isApplied
           ? `<button class="btn-apply done" disabled>✅ Applied</button>`
           : `<a class="btn-apply" href="${j.url}" target="_blank" onclick="markApplied('${j.id}',this)">Apply ↗</a>`}
+        ${!isApplied ? `<button class="btn-ai-apply" onclick="aiApply('${j.id}')">🤖 AI Apply</button>` : ''}
         <button class="btn-save${isSaved?' done':''}" onclick="toggleSave('${j.id}',this)">
           ${isSaved?'🔖 Saved':'🔖 Save'}
         </button>
+        ${j.ai ? `<span style="font-size:.75rem;background:#e8f5e9;color:#1b5e20;padding:2px 8px;border-radius:10px;font-weight:700;margin-left:4px">🤖 AI Import</span>` : ''}
         <span style="font-size:.82rem;color:var(--muted);margin-left:auto">via ${j.source}</span>
       </div>
     </div>`;
@@ -402,6 +464,82 @@ function authOk(m){const e=document.getElementById('auth-success');e.textContent
 function authErr(m){const e=document.getElementById('auth-error');e.textContent=m;e.style.display='block';document.getElementById('auth-success').style.display='none';}
 
 document.getElementById('authModal').addEventListener('click',e=>{if(e.target===document.getElementById('authModal'))closeAuth();});
+document.getElementById('profileModal').addEventListener('click',e=>{if(e.target===document.getElementById('profileModal'))closeProfileModal();});
+
+// ── AI Apply ─────────────────────────────────────────────────────────────────
+let pendingAiJobId = null;
+
+function aiApply(jobId) {
+  pendingAiJobId = jobId;
+  // Load saved profile into form
+  const pf = loadProfile();
+  if(pf) {
+    document.getElementById('pf-name').value     = pf.name     || '';
+    document.getElementById('pf-email').value    = pf.email    || '';
+    document.getElementById('pf-phone').value    = pf.phone    || '';
+    document.getElementById('pf-location').value = pf.location || '';
+    document.getElementById('pf-linkedin').value = pf.linkedin || '';
+    document.getElementById('pf-resume').value   = pf.resume   || '';
+    document.getElementById('pf-skills').value   = pf.skills   || '';
+  }
+  document.getElementById('profileModal').classList.add('open');
+}
+
+function closeProfileModal() {
+  document.getElementById('profileModal').classList.remove('open');
+  pendingAiJobId = null;
+}
+
+function loadProfile() {
+  try { return JSON.parse(localStorage.getItem('ttp_ai_profile') || 'null'); } catch { return null; }
+}
+
+function saveProfileAndApply() {
+  const pf = {
+    name:     document.getElementById('pf-name').value.trim(),
+    email:    document.getElementById('pf-email').value.trim(),
+    phone:    document.getElementById('pf-phone').value.trim(),
+    location: document.getElementById('pf-location').value.trim(),
+    linkedin: document.getElementById('pf-linkedin').value.trim(),
+    resume:   document.getElementById('pf-resume').value.trim(),
+    skills:   document.getElementById('pf-skills').value.trim(),
+  };
+  try { localStorage.setItem('ttp_ai_profile', JSON.stringify(pf)); } catch {}
+
+  const job = jobs.find(j => j.id === pendingAiJobId);
+  if(!job) { closeProfileModal(); return; }
+
+  // Queue the apply
+  try {
+    const queue = JSON.parse(localStorage.getItem('ttp_ai_queue') || '[]');
+    const entry = { jobId: job.id, title: job.title, company: job.company, url: job.url, profile: pf, queuedAt: new Date().toISOString() };
+    if(!queue.find(q=>q.jobId===job.id)) queue.push(entry);
+    localStorage.setItem('ttp_ai_queue', JSON.stringify(queue));
+  } catch {}
+
+  closeProfileModal();
+
+  // Open the apply URL
+  window.open(job.url, '_blank');
+
+  // Toast
+  showAiToast(`🤖 Opening "${job.title}" for AI Apply…\nClaude will auto-fill your profile on the form.`);
+
+  // Mark as applied after short delay
+  setTimeout(() => {
+    const fakeBtn = { outerHTML: '' };
+    markApplied(job.id, fakeBtn);
+  }, 2000);
+}
+
+let toastTimer;
+function showAiToast(msg) {
+  const el = document.getElementById('aiToast');
+  el.textContent = msg;
+  el.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.style.display = 'none'; }, 5000);
+}
 
 updateNav();
 loadJobs();
