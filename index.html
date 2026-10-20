@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TechTalent Portal — Find & Hire IT Professionals</title>
+<meta name="description" content="Free portal for IT professionals across all technologies. Post your resume, get discovered by recruiters worldwide.">
+<style>
+:root {
+  --blue: #0b2e59;
+  --accent: #1565c0;
+  --green: #1b8a4a;
+  --light: #e8f0fe;
+  --text: #1a1a1a;
+  --muted: #555;
+  --border: #c5d5e8;
+  --bg: #f7f9fc;
+  --card: #fff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
+
+/* NAV */
+.topnav {
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 56px;
+  position: sticky; top: 0; z-index: 200;
+}
+.topnav .logo { color: #fff; font-size: 1.2rem; font-weight: 700; text-decoration: none; letter-spacing: .3px; }
+.topnav .logo span { color: #7ec8f7; }
+.nav-links { display: flex; gap: 4px; align-items: center; }
+.nav-links a { color: rgba(255,255,255,.8); text-decoration: none; padding: 6px 14px; border-radius: 4px; font-size: .9rem; transition: background .15s; }
+.nav-links a:hover, .nav-links a.active { background: rgba(255,255,255,.15); color: #fff; }
+.btn-primary { background: #1565c0; color: #fff !important; border-radius: 6px !important; font-weight: 600; }
+.btn-primary:hover { background: #0d47a1 !important; }
+.btn-outline { border: 1px solid rgba(255,255,255,.5); border-radius: 6px !important; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0b2e59 0%, #1565c0 60%, #0d8a5a 100%);
+  color: #fff;
+  text-align: center;
+  padding: 72px 20px 56px;
+}
+.hero h1 { font-size: 2.6rem; font-weight: 800; margin-bottom: 14px; line-height: 1.2; }
+.hero h1 span { color: #7ec8f7; }
+.hero p { font-size: 1.1rem; opacity: .9; max-width: 580px; margin: 0 auto 28px; }
+.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.hero-btns a {
+  padding: 12px 28px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem; transition: transform .15s;
+}
+.hero-btns a:hover { transform: translateY(-2px); }
+.btn-white { background: #fff; color: var(--blue); }
+.btn-green { background: #1b8a4a; color: #fff; border: 2px solid rgba(255,255,255,.3); }
+.stats-row { display: flex; gap: 40px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
+.stat { text-align: center; }
+.stat .num { font-size: 1.8rem; font-weight: 800; }
+.stat .label { font-size: .85rem; opacity: .75; }
+
+/* SEARCH BAR */
+.search-section { background: #fff; border-bottom: 1px solid var(--border); padding: 18px 20px; }
+.search-bar { max-width: 800px; margin: 0 auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.search-bar input, .search-bar select {
+  flex: 1; min-width: 140px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px;
+  font-size: .95rem; background: var(--bg); color: var(--text);
+}
+.search-bar button {
+  padding: 10px 24px; background: var(--accent); color: #fff; border: none; border-radius: 8px;
+  font-weight: 700; cursor: pointer; font-size: .95rem;
+}
+.search-bar button:hover { background: #0d47a1; }
+
+/* MAIN LAYOUT */
+.main-wrap { max-width: 1100px; margin: 0 auto; padding: 24px 20px; display: grid; grid-template-columns: 220px 1fr; gap: 24px; }
+@media (max-width: 700px) { .main-wrap { grid-template-columns: 1fr; } .sidebar { display: none; } }
+
+/* SIDEBAR FILTERS */
+.sidebar { align-self: start; }
+.filter-box { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.filter-box h3 { font-size: .85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--blue); margin-bottom: 10px; }
+.filter-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; cursor: pointer; font-size: .9rem; }
+.filter-item input[type=checkbox] { accent-color: var(--accent); }
+
+/* RESUME CARDS */
+.results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.results-header h2 { font-size: 1rem; color: var(--muted); }
+.sort-select { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: .9rem; }
+
+.resume-grid { display: flex; flex-direction: column; gap: 14px; }
+.resume-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+  transition: box-shadow .2s, border-color .2s;
+  position: relative;
+}
+.resume-card:hover { box-shadow: 0 4px 16px rgba(11,46,89,.1); border-color: var(--accent); }
+.resume-card .card-top { display: flex; gap: 14px; align-items: flex-start; }
+.avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 1.2rem; font-weight: 700; flex-shrink: 0;
+}
+.card-info { flex: 1; }
+.card-name { font-size: 1.05rem; font-weight: 700; color: var(--blue); }
+.card-role { color: var(--accent); font-size: .93rem; margin: 2px 0; }
+.card-meta { color: var(--muted); font-size: .85rem; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.tag { background: var(--light); color: var(--blue); font-size: .78rem; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+.tag.green { background: #d4edda; color: var(--green); }
+.card-actions { display: flex; gap: 8px; margin-top: 14px; align-items: center; }
+.btn-view { background: var(--accent); color: #fff; padding: 7px 18px; border-radius: 6px; text-decoration: none; font-size: .88rem; font-weight: 600; border: none; cursor: pointer; }
+.btn-view:hover { background: #0d47a1; }
+.btn-contact { background: #fff; color: var(--accent); padding: 7px 18px; border-radius: 6px; text-decoration: none; font-size: .88rem; font-weight: 600; border: 1px solid var(--accent); cursor: pointer; }
+.btn-contact:hover { background: var(--light); }
+.open-badge { position: absolute; top: 16px; right: 16px; background: #d4edda; color: var(--green); font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+
+/* MODAL */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 500; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.open { display: flex; }
+.modal { background: #fff; border-radius: 14px; padding: 32px; max-width: 480px; width: 100%; max-height: 90vh; overflow-y: auto; }
+.modal h2 { font-size: 1.3rem; color: var(--blue); margin-bottom: 6px; }
+.modal .subtitle { color: var(--muted); font-size: .9rem; margin-bottom: 24px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: .88rem; font-weight: 600; color: var(--blue); margin-bottom: 5px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+  font-size: .93rem; font-family: inherit; background: var(--bg);
+}
+.form-group textarea { resize: vertical; min-height: 80px; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(21,101,192,.1);
+}
+.modal-btns { display: flex; gap: 10px; margin-top: 20px; }
+.modal-btns button { flex: 1; padding: 11px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: .95rem; border: none; }
+.btn-submit { background: var(--accent); color: #fff; }
+.btn-submit:hover { background: #0d47a1; }
+.btn-cancel { background: var(--bg); color: var(--muted); border: 1px solid var(--border) !important; }
+.tabs-row { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+.tab-btn { padding: 8px 20px; background: none; border: none; cursor: pointer; font-size: .95rem; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px; }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
+.success-msg { background: #d4edda; color: var(--green); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: .93rem; display: none; }
+.error-msg { background: #fdecea; color: #c62828; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: .93rem; display: none; }
+.divider { text-align: center; color: var(--muted); font-size: .85rem; margin: 14px 0; position: relative; }
+.divider::before { content:''; position:absolute; left:0; top:50%; width:42%; height:1px; background:var(--border); }
+.divider::after  { content:''; position:absolute; right:0; top:50%; width:42%; height:1px; background:var(--border); }
+
+/* FOOTER */
+footer { background: var(--blue); color: rgba(255,255,255,.7); text-align: center; padding: 24px 20px; font-size: .88rem; margin-top: 48px; }
+footer a { color: rgba(255,255,255,.9); }
+
+/* LOADING */
+.skeleton { background: linear-gradient(90deg, #e8eaf0 25%, #f0f2f5 50%, #e8eaf0 75%); background-size: 200%; animation: shimmer 1.5s infinite; border-radius: 8px; }
+@keyframes shimmer { 0%{background-position:200%} 100%{background-position:-200%} }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <a href="index.html" class="logo">Tech<span>Talent</span> Portal</a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Browse Talent</a>
+    <a href="jobs.html">Browse Jobs</a>
+    <a href="submit.html">Post Resume</a>
+    <a href="#" onclick="openModal('signup')" class="btn-outline">Sign Up</a>
+    <a href="#" onclick="openModal('login')" class="btn-primary">Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Find Top <span>IT Talent</span><br>Across Every Technology</h1>
+  <p>Salesforce · Java · Python · DevOps · Cloud · Data Science · SAP · React — all technologies, all roles, all experience levels.</p>
+  <div class="hero-btns">
+    <a href="submit.html" class="btn-white">📄 Post Your Resume — Free</a>
+    <a href="#" onclick="openModal('signup')" class="btn-green">🔍 Hire Talent — Free</a>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="num" id="stat-profiles">0</div><div class="label">Active Profiles</div></div>
+    <div class="stat"><div class="num">50+</div><div class="label">Technologies</div></div>
+    <div class="stat"><div class="num">Free</div><div class="label">Always Free</div></div>
+    <div class="stat"><div class="num">Global</div><div class="label">Remote-First</div></div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="🔍  Search by name, skill, role..." oninput="filterCards()">
+    <select id="techFilter" onchange="filterCards()">
+      <option value="">All Technologies</option>
+      <option>Salesforce</option>
+      <option>Java</option>
+      <option>Python</option>
+      <option>React / Vue / Angular</option>
+      <option>DevOps / Cloud</option>
+      <option>Data Science / ML</option>
+      <option>SAP</option>
+      <option>Oracle</option>
+      <option>.NET / C#</option>
+      <option>Mobile (iOS/Android)</option>
+    </select>
+    <select id="expFilter" onchange="filterCards()">
+      <option value="">Any Experience</option>
+      <option>0–2 years</option>
+      <option>3–5 years</option>
+      <option>6–10 years</option>
+      <option>10+ years</option>
+    </select>
+    <select id="workFilter" onchange="filterCards()">
+      <option value="">Work Type</option>
+      <option>Remote</option>
+      <option>Freelance / Contract</option>
+      <option>Full-time</option>
+      <option>Part-time</option>
+    </select>
+    <button onclick="filterCards()">Search</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrap">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="filter-box">
+      <h3>Location</h3>
+      <label class="filter-item"><input type="checkbox" value="India" onchange="filterCards()"> India</label>
+      <label class="filter-item"><input type="checkbox" value="USA" onchange="filterCards()"> USA</label>
+      <label class="filter-item"><input type="checkbox" value="UK" onchange="filterCards()"> UK</label>
+      <label class="filter-item"><input type="checkbox" value="Remote" onchange="filterCards()"> Remote Only</label>
+      <label class="filter-item"><input type="checkbox" value="Europe" onchange="filterCards()"> Europe</label>
+    </div>
+    <div class="filter-box">
+      <h3>Availability</h3>
+      <label class="filter-item"><input type="checkbox" value="Immediately" onchange="filterCards()"> Immediately</label>
+      <label class="filter-item"><input type="checkbox" value="2 weeks" onchange="filterCards()"> Within 2 weeks</label>
+      <label class="filter-item"><input type="checkbox" value="1 month" onchange="filterCards()"> Within 1 month</label>
+    </div>
+  </aside>
+
+  <!-- CARDS -->
+  <main>
+    <div class="results-header">
+      <h2 id="results-count">Loading profiles…</h2>
+      <select class="sort-select" onchange="sortCards(this.value)">
+        <option value="recent">Most Recent</option>
+        <option value="exp">Most Experienced</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </div>
+    <div class="resume-grid" id="resumeGrid">
+      <!-- Cards injected by JS -->
+    </div>
+  </main>
+</div>
+
+<!-- SIGN UP / LOGIN MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <div class="tabs-row">
+      <button class="tab-btn active" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+      <button class="tab-btn" id="tab-login" onclick="switchTab('login')">Login</button>
+    </div>
+    <div id="success-msg" class="success-msg"></div>
+    <div id="error-msg" class="error-msg"></div>
+
+    <!-- SIGN UP FORM -->
+    <div id="signup-form">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="su-name" placeholder="e.g. Purnachandar Padishala">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="su-email" placeholder="you@email.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="su-pass" placeholder="Min 8 characters">
+      </div>
+      <div class="form-group">
+        <label>I am a…</label>
+        <select id="su-role">
+          <option value="candidate">Job Seeker / Freelancer</option>
+          <option value="recruiter">Recruiter / Hiring Manager</option>
+        </select>
+      </div>
+      <div class="modal-btns">
+        <button class="btn-submit" onclick="doSignup()">Create Account</button>
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="login-form" style="display:none">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="li-email" placeholder="you@email.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="li-pass" placeholder="Your password">
+      </div>
+      <div class="modal-btns">
+        <button class="btn-submit" onclick="doLogin()">Login</button>
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal">
+    <h2>Contact Candidate</h2>
+    <p class="subtitle">Your message will be forwarded to the candidate's email.</p>
+    <div id="contact-success" class="success-msg"></div>
+    <div class="form-group"><label>Your Name</label><input type="text" id="c-name" placeholder="Your name"></div>
+    <div class="form-group"><label>Your Email</label><input type="email" id="c-email" placeholder="your@email.com"></div>
+    <div class="form-group"><label>Company / Role</label><input type="text" id="c-company" placeholder="e.g. Infosys – Recruiter"></div>
+    <div class="form-group"><label>Message</label><textarea id="c-msg" placeholder="Tell them about the opportunity…"></textarea></div>
+    <input type="hidden" id="c-target">
+    <div class="modal-btns">
+      <button class="btn-submit" onclick="sendContact()">Send Message</button>
+      <button class="btn-cancel" onclick="closeContactModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 TechTalent Portal &nbsp;·&nbsp; Free for candidates and recruiters &nbsp;·&nbsp;
+  <a href="submit.html">Post Resume</a> &nbsp;·&nbsp; <a href="mailto:purna.padishala@gmail.com">Contact Admin</a>
+</footer>
+
+<script>
+// ── Config ──────────────────────────────────────────────────────────────────
+const API = 'http://localhost:4747'; // Local storage API running on your PC
+
+// ── Sample / seed data (shown when API is offline) ───────────────────────────
+const SEED = [
+  {
+    id: 'purna001',
+    name: 'Purnachandar Padishala',
+    initials: 'PP',
+    role: 'IT Analyst / Salesforce Developer',
+    company: 'Tata Consultancy Services',
+    location: 'Hyderabad, India',
+    exp: '5+ years',
+    tech: ['Salesforce', 'Revenue Cloud', 'Apex', 'LWC', 'Azure DevOps'],
+    availability: 'Open to Freelance & Remote',
+    open: true,
+    summary: '5× Salesforce Certified. Revenue Cloud Advanced, Apex, LWC, CI/CD. TCS + Evoke Technologies.',
+    pdf: 'Purnachandar_Padishala_Salesforce_Developer_Resume.pdf',
+    profile: 'profile.html'
+  }
+];
+
+let allProfiles = [];
+
+async function loadProfiles() {
+  try {
+    const r = await fetch(`${API}/profiles`, { signal: AbortSignal.timeout(3000) });
+    const data = await r.json();
+    allProfiles = data.length ? data : SEED;
+  } catch {
+    allProfiles = SEED; // offline — show seed
+  }
+  renderCards(allProfiles);
+  document.getElementById('stat-profiles').textContent = allProfiles.length;
+}
+
+function renderCards(profiles) {
+  const grid = document.getElementById('resumeGrid');
+  document.getElementById('results-count').textContent = `${profiles.length} profile${profiles.length !== 1 ? 's' : ''} found`;
+  if (!profiles.length) {
+    grid.innerHTML = '<p style="color:var(--muted);padding:20px 0">No profiles match your search. <a href="submit.html">Be the first to post one!</a></p>';
+    return;
+  }
+  grid.innerHTML = profiles.map(p => `
+    <div class="resume-card" data-tech="${(p.tech||[]).join(',')}" data-loc="${p.location||''}" data-exp="${p.exp||''}">
+      ${p.open ? '<span class="open-badge">✅ Open to Work</span>' : ''}
+      <div class="card-top">
+        <div class="avatar">${p.initials || p.name.split(' ').map(x=>x[0]).join('').slice(0,2)}</div>
+        <div class="card-info">
+          <div class="card-name">${p.name}</div>
+          <div class="card-role">${p.role}</div>
+          <div class="card-meta">📍 ${p.location || 'Not specified'} &nbsp;·&nbsp; ${p.exp || ''} experience &nbsp;·&nbsp; ${p.company || ''}</div>
+        </div>
+      </div>
+      <div class="card-tags">
+        ${(p.tech||[]).map(t => `<span class="tag">${t}</span>`).join('')}
+        ${p.availability ? `<span class="tag green">${p.availability}</span>` : ''}
+      </div>
+      <p style="color:var(--muted);font-size:.88rem;margin-top:10px">${p.summary || ''}</p>
+      <div class="card-actions">
+        <a href="${p.profile || 'profile.html?id=' + p.id}" class="btn-view">View Profile</a>
+        <button class="btn-contact" onclick="openContact('${p.id}','${p.name}')">Contact</button>
+        ${p.pdf ? `<a href="${p.pdf}" download style="font-size:.85rem;color:var(--accent);margin-left:6px">⬇ PDF</a>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const tech = document.getElementById('techFilter').value.toLowerCase();
+  const work = document.getElementById('workFilter').value.toLowerCase();
+  const locs = [...document.querySelectorAll('.sidebar input[type=checkbox]:checked')].map(c=>c.value.toLowerCase());
+
+  const filtered = allProfiles.filter(p => {
+    const blob = `${p.name} ${p.role} ${(p.tech||[]).join(' ')} ${p.summary||''}`.toLowerCase();
+    if (q && !blob.includes(q)) return false;
+    if (tech && !(p.tech||[]).join(' ').toLowerCase().includes(tech.split(' ')[0])) return false;
+    if (work && !(p.availability||'').toLowerCase().includes(work.split(' ')[0])) return false;
+    if (locs.length && !locs.some(l => (p.location||'').toLowerCase().includes(l) || (p.availability||'').toLowerCase().includes(l))) return false;
+    return true;
+  });
+  renderCards(filtered);
+}
+
+function sortCards(by) {
+  const sorted = [...allProfiles];
+  if (by === 'name') sorted.sort((a,b) => a.name.localeCompare(b.name));
+  else if (by === 'exp') sorted.sort((a,b) => parseInt(b.exp)||0 - parseInt(a.exp)||0);
+  renderCards(sorted);
+}
+
+// ── Auth Modals ──────────────────────────────────────────────────────────────
+function openModal(tab) {
+  switchTab(tab);
+  document.getElementById('authModal').classList.add('open');
+}
+function closeModal() { document.getElementById('authModal').classList.remove('open'); }
+function switchTab(t) {
+  document.getElementById('signup-form').style.display = t==='signup' ? '' : 'none';
+  document.getElementById('login-form').style.display = t==='login' ? '' : 'none';
+  document.getElementById('tab-signup').className = 'tab-btn' + (t==='signup'?' active':'');
+  document.getElementById('tab-login').className = 'tab-btn' + (t==='login'?' active':'');
+  document.getElementById('success-msg').style.display = 'none';
+  document.getElementById('error-msg').style.display = 'none';
+}
+
+async function doSignup() {
+  const name=document.getElementById('su-name').value.trim();
+  const email=document.getElementById('su-email').value.trim();
+  const pass=document.getElementById('su-pass').value;
+  const role=document.getElementById('su-role').value;
+  if(!name||!email||!pass){showError('Please fill all fields.');return;}
+  if(pass.length<8){showError('Password must be at least 8 characters.');return;}
+  try {
+    const r = await fetch(`${API}/signup`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({name,email,pass,role,createdAt:new Date().toISOString()}),
+      signal: AbortSignal.timeout(5000)
+    });
+    const d = await r.json();
+    if(r.ok){ showSuccess('Account created! Welcome to TechTalent Portal.'); localStorage.setItem('ttp_user',JSON.stringify({name,email,role})); setTimeout(()=>{closeModal();},1800); }
+    else { showError(d.error||'Signup failed.'); }
+  } catch {
+    // Offline: save locally
+    localStorage.setItem('ttp_user', JSON.stringify({name,email,role}));
+    showSuccess('Account created (offline mode). You can now post your resume!');
+    setTimeout(closeModal, 1800);
+  }
+}
+
+async function doLogin() {
+  const email=document.getElementById('li-email').value.trim();
+  const pass=document.getElementById('li-pass').value;
+  if(!email||!pass){showError('Please enter email and password.');return;}
+  try {
+    const r = await fetch(`${API}/login`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({email,pass}), signal: AbortSignal.timeout(5000)
+    });
+    const d = await r.json();
+    if(r.ok){ localStorage.setItem('ttp_user',JSON.stringify(d.user)); showSuccess(`Welcome back, ${d.user.name}!`); setTimeout(closeModal,1500); }
+    else { showError(d.error||'Invalid credentials.'); }
+  } catch {
+    showError('Could not reach server. Make sure the local API is running (see README).');
+  }
+}
+
+function showSuccess(m){ const el=document.getElementById('success-msg'); el.textContent=m; el.style.display='block'; document.getElementById('error-msg').style.display='none'; }
+function showError(m){ const el=document.getElementById('error-msg'); el.textContent=m; el.style.display='block'; document.getElementById('success-msg').style.display='none'; }
+
+// ── Contact Modal ─────────────────────────────────────────────────────────────
+function openContact(id, name) {
+  document.getElementById('c-target').value = id + '|' + name;
+  document.getElementById('contact-success').style.display = 'none';
+  document.getElementById('contactModal').classList.add('open');
+}
+function closeContactModal() { document.getElementById('contactModal').classList.remove('open'); }
+async function sendContact() {
+  const name=document.getElementById('c-name').value.trim();
+  const email=document.getElementById('c-email').value.trim();
+  const company=document.getElementById('c-company').value.trim();
+  const msg=document.getElementById('c-msg').value.trim();
+  const target=document.getElementById('c-target').value;
+  if(!name||!email||!msg){alert('Please fill name, email and message.');return;}
+  try {
+    await fetch(`${API}/contact`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({from:{name,email,company},target,message:msg,sentAt:new Date().toISOString()}),
+      signal: AbortSignal.timeout(5000)
+    });
+  } catch {}
+  const el = document.getElementById('contact-success');
+  el.textContent = 'Message sent! The candidate will be notified.';
+  el.style.display = 'block';
+  setTimeout(closeContactModal, 2000);
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if(e.target===o) { closeModal(); closeContactModal(); } }));
+
+loadProfiles();
+</script>
+</body>
+</html>

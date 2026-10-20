@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Dashboard — TechTalent Portal</title>
+<style>
+:root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--orange:#e65100;--light:#e8f0fe;--text:#1a1a1a;--muted:#555;--border:#c5d5e8;--bg:#f7f9fc;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;}
+.topnav{background:var(--blue);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:56px;position:sticky;top:0;z-index:200;}
+.topnav .logo{color:#fff;font-size:1.2rem;font-weight:700;text-decoration:none;}
+.topnav .logo span{color:#7ec8f7;}
+.nav-links{display:flex;gap:4px;align-items:center;}
+.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.9rem;}
+.nav-links a:hover{background:rgba(255,255,255,.15);color:#fff;}
+.btn-primary{background:#1565c0;color:#fff !important;border-radius:6px !important;font-weight:600;}
+
+.wrap{max-width:1050px;margin:0 auto;padding:28px 20px 60px;}
+
+/* GREETING */
+.greeting{background:linear-gradient(135deg,var(--blue),var(--accent));color:#fff;border-radius:14px;padding:28px 32px;margin-bottom:24px;display:flex;align-items:center;gap:24px;}
+.greeting .avatar{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;flex-shrink:0;}
+.greeting h1{font-size:1.5rem;margin-bottom:4px;}
+.greeting p{opacity:.85;font-size:.95rem;}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+@media(max-width:680px){.stats-grid{grid-template-columns:1fr 1fr;}}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;text-align:center;}
+.stat-card .n{font-size:2rem;font-weight:800;color:var(--blue);}
+.stat-card .l{font-size:.82rem;color:var(--muted);margin-top:2px;}
+.stat-card .icon{font-size:1.4rem;margin-bottom:4px;}
+
+/* SECTIONS */
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.section-header h2{font-size:1rem;font-weight:700;color:var(--blue);}
+.section-header a{font-size:.88rem;color:var(--accent);}
+
+/* APPLICATION TABLE */
+.app-table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:24px;}
+.app-table th{background:var(--blue);color:#fff;text-align:left;padding:10px 14px;font-size:.83rem;font-weight:600;}
+.app-table td{padding:11px 14px;border-bottom:1px solid var(--border);font-size:.88rem;}
+.app-table tr:last-child td{border-bottom:none;}
+.app-table tr:hover td{background:var(--light);}
+.status-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.77rem;font-weight:700;}
+.s-applied{background:#cce5ff;color:#004085;}
+.s-viewed{background:#fff3cd;color:#856404;}
+.s-shortlisted{background:#d4edda;color:var(--green);}
+.s-rejected{background:#f8d7da;color:#721c24;}
+.s-interview{background:#e2d9f3;color:#6610f2;}
+.source-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;}
+
+/* JOB ALERTS */
+.alert-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.alert-info .a-title{font-weight:700;font-size:.93rem;color:var(--blue);}
+.alert-info .a-desc{font-size:.83rem;color:var(--muted);}
+.toggle-btn{background:var(--green);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:.82rem;font-weight:700;cursor:pointer;}
+.toggle-btn.off{background:var(--muted);}
+
+/* SAVED JOBS */
+.saved-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.saved-info .s-title{font-weight:700;font-size:.93rem;color:var(--blue);}
+.saved-info .s-meta{font-size:.82rem;color:var(--muted);}
+.saved-btns{display:flex;gap:7px;flex-shrink:0;}
+.btn-sm{padding:5px 13px;border-radius:6px;font-size:.82rem;font-weight:600;border:none;cursor:pointer;}
+.btn-apply-sm{background:var(--accent);color:#fff;}
+.btn-unsave{background:#fff;border:1px solid var(--border)!important;color:var(--muted);}
+
+/* PROFILE SECTION */
+.profile-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:24px;}
+.profile-card h3{font-size:.95rem;font-weight:700;color:var(--blue);margin-bottom:14px;border-left:4px solid var(--accent);padding-left:10px;}
+.profile-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.profile-row:last-child{border-bottom:none;}
+.profile-row .key{font-size:.82rem;color:var(--muted);min-width:120px;}
+.profile-row .val{font-size:.9rem;font-weight:600;color:var(--text);}
+.edit-btn{background:var(--light);color:var(--accent);border:none;border-radius:6px;padding:4px 12px;font-size:.8rem;font-weight:600;cursor:pointer;margin-left:auto;}
+
+/* LOGIN GATE */
+.login-gate{text-align:center;padding:60px 20px;}
+.login-gate h2{font-size:1.5rem;color:var(--blue);margin-bottom:10px;}
+.login-gate p{color:var(--muted);margin-bottom:20px;}
+.login-gate a{background:var(--accent);color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:1rem;}
+
+/* TABS */
+.dash-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;}
+.dash-tab{padding:9px 20px;background:none;border:none;cursor:pointer;font-size:.93rem;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-2px;}
+.dash-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700;}
+
+.empty-state{text-align:center;padding:32px;color:var(--muted);}
+.empty-state .ei{font-size:2.5rem;margin-bottom:8px;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="logo">Tech<span>Talent</span> Portal</a>
+  <div class="nav-links">
+    <a href="index.html">Browse Talent</a>
+    <a href="jobs.html">Freelance Jobs</a>
+    <a href="submit.html">Post Resume</a>
+    <a href="dashboard.html" class="active">My Dashboard</a>
+    <a href="#" onclick="doLogout()">Logout</a>
+  </div>
+</nav>
+
+<div class="wrap" id="mainWrap">
+
+  <!-- LOGIN GATE -->
+  <div id="loginGate" class="login-gate" style="display:none">
+    <div style="font-size:3rem;margin-bottom:12px">🔒</div>
+    <h2>Sign in to view your dashboard</h2>
+    <p>Track your job applications, manage alerts, and update your profile.</p>
+    <a href="jobs.html">Login / Sign Up →</a>
+  </div>
+
+  <!-- DASHBOARD CONTENT -->
+  <div id="dashContent">
+
+    <!-- GREETING -->
+    <div class="greeting">
+      <div class="avatar" id="userAvatar">?</div>
+      <div>
+        <h1 id="greetMsg">Welcome back!</h1>
+        <p id="greetSub">Here's your job search summary</p>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div style="font-size:.85rem;opacity:.8">Last active</div>
+        <div style="font-size:.9rem;font-weight:700" id="lastActive">–</div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card"><div class="icon">📤</div><div class="n" id="stat-applied">0</div><div class="l">Applications Sent</div></div>
+      <div class="stat-card"><div class="icon">👁️</div><div class="n" id="stat-viewed">0</div><div class="l">Profile Views</div></div>
+      <div class="stat-card"><div class="icon">🔖</div><div class="n" id="stat-saved">0</div><div class="l">Saved Jobs</div></div>
+      <div class="stat-card"><div class="icon">🎯</div><div class="n" id="stat-response">—</div><div class="l">Response Rate</div></div>
+    </div>
+
+    <!-- TABS -->
+    <div class="dash-tabs">
+      <button class="dash-tab active" onclick="showTab('applications')">Applications</button>
+      <button class="dash-tab" onclick="showTab('saved')">Saved Jobs</button>
+      <button class="dash-tab" onclick="showTab('alerts')">Job Alerts</button>
+      <button class="dash-tab" onclick="showTab('profile')">My Profile</button>
+    </div>
+
+    <!-- APPLICATIONS TAB -->
+    <div id="tab-applications">
+      <div class="section-header">
+        <h2>Application History</h2>
+        <a href="jobs.html">Find More Jobs →</a>
+      </div>
+      <div id="appTableWrap"></div>
+    </div>
+
+    <!-- SAVED TAB -->
+    <div id="tab-saved" style="display:none">
+      <div class="section-header">
+        <h2>Saved Jobs</h2>
+        <a href="jobs.html">Browse All →</a>
+      </div>
+      <div id="savedList"></div>
+    </div>
+
+    <!-- ALERTS TAB -->
+    <div id="tab-alerts" style="display:none">
+      <div class="section-header"><h2>Job Alerts</h2></div>
+      <div id="alertList"></div>
+      <button style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-weight:700;cursor:pointer;margin-top:8px" onclick="addAlert()">+ New Alert</button>
+    </div>
+
+    <!-- PROFILE TAB -->
+    <div id="tab-profile" style="display:none">
+      <div class="profile-card">
+        <h3>Your Public Profile</h3>
+        <div id="profileRows"></div>
+        <div style="margin-top:14px;display:flex;gap:8px">
+          <a href="submit.html" style="background:var(--accent);color:#fff;padding:9px 20px;border-radius:8px;text-decoration:none;font-size:.9rem;font-weight:700">Edit Profile</a>
+          <a href="profile.html" style="background:var(--light);color:var(--blue);padding:9px 20px;border-radius:8px;text-decoration:none;font-size:.9rem;font-weight:700">View Public Profile</a>
+        </div>
+      </div>
+      <div class="profile-card" style="margin-top:14px">
+        <h3>Connected Portals (Coming Soon)</h3>
+        <p style="color:var(--muted);font-size:.9rem;margin-bottom:14px">Connect your accounts on external job platforms so we can auto-track your application status.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <button class="btn-sm" style="background:#2164f3;color:#fff;padding:8px 16px;border-radius:8px">Connect Indeed</button>
+          <button class="btn-sm" style="background:#0a66c2;color:#fff;padding:8px 16px;border-radius:8px">Connect LinkedIn</button>
+          <button class="btn-sm" style="background:#14a800;color:#fff;padding:8px 16px;border-radius:8px">Connect Upwork</button>
+          <button class="btn-sm" style="background:#0e4fac;color:#fff;padding:8px 16px;border-radius:8px">Connect Freelancer</button>
+        </div>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:10px">⚠️ This feature is in development. Once connected, your application status from each platform will sync here automatically.</p>
+      </div>
+    </div>
+
+  </div><!-- /dashContent -->
+</div>
+
+<script>
+const API = 'http://localhost:4747';
+let user = JSON.parse(localStorage.getItem('ttp_user')||'null');
+const appliedIds = new Set(JSON.parse(localStorage.getItem('ttp_applied')||'[]'));
+const savedIds   = new Set(JSON.parse(localStorage.getItem('ttp_saved')||'[]'));
+let applications = JSON.parse(localStorage.getItem('ttp_applications')||'[]');
+let alerts       = JSON.parse(localStorage.getItem('ttp_alerts')||'[]');
+
+const SRC_COLORS = {Indeed:'#2164f3',LinkedIn:'#0a66c2',Upwork:'#14a800',Freelancer:'#0e4fac',Toptal:'#204ecf',Guru:'#f07c00',PeoplePerHour:'#e8360e'};
+
+function init() {
+  if(!user) {
+    document.getElementById('dashContent').style.display='none';
+    document.getElementById('loginGate').style.display='block';
+    return;
+  }
+  const initials = user.name.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('userAvatar').textContent = initials;
+  document.getElementById('greetMsg').textContent = `Welcome back, ${user.name.split(' ')[0]}!`;
+  document.getElementById('greetSub').textContent = `${appliedIds.size} applications tracked · ${savedIds.size} jobs saved`;
+  document.getElementById('lastActive').textContent = new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+
+  // Load applications from API (fall back to localStorage)
+  loadApplications();
+  renderSaved();
+  renderAlerts();
+  renderProfile();
+
+  document.getElementById('stat-applied').textContent = appliedIds.size;
+  document.getElementById('stat-saved').textContent   = savedIds.size;
+}
+
+async function loadApplications() {
+  try {
+    const r = await fetch(`${API}/applications?email=${encodeURIComponent(user.email)}`,{signal:AbortSignal.timeout(3000)});
+    if(r.ok) applications = await r.json();
+  } catch {}
+  renderApplications();
+  document.getElementById('stat-applied').textContent = Math.max(applications.length, appliedIds.size);
+}
+
+function renderApplications() {
+  const wrap = document.getElementById('appTableWrap');
+  if(!applications.length && !appliedIds.size) {
+    wrap.innerHTML=`<div class="empty-state"><div class="ei">📤</div><p>No applications yet. <a href="jobs.html" style="color:var(--accent)">Browse freelance jobs →</a></p></div>`;
+    document.getElementById('stat-viewed').textContent='0';
+    document.getElementById('stat-response').textContent='—';
+    return;
+  }
+
+  // Build rows: merge API data with localStorage applied IDs
+  const rows = applications.length ? applications : [...appliedIds].map(id=>({jobId:id,jobTitle:'Job #'+id,source:'Portal',url:'#',appliedAt:new Date().toISOString(),status:'Applied'}));
+
+  const viewed     = rows.filter(r=>r.status&&r.status!=='Applied').length;
+  const shortlisted= rows.filter(r=>['Shortlisted','Interview'].includes(r.status)).length;
+  document.getElementById('stat-viewed').textContent = viewed;
+  document.getElementById('stat-response').textContent = rows.length ? Math.round(shortlisted/rows.length*100)+'%' : '—';
+
+  wrap.innerHTML = `
+  <table class="app-table">
+    <thead><tr>
+      <th>Job Title</th><th>Source</th><th>Applied</th><th>Status</th><th>Action</th>
+    </tr></thead>
+    <tbody>
+      ${rows.map(r=>{
+        const d=new Date(r.appliedAt);
+        const dateStr=isNaN(d)?'—':d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'2-digit'});
+        const status=r.status||'Applied';
+        const cls={'Applied':'s-applied','Viewed':'s-viewed','Shortlisted':'s-shortlisted','Rejected':'s-rejected','Interview':'s-interview'}[status]||'s-applied';
+        const col=SRC_COLORS[r.source]||'#607d8b';
+        return `<tr>
+          <td><strong>${r.jobTitle||r.jobId}</strong></td>
+          <td><span class="source-dot" style="background:${col}"></span>${r.source||'—'}</td>
+          <td>${dateStr}</td>
+          <td><span class="status-badge ${cls}">${status}</span></td>
+          <td>${r.url&&r.url!=='#'?`<a href="${r.url}" target="_blank" style="color:var(--accent);font-size:.82rem">View Job ↗</a>`:'—'}</td>
+        </tr>`;
+      }).join('')}
+    </tbody>
+  </table>`;
+}
+
+function renderSaved() {
+  const el = document.getElementById('savedList');
+  if(!savedIds.size){el.innerHTML=`<div class="empty-state"><div class="ei">🔖</div><p>No saved jobs. <a href="jobs.html" style="color:var(--accent)">Browse jobs →</a></p></div>`;return;}
+  // Get job details from localStorage
+  const SEED=[{id:'j1',title:'Salesforce Revenue Cloud Developer',company:'Confidential',location:'Remote',type:'Contract',source:'Indeed',url:'https://www.indeed.com/jobs?q=salesforce+revenue+cloud'},{id:'j2',title:'Salesforce LWC Developer',company:'TechCorp UK',location:'Remote',type:'Freelance',source:'LinkedIn',url:'https://www.linkedin.com/jobs/search/?keywords=salesforce+lwc'},{id:'j3',title:'Python Backend Developer',company:'StartupX',location:'Remote',type:'Freelance',source:'Upwork',url:'https://www.upwork.com/nx/search/jobs/?q=python'},{id:'j5',title:'Senior DevOps Engineer (AWS)',company:'FinTech Ltd',location:'Remote',type:'Contract',source:'Toptal',url:'https://www.toptal.com/devops'}];
+  const savedJobs=SEED.filter(j=>savedIds.has(j.id));
+  if(!savedJobs.length){el.innerHTML=`<div class="empty-state"><div class="ei">🔖</div><p>Saved jobs not loaded. <a href="jobs.html" style="color:var(--accent)">Go to jobs page →</a></p></div>`;return;}
+  el.innerHTML=savedJobs.map(j=>`
+    <div class="saved-card">
+      <div class="saved-info">
+        <div class="s-title">${j.title}</div>
+        <div class="s-meta">${j.company} · ${j.location} · ${j.type} · via ${j.source}</div>
+      </div>
+      <div class="saved-btns">
+        <a href="${j.url}" target="_blank" class="btn-sm btn-apply-sm">Apply ↗</a>
+        <button class="btn-sm btn-unsave" onclick="unsave('${j.id}',this)">Remove</button>
+      </div>
+    </div>`).join('');
+}
+function unsave(id,btn){savedIds.delete(id);localStorage.setItem('ttp_saved',JSON.stringify([...savedIds]));btn.closest('.saved-card').remove();document.getElementById('stat-saved').textContent=savedIds.size;}
+
+function renderAlerts() {
+  const el=document.getElementById('alertList');
+  if(!alerts.length){
+    // Default alerts
+    alerts=[{id:'a1',title:'Salesforce Jobs',q:'salesforce developer',active:true},{id:'a2',title:'Remote Freelance',q:'remote freelance IT',active:false}];
+    localStorage.setItem('ttp_alerts',JSON.stringify(alerts));
+  }
+  el.innerHTML=alerts.map(a=>`
+    <div class="alert-card">
+      <div class="alert-info"><div class="a-title">🔔 ${a.title}</div><div class="a-desc">Keyword: "${a.q}" · Notified by email</div></div>
+      <button class="toggle-btn${a.active?'':' off'}" onclick="toggleAlert('${a.id}',this)">${a.active?'ON':'OFF'}</button>
+    </div>`).join('');
+}
+function toggleAlert(id,btn){const a=alerts.find(x=>x.id===id);if(a){a.active=!a.active;btn.textContent=a.active?'ON':'OFF';btn.className='toggle-btn'+(a.active?'':' off');localStorage.setItem('ttp_alerts',JSON.stringify(alerts));}}
+function addAlert(){const q=prompt('Alert keyword (e.g. "java developer remote"):');if(!q)return;const a={id:'a'+Date.now(),title:q,q,active:true};alerts.push(a);localStorage.setItem('ttp_alerts',JSON.stringify(alerts));renderAlerts();}
+
+function renderProfile() {
+  const el=document.getElementById('profileRows');
+  const p=JSON.parse(localStorage.getItem('ttp_profile')||'{}');
+  const rows=[
+    {k:'Name',v:user.name},
+    {k:'Email',v:user.email},
+    {k:'Role',v:p.role||'Not set'},
+    {k:'Location',v:p.location||'Not set'},
+    {k:'Experience',v:p.exp||'Not set'},
+    {k:'Top Skills',v:p.skills||(p.tech?p.tech.join(', '):'Not set')},
+    {k:'Availability',v:p.availability||'Not set'},
+  ];
+  el.innerHTML=rows.map(r=>`<div class="profile-row"><span class="key">${r.k}</span><span class="val">${r.v}</span></div>`).join('');
+}
+
+function showTab(name){
+  ['applications','saved','alerts','profile'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display=t===name?'':'none';
+  });
+  document.querySelectorAll('.dash-tab').forEach((btn,i)=>{
+    btn.classList.toggle('active',['applications','saved','alerts','profile'][i]===name);
+  });
+}
+
+function doLogout(){localStorage.removeItem('ttp_user');window.location.href='index.html';}
+
+init();
+</script>
+</body>
+</html>

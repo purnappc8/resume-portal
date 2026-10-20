@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Post Your Resume — TechTalent Portal</title>
+<style>
+:root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--light:#e8f0fe;--text:#1a1a1a;--muted:#555;--border:#c5d5e8;--bg:#f7f9fc;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;}
+.topnav{background:var(--blue);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:56px;position:sticky;top:0;z-index:200;}
+.topnav .logo{color:#fff;font-size:1.2rem;font-weight:700;text-decoration:none;}
+.topnav .logo span{color:#7ec8f7;}
+.nav-links{display:flex;gap:4px;align-items:center;}
+.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.9rem;}
+.nav-links a:hover,.nav-links a.active{background:rgba(255,255,255,.15);color:#fff;}
+.btn-primary{background:#1565c0;color:#fff !important;border-radius:6px !important;font-weight:600;}
+
+.page-header{background:linear-gradient(135deg,#0b2e59,#1565c0);color:#fff;padding:48px 20px;text-align:center;}
+.page-header h1{font-size:2rem;font-weight:800;margin-bottom:8px;}
+.page-header p{opacity:.85;max-width:500px;margin:0 auto;}
+
+.form-wrap{max-width:700px;margin:32px auto;padding:0 20px 60px;}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:28px 32px;margin-bottom:20px;}
+.card h2{font-size:1rem;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin-bottom:20px;border-left:4px solid var(--accent);padding-left:10px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+@media(max-width:580px){.form-row{grid-template-columns:1fr;}}
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:.87rem;font-weight:600;color:var(--blue);margin-bottom:5px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.93rem;font-family:inherit;background:var(--bg);}
+.form-group textarea{resize:vertical;min-height:90px;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(21,101,192,.1);}
+.tags-input{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);min-height:44px;cursor:text;}
+.tags-input input{border:none;background:none;outline:none;font-size:.93rem;flex:1;min-width:120px;}
+.tag{background:var(--light);color:var(--blue);font-size:.8rem;padding:3px 10px;border-radius:20px;font-weight:600;display:flex;align-items:center;gap:5px;}
+.tag button{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1rem;line-height:1;padding:0;}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:10px;}
+.checkbox-item{display:flex;align-items:center;gap:6px;font-size:.9rem;}
+.checkbox-item input{accent-color:var(--accent);}
+.file-drop{border:2px dashed var(--border);border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:border-color .2s;background:var(--bg);}
+.file-drop:hover,.file-drop.dragover{border-color:var(--accent);background:var(--light);}
+.file-drop p{color:var(--muted);font-size:.9rem;}
+.file-drop .icon{font-size:2.4rem;margin-bottom:8px;}
+.file-name{color:var(--green);font-weight:600;margin-top:8px;font-size:.9rem;}
+.submit-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:1.1rem;font-weight:700;cursor:pointer;margin-top:8px;}
+.submit-btn:hover{background:#0d47a1;}
+.success-card{background:#d4edda;border:1px solid #a8d5b5;border-radius:14px;padding:32px;text-align:center;display:none;}
+.success-card .icon{font-size:3rem;margin-bottom:12px;}
+.success-card h2{color:var(--green);margin-bottom:8px;}
+.error-msg{background:#fdecea;color:#c62828;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:none;}
+.progress-bar{height:6px;background:var(--light);border-radius:3px;margin-bottom:24px;}
+.progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .3s;}
+.step-labels{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-bottom:20px;}
+.step-labels span.active{color:var(--accent);font-weight:700;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="logo">Tech<span>Talent</span> Portal</a>
+  <div class="nav-links">
+    <a href="index.html">Browse Talent</a>
+    <a href="submit.html" class="active">Post Resume</a>
+    <a href="#" class="btn-primary">Login</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Post Your Resume — Free</h1>
+  <p>Get discovered by recruiters worldwide. All technologies, all roles, remote or onsite.</p>
+</div>
+
+<div class="form-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+  <div class="step-labels">
+    <span id="sl1" class="active">Personal Info</span>
+    <span id="sl2">Skills & Experience</span>
+    <span id="sl3">Upload & Submit</span>
+  </div>
+
+  <div id="error-msg" class="error-msg"></div>
+
+  <!-- STEP 1 -->
+  <div id="step1">
+    <div class="card">
+      <h2>Personal Information</h2>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name *</label><input type="text" id="f-name" placeholder="e.g. Purnachandar Padishala"></div>
+        <div class="form-group"><label>Email *</label><input type="email" id="f-email" placeholder="you@email.com"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Phone</label><input type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX"></div>
+        <div class="form-group"><label>LinkedIn URL</label><input type="url" id="f-linkedin" placeholder="linkedin.com/in/yourname"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Current Role / Title *</label><input type="text" id="f-role" placeholder="e.g. IT Analyst / Salesforce Developer"></div>
+        <div class="form-group"><label>Current Company</label><input type="text" id="f-company" placeholder="e.g. Tata Consultancy Services"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Location *</label><input type="text" id="f-location" placeholder="e.g. Hyderabad, India"></div>
+        <div class="form-group"><label>Years of Experience</label>
+          <select id="f-exp">
+            <option>0–2 years</option><option>3–5 years</option><option selected>5+ years</option><option>6–10 years</option><option>10+ years</option>
+          </select>
+        </div>
+      </div>
+      <button class="submit-btn" style="background:var(--green)" onclick="nextStep(2)">Next: Skills & Experience →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div id="step2" style="display:none">
+    <div class="card">
+      <h2>Skills & Experience</h2>
+      <div class="form-group">
+        <label>Primary Technology / Domain *</label>
+        <select id="f-domain">
+          <option>Salesforce</option><option>Java / Spring</option><option>Python</option><option>React / Vue / Angular</option>
+          <option>DevOps / Cloud</option><option>Data Science / ML</option><option>SAP</option><option>Oracle</option>
+          <option>.NET / C#</option><option>Mobile (iOS/Android)</option><option>Full-Stack</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Skills / Technologies (press Enter after each)</label>
+        <div class="tags-input" id="tags-box" onclick="document.getElementById('tag-input').focus()">
+          <input type="text" id="tag-input" placeholder="Type a skill and press Enter…" onkeydown="addTag(event)">
+        </div>
+        <input type="hidden" id="f-skills">
+      </div>
+      <div class="form-group">
+        <label>Professional Summary *</label>
+        <textarea id="f-summary" placeholder="2–3 sentences about your expertise and what you're looking for…"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Open to (select all that apply)</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" value="Remote" id="cb-remote"> Remote</label>
+          <label class="checkbox-item"><input type="checkbox" value="Freelance" id="cb-freelance"> Freelance / Contract</label>
+          <label class="checkbox-item"><input type="checkbox" value="Full-time" id="cb-fulltime"> Full-time</label>
+          <label class="checkbox-item"><input type="checkbox" value="Onsite" id="cb-onsite"> Onsite</label>
+          <label class="checkbox-item"><input type="checkbox" value="Part-time" id="cb-parttime"> Part-time</label>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button class="submit-btn" style="background:var(--muted)" onclick="nextStep(1)">← Back</button>
+        <button class="submit-btn" style="background:var(--green)" onclick="nextStep(3)">Next: Upload Resume →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="step3" style="display:none">
+    <div class="card">
+      <h2>Upload Resume (PDF)</h2>
+      <div class="file-drop" id="fileDrop" onclick="document.getElementById('resumeFile').click()" ondragover="dragOver(event)" ondrop="dropFile(event)">
+        <div class="icon">📄</div>
+        <p><strong>Click to upload</strong> or drag & drop your PDF resume</p>
+        <p>PDF up to 5MB</p>
+        <p class="file-name" id="fileName"></p>
+      </div>
+      <input type="file" id="resumeFile" accept=".pdf" style="display:none" onchange="fileChosen(this)">
+      <div class="form-group" style="margin-top:16px">
+        <label>Password (to manage your listing later)</label>
+        <input type="password" id="f-pass" placeholder="Min 8 characters">
+      </div>
+      <div class="form-group">
+        <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer">
+          <input type="checkbox" id="f-agree" style="margin-top:3px;accent-color:var(--accent)">
+          <span style="font-size:.9rem;font-weight:normal">I agree to the <a href="#" style="color:var(--accent)">Terms of Use</a>. My information will be stored on the portal and visible to registered recruiters.</span>
+        </label>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button class="submit-btn" style="background:var(--muted)" onclick="nextStep(2)">← Back</button>
+        <button class="submit-btn" onclick="submitResume()">🚀 Publish My Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="successCard" class="success-card">
+    <div class="icon">🎉</div>
+    <h2>Profile Published!</h2>
+    <p>Your resume is now live on TechTalent Portal and visible to recruiters worldwide.</p>
+    <p style="margin-top:12px"><a href="index.html" style="color:var(--accent);font-weight:700">← Back to Portal</a></p>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:4747';
+let tags = [];
+let resumeFile = null;
+
+function nextStep(n) {
+  // Validate
+  if(n===2) {
+    const name=document.getElementById('f-name').value.trim();
+    const email=document.getElementById('f-email').value.trim();
+    const role=document.getElementById('f-role').value.trim();
+    const loc=document.getElementById('f-location').value.trim();
+    if(!name||!email||!role||!loc){showErr('Please fill all required (*) fields.');return;}
+  }
+  if(n===3) {
+    const sum=document.getElementById('f-summary').value.trim();
+    if(!sum){showErr('Please write a short professional summary.');return;}
+  }
+  hideErr();
+  [1,2,3].forEach(i=>{document.getElementById('step'+i).style.display=i===n?'':'none';});
+  document.getElementById('progress').style.width=(n===1?'10':n===2?'50':'85')+'%';
+  ['sl1','sl2','sl3'].forEach((id,i)=>{document.getElementById(id).classList.toggle('active',i+1===n);});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function addTag(e) {
+  if(e.key==='Enter'||e.key===','){
+    e.preventDefault();
+    const v = e.target.value.trim().replace(/,$/,'');
+    if(v&&!tags.includes(v)){
+      tags.push(v);
+      renderTags();
+    }
+    e.target.value='';
+  }
+}
+function removeTag(t){tags=tags.filter(x=>x!==t);renderTags();}
+function renderTags(){
+  const box=document.getElementById('tags-box');
+  const inp=document.getElementById('tag-input');
+  box.innerHTML='';
+  tags.forEach(t=>{
+    const s=document.createElement('span');s.className='tag';
+    s.innerHTML=`${t}<button type="button" onclick="removeTag('${t}')">×</button>`;
+    box.appendChild(s);
+  });
+  box.appendChild(inp);
+  document.getElementById('f-skills').value=tags.join(',');
+}
+
+function fileChosen(input){
+  resumeFile=input.files[0];
+  if(resumeFile) document.getElementById('fileName').textContent='✅ '+resumeFile.name;
+}
+function dragOver(e){e.preventDefault();document.getElementById('fileDrop').classList.add('dragover');}
+function dropFile(e){
+  e.preventDefault();
+  document.getElementById('fileDrop').classList.remove('dragover');
+  resumeFile=e.dataTransfer.files[0];
+  if(resumeFile) document.getElementById('fileName').textContent='✅ '+resumeFile.name;
+}
+
+async function submitResume() {
+  if(!document.getElementById('f-agree').checked){showErr('Please accept the Terms of Use.');return;}
+  const pass=document.getElementById('f-pass').value;
+  if(pass&&pass.length<8){showErr('Password must be at least 8 characters.');return;}
+  hideErr();
+
+  const avail = ['remote','freelance','full-time','onsite','part-time']
+    .filter((_,i)=>document.querySelectorAll('.checkbox-group input')[i].checked)
+    .join(', ');
+
+  const profile = {
+    id: Date.now().toString(36),
+    name: document.getElementById('f-name').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    phone: document.getElementById('f-phone').value.trim(),
+    linkedin: document.getElementById('f-linkedin').value.trim(),
+    role: document.getElementById('f-role').value.trim(),
+    company: document.getElementById('f-company').value.trim(),
+    location: document.getElementById('f-location').value.trim(),
+    exp: document.getElementById('f-exp').value,
+    domain: document.getElementById('f-domain').value,
+    tech: tags,
+    summary: document.getElementById('f-summary').value.trim(),
+    availability: avail,
+    open: true,
+    submittedAt: new Date().toISOString(),
+    initials: document.getElementById('f-name').value.trim().split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase()
+  };
+
+  try {
+    const fd = new FormData();
+    fd.append('profile', JSON.stringify(profile));
+    if(resumeFile) fd.append('pdf', resumeFile);
+    const r = await fetch(`${API}/submit`, { method:'POST', body: fd, signal: AbortSignal.timeout(10000) });
+    if(!r.ok) throw new Error('Server error');
+  } catch {
+    // Save locally as fallback
+    const key='ttp_submissions';
+    const arr=JSON.parse(localStorage.getItem(key)||'[]');
+    arr.push(profile);
+    localStorage.setItem(key, JSON.stringify(arr));
+  }
+
+  document.getElementById('progress').style.width='100%';
+  ['step1','step2','step3'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('successCard').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showErr(m){const e=document.getElementById('error-msg');e.textContent=m;e.style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
+function hideErr(){document.getElementById('error-msg').style.display='none';}
+</script>
+</body>
+</html>
