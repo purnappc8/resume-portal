@@ -68,7 +68,7 @@ function getBody(req) {
 // ── CORS headers ─────────────────────────────────────────────────────────────
 function setCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
@@ -223,6 +223,45 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
+
+  // ── POST /jobs (employer posts a job) ────────────────────────────────────
+  if (req.method === 'POST' && url === '/jobs') {
+    if (!data.title || !data.company) return json(res, 400, { error: 'title and company are required.' });
+    const jobs = readJson('jobs.json', []);
+    const job = {
+      id:          data.id || 'portal_' + Date.now().toString(36),
+      title:       data.title,
+      company:     data.company,
+      location:    data.location    || 'Remote',
+      type:        data.type        || 'Freelance',
+      salary:      data.salary      || '',
+      experience:  data.experience  || '',
+      skills:      data.skills      || [],
+      description: data.description || '',
+      email:       data.email       || '',
+      applyUrl:    data.applyUrl    || '',
+      source:      'TechTalent Portal',
+      postedBy:    data.postedBy    || 'anonymous',
+      postedAt:    data.postedAt    || new Date().toISOString()
+    };
+    jobs.unshift(job);          // newest first
+    writeJson('jobs.json', jobs);
+    console.log(`  → Job posted: ${job.title} by ${job.company}`);
+    return json(res, 201, { ok: true, id: job.id });
+  }
+
+  // ── DELETE /jobs/:id ───────────────────────────────────────────────────────
+  if (req.method === 'DELETE' && url.startsWith('/jobs/')) {
+    const jobId = url.split('/jobs/')[1];
+    const jobs  = readJson('jobs.json', []);
+    const idx   = jobs.findIndex(j => j.id === jobId);
+    if (idx < 0) return json(res, 404, { error: 'Job not found.' });
+    jobs.splice(idx, 1);
+    writeJson('jobs.json', jobs);
+    console.log(`  → Job deleted: ${jobId}`);
+    return json(res, 200, { ok: true });
+  }
+
   // ── 404 ───────────────────────────────────────────────────────────────────
   json(res, 404, { error: 'Not found' });
 });
@@ -241,6 +280,8 @@ server.listen(PORT, '127.0.0.1', () => {
   console.log('  POST /login           — Login');
   console.log('  POST /submit          — Submit resume/profile');
   console.log('  POST /applied         — Track job application');
+  console.log('  POST /jobs            — Post a new job listing');
+  console.log('  DELETE /jobs/:id      — Remove a job listing');
   console.log('  POST /contact         — Recruiter contact form');
   console.log('  GET  /stats           — Portal statistics\n');
   console.log('Press Ctrl+C to stop.\n');

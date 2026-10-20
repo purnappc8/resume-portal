@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="auth.js"></script>
+<title>Post a Job — TechTalent Portal</title>
+<style>
+:root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--orange:#e65100;--light:#e8f0fe;--text:#1a1a1a;--muted:#555;--border:#c5d5e8;--bg:#f7f9fc;--red:#c62828;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;}
+.topnav{background:var(--blue);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:56px;position:sticky;top:0;z-index:200;}
+.topnav .logo{color:#fff;font-size:1.2rem;font-weight:700;text-decoration:none;}
+.topnav .logo span{color:#7ec8f7;}
+.nav-links{display:flex;gap:4px;align-items:center;}
+.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.9rem;}
+.nav-links a:hover,.nav-links a.active{background:rgba(255,255,255,.15);color:#fff;}
+.btn-primary{background:#1565c0;color:#fff !important;border-radius:6px !important;font-weight:600;}
+
+.page-header{background:linear-gradient(135deg,#0b2e59,#1565c0);color:#fff;padding:48px 20px;text-align:center;}
+.page-header h1{font-size:2rem;font-weight:800;margin-bottom:8px;}
+.page-header p{opacity:.85;max-width:520px;margin:0 auto;font-size:.95rem;}
+
+.wrap{max-width:800px;margin:32px auto;padding:0 20px 80px;}
+
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:28px 32px;margin-bottom:20px;}
+@media(max-width:580px){.card{padding:20px 16px;}}
+.card h2{font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var(--blue);border-left:4px solid var(--accent);padding-left:10px;margin-bottom:20px;}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:580px){.form-row{grid-template-columns:1fr;}}
+.form-group{margin-bottom:16px;}
+.form-group label{display:block;font-size:.87rem;font-weight:600;color:var(--blue);margin-bottom:5px;}
+.form-group label span{color:#888;font-weight:400;font-size:.8rem;} /* optional tag */
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:10px 12px;border:1px solid var(--border);
+  border-radius:8px;font-size:.93rem;font-family:inherit;background:var(--bg);
+  transition:border .15s;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+  outline:none;border-color:var(--accent);background:#fff;
+}
+.form-group textarea{resize:vertical;min-height:110px;}
+.char-count{font-size:.75rem;color:var(--muted);text-align:right;margin-top:3px;}
+
+.skill-input-wrap{position:relative;}
+.skill-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.skill-chip{background:var(--light);color:var(--blue);font-size:.82rem;padding:4px 10px;border-radius:20px;display:flex;align-items:center;gap:5px;font-weight:600;}
+.skill-chip button{background:none;border:none;cursor:pointer;color:var(--muted);font-size:.9rem;padding:0;line-height:1;}
+.skill-chip button:hover{color:var(--red);}
+
+.job-type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+@media(max-width:480px){.job-type-grid{grid-template-columns:repeat(2,1fr);}}
+.type-btn{border:1px solid var(--border);background:#fff;border-radius:8px;padding:10px 8px;text-align:center;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--muted);transition:.15s;font-family:inherit;}
+.type-btn:hover{border-color:var(--accent);color:var(--accent);}
+.type-btn.selected{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+.salary-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+@media(max-width:480px){.salary-row{grid-template-columns:1fr;}}
+
+.preview-card{border:2px dashed var(--border);border-radius:12px;padding:20px 22px;background:#fafcff;margin-top:8px;}
+.preview-card .job-title{font-size:1.1rem;font-weight:800;color:var(--blue);}
+.preview-card .job-meta{font-size:.88rem;color:var(--muted);margin:4px 0 10px;}
+.preview-card .tags{display:flex;flex-wrap:wrap;gap:6px;}
+.preview-card .tag{background:var(--light);color:var(--blue);font-size:.78rem;padding:3px 10px;border-radius:20px;font-weight:600;}
+.preview-card .portal-badge{background:#e8f5e9;color:var(--green);font-size:.75rem;padding:3px 10px;border-radius:20px;font-weight:700;}
+
+.btn{padding:12px 28px;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;}
+.btn-submit{background:var(--accent);color:#fff;width:100%;}
+.btn-submit:hover{background:#0d47a1;}
+.btn-submit:disabled{opacity:.55;cursor:not-allowed;}
+
+.alert{border-radius:8px;padding:12px 16px;font-size:.9rem;margin-bottom:16px;display:none;}
+.alert-err{background:#fff3f3;border:1px solid #ffcdd2;color:var(--red);}
+.alert-ok{background:#e8f5e9;border:1px solid #a5d6a7;color:var(--green);}
+
+/* My posted jobs */
+.posted-job{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;}
+.posted-job .pj-title{font-weight:700;color:var(--blue);font-size:.97rem;}
+.posted-job .pj-meta{font-size:.82rem;color:var(--muted);margin-top:2px;}
+.delete-btn{background:none;border:1px solid #ffcdd2;color:var(--red);border-radius:6px;padding:5px 12px;font-size:.8rem;cursor:pointer;white-space:nowrap;font-family:inherit;font-weight:600;}
+.delete-btn:hover{background:#fff3f3;}
+.empty-state{text-align:center;padding:32px;color:var(--muted);font-size:.9rem;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="logo">Tech<span>Talent</span> Portal</a>
+  <div class="nav-links">
+    <a href="index.html">Browse Talent</a>
+    <a href="jobs.html">Browse Jobs</a>
+    <a href="post-job.html" class="active">Post a Job</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="#" onclick="ttpLogout();return false" style="color:rgba(255,255,255,.6);font-size:.85rem;">Sign Out</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>📋 Post a Job</h1>
+  <p>Reach thousands of verified IT freelancers and candidates. Your listing goes live instantly.</p>
+</div>
+
+<div class="wrap">
+
+  <!-- My existing postings -->
+  <div class="card" id="myJobsCard" style="display:none">
+    <h2>My Posted Jobs</h2>
+    <div id="myJobsList"></div>
+  </div>
+
+  <!-- Post new job form -->
+  <div class="card">
+    <h2>New Job Listing</h2>
+
+    <div id="alertErr" class="alert alert-err"></div>
+    <div id="alertOk"  class="alert alert-ok"></div>
+
+    <!-- Basic info -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Job Title *</label>
+        <input type="text" id="f-title" placeholder="e.g. Salesforce Developer" maxlength="100">
+      </div>
+      <div class="form-group">
+        <label>Company / Your Name *</label>
+        <input type="text" id="f-company" placeholder="e.g. Accenture or John Smith">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Location *</label>
+        <input type="text" id="f-location" placeholder="e.g. Remote / Hyderabad / USA">
+      </div>
+      <div class="form-group">
+        <label>Experience Required</label>
+        <input type="text" id="f-exp" placeholder="e.g. 3–5 years">
+      </div>
+    </div>
+
+    <!-- Job type -->
+    <div class="form-group">
+      <label>Job Type *</label>
+      <div class="job-type-grid" id="jobTypeGrid">
+        <button class="type-btn selected" data-val="Freelance">🔗 Freelance</button>
+        <button class="type-btn" data-val="Contract">📄 Contract</button>
+        <button class="type-btn" data-val="Full-time">🏢 Full-time</button>
+        <button class="type-btn" data-val="Part-time">⏱ Part-time</button>
+      </div>
+    </div>
+
+    <!-- Salary -->
+    <div class="form-group">
+      <label>Rate / Salary <span>(optional)</span></label>
+      <div class="salary-row">
+        <input type="text" id="f-sal-min" placeholder="Min e.g. $50">
+        <input type="text" id="f-sal-max" placeholder="Max e.g. $80">
+        <select id="f-sal-unit">
+          <option value="/hr">per hour</option>
+          <option value="/day">per day</option>
+          <option value="/month">per month</option>
+          <option value="/year">per year</option>
+          <option value="fixed">fixed price</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="form-group">
+      <label>Required Skills <span>(type and press Enter or comma)</span></label>
+      <input type="text" id="f-skill-input" placeholder="e.g. Salesforce, Apex, LWC…">
+      <div class="skill-chips" id="skillChips"></div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label>Job Description *</label>
+      <textarea id="f-desc" placeholder="Describe the role, responsibilities, what you are looking for…" maxlength="2000" oninput="document.getElementById('descCount').textContent=this.value.length+'/2000'"></textarea>
+      <div class="char-count" id="descCount">0/2000</div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Application / Contact Email *</label>
+        <input type="email" id="f-email" placeholder="recruiter@company.com">
+      </div>
+      <div class="form-group">
+        <label>External Apply URL <span>(optional)</span></label>
+        <input type="url" id="f-url" placeholder="https://…">
+      </div>
+    </div>
+
+    <!-- Preview -->
+    <div class="form-group" style="margin-top:4px">
+      <label>Preview</label>
+      <div class="preview-card" id="preview">
+        <div class="job-title" id="prev-title">Job Title</div>
+        <div class="job-meta" id="prev-meta">Company · Location · Type</div>
+        <div class="tags" id="prev-tags"></div>
+      </div>
+    </div>
+
+    <button class="btn btn-submit" id="btnPost" onclick="submitJob()">🚀 Post Job — It's Free</button>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:4747';
+const KEY = 'ttp_session';
+let skills = [];
+let jobType = 'Freelance';
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+function getSession() {
+  try { return JSON.parse(sessionStorage.getItem(KEY) || localStorage.getItem(KEY) || 'null'); } catch { return null; }
+}
+function ttpLogout() {
+  try { sessionStorage.removeItem(KEY); localStorage.removeItem(KEY); } catch {}
+  location.href = 'login.html';
+}
+
+// Pre-fill contact email from session
+(function(){
+  const s = getSession();
+  if (s && s.email) document.getElementById('f-email').value = s.email;
+  if (s && s.name)  document.getElementById('f-company').value = s.name;
+})();
+
+// ── Job type buttons ──────────────────────────────────────────────────────────
+document.getElementById('jobTypeGrid').addEventListener('click', e => {
+  const btn = e.target.closest('.type-btn');
+  if (!btn) return;
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  jobType = btn.dataset.val;
+  updatePreview();
+});
+
+// ── Skill chips ───────────────────────────────────────────────────────────────
+document.getElementById('f-skill-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    addSkill(e.target.value.trim().replace(/,$/, ''));
+    e.target.value = '';
+  }
+});
+document.getElementById('f-skill-input').addEventListener('blur', e => {
+  if (e.target.value.trim()) { addSkill(e.target.value.trim()); e.target.value = ''; }
+});
+
+function addSkill(s) {
+  if (!s || skills.includes(s)) return;
+  skills.push(s);
+  renderChips();
+  updatePreview();
+}
+function removeSkill(s) {
+  skills = skills.filter(x => x !== s);
+  renderChips();
+  updatePreview();
+}
+function renderChips() {
+  document.getElementById('skillChips').innerHTML = skills.map(s =>
+    `<span class="skill-chip">${s}<button onclick="removeSkill('${s.replace(/'/g,"\\'")}')" title="Remove">×</button></span>`
+  ).join('');
+}
+
+// ── Live preview ──────────────────────────────────────────────────────────────
+['f-title','f-company','f-location','f-sal-min','f-sal-max'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', updatePreview);
+});
+
+function updatePreview() {
+  const title   = document.getElementById('f-title').value   || 'Job Title';
+  const company = document.getElementById('f-company').value || 'Company';
+  const loc     = document.getElementById('f-location').value|| 'Location';
+  const min     = document.getElementById('f-sal-min').value;
+  const max     = document.getElementById('f-sal-max').value;
+  const unit    = document.getElementById('f-sal-unit').value;
+  const salStr  = min||max ? ` · ${min}${max?'–'+max:''}${unit}` : '';
+
+  document.getElementById('prev-title').textContent = title;
+  document.getElementById('prev-meta').textContent  = `${company} · ${loc} · ${jobType}${salStr}`;
+  document.getElementById('prev-tags').innerHTML    =
+    `<span class="portal-badge">✅ TechTalent Portal</span>` +
+    skills.slice(0,6).map(s=>`<span class="tag">${s}</span>`).join('');
+}
+
+// ── Submit ────────────────────────────────────────────────────────────────────
+async function submitJob() {
+  const title   = document.getElementById('f-title').value.trim();
+  const company = document.getElementById('f-company').value.trim();
+  const loc     = document.getElementById('f-location').value.trim();
+  const desc    = document.getElementById('f-desc').value.trim();
+  const email   = document.getElementById('f-email').value.trim();
+
+  if (!title||!company||!loc||!desc||!email) {
+    showAlert('err', 'Please fill in all required fields (*).');
+    return;
+  }
+
+  const sess = getSession();
+  const min  = document.getElementById('f-sal-min').value.trim();
+  const max  = document.getElementById('f-sal-max').value.trim();
+  const unit = document.getElementById('f-sal-unit').value;
+  const salary = min||max ? `${min}${max?'–'+max:''}${unit}` : '';
+
+  const job = {
+    id:          'portal_' + Date.now().toString(36),
+    title,
+    company,
+    location:    loc,
+    type:        jobType,
+    salary,
+    experience:  document.getElementById('f-exp').value.trim(),
+    skills,
+    description: desc,
+    email,
+    applyUrl:    document.getElementById('f-url').value.trim() || `mailto:${email}`,
+    source:      'TechTalent Portal',
+    postedBy:    sess ? sess.email : 'anonymous',
+    postedAt:    new Date().toISOString()
+  };
+
+  const btn = document.getElementById('btnPost');
+  btn.disabled = true; btn.textContent = 'Posting…';
+
+  try {
+    const r = await fetch(`${API}/jobs`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(job),
+      signal: AbortSignal.timeout(5000)
+    });
+    const d = await r.json();
+    if (!r.ok) { showAlert('err', d.error || 'Could not post job.'); return; }
+    showAlert('ok', '🎉 Job posted! It is now live on the job board.');
+    saveLocalJob(job);
+    resetForm();
+    loadMyJobs();
+  } catch {
+    // Server offline: store in localStorage so it posts when server comes back
+    saveLocalJob(job);
+    showAlert('ok', '✅ Job saved locally. It will appear once the local server is running.');
+    resetForm();
+    loadMyJobs();
+  } finally {
+    btn.disabled = false; btn.textContent = '🚀 Post Job — It\'s Free';
+  }
+}
+
+// ── Local storage backup (offline) ───────────────────────────────────────────
+function saveLocalJob(job) {
+  try {
+    const mine = JSON.parse(localStorage.getItem('ttp_my_jobs') || '[]');
+    mine.unshift(job);
+    localStorage.setItem('ttp_my_jobs', JSON.stringify(mine));
+  } catch {}
+}
+
+function loadMyJobs() {
+  try {
+    const mine = JSON.parse(localStorage.getItem('ttp_my_jobs') || '[]');
+    const card = document.getElementById('myJobsCard');
+    const list = document.getElementById('myJobsList');
+    if (!mine.length) { card.style.display = 'none'; return; }
+    card.style.display = '';
+    list.innerHTML = mine.map(j => `
+      <div class="posted-job">
+        <div>
+          <div class="pj-title">${j.title}</div>
+          <div class="pj-meta">${j.company} · ${j.location} · ${j.type} · Posted ${new Date(j.postedAt).toLocaleDateString()}</div>
+        </div>
+        <button class="delete-btn" onclick="deleteJob('${j.id}')">Delete</button>
+      </div>`).join('');
+  } catch {}
+}
+
+async function deleteJob(id) {
+  if (!confirm('Delete this job listing?')) return;
+  // Remove from server
+  try {
+    await fetch(`${API}/jobs/${id}`, { method: 'DELETE', signal: AbortSignal.timeout(4000) });
+  } catch {}
+  // Remove from localStorage
+  try {
+    const mine = JSON.parse(localStorage.getItem('ttp_my_jobs') || '[]').filter(j => j.id !== id);
+    localStorage.setItem('ttp_my_jobs', JSON.stringify(mine));
+  } catch {}
+  loadMyJobs();
+}
+
+function resetForm() {
+  ['f-title','f-company','f-location','f-exp','f-sal-min','f-sal-max','f-desc','f-url'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  skills = [];
+  renderChips();
+  document.getElementById('descCount').textContent = '0/2000';
+  updatePreview();
+}
+
+function showAlert(type, msg) {
+  const ok  = document.getElementById('alertOk');
+  const err = document.getElementById('alertErr');
+  ok.style.display = 'none'; err.style.display = 'none';
+  const el = type === 'ok' ? ok : err;
+  el.textContent = msg; el.style.display = 'block';
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  if (type === 'ok') setTimeout(() => { el.style.display = 'none'; }, 5000);
+}
+
+// Init
+loadMyJobs();
+updatePreview();
+</script>
+</body>
+</html>

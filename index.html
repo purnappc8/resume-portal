@@ -165,13 +165,14 @@ footer a { color: rgba(255,255,255,.9); }
 <!-- NAV -->
 <nav class="topnav">
   <a href="index.html" class="logo">Tech<span>Talent</span> Portal</a>
-  <div class="nav-links">
+    <div class="nav-links">
     <a href="index.html" class="active">Browse Talent</a>
     <a href="jobs.html">Browse Jobs</a>
     <a href="submit.html">Post Resume</a>
+    <a href="post-job.html">Post a Job</a>
     <a href="login.html" id="navSignupBtn" class="btn-outline" style="border:1px solid rgba(255,255,255,.5);border-radius:6px">Sign Up</a>
     <a href="login.html" class="btn-primary" id="navAuthBtn">Sign In</a>
-</div>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -522,17 +523,6 @@ async function sendContact() {
 document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if(e.target===o) { closeModal(); closeContactModal(); } }));
 
 loadProfiles();
-</script>
-
-<script>
-(function(){
-  var sess; try{ sess=JSON.parse(sessionStorage.getItem('ttp_session')||localStorage.getItem('ttp_session')||'null'); }catch{}
-  var btn=document.getElementById('navAuthBtn');
-  if(btn && sess && sess.token && sess.token!=='guest'){
-    btn.textContent='My Dashboard';
-    btn.href='dashboard.html';
-  }
-})();
 </script>
 </body>
 </html>
