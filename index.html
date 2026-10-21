@@ -170,8 +170,15 @@ footer a { color: rgba(255,255,255,.9); }
     <a href="jobs.html">Browse Jobs</a>
     <a href="submit.html">Post Resume</a>
     <a href="post-job.html">Post a Job</a>
-    <a href="login.html" id="navSignupBtn" class="btn-outline" style="border:1px solid rgba(255,255,255,.5);border-radius:6px">Sign Up</a>
-    <a href="login.html" class="btn-primary" id="navAuthBtn">Sign In</a>
+    <span id="navLoggedOut" style="display:flex;gap:4px;align-items:center">
+      <a href="login.html" class="btn-outline" style="border:1px solid rgba(255,255,255,.5);border-radius:6px">Sign Up</a>
+      <a href="login.html" class="btn-primary">Sign In</a>
+    </span>
+    <span id="navLoggedIn" style="display:none;gap:4px;align-items:center">
+      <span style="color:rgba(255,255,255,.85);font-size:.9rem">Hi, <b id="navUserName">User</b></span>
+      <a href="dashboard.html" style="color:rgba(255,255,255,.8);text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.9rem">My Dashboard</a>
+      <a href="#" onclick="ttpLogout();return false" style="color:rgba(255,255,255,.7);text-decoration:none;padding:6px 10px;border-radius:4px;font-size:.85rem">Sign Out</a>
+    </span>
   </div>
 </nav>
 
@@ -197,16 +204,53 @@ footer a { color: rgba(255,255,255,.9); }
     <input type="text" id="searchInput" placeholder="🔍  Search by name, skill, role..." oninput="filterCards()">
     <select id="techFilter" onchange="filterCards()">
       <option value="">All Technologies</option>
-      <option>Salesforce</option>
-      <option>Java</option>
-      <option>Python</option>
-      <option>React / Vue / Angular</option>
-      <option>DevOps / Cloud</option>
-      <option>Data Science / ML</option>
-      <option>SAP</option>
-      <option>Oracle</option>
-      <option>.NET / C#</option>
-      <option>Mobile (iOS/Android)</option>
+      <optgroup label="CRM / ERP">
+        <option>Salesforce</option>
+        <option>SAP</option>
+        <option>Oracle</option>
+        <option>ServiceNow</option>
+        <option>Dynamics 365</option>
+        <option>HubSpot</option>
+        <option>Zoho</option>
+      </optgroup>
+      <optgroup label="Development">
+        <option>Java</option>
+        <option>Python</option>
+        <option>.NET / C#</option>
+        <option>Node.js</option>
+        <option>Go / Golang</option>
+        <option>Ruby on Rails</option>
+        <option>PHP / Laravel</option>
+      </optgroup>
+      <optgroup label="Frontend">
+        <option>React</option>
+        <option>Angular</option>
+        <option>Vue.js</option>
+        <option>TypeScript</option>
+      </optgroup>
+      <optgroup label="Cloud / DevOps">
+        <option>AWS</option>
+        <option>Azure</option>
+        <option>GCP</option>
+        <option>DevOps / CI-CD</option>
+        <option>Kubernetes / Docker</option>
+        <option>Terraform</option>
+      </optgroup>
+      <optgroup label="Data / AI">
+        <option>Data Science / ML</option>
+        <option>Data Engineering</option>
+        <option>Power BI / Tableau</option>
+        <option>Generative AI / LLM</option>
+      </optgroup>
+      <optgroup label="Mobile">
+        <option>iOS / Swift</option>
+        <option>Android / Kotlin</option>
+        <option>React Native / Flutter</option>
+      </optgroup>
+      <optgroup label="Testing / QA">
+        <option>Selenium / QA</option>
+        <option>Cypress / Playwright</option>
+      </optgroup>
     </select>
     <select id="expFilter" onchange="filterCards()">
       <option value="">Any Experience</option>
@@ -433,6 +477,34 @@ function sortCards(by) {
   renderCards(sorted);
 }
 
+// ── Session helpers (must match auth.js / login.html) ────────────────────────
+const SESSION_KEY = 'ttp_session';
+function getSession() {
+  try { const r = sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY); return r ? JSON.parse(r) : null; } catch { return null; }
+}
+function saveSession(data) {
+  const json = JSON.stringify(data);
+  try { sessionStorage.setItem(SESSION_KEY, json); localStorage.setItem(SESSION_KEY, json); } catch {}
+}
+function hashSimple(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+  return h.toString(16);
+}
+function ttpLogout() {
+  try { sessionStorage.removeItem(SESSION_KEY); localStorage.removeItem(SESSION_KEY); } catch {}
+  location.reload();
+}
+
+function updateNavForSession() {
+  const sess = getSession();
+  if (sess && sess.token) {
+    document.getElementById('navLoggedOut').style.display = 'none';
+    document.getElementById('navLoggedIn').style.display = 'flex';
+    document.getElementById('navUserName').textContent = sess.name || sess.email || 'User';
+  }
+}
+
 // ── Auth Modals ──────────────────────────────────────────────────────────────
 function openModal(tab) {
   switchTab(tab);
@@ -454,21 +526,29 @@ async function doSignup() {
   const pass=document.getElementById('su-pass').value;
   const role=document.getElementById('su-role').value;
   if(!name||!email||!pass){showError('Please fill all fields.');return;}
-  if(pass.length<8){showError('Password must be at least 8 characters.');return;}
+  if(pass.length<6){showError('Password must be at least 6 characters.');return;}
   try {
     const r = await fetch(`${API}/signup`, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({name,email,pass,role,createdAt:new Date().toISOString()}),
+      body: JSON.stringify({name,email,password:pass,role,createdAt:new Date().toISOString()}),
       signal: AbortSignal.timeout(5000)
     });
     const d = await r.json();
-    if(r.ok){ showSuccess('Account created! Welcome to TechTalent Portal.'); localStorage.setItem('ttp_user',JSON.stringify({name,email,role})); setTimeout(()=>{closeModal();},1800); }
-    else { showError(d.error||'Signup failed.'); }
+    if(r.ok){
+      saveSession({token: d.token || 'local_'+Date.now(), email, name, userId: d.userId});
+      showSuccess('Account created! Redirecting to your dashboard…');
+      setTimeout(()=>{ location.href='dashboard.html'; }, 1000);
+    } else { showError(d.error||'Signup failed.'); }
   } catch {
-    // Offline: save locally
-    localStorage.setItem('ttp_user', JSON.stringify({name,email,role}));
-    showSuccess('Account created (offline mode). You can now post your resume!');
-    setTimeout(closeModal, 1800);
+    // Offline fallback: store in localStorage
+    const users = JSON.parse(localStorage.getItem('ttp_users')||'[]');
+    if(users.find(u=>u.email===email)){ showError('Email already registered. Please sign in.'); return; }
+    const user = {id:'u_'+Date.now(), name, email, pwd: hashSimple(pass), role};
+    users.push(user);
+    localStorage.setItem('ttp_users', JSON.stringify(users));
+    saveSession({token:'offline_'+Date.now(), email, name, userId: user.id});
+    showSuccess('Account created! Redirecting to your dashboard…');
+    setTimeout(()=>{ location.href='dashboard.html'; }, 1000);
   }
 }
 
@@ -479,13 +559,25 @@ async function doLogin() {
   try {
     const r = await fetch(`${API}/login`, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({email,pass}), signal: AbortSignal.timeout(5000)
+      body: JSON.stringify({email, password:pass}), signal: AbortSignal.timeout(5000)
     });
     const d = await r.json();
-    if(r.ok){ localStorage.setItem('ttp_user',JSON.stringify(d.user)); showSuccess(`Welcome back, ${d.user.name}!`); setTimeout(closeModal,1500); }
-    else { showError(d.error||'Invalid credentials.'); }
+    if(r.ok){
+      saveSession({token: d.token || 'local_'+Date.now(), email, name: d.name||d.user?.name||email.split('@')[0], userId: d.userId||d.user?.id});
+      showSuccess(`Welcome back! Redirecting…`);
+      setTimeout(()=>{ location.href='dashboard.html'; }, 1000);
+    } else { showError(d.error||'Invalid email or password.'); }
   } catch {
-    showError('Could not reach server. Make sure the local API is running (see README).');
+    // Offline fallback
+    const users = JSON.parse(localStorage.getItem('ttp_users')||'[]');
+    const user = users.find(u=>u.email===email && u.pwd===hashSimple(pass));
+    if(user){
+      saveSession({token:'offline_'+Date.now(), email, name: user.name, userId: user.id});
+      showSuccess(`Welcome back, ${user.name}! Redirecting…`);
+      setTimeout(()=>{ location.href='dashboard.html'; }, 1000);
+    } else {
+      showError('Invalid email or password.');
+    }
   }
 }
 
@@ -522,6 +614,7 @@ async function sendContact() {
 // Close modals on overlay click
 document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if(e.target===o) { closeModal(); closeContactModal(); } }));
 
+updateNavForSession();
 loadProfiles();
 </script>
 </body>
