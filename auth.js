@@ -1,9 +1,11 @@
 /**
- * TechTalent Portal — Auth Guard
- * Include this script in any page that requires login.
- * Usage: <script src="auth.js"></script>  (place in <head> or early <body>)
- * Pages that are always public: index.html, jobs.html, profile.html, login.html,
- * submit.html (candidates can post a resume as a guest; signing in is optional)
+ * TechTalent Portal — Auth Guard + Nav Updater
+ * Include this script in any page.
+ * Usage: <script src="auth.js"></script>
+ *
+ * Public pages (no forced login):
+ *   index.html, jobs.html, profile.html, login.html, submit.html, resume-builder.html
+ * Protected pages: dashboard.html, post-job.html, and anything else
  */
 (function () {
   'use strict';
@@ -11,7 +13,6 @@
   const KEY = 'ttp_session';
   const API = 'http://localhost:4747';
 
-  // Returns the stored session object or null
   function getSession() {
     try {
       const raw = sessionStorage.getItem(KEY) || localStorage.getItem(KEY);
@@ -19,7 +20,6 @@
     } catch { return null; }
   }
 
-  // Store session (optionally persist across tabs with localStorage)
   function setSession(data, remember) {
     const json = JSON.stringify(data);
     try {
@@ -28,7 +28,6 @@
     } catch {}
   }
 
-  // Clear session (logout)
   function clearSession() {
     try {
       sessionStorage.removeItem(KEY);
@@ -36,22 +35,74 @@
     } catch {}
   }
 
-  // Redirect to login, preserving where the user wanted to go
   function requireLogin() {
     const here = encodeURIComponent(location.pathname + location.search);
     location.replace('login.html?next=' + here);
   }
 
-  // Expose helpers globally
-  window.TTP_AUTH = { getSession, setSession, clearSession, API };
+  // ── Update nav based on session ──────────────────────────────────────────
+  // Supports two nav patterns:
+  //  A) #navLoggedOut + #navLoggedIn + #navUserName  (index.html modal style)
+  //  B) #navUser single link                          (resume-builder etc.)
+  function updateNav() {
+    const sess = getSession();
+    const loggedOut = document.getElementById('navLoggedOut');
+    const loggedIn  = document.getElementById('navLoggedIn');
+    const userName  = document.getElementById('navUserName');
+    const navUser   = document.getElementById('navUser');
 
-  // ── GUARD: if this script runs on a protected page, block immediately ──
+    if (loggedOut && loggedIn) {
+      // Pattern A
+      if (sess && sess.token) {
+        loggedOut.style.display = 'none';
+        loggedIn.style.display  = 'flex';
+        if (userName) userName.textContent = (sess.name || sess.email || 'User').split(' ')[0];
+      } else {
+        loggedOut.style.display = 'flex';
+        loggedIn.style.display  = 'none';
+      }
+    } else if (navUser) {
+      // Pattern B
+      if (sess && sess.token) {
+        navUser.textContent = (sess.name || sess.email || 'User').split(' ')[0];
+        navUser.href = 'dashboard.html';
+        navUser.style.fontWeight = '700';
+        navUser.style.color = '#fff';
+      } else {
+        navUser.textContent = 'Sign In';
+        navUser.href = 'login.html?next=' + encodeURIComponent(location.pathname.split('/').pop() || 'index.html');
+      }
+    }
+  }
+
+  // Expose globally
+  window.TTP_AUTH = { getSession, setSession, clearSession, updateNav, API };
+
+  // Global logout used by inline onclick handlers
+  window.ttpLogout = function () {
+    clearSession();
+    location.href = 'index.html';
+  };
+
+  // ── Guard protected pages ────────────────────────────────────────────────
   const page = location.pathname.split('/').pop() || 'index.html';
-  const PUBLIC = ['index.html', 'jobs.html', 'profile.html', 'login.html', 'submit.html', ''];
+  const PUBLIC = [
+    'index.html', 'jobs.html', 'profile.html', 'login.html',
+    'submit.html', 'resume-builder.html', ''
+  ];
   if (!PUBLIC.includes(page)) {
     const sess = getSession();
     if (!sess || !sess.token) {
       requireLogin();
+      return;
     }
   }
+
+  // ── Update nav once DOM is ready ─────────────────────────────────────────
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateNav);
+  } else {
+    updateNav();
+  }
+
 })();
