@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resume Builder — TechTalent Portal</title>
+<style>
+:root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--light:#e8f0fe;--text:#1a1a1a;--muted:#666;--border:#c5d5e8;--bg:#f7f9fc;--red:#c62828;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;min-height:100vh;display:flex;flex-direction:column;}
+
+/* ── Nav ── */
+.topnav{background:var(--blue);display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:56px;gap:12px;}
+.topnav .logo{color:#fff;font-size:1.15rem;font-weight:800;text-decoration:none;white-space:nowrap;}
+.topnav .logo span{color:#7ec8f7;}
+.topnav-links{display:flex;gap:16px;align-items:center;}
+.topnav-links a{color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;white-space:nowrap;}
+.topnav-links a:hover{color:#fff;}
+.topnav-links a.active{color:#fff;font-weight:700;}
+
+/* ── Layout ── */
+.page-wrap{display:flex;flex:1;gap:0;min-height:0;}
+@media(max-width:900px){.page-wrap{flex-direction:column;}}
+
+/* ── Builder Panel ── */
+.builder{width:440px;min-width:340px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:24px 28px 40px;flex-shrink:0;}
+@media(max-width:900px){.builder{width:100%;border-right:none;border-bottom:1px solid var(--border);padding:18px 16px 24px;}}
+
+.section-head{display:flex;align-items:center;gap:8px;margin-bottom:14px;margin-top:22px;}
+.section-head:first-child{margin-top:0;}
+.section-head h2{font-size:1rem;font-weight:800;color:var(--blue);}
+.section-head .num{background:var(--accent);color:#fff;width:24px;height:24px;border-radius:50%;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+.fg{margin-bottom:12px;}
+.fg label{display:block;font-size:.82rem;font-weight:600;color:var(--blue);margin-bottom:4px;}
+.fg input,.fg textarea,.fg select{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;font-family:inherit;background:var(--bg);resize:vertical;transition:border .15s;}
+.fg input:focus,.fg textarea:focus,.fg select:focus{outline:none;border-color:var(--accent);background:#fff;}
+.fg textarea{min-height:70px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* Skills tags */
+.tag-wrap{display:flex;flex-wrap:wrap;gap:6px;min-height:36px;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);cursor:text;}
+.tag-wrap:focus-within{border-color:var(--accent);background:#fff;}
+.tag{background:var(--light);color:var(--accent);border-radius:6px;padding:3px 8px;font-size:.82rem;display:flex;align-items:center;gap:4px;}
+.tag button{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1rem;line-height:1;padding:0;}
+.tag-input{border:none;outline:none;background:none;font-size:.88rem;font-family:inherit;min-width:80px;flex:1;}
+
+/* Entry cards */
+.entries{display:flex;flex-direction:column;gap:8px;margin-bottom:8px;}
+.entry-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
+.entry-card-head{display:flex;justify-content:space-between;align-items:flex-start;}
+.entry-title{font-weight:700;font-size:.9rem;color:var(--blue);}
+.entry-sub{font-size:.82rem;color:var(--muted);}
+.entry-actions{display:flex;gap:6px;flex-shrink:0;}
+.btn-icon{background:none;border:1px solid var(--border);border-radius:6px;padding:3px 7px;cursor:pointer;font-size:.82rem;color:var(--muted);}
+.btn-icon:hover{background:var(--light);}
+
+.add-btn{width:100%;padding:9px;border:1.5px dashed var(--border);border-radius:8px;background:none;font-size:.88rem;color:var(--accent);cursor:pointer;font-family:inherit;font-weight:600;transition:.15s;}
+.add-btn:hover{background:var(--light);border-color:var(--accent);}
+
+/* Inline form */
+.inline-form{background:var(--bg);border:1px solid var(--accent);border-radius:10px;padding:14px;margin-top:8px;display:none;}
+.inline-form.open{display:block;}
+.inline-form-actions{display:flex;gap:8px;margin-top:10px;}
+.btn-save{background:var(--accent);color:#fff;border:none;border-radius:7px;padding:7px 16px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn-cancel{background:#fff;color:var(--muted);border:1px solid var(--border);border-radius:7px;padding:7px 14px;font-size:.88rem;cursor:pointer;font-family:inherit;}
+
+/* Action bar */
+.action-bar{margin-top:24px;display:flex;flex-direction:column;gap:10px;}
+.btn-primary{background:var(--accent);color:#fff;border:none;border-radius:9px;padding:12px;font-size:1rem;font-weight:700;cursor:pointer;width:100%;font-family:inherit;transition:.15s;}
+.btn-primary:hover{background:#0d47a1;}
+.btn-outline{background:#fff;color:var(--accent);border:1.5px solid var(--accent);border-radius:9px;padding:11px;font-size:.95rem;font-weight:700;cursor:pointer;width:100%;font-family:inherit;transition:.15s;}
+.btn-outline:hover{background:var(--light);}
+.btn-green{background:var(--green);color:#fff;border:none;border-radius:9px;padding:11px;font-size:.95rem;font-weight:700;cursor:pointer;width:100%;font-family:inherit;transition:.15s;}
+.btn-green:hover{background:#155f35;}
+
+/* ── Preview Panel ── */
+.preview-wrap{flex:1;overflow-y:auto;padding:24px 28px;background:#e8ecf0;}
+@media(max-width:900px){.preview-wrap{padding:16px 12px;}}
+
+.preview-a4{background:#fff;width:100%;max-width:700px;margin:0 auto;box-shadow:0 4px 32px rgba(0,0,0,.12);border-radius:4px;min-height:900px;padding:0;}
+
+/* ── RESUME TEMPLATE ── */
+#resume{padding:44px 48px;font-family:'Segoe UI',Arial,sans-serif;color:#1a1a1a;font-size:14px;line-height:1.55;}
+@media(max-width:600px){#resume{padding:28px 20px;}}
+
+.r-header{border-bottom:3px solid var(--accent);padding-bottom:16px;margin-bottom:18px;}
+.r-name{font-size:2rem;font-weight:900;color:var(--blue);line-height:1.1;}
+.r-title{font-size:1.1rem;color:var(--accent);font-weight:600;margin-top:3px;}
+.r-contact{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:8px;font-size:.82rem;color:var(--muted);}
+.r-contact a{color:var(--muted);text-decoration:none;}
+
+.r-section{margin-bottom:18px;}
+.r-section-title{font-size:.85rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:4px;margin-bottom:10px;}
+.r-summary{font-size:.92rem;color:#333;line-height:1.6;}
+
+.r-skills{display:flex;flex-wrap:wrap;gap:6px;}
+.r-skill{background:var(--light);color:var(--accent);border-radius:4px;padding:3px 10px;font-size:.82rem;font-weight:600;}
+
+.r-entry{margin-bottom:12px;}
+.r-entry-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.r-entry-title{font-weight:800;font-size:.95rem;color:var(--blue);}
+.r-entry-dates{font-size:.8rem;color:var(--muted);white-space:nowrap;flex-shrink:0;}
+.r-entry-sub{font-size:.87rem;color:var(--muted);margin-bottom:4px;}
+.r-entry-desc{font-size:.87rem;color:#333;white-space:pre-line;}
+.r-entry-desc ul{padding-left:18px;}
+
+/* ── Print ── */
+@media print{
+  .topnav,.builder,.preview-wrap>.preview-header,.action-bar{display:none!important;}
+  body{background:#fff;}
+  .page-wrap{display:block;}
+  .preview-wrap{padding:0;background:#fff;}
+  .preview-a4{box-shadow:none;max-width:100%;}
+  #resume{padding:20mm 18mm;}
+}
+
+/* Preview header */
+.preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.preview-header h3{font-size:1rem;font-weight:700;color:var(--blue);}
+.preview-btns{display:flex;gap:8px;}
+.pbtn{padding:7px 16px;border-radius:7px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:inherit;border:none;}
+.pbtn-outline{background:#fff;color:var(--accent);border:1.5px solid var(--accent);}
+.pbtn-solid{background:var(--accent);color:#fff;}
+
+.placeholder-text{color:#bbb;font-style:italic;}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:#333;color:#fff;padding:12px 20px;border-radius:10px;font-size:.9rem;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;}
+.toast.show{opacity:1;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="logo">Tech<span>Talent</span> Portal</a>
+  <div class="topnav-links">
+    <a href="index.html">Home</a>
+    <a href="jobs.html">Jobs</a>
+    <a href="resume-builder.html" class="active">Resume Builder</a>
+    <a href="submit.html">My Profile</a>
+    <a id="navUser" href="login.html">Sign In</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- ── LEFT: Builder Form ── -->
+  <div class="builder">
+
+    <!-- 1. Personal Info -->
+    <div class="section-head"><div class="num">1</div><h2>Personal Information</h2></div>
+    <div class="fg"><label>Full Name *</label><input id="f-name" placeholder="e.g. Purnachandar Padishala" oninput="render()"></div>
+    <div class="fg"><label>Professional Title</label><input id="f-title" placeholder="e.g. Salesforce Developer" oninput="render()"></div>
+    <div class="row2">
+      <div class="fg"><label>Email</label><input id="f-email" type="email" placeholder="you@example.com" oninput="render()"></div>
+      <div class="fg"><label>Phone</label><input id="f-phone" placeholder="+91 9876543210" oninput="render()"></div>
+    </div>
+    <div class="row2">
+      <div class="fg"><label>Location</label><input id="f-location" placeholder="Hyderabad, India" oninput="render()"></div>
+      <div class="fg"><label>LinkedIn URL</label><input id="f-linkedin" placeholder="linkedin.com/in/yourname" oninput="render()"></div>
+    </div>
+    <div class="fg"><label>GitHub / Portfolio</label><input id="f-github" placeholder="github.com/yourname" oninput="render()"></div>
+
+    <!-- 2. Summary -->
+    <div class="section-head"><div class="num">2</div><h2>Professional Summary</h2></div>
+    <div class="fg"><textarea id="f-summary" rows="4" placeholder="Write 2-3 sentences about your expertise, key achievements, and what you bring to the table..." oninput="render()"></textarea></div>
+
+    <!-- 3. Skills -->
+    <div class="section-head"><div class="num">3</div><h2>Skills</h2></div>
+    <div class="fg">
+      <label>Type a skill and press Enter</label>
+      <div class="tag-wrap" id="skillTagWrap" onclick="document.getElementById('skillInput').focus()">
+        <input class="tag-input" id="skillInput" placeholder="e.g. Salesforce, Apex, LWC…" onkeydown="handleSkillKey(event)">
+      </div>
+    </div>
+
+    <!-- 4. Experience -->
+    <div class="section-head"><div class="num">4</div><h2>Work Experience</h2></div>
+    <div class="entries" id="expEntries"></div>
+    <button class="add-btn" onclick="openForm('exp')">+ Add Experience</button>
+    <div class="inline-form" id="expForm">
+      <div class="fg"><label>Job Title *</label><input id="exp-title" placeholder="Salesforce Developer"></div>
+      <div class="fg"><label>Company *</label><input id="exp-company" placeholder="Accenture"></div>
+      <div class="row2">
+        <div class="fg"><label>Start</label><input id="exp-start" placeholder="Jun 2022"></div>
+        <div class="fg"><label>End</label><input id="exp-end" placeholder="Present"></div>
+      </div>
+      <div class="fg"><label>Description (use • for bullets)</label><textarea id="exp-desc" rows="4" placeholder="• Built Lightning Web Components for client portal&#10;• Automated workflows reducing manual effort by 40%"></textarea></div>
+      <div class="inline-form-actions">
+        <button class="btn-save" onclick="saveEntry('exp')">Save</button>
+        <button class="btn-cancel" onclick="closeForm('exp')">Cancel</button>
+      </div>
+    </div>
+
+    <!-- 5. Education -->
+    <div class="section-head"><div class="num">5</div><h2>Education</h2></div>
+    <div class="entries" id="eduEntries"></div>
+    <button class="add-btn" onclick="openForm('edu')">+ Add Education</button>
+    <div class="inline-form" id="eduForm">
+      <div class="fg"><label>Degree / Qualification *</label><input id="edu-degree" placeholder="B.Tech in Computer Science"></div>
+      <div class="fg"><label>Institution *</label><input id="edu-inst" placeholder="Osmania University"></div>
+      <div class="row2">
+        <div class="fg"><label>Start</label><input id="edu-start" placeholder="2016"></div>
+        <div class="fg"><label>End</label><input id="edu-end" placeholder="2020"></div>
+      </div>
+      <div class="fg"><label>Notes (optional)</label><input id="edu-notes" placeholder="CGPA 8.2 / First Class"></div>
+      <div class="inline-form-actions">
+        <button class="btn-save" onclick="saveEntry('edu')">Save</button>
+        <button class="btn-cancel" onclick="closeForm('edu')">Cancel</button>
+      </div>
+    </div>
+
+    <!-- 6. Certifications -->
+    <div class="section-head"><div class="num">6</div><h2>Certifications</h2></div>
+    <div class="entries" id="certEntries"></div>
+    <button class="add-btn" onclick="openForm('cert')">+ Add Certification</button>
+    <div class="inline-form" id="certForm">
+      <div class="fg"><label>Certification Name *</label><input id="cert-name" placeholder="Salesforce Certified Platform Developer I"></div>
+      <div class="row2">
+        <div class="fg"><label>Issuer</label><input id="cert-issuer" placeholder="Salesforce"></div>
+        <div class="fg"><label>Year</label><input id="cert-year" placeholder="2023"></div>
+      </div>
+      <div class="inline-form-actions">
+        <button class="btn-save" onclick="saveEntry('cert')">Save</button>
+        <button class="btn-cancel" onclick="closeForm('cert')">Cancel</button>
+      </div>
+    </div>
+
+    <!-- 7. Projects -->
+    <div class="section-head"><div class="num">7</div><h2>Projects <span style="font-size:.78rem;font-weight:400;color:var(--muted)">(optional)</span></h2></div>
+    <div class="entries" id="projEntries"></div>
+    <button class="add-btn" onclick="openForm('proj')">+ Add Project</button>
+    <div class="inline-form" id="projForm">
+      <div class="fg"><label>Project Name *</label><input id="proj-name" placeholder="TechTalent Portal"></div>
+      <div class="fg"><label>Tech Stack</label><input id="proj-tech" placeholder="Node.js, GitHub Pages, LinkedIn OAuth"></div>
+      <div class="fg"><label>Description</label><textarea id="proj-desc" rows="3" placeholder="Brief description of what you built and the impact"></textarea></div>
+      <div class="fg"><label>URL (optional)</label><input id="proj-url" placeholder="https://github.com/yourname/project"></div>
+      <div class="inline-form-actions">
+        <button class="btn-save" onclick="saveEntry('proj')">Save</button>
+        <button class="btn-cancel" onclick="closeForm('proj')">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="action-bar">
+      <button class="btn-primary" onclick="window.print()">⬇ Download PDF</button>
+      <button class="btn-green" onclick="saveToProfile()">☁ Save to My Profile</button>
+      <button class="btn-outline" onclick="clearAll()">✕ Start Over</button>
+    </div>
+  </div>
+
+  <!-- ── RIGHT: Live Preview ── -->
+  <div class="preview-wrap">
+    <div class="preview-header">
+      <h3>Live Preview</h3>
+      <div class="preview-btns">
+        <button class="pbtn pbtn-outline" onclick="copyText()">Copy Text</button>
+        <button class="pbtn pbtn-solid" onclick="window.print()">Print / PDF</button>
+      </div>
+    </div>
+    <div class="preview-a4">
+      <div id="resume">
+        <!-- rendered here by JS -->
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+const state = {
+  exp:  [],
+  edu:  [],
+  cert: [],
+  proj: [],
+  skills: []
+};
+let editIdx = { exp: -1, edu: -1, cert: -1, proj: -1 };
+
+// ── Nav: show user name ────────────────────────────────────────────────────
+try {
+  const u = JSON.parse(sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session') || 'null');
+  if (u) {
+    const nav = document.getElementById('navUser');
+    nav.textContent = u.name.split(' ')[0];
+    nav.href = 'dashboard.html';
+    // Pre-fill name/email
+    if (!document.getElementById('f-name').value) {
+      document.getElementById('f-name').value = u.name || '';
+      document.getElementById('f-email').value = u.email || '';
+    }
+  }
+} catch {}
+
+// ── Skills ────────────────────────────────────────────────────────────────
+function handleSkillKey(e) {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const val = e.target.value.trim().replace(/,$/, '');
+    if (val && !state.skills.includes(val)) {
+      state.skills.push(val);
+      renderTags();
+      render();
+    }
+    e.target.value = '';
+  } else if (e.key === 'Backspace' && !e.target.value && state.skills.length) {
+    state.skills.pop();
+    renderTags();
+    render();
+  }
+}
+function renderTags() {
+  const wrap = document.getElementById('skillTagWrap');
+  const input = document.getElementById('skillInput');
+  wrap.innerHTML = '';
+  state.skills.forEach((s, i) => {
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.innerHTML = `${esc(s)} <button onclick="removeSkill(${i})" title="Remove">×</button>`;
+    wrap.appendChild(tag);
+  });
+  wrap.appendChild(input);
+}
+function removeSkill(i) { state.skills.splice(i, 1); renderTags(); render(); }
+
+// ── Entry Forms ───────────────────────────────────────────────────────────
+function openForm(type, idx = -1) {
+  editIdx[type] = idx;
+  const f = document.getElementById(type + 'Form');
+  f.classList.add('open');
+  if (idx >= 0) {
+    const e = state[type][idx];
+    if (type === 'exp') {
+      set('exp-title', e.title); set('exp-company', e.company);
+      set('exp-start', e.start); set('exp-end', e.end); set('exp-desc', e.desc);
+    } else if (type === 'edu') {
+      set('edu-degree', e.degree); set('edu-inst', e.inst);
+      set('edu-start', e.start); set('edu-end', e.end); set('edu-notes', e.notes);
+    } else if (type === 'cert') {
+      set('cert-name', e.name); set('cert-issuer', e.issuer); set('cert-year', e.year);
+    } else if (type === 'proj') {
+      set('proj-name', e.name); set('proj-tech', e.tech);
+      set('proj-desc', e.desc); set('proj-url', e.url);
+    }
+  }
+  f.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function closeForm(type) {
+  document.getElementById(type + 'Form').classList.remove('open');
+  clearForm(type);
+  editIdx[type] = -1;
+}
+function clearForm(type) {
+  ['title','company','start','end','desc','degree','inst','notes','name','issuer','year','tech','url']
+    .forEach(k => { const el = document.getElementById(type + '-' + k); if(el) el.value = ''; });
+}
+function saveEntry(type) {
+  let entry;
+  if (type === 'exp') {
+    const title = get('exp-title'); if (!title) { alert('Job Title is required'); return; }
+    entry = { title, company: get('exp-company'), start: get('exp-start'), end: get('exp-end'), desc: get('exp-desc') };
+  } else if (type === 'edu') {
+    const degree = get('edu-degree'); if (!degree) { alert('Degree is required'); return; }
+    entry = { degree, inst: get('edu-inst'), start: get('edu-start'), end: get('edu-end'), notes: get('edu-notes') };
+  } else if (type === 'cert') {
+    const name = get('cert-name'); if (!name) { alert('Certification name is required'); return; }
+    entry = { name, issuer: get('cert-issuer'), year: get('cert-year') };
+  } else if (type === 'proj') {
+    const name = get('proj-name'); if (!name) { alert('Project name is required'); return; }
+    entry = { name, tech: get('proj-tech'), desc: get('proj-desc'), url: get('proj-url') };
+  }
+  if (editIdx[type] >= 0) state[type][editIdx[type]] = entry;
+  else state[type].push(entry);
+  closeForm(type);
+  renderEntries(type);
+  render();
+}
+function deleteEntry(type, i) { state[type].splice(i, 1); renderEntries(type); render(); }
+
+function renderEntries(type) {
+  const wrap = document.getElementById(type + 'Entries');
+  if (!state[type].length) { wrap.innerHTML = ''; return; }
+  wrap.innerHTML = state[type].map((e, i) => {
+    let title = '', sub = '';
+    if (type === 'exp')  { title = e.title; sub = [e.company, e.start && e.end ? e.start + ' – ' + e.end : e.start].filter(Boolean).join(' · '); }
+    if (type === 'edu')  { title = e.degree; sub = [e.inst, e.start && e.end ? e.start + ' – ' + e.end : e.start].filter(Boolean).join(' · '); }
+    if (type === 'cert') { title = e.name; sub = [e.issuer, e.year].filter(Boolean).join(' · '); }
+    if (type === 'proj') { title = e.name; sub = e.tech; }
+    return `<div class="entry-card">
+      <div class="entry-card-head">
+        <div><div class="entry-title">${esc(title)}</div>${sub ? `<div class="entry-sub">${esc(sub)}</div>` : ''}</div>
+        <div class="entry-actions">
+          <button class="btn-icon" onclick="openForm('${type}',${i})">✏</button>
+          <button class="btn-icon" onclick="deleteEntry('${type}',${i})">🗑</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Resume Render ─────────────────────────────────────────────────────────
+function render() {
+  const name     = get('f-name')     || '<span class="placeholder-text">Your Name</span>';
+  const title    = get('f-title')    || '';
+  const email    = get('f-email')    || '';
+  const phone    = get('f-phone')    || '';
+  const location = get('f-location') || '';
+  const linkedin = get('f-linkedin') || '';
+  const github   = get('f-github')   || '';
+  const summary  = get('f-summary')  || '';
+
+  const contact = [email, phone, location, linkedin, github]
+    .filter(Boolean)
+    .map(c => `<span>${esc(c)}</span>`)
+    .join('');
+
+  let html = `<div class="r-header">
+    <div class="r-name">${get('f-name') ? esc(get('f-name')) : '<span class="placeholder-text">Your Name</span>'}</div>
+    ${title ? `<div class="r-title">${esc(title)}</div>` : ''}
+    ${contact ? `<div class="r-contact">${contact}</div>` : ''}
+  </div>`;
+
+  if (summary) html += `<div class="r-section">
+    <div class="r-section-title">Professional Summary</div>
+    <div class="r-summary">${esc(summary)}</div>
+  </div>`;
+
+  if (state.skills.length) html += `<div class="r-section">
+    <div class="r-section-title">Skills</div>
+    <div class="r-skills">${state.skills.map(s => `<span class="r-skill">${esc(s)}</span>`).join('')}</div>
+  </div>`;
+
+  if (state.exp.length) html += `<div class="r-section">
+    <div class="r-section-title">Work Experience</div>
+    ${state.exp.map(e => `<div class="r-entry">
+      <div class="r-entry-head">
+        <div class="r-entry-title">${esc(e.title)}</div>
+        ${(e.start || e.end) ? `<div class="r-entry-dates">${esc([e.start,e.end].filter(Boolean).join(' – '))}</div>` : ''}
+      </div>
+      ${e.company ? `<div class="r-entry-sub">${esc(e.company)}</div>` : ''}
+      ${e.desc ? `<div class="r-entry-desc">${formatDesc(e.desc)}</div>` : ''}
+    </div>`).join('')}
+  </div>`;
+
+  if (state.edu.length) html += `<div class="r-section">
+    <div class="r-section-title">Education</div>
+    ${state.edu.map(e => `<div class="r-entry">
+      <div class="r-entry-head">
+        <div class="r-entry-title">${esc(e.degree)}</div>
+        ${(e.start || e.end) ? `<div class="r-entry-dates">${esc([e.start,e.end].filter(Boolean).join(' – '))}</div>` : ''}
+      </div>
+      ${e.inst ? `<div class="r-entry-sub">${esc(e.inst)}</div>` : ''}
+      ${e.notes ? `<div class="r-entry-desc">${esc(e.notes)}</div>` : ''}
+    </div>`).join('')}
+  </div>`;
+
+  if (state.cert.length) html += `<div class="r-section">
+    <div class="r-section-title">Certifications</div>
+    ${state.cert.map(e => `<div class="r-entry">
+      <div class="r-entry-head">
+        <div class="r-entry-title">${esc(e.name)}</div>
+        ${e.year ? `<div class="r-entry-dates">${esc(e.year)}</div>` : ''}
+      </div>
+      ${e.issuer ? `<div class="r-entry-sub">${esc(e.issuer)}</div>` : ''}
+    </div>`).join('')}
+  </div>`;
+
+  if (state.proj.length) html += `<div class="r-section">
+    <div class="r-section-title">Projects</div>
+    ${state.proj.map(e => `<div class="r-entry">
+      <div class="r-entry-head">
+        <div class="r-entry-title">${esc(e.name)}${e.url ? ` <a href="${esc(e.url)}" style="font-size:.8rem;font-weight:400;color:var(--accent)" target="_blank">↗</a>` : ''}</div>
+      </div>
+      ${e.tech ? `<div class="r-entry-sub">${esc(e.tech)}</div>` : ''}
+      ${e.desc ? `<div class="r-entry-desc">${esc(e.desc)}</div>` : ''}
+    </div>`).join('')}
+  </div>`;
+
+  document.getElementById('resume').innerHTML = html;
+  autosave();
+}
+
+function formatDesc(text) {
+  // Convert lines starting with • to list items, rest as paragraph
+  const lines = text.split('\n');
+  const bullets = lines.filter(l => l.trim().startsWith('•'));
+  const prose   = lines.filter(l => !l.trim().startsWith('•') && l.trim());
+  let out = '';
+  if (prose.length)   out += `<p>${esc(prose.join(' '))}</p>`;
+  if (bullets.length) out += `<ul>${bullets.map(l => `<li>${esc(l.trim().slice(1).trim())}</li>`).join('')}</ul>`;
+  return out || esc(text);
+}
+
+// ── Save to Profile ───────────────────────────────────────────────────────
+async function saveToProfile() {
+  const name = get('f-name');
+  if (!name) { toast('Please enter your name first.'); return; }
+  let user;
+  try { user = JSON.parse(sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session') || 'null'); } catch {}
+  if (!user) { toast('Sign in first to save your profile.'); setTimeout(() => location.href='login.html?next=resume-builder.html', 1500); return; }
+
+  const profile = {
+    id:       user.id || 'usr_' + Date.now().toString(36),
+    name:     get('f-name'),
+    title:    get('f-title'),
+    email:    get('f-email') || user.email,
+    phone:    get('f-phone'),
+    location: get('f-location'),
+    linkedin: get('f-linkedin'),
+    github:   get('f-github'),
+    summary:  get('f-summary'),
+    skills:   state.skills,
+    experience: state.exp,
+    education:  state.edu,
+    certs:      state.cert,
+    projects:   state.proj,
+    updatedAt: new Date().toISOString()
+  };
+
+  try {
+    const r = await fetch('http://localhost:4747/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(profile)
+    });
+    if (r.ok) { toast('✅ Profile saved successfully!'); }
+    else       { toast('Server error — profile saved locally.'); }
+  } catch {
+    toast('Server offline — profile saved in browser only.');
+  }
+  // Always save locally too
+  try { localStorage.setItem('ttp_builder_profile', JSON.stringify(profile)); } catch {}
+}
+
+// ── Autosave / Restore ────────────────────────────────────────────────────
+function autosave() {
+  try {
+    localStorage.setItem('ttp_builder_draft', JSON.stringify({
+      fields: {
+        name: get('f-name'), title: get('f-title'), email: get('f-email'),
+        phone: get('f-phone'), location: get('f-location'), linkedin: get('f-linkedin'),
+        github: get('f-github'), summary: get('f-summary')
+      },
+      skills: state.skills,
+      exp: state.exp, edu: state.edu, cert: state.cert, proj: state.proj
+    }));
+  } catch {}
+}
+function restoreDraft() {
+  try {
+    const d = JSON.parse(localStorage.getItem('ttp_builder_draft') || 'null');
+    if (!d) return;
+    const f = d.fields || {};
+    set('f-name', f.name); set('f-title', f.title); set('f-email', f.email);
+    set('f-phone', f.phone); set('f-location', f.location);
+    set('f-linkedin', f.linkedin); set('f-github', f.github); set('f-summary', f.summary);
+    state.skills = d.skills || [];
+    state.exp  = d.exp  || [];
+    state.edu  = d.edu  || [];
+    state.cert = d.cert || [];
+    state.proj = d.proj || [];
+    renderTags();
+    ['exp','edu','cert','proj'].forEach(t => renderEntries(t));
+    render();
+  } catch {}
+}
+
+// ── Utils ─────────────────────────────────────────────────────────────────
+function get(id) { const el=document.getElementById(id); return el ? el.value.trim() : ''; }
+function set(id, val) { const el=document.getElementById(id); if(el && val !== undefined) el.value = val || ''; }
+function esc(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+function clearAll() {
+  if (!confirm('Clear everything and start over?')) return;
+  ['f-name','f-title','f-email','f-phone','f-location','f-linkedin','f-github','f-summary'].forEach(id => set(id,''));
+  state.skills=[]; state.exp=[]; state.edu=[]; state.cert=[]; state.proj=[];
+  renderTags(); ['exp','edu','cert','proj'].forEach(t => renderEntries(t));
+  try { localStorage.removeItem('ttp_builder_draft'); } catch {}
+  render();
+}
+function copyText() {
+  const text = document.getElementById('resume').innerText;
+  navigator.clipboard.writeText(text).then(() => toast('Resume text copied!')).catch(() => toast('Copy failed — use Ctrl+A on the preview.'));
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────
+restoreDraft();
+if (!get('f-name') && !state.exp.length) render(); // show empty state
+</script>
+</body>
+</html>

@@ -11,6 +11,15 @@ const fs      = require('fs');
 const path    = require('path');
 const crypto  = require('crypto');
 
+// Load .env file if present (keeps secrets out of source code)
+const envFile = path.join(__dirname, '.env');
+if (fs.existsSync(envFile)) {
+  fs.readFileSync(envFile, 'utf8').split('\n').forEach(line => {
+    const [k, ...v] = line.trim().split('=');
+    if (k && !k.startsWith('#') && v.length) process.env[k.trim()] = v.join('=').trim();
+  });
+}
+
 // ── Config ───────────────────────────────────────────────────────────────────
 const PORT     = 4747;
 const DATA_DIR = process.env.DATA_DIR || path.join('E:\\', 'ResumePortal', 'data');
