@@ -1,4 +1,4 @@
-/**
+﻿/**
  * TechTalent Portal — Local Storage Server
  * Runs on your PC and stores all data in E:\ResumePortal\data\
  *
@@ -10,6 +10,7 @@ const http    = require('http');
 const fs      = require('fs');
 const path    = require('path');
 const crypto  = require('crypto');
+const { startAutoRefresh, readCache } = require('./job_aggregator');
 
 // Load .env file if present (keeps secrets out of source code)
 const envFile = path.join(__dirname, '.env');
@@ -120,9 +121,25 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, safe);
   }
 
-  // ── GET /jobs ─────────────────────────────────────────────────────────────
+  // -- GET /jobs: merge portal-posted + live aggregated jobs
   if (req.method === 'GET' && url === '/jobs') {
-    return json(res, 200, readJson('jobs.json'));
+    const portalJobs = readJson('jobs.json', []);
+    const liveJobs   = readCache(DATA_DIR);
+    const seen = new Set();
+    const merged = [...portalJobs, ...liveJobs].filter(j => {
+      const key = (j.url || j.id || '').split('?')[0];
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+    return json(res, 200, merged);
+  }
+
+  // -- GET /jobs/refresh: trigger on-demand re-fetch
+  if (req.method === 'GET' && url === '/jobs/refresh') {
+    const { aggregate } = require('./job_aggregator');
+    aggregate(DATA_DIR).catch(e => console.error('[JobAgg]', e.message));
+    return json(res, 202, { ok: true, message: 'Refresh started' });
   }
 
   // ── GET /applications ─────────────────────────────────────────────────────
@@ -437,6 +454,9 @@ server.listen(PORT, '127.0.0.1', () => {
     const a=readJson('applications.json',[]).length;
     console.log(`Current data: ${p} profiles, ${u} users, ${a} applications\n`);
   } catch {}
+
+  // Start background job aggregator (auto-fetches live jobs every 2h)
+  startAutoRefresh(DATA_DIR);
 });
 
 server.on('error', err => {

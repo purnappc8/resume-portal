@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -260,13 +260,18 @@ let user    = JSON.parse(localStorage.getItem('ttp_user')||'null');
 
 // ── Source colors/logos ──────────────────────────────────────────────────────
 const SRC_STYLE = {
-  Indeed:       {bg:'#2164f3',label:'IN'},
-  LinkedIn:     {bg:'#0a66c2',label:'Li'},
-  Upwork:       {bg:'#14a800',label:'Up'},
-  Freelancer:   {bg:'#0e4fac',label:'Fr'},
-  Toptal:       {bg:'#204ecf',label:'To'},
-  Guru:         {bg:'#f07c00',label:'Gu'},
-  PeoplePerHour:{bg:'#e8360e',label:'PP'},
+  Indeed:       {bg:'#2164f3', label:'IN'},
+  LinkedIn:     {bg:'#0a66c2', label:'Li'},
+  Upwork:       {bg:'#14a800', label:'Up'},
+  Freelancer:   {bg:'#0e4fac', label:'Fr'},
+  Toptal:       {bg:'#204ecf', label:'To'},
+  Guru:         {bg:'#f07c00', label:'Gu'},
+  PeoplePerHour:{bg:'#e8360e', label:'PP'},
+  RemoteOK:     {bg:'#01161e', label:'RO'},
+  Remotive:     {bg:'#0057a8', label:'Rm'},
+  Arbeitnow:    {bg:'#6200ea', label:'AN'},
+  TheMuse:      {bg:'#d81b60', label:'TM'},
+  Live:         {bg:'#1b8a4a', label:'LV'},
 };
 
 // ── Real jobs from Indeed (AI-imported Oct 2026) ────────────────────────────
@@ -302,11 +307,48 @@ const SEED_JOBS = [
 ];
 
 async function loadJobs() {
+  document.getElementById('resultsCount').textContent = 'Loading live jobs...';
+  let serverJobs = [];
   try {
-    const r = await fetch(`${API}/jobs`, {signal:AbortSignal.timeout(3000)});
-    const data = await r.json();
-    jobs = data.length ? data : SEED_JOBS;
-  } catch { jobs = SEED_JOBS; }
+    const r = await fetch(`${API}/jobs`, {signal:AbortSignal.timeout(6000)});
+    if (r.ok) {
+      const data = await r.json();
+      if (Array.isArray(data) && data.length) serverJobs = data;
+    }
+  } catch {}
+
+  if (serverJobs.length) {
+    // Merge: server already deduped; add any seed jobs not already in server list
+    const serverUrls = new Set(serverJobs.map(j => (j.url||'').split('?')[0]));
+    const seedOnly = SEED_JOBS.filter(j => !serverUrls.has((j.url||'').split('?')[0]));
+    jobs = [...serverJobs, ...seedOnly];
+
+    // Add source pills for new sources
+    const knownSrcs = new Set(['all','Indeed','LinkedIn','Upwork','Freelancer','Toptal','Guru','PeoplePerHour','ai']);
+    serverJobs.forEach(j => {
+      if (j.source && !knownSrcs.has(j.source)) {
+        knownSrcs.add(j.source);
+        if (!SRC_STYLE[j.source]) SRC_STYLE[j.source] = {bg:'#455a64', label: j.source.slice(0,2)};
+        const pills = document.getElementById('sourcePills');
+        if (pills && !document.querySelector('.source-pill[data-src="' + j.source + '"]')) {
+          const p = document.createElement('span');
+          p.className = 'source-pill'; p.dataset.src = j.source;
+          p.textContent = j.source;
+          p.onclick = function(){ filterSource(j.source, this); };
+          pills.appendChild(p);
+        }
+      }
+    });
+
+    // Banner update showing live count
+    const liveCount = serverJobs.filter(j => j.fetchedAt).length;
+    if (liveCount > 0) {
+      const hdr = document.querySelector('.page-header p');
+      if (hdr) hdr.innerHTML = '<b style="color:#7ec8f7">' + liveCount + ' live jobs</b> auto-fetched from RemoteOK, Remotive, Arbeitnow, Indeed RSS &amp; TheMuse &mdash; refreshes every 2h';
+    }
+  } else {
+    jobs = SEED_JOBS;
+  }
   updateDashBanner();
   renderJobs();
 }
