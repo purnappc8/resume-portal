@@ -62,6 +62,13 @@ section h2{font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var
 .btn-submit{background:var(--accent);color:#fff;}
 .btn-cancel{background:var(--bg);color:var(--muted);}
 .success-msg{background:#d4edda;color:var(--green);border-radius:8px;padding:10px;margin-bottom:12px;display:none;font-size:.9rem;}
+.error-msg{background:#fdecea;color:#c62828;border-radius:8px;padding:10px;margin-bottom:12px;display:none;font-size:.9rem;}
+.error-msg a{color:#1565c0;font-weight:600;}
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:900;max-width:calc(100vw - 32px);}
+.toast{display:flex;gap:10px;align-items:flex-start;background:#fff;border-left:5px solid var(--green);border-radius:10px;padding:14px 16px;box-shadow:0 6px 24px rgba(11,46,89,.22);font-size:.92rem;line-height:1.45;width:340px;max-width:100%;animation:toastIn .25s ease-out;}
+.toast b{color:var(--blue);}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.btn-submit[disabled]{opacity:.65;cursor:wait;}
 </style>
 </head>
 <body>
@@ -120,12 +127,13 @@ section h2{font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var
   <div class="modal">
     <h2>Contact Candidate</h2>
     <div id="c-success" class="success-msg"></div>
+    <div id="c-error" class="error-msg" role="alert"></div>
     <div class="form-group"><label>Your Name</label><input type="text" id="c-name" placeholder="Your name"></div>
     <div class="form-group"><label>Your Email</label><input type="email" id="c-email" placeholder="your@email.com"></div>
     <div class="form-group"><label>Company / Role</label><input type="text" id="c-co" placeholder="e.g. Infosys – Recruiter"></div>
     <div class="form-group"><label>Message</label><textarea id="c-msg" placeholder="Tell them about the opportunity…"></textarea></div>
     <div class="modal-btns">
-      <button class="btn-submit" onclick="sendContact()">Send</button>
+      <button class="btn-submit" onclick="sendContact()">Send Message</button>
       <button class="btn-cancel" onclick="closeContact()">Cancel</button>
     </div>
   </div>
@@ -226,20 +234,38 @@ function renderProfile(p) {
   window._profileName = p.name;
 }
 
-function openContact(){document.getElementById('contactModal').classList.add('open');}
+function openContact(){document.getElementById('c-error').style.display='none';document.getElementById('contactModal').classList.add('open');}
 function closeContact(){document.getElementById('contactModal').classList.remove('open');}
+function escH(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function showErr(html){const e=document.getElementById('c-error');e.innerHTML=html;e.style.display='block';}
 async function sendContact(){
   const name=document.getElementById('c-name').value.trim();
   const email=document.getElementById('c-email').value.trim();
+  const company=document.getElementById('c-co').value.trim();
   const msg=document.getElementById('c-msg').value.trim();
-  if(!name||!email||!msg){alert('Please fill name, email and message.');return;}
-  try{await fetch(`${API}/contact`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({from:{name,email,company:document.getElementById('c-co').value},target:window._profileId+'|'+window._profileName,message:msg,sentAt:new Date().toISOString()}),signal:AbortSignal.timeout(5000)});}catch{}
-  const s=document.getElementById('c-success');s.textContent='Message sent!';s.style.display='block';
-  setTimeout(closeContact,1800);
+  const target=window._profileId+'|'+window._profileName;
+  document.getElementById('c-error').style.display='none';
+  if(!name||!email||!msg){showErr('Please fill in your name, email and message.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showErr('Please enter a valid email so the candidate can reply.');return;}
+  const btn=document.querySelector('#contactModal .btn-submit');btn.disabled=true;btn.textContent='Sending…';
+  let ok=false;
+  try{const r=await fetch(`${API}/contact`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({from:{name,email,company},target,message:msg,sentAt:new Date().toISOString()}),signal:AbortSignal.timeout(5000)});ok=r.ok;}catch{}
+  btn.disabled=false;btn.textContent='Send Message';
+  if(ok){
+    closeContact();document.getElementById('c-msg').value='';
+    const t=document.createElement('div');t.className='toast';
+    t.innerHTML=`<span>✅</span><div><b>Message sent</b><br>${escH(window._profileName||'The candidate')} will get your message and can reply to ${escH(email)}.</div>`;
+    document.getElementById('toastWrap').appendChild(t);setTimeout(()=>t.remove(),5000);
+  }else{
+    const subject=encodeURIComponent(`Opportunity for ${window._profileName||'candidate'} (via TechTalent Portal)`);
+    const body=encodeURIComponent(`${msg}\n\n— ${name}${company?', '+company:''}\n${email}\n\nCandidate: ${target}`);
+    showErr(`⚠️ <b>Couldn't send right now</b> — your message wasn't delivered. <a href="mailto:purna.padishala@gmail.com?subject=${subject}&body=${body}">Send it by email instead</a>.`);
+  }
 }
 document.getElementById('contactModal').addEventListener('click',e=>{if(e.target===document.getElementById('contactModal'))closeContact();});
 
 loadProfile();
 </script>
+<div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
 </body>
 </html>

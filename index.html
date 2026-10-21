@@ -158,6 +158,36 @@ footer a { color: rgba(255,255,255,.9); }
 /* LOADING */
 .skeleton { background: linear-gradient(90deg, #e8eaf0 25%, #f0f2f5 50%, #e8eaf0 75%); background-size: 200%; animation: shimmer 1.5s infinite; border-radius: 8px; }
 @keyframes shimmer { 0%{background-position:200%} 100%{background-position:-200%} }
+.sk-card { pointer-events: none; }
+.sk-card:hover { box-shadow: none; border-color: var(--border); }
+.sk-avatar { width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0; }
+.sk-line { display: block; height: 12px; margin: 6px 0; }
+.sk-tag { display: inline-block; width: 70px; height: 22px; border-radius: 20px; }
+.sk-btn { display: inline-block; width: 104px; height: 32px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } html { scroll-behavior: auto !important; } }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Scroll target for "Hire Talent" (offset for sticky nav) */
+#profiles-section { scroll-margin-top: 64px; }
+
+/* Sample-profile marker */
+.sample-badge { position: absolute; top: 16px; right: 16px; background: #fff4e5; color: #8a5300; font-size: .75rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; border: 1px solid #f3d19c; }
+.sample-note { font-size: .82rem; color: var(--muted); }
+.sample-note a { color: var(--accent); font-weight: 600; }
+
+/* TOAST */
+.toast-wrap { position: fixed; bottom: 24px; right: 24px; z-index: 900; display: flex; flex-direction: column; gap: 10px; max-width: calc(100vw - 32px); }
+@media (max-width: 500px) { .toast-wrap { right: 16px; left: 16px; bottom: 16px; } }
+.toast { display: flex; gap: 10px; align-items: flex-start; background: #fff; color: var(--text); border-left: 5px solid var(--green); border-radius: 10px; padding: 14px 16px; box-shadow: 0 6px 24px rgba(11,46,89,.22); font-size: .92rem; line-height: 1.45; width: 340px; max-width: 100%; animation: toastIn .25s ease-out; }
+.toast.error { border-left-color: #c62828; }
+.toast .t-icon { font-size: 1.15rem; line-height: 1.2; }
+.toast .t-body { flex: 1; }
+.toast .t-title { font-weight: 700; color: var(--blue); }
+.toast .t-body a { color: var(--accent); font-weight: 600; }
+.toast .t-close { background: none; border: none; font-size: 1.1rem; color: var(--muted); cursor: pointer; line-height: 1; padding: 0 2px; }
+.toast.hide { opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s; }
+@keyframes toastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.btn-submit[disabled] { opacity: .65; cursor: wait; }
 </style>
 </head>
 <body>
@@ -187,8 +217,8 @@ footer a { color: rgba(255,255,255,.9); }
   <h1>Find Top <span>IT Talent</span><br>Across Every Technology</h1>
   <p>Salesforce · Java · Python · DevOps · Cloud · Data Science · SAP · React — all technologies, all roles, all experience levels.</p>
   <div class="hero-btns">
-    <a href="login.html?next=submit.html" class="btn-white">📄 Post Resume — Free Signup</a>
-    <a href="#profiles-section" onclick="event.preventDefault();document.getElementById('profiles-section').scrollIntoView({behavior:'smooth'})" class="btn-green">🔍 Browse Talent Free ↓</a>
+    <a href="submit.html" class="btn-white">📄 Post Your Resume — Free</a>
+    <a href="#profiles-section" onclick="goToTalent(event)" class="btn-green">🔍 Hire Talent — Free</a>
   </div>
   <div class="stats-row">
     <div class="stat"><div class="num" id="stat-profiles">0</div><div class="label">Active Profiles</div></div>
@@ -293,16 +323,18 @@ footer a { color: rgba(255,255,255,.9); }
   <!-- CARDS -->
   <main>
     <div class="results-header">
-      <h2 id="results-count"></h2>
+      <h2 id="results-count" aria-live="polite"><span class="skeleton sk-line" style="width:140px;height:18px" aria-hidden="true"></span><span class="sr-only">Loading profiles…</span></h2>
       <select class="sort-select" onchange="sortCards(this.value)">
         <option value="recent">Most Recent</option>
         <option value="exp">Most Experienced</option>
         <option value="name">Name A–Z</option>
       </select>
     </div>
-    <div class="resume-grid" id="resumeGrid">
-      <div class="resume-card" style="min-height:110px"><div class="skeleton" style="height:14px;width:55%;margin-bottom:10px"></div><div class="skeleton" style="height:11px;width:38%;margin-bottom:8px"></div><div class="skeleton" style="height:11px;width:72%"></div></div>
-      <div class="resume-card" style="min-height:110px"><div class="skeleton" style="height:14px;width:60%;margin-bottom:10px"></div><div class="skeleton" style="height:11px;width:42%;margin-bottom:8px"></div><div class="skeleton" style="height:11px;width:68%"></div></div>
+    <div class="resume-grid" id="resumeGrid" aria-busy="true">
+      <!-- Skeleton cards shown until profiles load; replaced by JS -->
+      <div class="resume-card sk-card" aria-hidden="true"><div class="card-top"><div class="skeleton sk-avatar"></div><div class="card-info"><div class="skeleton sk-line" style="width:45%;height:16px"></div><div class="skeleton sk-line" style="width:65%"></div><div class="skeleton sk-line" style="width:80%"></div></div></div><div class="card-tags"><span class="skeleton sk-tag"></span><span class="skeleton sk-tag"></span><span class="skeleton sk-tag"></span></div><div class="skeleton sk-line" style="width:92%;margin-top:12px"></div><div class="card-actions"><span class="skeleton sk-btn"></span><span class="skeleton sk-btn"></span></div></div>
+      <div class="resume-card sk-card" aria-hidden="true"><div class="card-top"><div class="skeleton sk-avatar"></div><div class="card-info"><div class="skeleton sk-line" style="width:38%;height:16px"></div><div class="skeleton sk-line" style="width:58%"></div><div class="skeleton sk-line" style="width:74%"></div></div></div><div class="card-tags"><span class="skeleton sk-tag"></span><span class="skeleton sk-tag"></span></div><div class="skeleton sk-line" style="width:86%;margin-top:12px"></div><div class="card-actions"><span class="skeleton sk-btn"></span><span class="skeleton sk-btn"></span></div></div>
+      <div class="resume-card sk-card" aria-hidden="true"><div class="card-top"><div class="skeleton sk-avatar"></div><div class="card-info"><div class="skeleton sk-line" style="width:50%;height:16px"></div><div class="skeleton sk-line" style="width:62%"></div><div class="skeleton sk-line" style="width:70%"></div></div></div><div class="card-tags"><span class="skeleton sk-tag"></span><span class="skeleton sk-tag"></span><span class="skeleton sk-tag"></span></div><div class="skeleton sk-line" style="width:90%;margin-top:12px"></div><div class="card-actions"><span class="skeleton sk-btn"></span><span class="skeleton sk-btn"></span></div></div>
     </div>
   </main>
 </div>
@@ -384,6 +416,8 @@ footer a { color: rgba(255,255,255,.9); }
   </div>
 </div>
 
+<div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
+
 <footer>
   © 2026 TechTalent Portal &nbsp;·&nbsp; Free for candidates and recruiters &nbsp;·&nbsp;
   <a href="submit.html">Post Resume</a> &nbsp;·&nbsp; <a href="mailto:purna.padishala@gmail.com">Contact Admin</a>
@@ -412,18 +446,43 @@ const SEED = [
   }
 ];
 
+// Illustrative sample profiles so the board isn't empty while real sign-ups grow.
+// They are clearly badged "Sample" in the UI and can't be contacted.
+// Once there are MIN_REAL_PROFILES real profiles, samples stop being shown.
+const MIN_REAL_PROFILES = 10;
+const SAMPLE_PROFILES = [
+  { id:'sample01', sample:true, name:'Ananya Rao', role:'Senior Java / Spring Boot Engineer', company:'Fintech product company', location:'Bengaluru, India', exp:'8 years', tech:['Java','Spring Boot','Kafka','AWS','Kubernetes / Docker'], availability:'Open to Remote & Contract', summary:'Builds high-throughput payment microservices. Event-driven design with Kafka, observability on AWS.' },
+  { id:'sample02', sample:true, name:'Daniel Hughes', role:'React & TypeScript Frontend Developer', company:'Freelance', location:'London, UK', exp:'6 years', tech:['React','TypeScript','Next.js','Node.js'], availability:'Freelance / Contract — Immediately', summary:'Design-system minded frontend engineer. Accessible, fast React apps for SaaS dashboards.' },
+  { id:'sample03', sample:true, name:'Priya Menon', role:'Data Scientist — NLP & GenAI', company:'Analytics consultancy', location:'Remote (India)', exp:'5 years', tech:['Python','Data Science / ML','Generative AI / LLM','PyTorch'], availability:'Remote, within 2 weeks', summary:'Ships RAG and classification models to production. Strong on evaluation and MLOps hygiene.' },
+  { id:'sample04', sample:true, name:'Marcus Chen', role:'DevOps / Platform Engineer', company:'Cloud consultancy', location:'Austin, USA', exp:'9 years', tech:['AWS','Terraform','Kubernetes / Docker','DevOps / CI-CD'], availability:'Freelance / Contract', summary:'Infrastructure-as-code, GitOps pipelines and cost-optimised EKS platforms for scale-ups.' },
+  { id:'sample05', sample:true, name:'Sofia Martínez', role:'SAP S/4HANA FICO Consultant', company:'Independent', location:'Madrid, Europe', exp:'11 years', tech:['SAP','S/4HANA','FICO'], availability:'Contract — within 1 month', summary:'Led four S/4HANA finance migrations end to end, from blueprint through hypercare.' },
+  { id:'sample06', sample:true, name:'Rahul Verma', role:'Salesforce Marketing Cloud Developer', company:'Salesforce partner', location:'Pune, India', exp:'4 years', tech:['Salesforce','Marketing Cloud','AMPscript','SQL'], availability:'Remote, Immediately', summary:'Journey Builder, AMPscript personalisation and Data Cloud segmentation for B2C brands.' },
+  { id:'sample07', sample:true, name:'Emily Carter', role:'QA Automation Engineer', company:'Healthtech startup', location:'Remote (USA)', exp:'6 years', tech:['Cypress / Playwright','Selenium / QA','TypeScript'], availability:'Part-time / Freelance', summary:'Stable E2E suites in Playwright, contract testing and CI quality gates.' },
+  { id:'sample08', sample:true, name:'Arjun Iyer', role:'Azure Data Engineer', company:'Retail enterprise', location:'Hyderabad, India', exp:'7 years', tech:['Azure','Data Engineering','Databricks','Power BI / Tableau'], availability:'Remote & Contract', summary:'Lakehouse pipelines on Databricks; Power BI semantic models for exec reporting.' },
+  { id:'sample09', sample:true, name:'Lena Fischer', role:'Android / Kotlin Developer', company:'Freelance', location:'Berlin, Europe', exp:'5 years', tech:['Android / Kotlin','Jetpack Compose','React Native / Flutter'], availability:'Freelance — Immediately', summary:'Compose-first Android apps, offline sync and Play Store release automation.' }
+];
+
 let allProfiles = [];
 
 async function loadProfiles() {
+  let real = SEED;
   try {
     const r = await fetch(`${API}/profiles`, { signal: AbortSignal.timeout(3000) });
     const data = await r.json();
-    allProfiles = data.length ? data : SEED;
+    if (Array.isArray(data) && data.length) real = data;
   } catch {
-    allProfiles = SEED; // offline — show seed
+    // offline — show seed
   }
+  allProfiles = real.length < MIN_REAL_PROFILES ? [...real, ...SAMPLE_PROFILES] : real;
   renderCards(allProfiles);
-  document.getElementById('stat-profiles').textContent = allProfiles.length;
+  document.getElementById('resumeGrid').removeAttribute('aria-busy');
+  // Hero stat counts real profiles only — samples are illustrative
+  document.getElementById('stat-profiles').textContent = real.length;
+}
+
+// Escape anything that ends up in innerHTML (profiles can come from user submissions)
+function esc(v) {
+  return String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
 function renderCards(profiles) {
@@ -434,28 +493,40 @@ function renderCards(profiles) {
     return;
   }
   grid.innerHTML = profiles.map(p => `
-    <div class="resume-card" data-tech="${(p.tech||[]).join(',')}" data-loc="${p.location||''}" data-exp="${p.exp||''}">
-      ${p.open ? '<span class="open-badge">✅ Open to Work</span>' : ''}
+    <div class="resume-card" data-tech="${esc((p.tech||[]).join(','))}" data-loc="${esc(p.location)}" data-exp="${esc(p.exp)}">
+      ${p.sample ? '<span class="sample-badge" title="Illustrative profile to show how listings look">Sample profile</span>'
+                 : (p.open ? '<span class="open-badge">✅ Open to Work</span>' : '')}
       <div class="card-top">
-        <div class="avatar">${p.initials || p.name.split(' ').map(x=>x[0]).join('').slice(0,2)}</div>
+        <div class="avatar">${esc(p.initials || p.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</div>
         <div class="card-info">
-          <div class="card-name">${p.name}</div>
-          <div class="card-role">${p.role}</div>
-          <div class="card-meta">📍 ${p.location || 'Not specified'} &nbsp;·&nbsp; ${p.exp || ''} experience &nbsp;·&nbsp; ${p.company || ''}</div>
+          <div class="card-name">${esc(p.name)}</div>
+          <div class="card-role">${esc(p.role)}</div>
+          <div class="card-meta">📍 ${esc(p.location || 'Not specified')} &nbsp;·&nbsp; ${esc(p.exp)} experience &nbsp;·&nbsp; ${esc(p.company)}</div>
         </div>
       </div>
       <div class="card-tags">
-        ${(p.tech||[]).map(t => `<span class="tag">${t}</span>`).join('')}
-        ${p.availability ? `<span class="tag green">${p.availability}</span>` : ''}
+        ${(p.tech||[]).map(t => `<span class="tag">${esc(t)}</span>`).join('')}
+        ${p.availability ? `<span class="tag green">${esc(p.availability)}</span>` : ''}
       </div>
-      <p style="color:var(--muted);font-size:.88rem;margin-top:10px">${p.summary || ''}</p>
+      <p style="color:var(--muted);font-size:.88rem;margin-top:10px">${esc(p.summary)}</p>
       <div class="card-actions">
-        <a href="${p.profile || 'profile.html?id=' + p.id}" class="btn-view">View Profile</a>
-        <button class="btn-contact" onclick="openContact('${p.id}','${p.name}')">Contact</button>
-        ${p.pdf ? `<a href="${p.pdf}" download style="font-size:.85rem;color:var(--accent);margin-left:6px">⬇ PDF</a>` : ''}
+        ${p.sample
+          ? `<span class="sample-note">Illustrative listing. <a href="submit.html">Post your resume</a> to appear here.</span>`
+          : `<a href="${esc(p.profile || 'profile.html?id=' + encodeURIComponent(p.id))}" class="btn-view">View Profile</a>
+             <button class="btn-contact" data-id="${esc(p.id)}" onclick="openContact(this.dataset.id)">Contact</button>
+             ${p.pdf ? `<a href="${esc(p.pdf)}" download style="font-size:.85rem;color:var(--accent);margin-left:6px">⬇ PDF</a>` : ''}`}
       </div>
     </div>
   `).join('');
+}
+
+// "Hire Talent" → smooth-scroll to the profiles and put the cursor in search
+function goToTalent(e) {
+  if (e) e.preventDefault();
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('profiles-section').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  history.replaceState(null, '', '#profiles-section');
+  setTimeout(() => document.getElementById('searchInput').focus({ preventScroll: true }), reduce ? 0 : 450);
 }
 
 function filterCards() {
@@ -478,7 +549,7 @@ function filterCards() {
 function sortCards(by) {
   const sorted = [...allProfiles];
   if (by === 'name') sorted.sort((a,b) => a.name.localeCompare(b.name));
-  else if (by === 'exp') sorted.sort((a,b) => parseInt(b.exp)||0 - parseInt(a.exp)||0);
+  else if (by === 'exp') sorted.sort((a,b) => (parseInt(b.exp)||0) - (parseInt(a.exp)||0));
   renderCards(sorted);
 }
 
@@ -590,30 +661,72 @@ function showSuccess(m){ const el=document.getElementById('success-msg'); el.tex
 function showError(m){ const el=document.getElementById('error-msg'); el.textContent=m; el.style.display='block'; document.getElementById('success-msg').style.display='none'; }
 
 // ── Contact Modal ─────────────────────────────────────────────────────────────
-function openContact(id, name) {
-  document.getElementById('c-target').value = id + '|' + name;
+function openContact(id) {
+  const p = allProfiles.find(x => String(x.id) === String(id)) || {};
+  document.getElementById('c-target').value = id + '|' + (p.name || '');
   document.getElementById('contact-success').style.display = 'none';
+  document.querySelector('#contactModal h2').textContent = p.name ? `Contact ${p.name}` : 'Contact Candidate';
   document.getElementById('contactModal').classList.add('open');
+  document.getElementById('c-name').focus();
 }
 function closeContactModal() { document.getElementById('contactModal').classList.remove('open'); }
+
+// ── Toasts ────────────────────────────────────────────────────────────────────
+function showToast({ type = 'success', title, html, timeout = 5000 }) {
+  const wrap = document.getElementById('toastWrap');
+  wrap.querySelectorAll('.toast').forEach(old => old.remove()); // one message at a time
+  const t = document.createElement('div');
+  t.className = 'toast' + (type === 'error' ? ' error' : '');
+  t.setAttribute('role', type === 'error' ? 'alert' : 'status');
+  t.innerHTML = `<span class="t-icon">${type === 'error' ? '⚠️' : '✅'}</span>
+    <div class="t-body"><div class="t-title">${esc(title)}</div>${html ? `<div>${html}</div>` : ''}</div>
+    <button class="t-close" aria-label="Dismiss">×</button>`;
+  const dismiss = () => { t.classList.add('hide'); setTimeout(() => t.remove(), 220); };
+  t.querySelector('.t-close').onclick = dismiss;
+  wrap.appendChild(t);
+  if (timeout) setTimeout(dismiss, timeout);
+  return t;
+}
+
 async function sendContact() {
   const name=document.getElementById('c-name').value.trim();
   const email=document.getElementById('c-email').value.trim();
   const company=document.getElementById('c-company').value.trim();
   const msg=document.getElementById('c-msg').value.trim();
   const target=document.getElementById('c-target').value;
-  if(!name||!email||!msg){alert('Please fill name, email and message.');return;}
+  const candidate = target.split('|')[1] || 'the candidate';
+  if(!name||!email||!msg){
+    showToast({ type:'error', title:'A few details are missing', html:'Please fill in your name, email and message.' });
+    return;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    showToast({ type:'error', title:'Check your email address', html:'We need a valid email so the candidate can reply.' });
+    return;
+  }
+  const btn = document.querySelector('#contactModal .btn-submit');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  let ok = false;
   try {
-    await fetch(`${API}/contact`, {
+    const r = await fetch(`${API}/contact`, {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({from:{name,email,company},target,message:msg,sentAt:new Date().toISOString()}),
       signal: AbortSignal.timeout(5000)
     });
+    ok = r.ok;
   } catch {}
-  const el = document.getElementById('contact-success');
-  el.textContent = 'Message sent! The candidate will be notified.';
-  el.style.display = 'block';
-  setTimeout(closeContactModal, 2000);
+  btn.disabled = false; btn.textContent = 'Send Message';
+
+  if (ok) {
+    closeContactModal();
+    ['c-msg'].forEach(id => document.getElementById(id).value = '');
+    showToast({ title: 'Message sent', html: `${esc(candidate)} will get your message and can reply to ${esc(email)}.` });
+  } else {
+    // Don't pretend it worked — offer an email fallback that keeps what they typed
+    const subject = encodeURIComponent(`Opportunity for ${candidate} (via TechTalent Portal)`);
+    const body = encodeURIComponent(`${msg}\n\n— ${name}${company ? ', ' + company : ''}\n${email}\n\nCandidate: ${target}`);
+    showToast({ type:'error', timeout: 0, title: "Couldn't send right now",
+      html: `Your message wasn't delivered. <a href="mailto:purna.padishala@gmail.com?subject=${subject}&body=${body}">Send it by email instead</a> — we'll pass it on.` });
+  }
 }
 
 // Close modals on overlay click
