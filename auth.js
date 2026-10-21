@@ -2,7 +2,8 @@
  * TechTalent Portal — Auth Guard
  * Include this script in any page that requires login.
  * Usage: <script src="auth.js"></script>  (place in <head> or early <body>)
- * Pages that are always public: index.html, jobs.html, profile.html, login.html
+ * Pages that are always public: index.html, jobs.html, profile.html, login.html,
+ * submit.html (candidates can post a resume as a guest; signing in is optional)
  */
 (function () {
   'use strict';
@@ -46,7 +47,7 @@
 
   // ── GUARD: if this script runs on a protected page, block immediately ──
   const page = location.pathname.split('/').pop() || 'index.html';
-  const PUBLIC = ['index.html', 'jobs.html', 'profile.html', 'login.html', ''];
+  const PUBLIC = ['index.html', 'jobs.html', 'profile.html', 'login.html', 'submit.html', ''];
   if (!PUBLIC.includes(page)) {
     const sess = getSession();
     if (!sess || !sess.token) {

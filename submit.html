@@ -53,6 +53,15 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 .progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .3s;}
 .step-labels{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-bottom:20px;}
 .step-labels span.active{color:var(--accent);font-weight:700;}
+.guest-banner{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.guest-banner p{font-size:.9rem;color:var(--muted);margin:0;}
+.guest-banner p strong{color:var(--blue);}
+.linkedin-btn{padding:10px 18px;border:none;border-radius:8px;font-size:.92rem;font-weight:700;cursor:pointer;font-family:inherit;background:#0a66c2;color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.15s;white-space:nowrap;}
+.linkedin-btn:hover{background:#004182;}
+.li-note{display:none;margin-top:10px;padding:10px 14px;background:#fff3cd;border:1px solid #f0c060;border-radius:8px;font-size:.82rem;color:#6d4c00;line-height:1.5;width:100%;}
+.claim-box{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;margin-top:18px;text-align:center;}
+.claim-box p{font-size:.9rem;color:var(--muted);margin-bottom:12px;}
+.claim-box .alt-link{display:inline-block;margin-top:10px;font-size:.87rem;color:var(--accent);}
 </style>
 </head>
 <body>
@@ -62,7 +71,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
   <div class="nav-links">
     <a href="index.html">Browse Talent</a>
     <a href="submit.html" class="active">Post Resume</a>
-    <a href="#" class="btn-primary">Login</a>
+    <a href="login.html?next=submit.html" class="btn-primary" id="navAuthBtn">Login</a>
   </div>
 </nav>
 
@@ -72,6 +81,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 </div>
 
 <div class="form-wrap">
+  <!-- Shown only to visitors who aren't signed in (or are read-only guests) -->
+  <div class="guest-banner" id="guestBanner" style="display:none">
+    <p><strong>No account needed.</strong> Fill in the form and publish as a guest, or use 1-click sign in.</p>
+    <button type="button" class="linkedin-btn" onclick="linkedInLogin('submit.html')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" style="flex-shrink:0" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      Sign in with LinkedIn
+    </button>
+    <div class="li-note" id="liNoteTop">LinkedIn sign-in isn't available right now (it needs the local server running). No problem: just continue below as a guest.</div>
+  </div>
+
   <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
   <div class="step-labels">
     <span id="sl1" class="active">Personal Info</span>
@@ -161,7 +180,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
       </div>
       <input type="file" id="resumeFile" accept=".pdf" style="display:none" onchange="fileChosen(this)">
       <div class="form-group" style="margin-top:16px">
-        <label>Password (to manage your listing later)</label>
+        <label>Password (optional, to manage your listing later)</label>
         <input type="password" id="f-pass" placeholder="Min 8 characters">
       </div>
       <div class="form-group">
@@ -183,6 +202,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
     <h2>Profile Published!</h2>
     <p>Your resume is now live on TechTalent Portal and visible to recruiters worldwide.</p>
     <p style="margin-top:12px"><a href="index.html" style="color:var(--accent);font-weight:700">← Back to Portal</a></p>
+    <!-- Optional, never required: shown after a guest upload -->
+    <div class="claim-box" id="claimBox" style="display:none">
+      <p><strong style="color:var(--blue)">Optional:</strong> claim your profile to edit it later and track applications.</p>
+      <button type="button" class="linkedin-btn" onclick="linkedInLogin('dashboard.html')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" style="flex-shrink:0" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        Claim with LinkedIn
+      </button>
+      <div class="li-note" id="liNoteClaim">LinkedIn sign-in needs the local server running. You can create an account with your email instead.</div>
+      <br><a class="alt-link" id="claimEmailLink" href="login.html?next=dashboard.html#signup">or create an account with your email</a>
+    </div>
   </div>
 </div>
 
@@ -190,6 +219,32 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 const API = 'http://localhost:4747';
 let tags = [];
 let resumeFile = null;
+
+// ── Session: signing in is optional here. No session / read-only guest → guest upload ──
+const SESS = (window.TTP_AUTH && window.TTP_AUTH.getSession()) || null;
+const IS_GUEST = !SESS || !SESS.token || SESS.guest === true || SESS.token === 'guest';
+(function initSession() {
+  if (IS_GUEST) {
+    document.getElementById('guestBanner').style.display = 'flex';
+    return;
+  }
+  const nav = document.getElementById('navAuthBtn');
+  nav.textContent = 'My Dashboard'; nav.href = 'dashboard.html';
+  if (SESS.name)  document.getElementById('f-name').value  = SESS.name;
+  if (SESS.email) document.getElementById('f-email').value = SESS.email;
+})();
+
+// 1-click LinkedIn sign-in (needs the local server). The server redirects back to
+// login.html with the token in the hash; login.html stores the session, then goes to `dest`.
+function linkedInLogin(dest) {
+  const back = new URL('login.html?next=' + encodeURIComponent(dest), location.href).href;
+  const liUrl = `${API}/auth/linkedin?next=${encodeURIComponent(back)}`;
+  fetch(`${API}/stats`, { signal: AbortSignal.timeout(2500) })
+    .then(() => { location.href = liUrl; })
+    .catch(() => {
+      document.querySelectorAll('.li-note').forEach(n => { n.style.display = 'block'; });
+    });
+}
 
 function nextStep(n) {
   // Validate
@@ -199,6 +254,7 @@ function nextStep(n) {
     const role=document.getElementById('f-role').value.trim();
     const loc=document.getElementById('f-location').value.trim();
     if(!name||!email||!role||!loc){showErr('Please fill all required (*) fields.');return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showErr('Please enter a valid email address — it identifies your profile.');return;}
   }
   if(n===3) {
     const sum=document.getElementById('f-summary').value.trim();
@@ -273,17 +329,27 @@ async function submitResume() {
     summary: document.getElementById('f-summary').value.trim(),
     availability: avail,
     open: true,
+    guest: IS_GUEST,
     submittedAt: new Date().toISOString(),
     initials: document.getElementById('f-name').value.trim().split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase()
   };
 
+  let r = null;
   try {
     const fd = new FormData();
     fd.append('profile', JSON.stringify(profile));
     if(resumeFile) fd.append('pdf', resumeFile);
-    const r = await fetch(`${API}/submit`, { method:'POST', body: fd, signal: AbortSignal.timeout(10000) });
-    if(!r.ok) throw new Error('Server error');
-  } catch {
+    r = await fetch(`${API}/submit`, { method:'POST', body: fd, signal: AbortSignal.timeout(10000) });
+  } catch { r = null; }
+
+  if (r && r.status >= 400 && r.status < 500) {
+    // Server rejected the data (validation / existing claimed profile) — tell the user, don't fake success
+    let msg = 'Could not publish your profile. Please check the form and try again.';
+    try { const d = await r.json(); if (d && d.error) msg = d.error; } catch {}
+    showErr(msg);
+    return;
+  }
+  if (!r || !r.ok) {
     // Save locally as fallback
     const key='ttp_submissions';
     const arr=JSON.parse(localStorage.getItem(key)||'[]');
@@ -294,6 +360,10 @@ async function submitResume() {
   document.getElementById('progress').style.width='100%';
   ['step1','step2','step3'].forEach(id=>document.getElementById(id).style.display='none');
   document.getElementById('successCard').style.display='block';
+  if (IS_GUEST) {
+    document.getElementById('guestBanner').style.display='none';
+    document.getElementById('claimBox').style.display='block';
+  }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 

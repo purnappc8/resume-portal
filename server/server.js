@@ -177,6 +177,30 @@ const server = http.createServer(async (req, res) => {
       profile = data;
     }
 
+    // No login required: guest uploads are allowed, identified by email. Basic validation only.
+    if (!profile || typeof profile !== 'object') return json(res, 400, { error: 'Invalid submission.' });
+    const req_ = ['name', 'email', 'role', 'location', 'summary'];
+    if (req_.some(k => typeof profile[k] !== 'string' || !profile[k].trim())) {
+      return json(res, 400, { error: 'Please fill all required fields (name, email, role, location, summary).' });
+    }
+    profile.email = profile.email.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(profile.email) || profile.email.length > 254) {
+      return json(res, 400, { error: 'Please enter a valid email address.' });
+    }
+    if (pdfBuf && (pdfBuf.length > 5 * 1024 * 1024 || !/\.pdf$/i.test(pdfName || ''))) {
+      return json(res, 400, { error: 'Resume must be a PDF up to 5MB.' });
+    }
+    profile.id = String(profile.id || Date.now().toString(36)).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40) || Date.now().toString(36);
+    profile.guest = profile.guest === true;
+    delete profile.pass;
+
+    const profiles = readJson('profiles.json', []);
+    const existing = profiles.findIndex(p => (p.email || '').toLowerCase() === profile.email);
+    // A guest upload may not overwrite a profile that was submitted by a signed-in user
+    if (existing >= 0 && profile.guest && profiles[existing].guest === false) {
+      return json(res, 409, { error: 'A profile with this email already exists. Please sign in to update it.' });
+    }
+
     if (pdfBuf && pdfName) {
       const safeName = profile.id + '_' + pdfName.replace(/[^a-zA-Z0-9._-]/g, '_');
       fs.writeFileSync(path.join(PDF_DIR, safeName), pdfBuf);
@@ -184,8 +208,6 @@ const server = http.createServer(async (req, res) => {
       console.log(`  → PDF saved: ${safeName}`);
     }
 
-    const profiles = readJson('profiles.json', []);
-    const existing = profiles.findIndex(p => p.email === profile.email);
     if (existing >= 0) profiles[existing] = { ...profiles[existing], ...profile };
     else profiles.push(profile);
     writeJson('profiles.json', profiles);
