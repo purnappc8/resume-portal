@@ -187,8 +187,8 @@ footer a { color: rgba(255,255,255,.9); }
   <h1>Find Top <span>IT Talent</span><br>Across Every Technology</h1>
   <p>Salesforce · Java · Python · DevOps · Cloud · Data Science · SAP · React — all technologies, all roles, all experience levels.</p>
   <div class="hero-btns">
-    <a href="submit.html" class="btn-white">📄 Post Your Resume — Free</a>
-    <a href="#" onclick="openModal('signup')" class="btn-green">🔍 Hire Talent — Free</a>
+    <a href="login.html?next=submit.html" class="btn-white">📄 Post Resume — Free Signup</a>
+    <a href="#profiles-section" onclick="event.preventDefault();document.getElementById('profiles-section').scrollIntoView({behavior:'smooth'})" class="btn-green">🔍 Browse Talent Free ↓</a>
   </div>
   <div class="stats-row">
     <div class="stat"><div class="num" id="stat-profiles">0</div><div class="label">Active Profiles</div></div>
@@ -271,7 +271,7 @@ footer a { color: rgba(255,255,255,.9); }
 </div>
 
 <!-- MAIN -->
-<div class="main-wrap">
+<div class="main-wrap" id="profiles-section">
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="filter-box">
@@ -293,7 +293,7 @@ footer a { color: rgba(255,255,255,.9); }
   <!-- CARDS -->
   <main>
     <div class="results-header">
-      <h2 id="results-count">Loading profiles…</h2>
+      <h2 id="results-count"></h2>
       <select class="sort-select" onchange="sortCards(this.value)">
         <option value="recent">Most Recent</option>
         <option value="exp">Most Experienced</option>
@@ -301,7 +301,8 @@ footer a { color: rgba(255,255,255,.9); }
       </select>
     </div>
     <div class="resume-grid" id="resumeGrid">
-      <!-- Cards injected by JS -->
+      <div class="resume-card" style="min-height:110px"><div class="skeleton" style="height:14px;width:55%;margin-bottom:10px"></div><div class="skeleton" style="height:11px;width:38%;margin-bottom:8px"></div><div class="skeleton" style="height:11px;width:72%"></div></div>
+      <div class="resume-card" style="min-height:110px"><div class="skeleton" style="height:14px;width:60%;margin-bottom:10px"></div><div class="skeleton" style="height:11px;width:42%;margin-bottom:8px"></div><div class="skeleton" style="height:11px;width:68%"></div></div>
     </div>
   </main>
 </div>
@@ -318,6 +319,7 @@ footer a { color: rgba(255,255,255,.9); }
 
     <!-- SIGN UP FORM -->
     <div id="signup-form">
+      <form onsubmit="doSignup();return false">
       <div class="form-group">
         <label>Full Name</label>
         <input type="text" id="su-name" placeholder="e.g. Purnachandar Padishala">
@@ -338,13 +340,15 @@ footer a { color: rgba(255,255,255,.9); }
         </select>
       </div>
       <div class="modal-btns">
-        <button class="btn-submit" onclick="doSignup()">Create Account</button>
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="btn-submit">Create Account</button>
+        <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
       </div>
+      </form>
     </div>
 
     <!-- LOGIN FORM -->
     <div id="login-form" style="display:none">
+      <form onsubmit="doLogin();return false">
       <div class="form-group">
         <label>Email</label>
         <input type="email" id="li-email" placeholder="you@email.com">
@@ -354,9 +358,10 @@ footer a { color: rgba(255,255,255,.9); }
         <input type="password" id="li-pass" placeholder="Your password">
       </div>
       <div class="modal-btns">
-        <button class="btn-submit" onclick="doLogin()">Login</button>
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="btn-submit">Login</button>
+        <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
