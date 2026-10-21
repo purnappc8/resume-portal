@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Panel — TechTalent Portal</title>
+<style>
+:root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--red:#c62828;--light:#e8f0fe;--text:#1a1a1a;--muted:#666;--border:#c5d5e8;--bg:#f7f9fc;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;}
+
+/* Login screen */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0b2e59,#1565c0);}
+.login-card{background:#fff;border-radius:16px;padding:40px 36px;width:360px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.25);}
+.login-card h1{font-size:1.5rem;color:var(--blue);margin-bottom:6px;}
+.login-card p{color:var(--muted);font-size:.88rem;margin-bottom:24px;}
+.login-card input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:8px;font-size:.95rem;margin-bottom:12px;background:var(--bg);}
+.login-card button{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;}
+.login-card button:hover{background:#0d47a1;}
+.err-msg{color:var(--red);font-size:.85rem;margin-bottom:10px;display:none;}
+
+/* Main admin layout */
+.admin-wrap{display:none;min-height:100vh;}
+.topbar{background:var(--blue);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:54px;}
+.topbar .logo{color:#fff;font-size:1.1rem;font-weight:700;}
+.topbar .logo span{color:#7ec8f7;}
+.topbar-right{display:flex;align-items:center;gap:16px;}
+.topbar-right a{color:rgba(255,255,255,.8);font-size:.88rem;text-decoration:none;}
+.topbar-right a:hover{color:#fff;}
+.badge-admin{background:#ff6f00;color:#fff;font-size:.72rem;font-weight:800;padding:2px 8px;border-radius:10px;}
+
+.content{max-width:1200px;margin:0 auto;padding:28px 20px;}
+.page-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.page-title h1{font-size:1.5rem;color:var(--blue);}
+.stats-row{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap;}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 24px;flex:1;min-width:140px;text-align:center;}
+.stat-card .n{font-size:2rem;font-weight:800;color:var(--blue);}
+.stat-card .l{font-size:.82rem;color:var(--muted);margin-top:2px;}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;}
+.tab{padding:9px 22px;background:none;border:none;cursor:pointer;font-size:.95rem;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-2px;font-weight:600;}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* Table */
+.table-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;font-size:.88rem;}
+thead{background:var(--blue);color:#fff;}
+th{padding:11px 14px;text-align:left;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;}
+td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#f0f4ff;}
+.user-avatar{width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#fff;margin-right:8px;vertical-align:middle;}
+.role-badge{font-size:.75rem;font-weight:700;padding:2px 9px;border-radius:10px;}
+.role-candidate{background:#e8f0fe;color:#1565c0;}
+.role-recruiter{background:#e8f5e9;color:#1b8a4a;}
+.role-admin{background:#fff3e0;color:#e65100;}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;}
+.dot-active{background:#1b8a4a;}
+.dot-inactive{background:#bbb;}
+
+.btn-login-as{background:linear-gradient(135deg,#6a1b9a,#1565c0);color:#fff;border:none;padding:5px 14px;border-radius:6px;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;}
+.btn-login-as:hover{opacity:.85;}
+.btn-sm{padding:5px 12px;border-radius:6px;font-size:.82rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--blue);}
+.btn-sm:hover{background:var(--light);}
+.btn-danger{border-color:#ffcdd2;color:var(--red);}
+.btn-danger:hover{background:#fdecea;}
+
+/* Impersonation banner */
+.impersonate-banner{position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(90deg,#6a1b9a,#1565c0);color:#fff;padding:8px 20px;display:flex;align-items:center;justify-content:center;gap:16px;font-size:.9rem;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+.impersonate-banner button{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.5);color:#fff;padding:4px 14px;border-radius:6px;cursor:pointer;font-weight:700;font-size:.85rem;}
+.impersonate-banner button:hover{background:rgba(255,255,255,.35);}
+
+/* Applied/saved lists in user detail */
+.detail-panel{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:16px;}
+.detail-panel h3{color:var(--blue);font-size:.95rem;margin-bottom:12px;}
+.item-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.88rem;}
+.item-row:last-child{border:none;}
+
+/* Search bar */
+.search-row{display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap;}
+.search-row input{flex:1;min-width:200px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;background:var(--bg);}
+.search-row select{padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;background:var(--bg);}
+.count-lbl{color:var(--muted);font-size:.88rem;white-space:nowrap;}
+
+/* Profile detail modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:600;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;}
+.modal-overlay.open{display:flex;}
+.modal{background:#fff;border-radius:14px;padding:28px;max-width:560px;width:100%;}
+.modal h2{color:var(--blue);font-size:1.15rem;margin-bottom:16px;}
+.kv{display:flex;gap:10px;margin-bottom:8px;font-size:.88rem;}
+.kv .k{font-weight:700;color:var(--blue);min-width:110px;}
+.kv .v{color:var(--text);}
+.modal-close{float:right;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted);}
+.tag{background:var(--light);color:var(--blue);font-size:.76rem;padding:2px 8px;border-radius:10px;font-weight:600;display:inline-block;margin:2px;}
+.section-lbl{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin:14px 0 6px;}
+
+.empty{color:var(--muted);font-size:.9rem;padding:20px 0;text-align:center;}
+.refresh-btn{background:#fff;border:1px solid var(--border);border-radius:8px;padding:7px 16px;font-size:.88rem;cursor:pointer;color:var(--blue);font-weight:600;}
+.refresh-btn:hover{background:var(--light);}
+</style>
+</head>
+<body>
+
+<!-- ── Impersonation banner (shown on any page when impersonating) ────────── -->
+<div class="impersonate-banner" id="impBanner" style="display:none">
+  <span>👁 Admin View: You are logged in as <b id="impName"></b></span>
+  <button onclick="exitImpersonation()">✕ Exit &amp; Return to Admin</button>
+</div>
+
+<!-- ── Login screen ──────────────────────────────────────────────────────── -->
+<div class="login-wrap" id="loginScreen">
+  <div class="login-card">
+    <div style="font-size:2.5rem;margin-bottom:12px">🛡️</div>
+    <h1>Admin Panel</h1>
+    <p>TechTalent Portal — Developer Console<br><small style="color:#aaa">Only accessible at localhost</small></p>
+    <div class="err-msg" id="loginErr">Invalid admin password.</div>
+    <input type="password" id="adminPass" placeholder="Admin password" onkeydown="if(event.key==='Enter')adminLogin()">
+    <button onclick="adminLogin()">Sign In as Admin</button>
+    <p style="margin-top:14px;font-size:.8rem;color:#aaa">Default: <code>ttp-admin-2026</code> (set ADMIN_PASSWORD in .env)</p>
+  </div>
+</div>
+
+<!-- ── Main admin panel ───────────────────────────────────────────────────── -->
+<div class="admin-wrap" id="adminPanel">
+
+  <div class="topbar">
+    <div class="logo">Tech<span>Talent</span> <span class="badge-admin">ADMIN</span></div>
+    <div class="topbar-right">
+      <span id="topAdminName" style="color:rgba(255,255,255,.7);font-size:.88rem"></span>
+      <a href="jobs.html" target="_blank">Jobs ↗</a>
+      <a href="dashboard.html" target="_blank">Portal ↗</a>
+      <a href="#" onclick="adminLogout()" style="color:#ff7043">Logout</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="page-title">
+      <h1>🛡️ Developer Console</h1>
+      <button class="refresh-btn" onclick="refreshAll()">⟳ Refresh</button>
+    </div>
+
+    <!-- Stats row -->
+    <div class="stats-row">
+      <div class="stat-card"><div class="n" id="st-users">—</div><div class="l">Users</div></div>
+      <div class="stat-card"><div class="n" id="st-profiles">—</div><div class="l">Profiles</div></div>
+      <div class="stat-card"><div class="n" id="st-jobs">—</div><div class="l">Live Jobs</div></div>
+      <div class="stat-card"><div class="n" id="st-applications">—</div><div class="l">Applications</div></div>
+      <div class="stat-card"><div class="n" id="st-livejobs">—</div><div class="l">Aggregated Jobs</div></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('users',this)">👥 Users</button>
+      <button class="tab" onclick="switchTab('profiles',this)">📄 Profiles</button>
+      <button class="tab" onclick="switchTab('applications',this)">✅ Applications</button>
+      <button class="tab" onclick="switchTab('jobs',this)">💼 Posted Jobs</button>
+      <button class="tab" onclick="switchTab('live',this)">🔴 Live Feed</button>
+    </div>
+
+    <!-- Users tab -->
+    <div id="tab-users">
+      <div class="search-row">
+        <input type="text" id="userSearch" placeholder="Search name, email, role…" oninput="renderUsers()">
+        <select id="roleFilter" onchange="renderUsers()">
+          <option value="">All Roles</option>
+          <option>candidate</option><option>recruiter</option><option>admin</option>
+        </select>
+        <span class="count-lbl" id="userCount"></span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>User</th><th>Email</th><th>Role</th><th>Joined</th><th>Apps</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Profiles tab -->
+    <div id="tab-profiles" style="display:none">
+      <div class="search-row">
+        <input type="text" id="profileSearch" placeholder="Search name, title, skills…" oninput="renderProfiles()">
+        <span class="count-lbl" id="profileCount"></span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Title</th><th>Skills</th><th>Location</th><th>Submitted</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="profileTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Applications tab -->
+    <div id="tab-applications" style="display:none">
+      <div class="search-row">
+        <input type="text" id="appSearch" placeholder="Search job title, user…" oninput="renderApplications()">
+        <span class="count-lbl" id="appCount"></span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>User</th><th>Job Title</th><th>Source</th><th>Applied At</th><th>URL</th></tr>
+          </thead>
+          <tbody id="appTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Posted Jobs tab -->
+    <div id="tab-jobs" style="display:none">
+      <div class="search-row">
+        <input type="text" id="jobSearch2" placeholder="Search title, company…" oninput="renderPostedJobs()">
+        <span class="count-lbl" id="jobCount"></span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Title</th><th>Company</th><th>Location</th><th>Type</th><th>Posted</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="jobTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Live Feed tab -->
+    <div id="tab-live" style="display:none">
+      <div class="search-row">
+        <input type="text" id="liveSearch" placeholder="Search title, company, source…" oninput="renderLiveJobs()">
+        <select id="liveSourceFilter" onchange="renderLiveJobs()">
+          <option value="">All Sources</option>
+        </select>
+        <button class="refresh-btn" onclick="triggerRefresh()">⟳ Refresh Now</button>
+        <span class="count-lbl" id="liveCount"></span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Title</th><th>Company</th><th>Source</th><th>Tech</th><th>Posted</th><th>Apply</th></tr>
+          </thead>
+          <tbody id="liveTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- User detail modal -->
+<div class="modal-overlay" id="userModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('userModal')">×</button>
+    <h2 id="um-title">User Detail</h2>
+    <div id="um-body"></div>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:4747';
+let adminToken = sessionStorage.getItem('ttp_admin_token') || '';
+let allUsers = [], allProfiles = [], allApps = [], allJobs = [], allLive = [];
+let currentTab = 'users';
+
+// ── Impersonation banner on load ────────────────────────────────────────────
+(function checkImpersonation() {
+  const imp = sessionStorage.getItem('ttp_impersonating');
+  if (imp) {
+    try {
+      const d = JSON.parse(imp);
+      document.getElementById('impBanner').style.display = 'flex';
+      document.getElementById('impName').textContent = d.name || d.email || 'User';
+    } catch {}
+  }
+})();
+
+function exitImpersonation() {
+  const orig = sessionStorage.getItem('ttp_admin_orig_session');
+  if (orig) {
+    sessionStorage.setItem('ttp_session', orig);
+    localStorage.setItem('ttp_session', orig);
+  }
+  sessionStorage.removeItem('ttp_impersonating');
+  sessionStorage.removeItem('ttp_admin_orig_session');
+  document.getElementById('impBanner').style.display = 'none';
+  // Restore admin user in ttp_user
+  const adminSess = JSON.parse(orig || '{}');
+  if (adminSess.name) {
+    localStorage.setItem('ttp_user', JSON.stringify({name: adminSess.name, email: adminSess.email, role:'admin'}));
+  }
+  location.reload();
+}
+
+// ── Admin auth ───────────────────────────────────────────────────────────────
+async function adminLogin() {
+  const pass = document.getElementById('adminPass').value;
+  document.getElementById('loginErr').style.display = 'none';
+  try {
+    const r = await fetch(`${API}/admin/auth`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({password: pass}),
+      signal: AbortSignal.timeout(5000)
+    });
+    const d = await r.json();
+    if (r.ok && d.token) {
+      adminToken = d.token;
+      sessionStorage.setItem('ttp_admin_token', adminToken);
+      document.getElementById('topAdminName').textContent = 'Admin';
+      showPanel();
+    } else {
+      document.getElementById('loginErr').style.display = 'block';
+    }
+  } catch (e) {
+    document.getElementById('loginErr').textContent = 'Server offline. Start server.js first.';
+    document.getElementById('loginErr').style.display = 'block';
+  }
+}
+
+function adminLogout() {
+  sessionStorage.removeItem('ttp_admin_token');
+  adminToken = '';
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+
+async function showPanel() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'block';
+  await refreshAll();
+}
+
+// Auto-login if token exists
+if (adminToken) { showPanel(); }
+
+// ── Fetch all data ──────────────────────────────────────────────────────────
+async function adminFetch(path) {
+  const r = await fetch(`${API}${path}`, {
+    headers: {'X-Admin-Token': adminToken},
+    signal: AbortSignal.timeout(8000)
+  });
+  if (r.status === 401) { adminLogout(); throw new Error('Unauthorized'); }
+  return r.json();
+}
+
+async function refreshAll() {
+  try {
+    [allUsers, allProfiles, allApps, allJobs, allLive] = await Promise.all([
+      adminFetch('/admin/users'),
+      adminFetch('/admin/profiles'),
+      adminFetch('/admin/applications'),
+      adminFetch('/admin/jobs'),
+      adminFetch('/admin/live-jobs'),
+    ]);
+  } catch(e) {
+    if (e.message !== 'Unauthorized') alert('Could not load data: ' + e.message);
+    return;
+  }
+  // Update stats
+  document.getElementById('st-users').textContent = allUsers.length;
+  document.getElementById('st-profiles').textContent = allProfiles.length;
+  document.getElementById('st-jobs').textContent = allLive.length + allJobs.length;
+  document.getElementById('st-applications').textContent = allApps.length;
+  document.getElementById('st-livejobs').textContent = allLive.length;
+
+  // Populate live source filter
+  const liveSrcs = [...new Set(allLive.map(j=>j.source).filter(Boolean))].sort();
+  const sel = document.getElementById('liveSourceFilter');
+  sel.innerHTML = '<option value="">All Sources</option>' + liveSrcs.map(s=>`<option>${s}</option>`).join('');
+
+  renderTab(currentTab);
+}
+
+// ── Tab switching ───────────────────────────────────────────────────────────
+function switchTab(name, el) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  ['users','profiles','applications','jobs','live'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t===name ? '' : 'none';
+  });
+  currentTab = name;
+  renderTab(name);
+}
+function renderTab(name) {
+  if(name==='users') renderUsers();
+  else if(name==='profiles') renderProfiles();
+  else if(name==='applications') renderApplications();
+  else if(name==='jobs') renderPostedJobs();
+  else if(name==='live') renderLiveJobs();
+}
+
+// ── Color helper ─────────────────────────────────────────────────────────────
+const BG_COLORS = ['#1565c0','#1b8a4a','#6a1b9a','#e65100','#00838f','#c62828','#4527a0'];
+function bgColor(str) { let h=0; for(let c of (str||'?')) h=(h*31+c.charCodeAt(0))&0xffff; return BG_COLORS[h%BG_COLORS.length]; }
+function initials(name) { return (name||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+function fmtDate(d) { if(!d) return '—'; const dt=new Date(d); return isNaN(dt)?d:dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+
+// ── Users tab ───────────────────────────────────────────────────────────────
+function renderUsers() {
+  const q = (document.getElementById('userSearch').value||'').toLowerCase();
+  const role = document.getElementById('roleFilter').value;
+  const rows = allUsers.filter(u => {
+    if (role && u.role !== role) return false;
+    return !q || `${u.name} ${u.email} ${u.role}`.toLowerCase().includes(q);
+  });
+  document.getElementById('userCount').textContent = `${rows.length} user${rows.length!==1?'s':''}`;
+  const userAppCounts = {};
+  allApps.forEach(a => {
+    const key = a.userEmail || (a.user && JSON.parse(a.user||'{}').email) || '';
+    if (key) userAppCounts[key] = (userAppCounts[key]||0) + 1;
+  });
+  document.getElementById('userTableBody').innerHTML = rows.map(u => `
+    <tr>
+      <td>
+        <span class="user-avatar" style="background:${bgColor(u.name)}">${initials(u.name)}</span>
+        <strong>${u.name||'—'}</strong>
+        ${u.linkedin ? '<span style="font-size:.75rem;color:#0a66c2;margin-left:4px">in</span>' : ''}
+      </td>
+      <td style="color:var(--muted)">${u.email||'—'}</td>
+      <td><span class="role-badge role-${u.role||'candidate'}">${u.role||'candidate'}</span></td>
+      <td style="color:var(--muted)">${fmtDate(u.createdAt)}</td>
+      <td><span style="font-weight:700;color:var(--blue)">${userAppCounts[u.email]||0}</span></td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn-login-as" onclick="loginAs(${JSON.stringify(u).replace(/"/g,'&quot;')})">👁 Login As</button>
+        <button class="btn-sm" onclick="viewUser(${JSON.stringify(u).replace(/"/g,'&quot;')})">Detail</button>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" class="empty">No users found.</td></tr>';
+}
+
+// ── Profiles tab ─────────────────────────────────────────────────────────────
+function renderProfiles() {
+  const q = (document.getElementById('profileSearch').value||'').toLowerCase();
+  const rows = allProfiles.filter(p => !q || `${p.name} ${p.title} ${(p.skills||[]).join(' ')}`.toLowerCase().includes(q));
+  document.getElementById('profileCount').textContent = `${rows.length} profile${rows.length!==1?'s':''}`;
+  document.getElementById('profileTableBody').innerHTML = rows.map(p => `
+    <tr>
+      <td><span class="user-avatar" style="background:${bgColor(p.name)};font-size:.75rem">${initials(p.name)}</span><strong>${p.name||'—'}</strong></td>
+      <td>${p.title||'—'}</td>
+      <td>${(p.skills||[]).slice(0,4).map(s=>`<span class="tag">${s}</span>`).join('')}</td>
+      <td style="color:var(--muted)">${p.location||'—'}</td>
+      <td style="color:var(--muted)">${fmtDate(p.submittedAt||p.createdAt)}</td>
+      <td><button class="btn-sm" onclick="viewProfile(${JSON.stringify(p).replace(/"/g,'&quot;')})">View</button></td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" class="empty">No profiles yet.</td></tr>';
+}
+
+// ── Applications tab ──────────────────────────────────────────────────────────
+function renderApplications() {
+  const q = (document.getElementById('appSearch').value||'').toLowerCase();
+  const rows = allApps.filter(a => !q || `${a.jobTitle} ${a.userEmail} ${a.source}`.toLowerCase().includes(q));
+  document.getElementById('appCount').textContent = `${rows.length} application${rows.length!==1?'s':''}`;
+  document.getElementById('appTableBody').innerHTML = rows.slice().reverse().map(a => {
+    let userEmail = a.userEmail || '';
+    if(!userEmail && a.user) { try{ userEmail = JSON.parse(a.user).email||''; }catch{} }
+    return `<tr>
+      <td style="color:var(--muted)">${userEmail||'—'}</td>
+      <td><strong>${a.jobTitle||a.jobId||'—'}</strong></td>
+      <td><span class="tag">${a.source||'—'}</span></td>
+      <td style="color:var(--muted)">${fmtDate(a.appliedAt)}</td>
+      <td>${a.url ? `<a href="${a.url}" target="_blank" style="color:var(--accent);font-size:.82rem">Apply ↗</a>` : '—'}</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="5" class="empty">No applications yet.</td></tr>';
+}
+
+// ── Posted Jobs tab ───────────────────────────────────────────────────────────
+function renderPostedJobs() {
+  const q = (document.getElementById('jobSearch2').value||'').toLowerCase();
+  const rows = allJobs.filter(j => !q || `${j.title} ${j.company}`.toLowerCase().includes(q));
+  document.getElementById('jobCount').textContent = `${rows.length} job${rows.length!==1?'s':''}`;
+  document.getElementById('jobTableBody').innerHTML = rows.map(j => `
+    <tr>
+      <td><strong>${j.title||'—'}</strong></td>
+      <td>${j.company||'—'}</td>
+      <td style="color:var(--muted)">${j.location||'—'}</td>
+      <td><span class="tag">${j.type||'—'}</span></td>
+      <td style="color:var(--muted)">${fmtDate(j.postedAt)}</td>
+      <td>
+        ${j.applyUrl ? `<a href="${j.applyUrl}" target="_blank" class="btn-sm" style="text-decoration:none">↗ Apply</a>` : ''}
+        <button class="btn-sm btn-danger" onclick="deleteJob('${j.id}')">Delete</button>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" class="empty">No portal-posted jobs yet.</td></tr>';
+}
+
+// ── Live jobs tab ─────────────────────────────────────────────────────────────
+function renderLiveJobs() {
+  const q = (document.getElementById('liveSearch').value||'').toLowerCase();
+  const src = document.getElementById('liveSourceFilter').value;
+  const rows = allLive.filter(j => {
+    if(src && j.source !== src) return false;
+    return !q || `${j.title} ${j.company} ${j.source} ${(j.tech||[]).join(' ')}`.toLowerCase().includes(q);
+  });
+  document.getElementById('liveCount').textContent = `${rows.length} job${rows.length!==1?'s':''}`;
+  document.getElementById('liveTableBody').innerHTML = rows.map(j => `
+    <tr>
+      <td><strong>${j.title||'—'}</strong><div style="font-size:.78rem;color:var(--muted)">${j.company||''}</div></td>
+      <td style="color:var(--muted)">${j.company||'—'}</td>
+      <td><span class="tag" style="background:#e8f5e9;color:#1b5e20">${j.source||'—'}</span></td>
+      <td>${(j.tech||[]).slice(0,3).map(t=>`<span class="tag">${t}</span>`).join('')}</td>
+      <td style="color:var(--muted)">${j.postedDays===0?'Today':j.postedDays===1?'Yesterday':(j.postedDays||0)+'d ago'}</td>
+      <td><a href="${j.url}" target="_blank" class="btn-sm" style="text-decoration:none">Apply ↗</a></td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" class="empty">No live jobs cached yet. Wait for aggregator to run.</td></tr>';
+}
+
+// ── Login As ─────────────────────────────────────────────────────────────────
+async function loginAs(user) {
+  try {
+    const r = await fetch(`${API}/admin/login-as`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'X-Admin-Token': adminToken},
+      body: JSON.stringify({userId: user.id, email: user.email}),
+      signal: AbortSignal.timeout(5000)
+    });
+    const d = await r.json();
+    if (!r.ok) { alert('Error: ' + (d.error||'unknown')); return; }
+
+    // Save admin's current session so we can restore it
+    const currSess = sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session') || '';
+    sessionStorage.setItem('ttp_admin_orig_session', currSess);
+
+    // Set target user's session
+    const targetSess = JSON.stringify({ token: d.token, name: user.name, email: user.email, role: user.role||'candidate', impersonated: true });
+    sessionStorage.setItem('ttp_session', targetSess);
+    localStorage.setItem('ttp_session', targetSess);
+    localStorage.setItem('ttp_user', JSON.stringify({name: user.name, email: user.email, role: user.role||'candidate'}));
+
+    // Mark impersonation
+    sessionStorage.setItem('ttp_impersonating', JSON.stringify({name: user.name, email: user.email}));
+
+    // Open portal in same tab so banner is visible
+    window.location.href = 'dashboard.html';
+  } catch(e) {
+    alert('Login As failed: ' + e.message);
+  }
+}
+
+// ── View user detail modal ────────────────────────────────────────────────────
+function viewUser(u) {
+  const apps = allApps.filter(a => {
+    let em = a.userEmail || '';
+    if(!em && a.user){ try{ em=JSON.parse(a.user).email||''; }catch{} }
+    return em === u.email;
+  });
+  const profile = allProfiles.find(p => p.email === u.email || (p.name && p.name === u.name));
+  document.getElementById('um-title').textContent = `👤 ${u.name||u.email}`;
+  document.getElementById('um-body').innerHTML = `
+    <div class="kv"><span class="k">Email</span><span class="v">${u.email||'—'}</span></div>
+    <div class="kv"><span class="k">Role</span><span class="v"><span class="role-badge role-${u.role||'candidate'}">${u.role||'candidate'}</span></span></div>
+    <div class="kv"><span class="k">Joined</span><span class="v">${fmtDate(u.createdAt)}</span></div>
+    <div class="kv"><span class="k">LinkedIn</span><span class="v">${u.linkedin ? '✅ Connected' : '—'}</span></div>
+    <div class="section-lbl">Applications (${apps.length})</div>
+    ${apps.length ? apps.map(a=>`<div class="item-row"><span>${a.jobTitle||a.jobId||'Unknown'}</span><span style="color:var(--muted);font-size:.82rem">${fmtDate(a.appliedAt)}</span></div>`).join('') : '<p style="color:var(--muted);font-size:.88rem">No applications yet.</p>'}
+    ${profile ? `
+      <div class="section-lbl">Profile</div>
+      <div class="kv"><span class="k">Title</span><span class="v">${profile.title||'—'}</span></div>
+      <div class="kv"><span class="k">Location</span><span class="v">${profile.location||'—'}</span></div>
+      <div class="kv"><span class="k">Skills</span><span class="v">${(profile.skills||[]).map(s=>`<span class="tag">${s}</span>`).join('')||'—'}</span></div>
+    ` : '<div class="section-lbl">No profile submitted</div>'}
+    <div style="margin-top:20px">
+      <button class="btn-login-as" onclick="loginAs(${JSON.stringify(u).replace(/"/g,'&quot;')});closeModal('userModal')">👁 Login As This User</button>
+    </div>`;
+  document.getElementById('userModal').classList.add('open');
+}
+
+function viewProfile(p) {
+  document.getElementById('um-title').textContent = `📄 ${p.name||'Profile'}`;
+  document.getElementById('um-body').innerHTML = `
+    <div class="kv"><span class="k">Name</span><span class="v">${p.name||'—'}</span></div>
+    <div class="kv"><span class="k">Title</span><span class="v">${p.title||'—'}</span></div>
+    <div class="kv"><span class="k">Email</span><span class="v">${p.email||'—'}</span></div>
+    <div class="kv"><span class="k">Phone</span><span class="v">${p.phone||'—'}</span></div>
+    <div class="kv"><span class="k">Location</span><span class="v">${p.location||'—'}</span></div>
+    <div class="kv"><span class="k">Experience</span><span class="v">${p.experience||'—'}</span></div>
+    <div class="kv"><span class="k">Rate</span><span class="v">${p.rate||'—'}</span></div>
+    <div class="kv"><span class="k">Availability</span><span class="v">${p.availability||'—'}</span></div>
+    <div class="section-lbl">Skills</div>
+    <div>${(p.skills||[]).map(s=>`<span class="tag">${s}</span>`).join('')||'—'}</div>
+    <div class="section-lbl">Summary</div>
+    <p style="font-size:.88rem;line-height:1.6;color:var(--text)">${p.summary||'—'}</p>
+    ${p.linkedin ? `<div class="kv" style="margin-top:10px"><span class="k">LinkedIn</span><span class="v"><a href="${p.linkedin}" target="_blank" style="color:var(--accent)">${p.linkedin}</a></span></div>` : ''}
+    ${p.resumeUrl ? `<div style="margin-top:12px"><a href="${p.resumeUrl}" target="_blank" class="btn-sm">📎 View Resume</a></div>` : ''}`;
+  document.getElementById('userModal').classList.add('open');
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.getElementById('userModal').addEventListener('click', e => { if(e.target===document.getElementById('userModal')) closeModal('userModal'); });
+
+// ── Delete job ───────────────────────────────────────────────────────────────
+async function deleteJob(id) {
+  if (!confirm('Delete this job posting?')) return;
+  try {
+    await fetch(`${API}/jobs/${id}`, {method:'DELETE', headers:{'X-Admin-Token': adminToken}});
+    await refreshAll();
+  } catch(e) { alert('Delete failed: ' + e.message); }
+}
+
+// ── Trigger live refresh ──────────────────────────────────────────────────────
+async function triggerRefresh() {
+  try {
+    await fetch(`${API}/jobs/refresh`, {headers:{'X-Admin-Token': adminToken}, signal: AbortSignal.timeout(5000)});
+    alert('Live job refresh started! Come back in ~30 seconds.');
+  } catch(e) { alert('Trigger failed: ' + e.message); }
+}
+</script>
+</body>
+</html>

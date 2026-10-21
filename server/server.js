@@ -1,4 +1,4 @@
-﻿/**
+/**
  * TechTalent Portal — Local Storage Server
  * Runs on your PC and stores all data in E:\ResumePortal\data\
  *
@@ -27,13 +27,21 @@ const DATA_DIR = process.env.DATA_DIR || path.join('E:\\', 'ResumePortal', 'data
 const PDF_DIR  = path.join(DATA_DIR, 'pdfs');
 
 // ── LinkedIn OAuth credentials ───────────────────────────────────────────────
-// 1. Go to https://www.linkedin.com/developers/apps/new and create a free app
-// 2. Under "Auth" tab → add redirect URL: http://localhost:4747/auth/linkedin/callback
-// 3. Under "Products" → request "Sign In with LinkedIn using OpenID Connect"
-// 4. Paste your Client ID and Secret below:
 const LINKEDIN_CLIENT_ID     = process.env.LINKEDIN_CLIENT_ID     || 'YOUR_LINKEDIN_CLIENT_ID';
 const LINKEDIN_CLIENT_SECRET = process.env.LINKEDIN_CLIENT_SECRET || 'YOUR_LINKEDIN_CLIENT_SECRET';
 const PORTAL_URL             = process.env.PORTAL_URL             || 'https://purnappc8.github.io/resume-portal/login.html';
+
+// ── Admin session tokens (in-memory; cleared on restart) ────────────────────
+const ADMIN_TOKENS = new Set();
+function genToken() { return crypto.randomBytes(24).toString('hex'); }
+function isAdminToken(req) {
+  const tok = (req.headers['x-admin-token'] || '').trim();
+  return tok && ADMIN_TOKENS.has(tok);
+}
+function requireAdmin(req, res) {
+  if (!isAdminToken(req)) { json(res, 401, { error: 'Unauthorized' }); return false; }
+  return true;
+}
 
 // Ensure data directories exist
 [DATA_DIR, PDF_DIR].forEach(d => {
@@ -88,7 +96,7 @@ function getBody(req) {
 function setCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-Admin-Token');
 }
 
 // ── Response helpers ──────────────────────────────────────────────────────────
@@ -176,7 +184,7 @@ const server = http.createServer(async (req, res) => {
     };
     users.push(user);
     writeJson('users.json', users);
-    console.log(`  → New user: ${user.name} (${user.email})`);
+    console.log(`  -> New user: ${user.name} (${user.email})`);
     const { pass: _, ...safe } = user;
     return json(res, 201, { user: safe });
   }
@@ -203,7 +211,6 @@ const server = http.createServer(async (req, res) => {
       profile = data;
     }
 
-    // No login required: guest uploads are allowed, identified by email. Basic validation only.
     if (!profile || typeof profile !== 'object') return json(res, 400, { error: 'Invalid submission.' });
     const req_ = ['name', 'email', 'role', 'location', 'summary'];
     if (req_.some(k => typeof profile[k] !== 'string' || !profile[k].trim())) {
@@ -222,7 +229,6 @@ const server = http.createServer(async (req, res) => {
 
     const profiles = readJson('profiles.json', []);
     const existing = profiles.findIndex(p => (p.email || '').toLowerCase() === profile.email);
-    // A guest upload may not overwrite a profile that was submitted by a signed-in user
     if (existing >= 0 && profile.guest && profiles[existing].guest === false) {
       return json(res, 409, { error: 'A profile with this email already exists. Please sign in to update it.' });
     }
@@ -231,13 +237,13 @@ const server = http.createServer(async (req, res) => {
       const safeName = profile.id + '_' + pdfName.replace(/[^a-zA-Z0-9._-]/g, '_');
       fs.writeFileSync(path.join(PDF_DIR, safeName), pdfBuf);
       profile.pdf = 'pdfs/' + safeName;
-      console.log(`  → PDF saved: ${safeName}`);
+      console.log(`  -> PDF saved: ${safeName}`);
     }
 
     if (existing >= 0) profiles[existing] = { ...profiles[existing], ...profile };
     else profiles.push(profile);
     writeJson('profiles.json', profiles);
-    console.log(`  → Profile saved: ${profile.name}`);
+    console.log(`  -> Profile saved: ${profile.name}`);
     return json(res, 201, { ok: true, id: profile.id });
   }
 
@@ -257,7 +263,7 @@ const server = http.createServer(async (req, res) => {
     };
     apps.push(entry);
     writeJson('applications.json', apps);
-    console.log(`  → Application: ${entry.jobTitle} via ${entry.source}`);
+    console.log(`  -> Application: ${entry.jobTitle} via ${entry.source}`);
     return json(res, 201, { ok: true });
   }
 
@@ -266,7 +272,7 @@ const server = http.createServer(async (req, res) => {
     const contacts = readJson('contacts.json', []);
     contacts.push({ id: Date.now().toString(36), ...data });
     writeJson('contacts.json', contacts);
-    console.log(`  → Contact from: ${data.from?.name} → ${data.target}`);
+    console.log(`  -> Contact from: ${data.from?.name} -> ${data.target}`);
     return json(res, 201, { ok: true });
   }
 
@@ -279,7 +285,6 @@ const server = http.createServer(async (req, res) => {
       contacts:     readJson('contacts.json',  []).length,
     });
   }
-
 
   // ── POST /jobs (employer posts a job) ────────────────────────────────────
   if (req.method === 'POST' && url === '/jobs') {
@@ -301,9 +306,9 @@ const server = http.createServer(async (req, res) => {
       postedBy:    data.postedBy    || 'anonymous',
       postedAt:    data.postedAt    || new Date().toISOString()
     };
-    jobs.unshift(job);          // newest first
+    jobs.unshift(job);
     writeJson('jobs.json', jobs);
-    console.log(`  → Job posted: ${job.title} by ${job.company}`);
+    console.log(`  -> Job posted: ${job.title} by ${job.company}`);
     return json(res, 201, { ok: true, id: job.id });
   }
 
@@ -315,18 +320,17 @@ const server = http.createServer(async (req, res) => {
     if (idx < 0) return json(res, 404, { error: 'Job not found.' });
     jobs.splice(idx, 1);
     writeJson('jobs.json', jobs);
-    console.log(`  → Job deleted: ${jobId}`);
+    console.log(`  -> Job deleted: ${jobId}`);
     return json(res, 200, { ok: true });
   }
 
   // ── GET /auth/linkedin ────────────────────────────────────────────────────
-  // Redirects browser to LinkedIn OAuth consent page
   if (req.method === 'GET' && url === '/auth/linkedin') {
     if (LINKEDIN_CLIENT_ID === 'YOUR_LINKEDIN_CLIENT_ID') {
       res.writeHead(200, {'Content-Type':'text/html'});
       return res.end(`<h2>LinkedIn not configured</h2>
         <p>Edit <code>server.js</code> and set <b>LINKEDIN_CLIENT_ID</b> and <b>LINKEDIN_CLIENT_SECRET</b>.</p>
-        <p><a href="https://www.linkedin.com/developers/apps/new">Create LinkedIn App →</a></p>`);
+        <p><a href="https://www.linkedin.com/developers/apps/new">Create LinkedIn App ></a></p>`);
     }
     const state = crypto.randomBytes(16).toString('hex');
     const redirectUri = `http://localhost:${PORT}/auth/linkedin/callback`;
@@ -337,7 +341,6 @@ const server = http.createServer(async (req, res) => {
       state,
       scope:         'openid profile email'
     });
-    // Store state + next URL in a temp file (valid 10 min)
     const pending = readJson('li_pending.json', {});
     pending[state] = { next: qs.next || PORTAL_URL, ts: Date.now() };
     writeJson('li_pending.json', pending);
@@ -346,13 +349,11 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ── GET /auth/linkedin/callback ───────────────────────────────────────────
-  // LinkedIn redirects here after user grants access
   if (req.method === 'GET' && url === '/auth/linkedin/callback') {
     const { code, state, error } = qs;
     const pending = readJson('li_pending.json', {});
     const entry = pending[state];
 
-    // Clean up old pending entries (>10 min)
     Object.keys(pending).forEach(k => { if (Date.now() - pending[k].ts > 600000) delete pending[k]; });
     if (state) delete pending[state];
     writeJson('li_pending.json', pending);
@@ -364,7 +365,6 @@ const server = http.createServer(async (req, res) => {
 
     try {
       const redirectUri = `http://localhost:${PORT}/auth/linkedin/callback`;
-      // Exchange code for token
       const tokenRes = await fetch('https://www.linkedin.com/oauth/v2/accessToken', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -380,7 +380,6 @@ const server = http.createServer(async (req, res) => {
       const accessToken = tokenData.access_token;
       if (!accessToken) throw new Error('No access token: ' + JSON.stringify(tokenData));
 
-      // Fetch profile via OpenID Connect userinfo
       const profileRes = await fetch('https://api.linkedin.com/v2/userinfo', {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
@@ -389,7 +388,6 @@ const server = http.createServer(async (req, res) => {
       const liEmail  = profile.email || '';
       const liAvatar = profile.picture || '';
 
-      // Create/update user in local users.json
       const users = readJson('users.json', []);
       let user = users.find(u => u.email === liEmail && liEmail);
       if (!user) {
@@ -397,9 +395,8 @@ const server = http.createServer(async (req, res) => {
         users.push(user);
         writeJson('users.json', users);
       }
-      console.log(`  → LinkedIn login: ${liName} (${liEmail})`);
+      console.log(`  -> LinkedIn login: ${liName} (${liEmail})`);
 
-      // Redirect back to portal with session token in hash
       const token = 'li_' + crypto.randomBytes(16).toString('hex');
       const dest = (entry.next || PORTAL_URL) + '#' + new URLSearchParams({
         li_token:  token,
@@ -416,38 +413,100 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
+  // ── ADMIN: POST /admin/auth ───────────────────────────────────────────────
+  if (req.method === 'POST' && url === '/admin/auth') {
+    const { password } = data;
+    const expected = process.env.ADMIN_PASSWORD || 'ttp-admin-2026';
+    if (password === expected) {
+      const token = genToken();
+      ADMIN_TOKENS.add(token);
+      return json(res, 200, { token });
+    }
+    return json(res, 401, { error: 'Wrong password' });
+  }
+
+  // ── ADMIN: GET /admin/users ───────────────────────────────────────────────
+  if (req.method === 'GET' && url === '/admin/users') {
+    if (!requireAdmin(req, res)) return;
+    const users = readJson('users.json', []).map(({ pass, ...u }) => u);
+    return json(res, 200, users);
+  }
+
+  // ── ADMIN: GET /admin/profiles ────────────────────────────────────────────
+  if (req.method === 'GET' && url === '/admin/profiles') {
+    if (!requireAdmin(req, res)) return;
+    return json(res, 200, readJson('profiles.json', []));
+  }
+
+  // ── ADMIN: GET /admin/applications ────────────────────────────────────────
+  if (req.method === 'GET' && url === '/admin/applications') {
+    if (!requireAdmin(req, res)) return;
+    return json(res, 200, readJson('applications.json', []));
+  }
+
+  // ── ADMIN: GET /admin/jobs ────────────────────────────────────────────────
+  if (req.method === 'GET' && url === '/admin/jobs') {
+    if (!requireAdmin(req, res)) return;
+    return json(res, 200, readJson('jobs.json', []));
+  }
+
+  // ── ADMIN: GET /admin/live-jobs ───────────────────────────────────────────
+  if (req.method === 'GET' && url === '/admin/live-jobs') {
+    if (!requireAdmin(req, res)) return;
+    return json(res, 200, readCache(DATA_DIR));
+  }
+
+  // ── ADMIN: POST /admin/login-as ───────────────────────────────────────────
+  if (req.method === 'POST' && url === '/admin/login-as') {
+    if (!requireAdmin(req, res)) return;
+    const { userId, email } = data;
+    const users = readJson('users.json', []);
+    const target = users.find(u => u.id === userId || u.email === email);
+    if (!target) return json(res, 404, { error: 'User not found' });
+    const token = genToken();
+    ADMIN_TOKENS.add(token);
+    const { pass: _, ...safe } = target;
+    return json(res, 200, { token, ...safe });
+  }
+
   // ── 404 ───────────────────────────────────────────────────────────────────
   json(res, 404, { error: 'Not found' });
 });
 
 server.listen(PORT, '127.0.0.1', () => {
-  console.log('\n╔══════════════════════════════════════════════════╗');
-  console.log('║   TechTalent Portal — Local Storage Server      ║');
-  console.log(`║   Running at: http://localhost:${PORT}             ║`);
-  console.log(`║   Data folder: ${DATA_DIR.padEnd(34)}║`);
-  console.log('╚══════════════════════════════════════════════════╝\n');
+  console.log('\n====================================================');
+  console.log('   TechTalent Portal -- Local Storage Server      ');
+  console.log(`   Running at: http://localhost:${PORT}             `);
+  console.log(`   Data folder: ${DATA_DIR}`);
+  console.log('====================================================\n');
   console.log('Endpoints:');
-  console.log('  GET  /profiles        — All public profiles');
-  console.log('  GET  /jobs            — Job listings');
-  console.log('  GET  /applications    — Application history');
-  console.log('  POST /signup          — Register new user');
-  console.log('  POST /login           — Login');
-  console.log('  POST /submit          — Submit resume/profile');
-  console.log('  POST /applied         — Track job application');
-  console.log('  POST /jobs            — Post a new job listing');
-  console.log('  DELETE /jobs/:id      — Remove a job listing');
-  console.log('  POST /contact         — Recruiter contact form');
-  console.log('  GET  /stats           — Portal statistics');
-  console.log('  GET  /auth/linkedin   — LinkedIn OAuth start');
-  console.log('  GET  /auth/linkedin/callback — LinkedIn OAuth callback\n');
+  console.log('  GET  /profiles        -- All public profiles');
+  console.log('  GET  /jobs            -- Job listings (portal + live)');
+  console.log('  GET  /jobs/refresh    -- Trigger live job re-fetch');
+  console.log('  GET  /applications    -- Application history');
+  console.log('  POST /signup          -- Register new user');
+  console.log('  POST /login           -- Login');
+  console.log('  POST /submit          -- Submit resume/profile');
+  console.log('  POST /applied         -- Track job application');
+  console.log('  POST /jobs            -- Post a new job listing');
+  console.log('  DELETE /jobs/:id      -- Remove a job listing');
+  console.log('  POST /contact         -- Recruiter contact form');
+  console.log('  GET  /stats           -- Portal statistics');
+  console.log('  GET  /auth/linkedin   -- LinkedIn OAuth start');
+  console.log('  POST /admin/auth      -- Admin login');
+  console.log('  GET  /admin/users     -- Admin: list users');
+  console.log('  GET  /admin/profiles  -- Admin: list profiles');
+  console.log('  GET  /admin/applications -- Admin: list applications');
+  console.log('  GET  /admin/jobs      -- Admin: list posted jobs');
+  console.log('  GET  /admin/live-jobs -- Admin: live aggregated jobs');
+  console.log('  POST /admin/login-as  -- Admin: impersonate user\n');
   if (LINKEDIN_CLIENT_ID === 'YOUR_LINKEDIN_CLIENT_ID') {
-    console.log('⚠️  LinkedIn login NOT configured. Edit server.js to set LINKEDIN_CLIENT_ID / LINKEDIN_CLIENT_SECRET.\n');
+    console.log('LinkedIn login NOT configured. Set LINKEDIN_CLIENT_ID / LINKEDIN_CLIENT_SECRET in .env\n');
   } else {
-    console.log('✅ LinkedIn OAuth ready.\n');
+    console.log('LinkedIn OAuth ready.\n');
   }
   console.log('Press Ctrl+C to stop.\n');
 
-  // Log current data counts
   try {
     const p=readJson('profiles.json',[]).length;
     const u=readJson('users.json',[]).length;
@@ -461,7 +520,7 @@ server.listen(PORT, '127.0.0.1', () => {
 
 server.on('error', err => {
   if (err.code === 'EADDRINUSE') {
-    console.error(`\n❌ Port ${PORT} is already in use. Close the other process and retry.\n`);
+    console.error(`\nPort ${PORT} is already in use. Close the other process and retry.\n`);
   } else {
     console.error('Server error:', err);
   }

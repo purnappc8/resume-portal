@@ -551,6 +551,53 @@ function autosave() {
     }));
   } catch {}
 }
+
+// -- Auto-fill from saved profile (runs on page load) ----------------------
+async function autoFillFromProfile() {
+  // 1. Try localStorage for a previously saved builder profile
+  try {
+    const cached = JSON.parse(localStorage.getItem('ttp_builder_profile') || 'null');
+    if (cached && cached.name) { applyProfileData(cached); return; }
+  } catch {}
+
+  // 2. Try the server if user is logged in
+  let user;
+  try { user = JSON.parse(sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session') || 'null'); } catch {}
+  if (!user || !user.email) return;
+
+  try {
+    const r = await fetch('http://localhost:4747/profiles', { signal: AbortSignal.timeout(4000) });
+    if (!r.ok) return;
+    const profiles = await r.json();
+    const mine = profiles.find(function(p){ return p.email === user.email || p.name === user.name; });
+    if (mine) {
+      applyProfileData(mine);
+      try { localStorage.setItem('ttp_builder_profile', JSON.stringify(mine)); } catch {}
+      toast('Profile loaded from your account!');
+    }
+  } catch {}
+}
+
+function applyProfileData(p) {
+  set('f-name',     p.name);
+  set('f-title',    p.title    || p.role);
+  set('f-email',    p.email);
+  set('f-phone',    p.phone);
+  set('f-location', p.location);
+  set('f-linkedin', p.linkedin);
+  set('f-github',   p.github);
+  set('f-summary',  p.summary);
+
+  if (Array.isArray(p.skills)     && p.skills.length)     state.skills = p.skills.slice();
+  if (Array.isArray(p.experience) && p.experience.length) state.exp   = p.experience.slice();
+  if (Array.isArray(p.education)  && p.education.length)  state.edu   = p.education.slice();
+  if (Array.isArray(p.certs)      && p.certs.length)      state.cert  = p.certs.slice();
+  if (Array.isArray(p.projects)   && p.projects.length)   state.proj  = p.projects.slice();
+
+  renderTags();
+  ['exp','edu','cert','proj'].forEach(function(t){ renderEntries(t); });
+  render();
+}
 function restoreDraft() {
   try {
     const d = JSON.parse(localStorage.getItem('ttp_builder_draft') || 'null');
@@ -597,7 +644,9 @@ function copyText() {
 
 // ── Init ──────────────────────────────────────────────────────────────────
 restoreDraft();
+autoFillFromProfile();
 if (!get('f-name') && !state.exp.length) render(); // show empty state
 </script>
 </body>
 </html>
+
