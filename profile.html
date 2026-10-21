@@ -106,7 +106,7 @@ section h2{font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var
       <h3>Quick Info</h3>
       <div id="quickInfo"></div>
       <a href="#" class="btn-contact" onclick="openContact(); return false">📩 Contact Candidate</a>
-      <a href="#" class="btn-pdf" id="pdfLink">⬇ Download Resume PDF</a>
+      <a href="#" class="btn-pdf" id="pdfLink" download="Purnachandar_Padishala_Salesforce_Developer_Resume.pdf">⬇ Download Resume PDF</a>
     </div>
     <div class="sidebar-card">
       <h3>Open To</h3>
@@ -133,6 +133,7 @@ section h2{font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var
 
 <script>
 const API = 'http://localhost:4747';
+const BASE = 'https://purnappc8.github.io/resume-portal/';
 
 // Default (Purna's) profile shown when no id param
 const DEFAULT = {
@@ -212,7 +213,15 @@ function renderProfile(p) {
   ].filter(Boolean).map(r=>`<div class="info-row"><span class="lbl">${r.lbl}</span><span class="val">${r.val}</span></div>`).join('');
 
   document.getElementById('availability').textContent = p.availability || 'Not specified';
-  if (p.pdf) document.getElementById('pdfLink').href = p.pdf;
+
+  // PDF download — resolve to absolute GitHub Pages URL so it always works
+  const pdfLink = document.getElementById('pdfLink');
+  if (p.pdf) {
+    const pdfUrl = p.pdf.startsWith('http') ? p.pdf : BASE + p.pdf;
+    pdfLink.href = pdfUrl;
+    pdfLink.setAttribute('download', p.pdf.split('/').pop());
+  }
+
   window._profileId = p.id;
   window._profileName = p.name;
 }
