@@ -91,7 +91,7 @@ footer-note{display:block;text-align:center;font-size:.8rem;color:var(--muted);m
     <div id="successBox" class="success-box"></div>
 
     <!-- LOGIN FORM -->
-    <div id="formLogin">
+    <form id="formLogin" onsubmit="doLogin();return false">
       <div class="form-group">
         <label>Email Address</label>
         <input type="email" id="loginEmail" placeholder="you@email.com" autocomplete="email">
@@ -103,11 +103,11 @@ footer-note{display:block;text-align:center;font-size:.8rem;color:var(--muted);m
       <label class="remember">
         <input type="checkbox" id="rememberMe" checked> Keep me signed in
       </label>
-      <button class="btn btn-primary" id="btnLogin" onclick="doLogin()">Sign In</button>
-    </div>
+      <button type="submit" class="btn btn-primary" id="btnLogin">Sign In</button>
+    </form>
 
     <!-- SIGNUP FORM -->
-    <div id="formSignup" style="display:none">
+    <form id="formSignup" style="display:none" onsubmit="doSignup();return false">
       <div class="form-group">
         <label>Full Name</label>
         <input type="text" id="signupName" placeholder="Purnachandar Padishala" autocomplete="name">
@@ -124,8 +124,8 @@ footer-note{display:block;text-align:center;font-size:.8rem;color:var(--muted);m
         <label>Confirm Password</label>
         <input type="password" id="signupPwd2" placeholder="Repeat password" autocomplete="new-password">
       </div>
-      <button class="btn btn-primary" id="btnSignup" onclick="doSignup()">Create Account</button>
-    </div>
+      <button type="submit" class="btn btn-primary" id="btnSignup">Create Account</button>
+    </form>
 
     <div class="divider">or</div>
     <button class="guest-btn" onclick="location.href='submit.html'" style="margin-bottom:8px">📄 Post your resume without an account</button>
@@ -200,8 +200,13 @@ function offlineLogin(email, pwd) {
       saveSession({token: 'offline_' + Date.now(), email, name: user.name, userId: user.id});
       showSuccess('Signed in (offline mode)! Redirecting…');
       setTimeout(() => location.href = decodeURIComponent(next), 800);
-    } else { showError('Invalid email or password.'); }
-  } catch { showError('Server is offline. Please start the local server.'); }
+    } else {
+      // No account found — guide user to create one with their email pre-filled
+      switchTab('signup');
+      document.getElementById('signupEmail').value = email;
+      showError('No account found for that email. Fill in your name and a password to create one.');
+    }
+  } catch { showError('Could not sign in. Please try again.'); }
 }
 
 async function doSignup() {

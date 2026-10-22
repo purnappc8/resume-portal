@@ -482,8 +482,8 @@ async function loadProfiles() {
   allProfiles = real.length < MIN_REAL_PROFILES ? [...real, ...SAMPLE_PROFILES] : real;
   renderCards(allProfiles);
   document.getElementById('resumeGrid').removeAttribute('aria-busy');
-  // Hero stat counts real profiles only — samples are illustrative
-  document.getElementById('stat-profiles').textContent = real.length;
+  // Hero stat shows total profiles visible on the board (real + illustrative samples)
+  document.getElementById('stat-profiles').textContent = allProfiles.length + '+';
 }
 
 // Escape anything that ends up in innerHTML (profiles can come from user submissions)
