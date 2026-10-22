@@ -812,16 +812,22 @@ async function sendContact() {
     addNotification('contact', `Message sent to ${candidate}`, `From ${name} (${email}) — will reply soon`);
     showToast({ title: 'Message sent!', html: `${esc(candidate)} will get your message and can reply to ${esc(email)}.` });
   } else {
-    // Save locally so admin can review — show success to avoid dead-end UX
+    // Server not reachable (always the case on the public site): keep a local copy,
+    // then open the recruiter's email app pre-filled so the message is really delivered.
     try {
       const pending = JSON.parse(localStorage.getItem('ttp_pending_contacts') || '[]');
       pending.push({ from: { name, email, company }, target, message: msg, sentAt: new Date().toISOString() });
       localStorage.setItem('ttp_pending_contacts', JSON.stringify(pending));
     } catch {}
+    const subject = encodeURIComponent(`Opportunity for ${candidate} (via TechTalent Portal)`);
+    const body = encodeURIComponent(`${msg}\n\n— ${name}${company ? ', ' + company : ''}\n${email}\n\nCandidate: ${target}`);
+    const mailto = `mailto:purna.padishala@gmail.com?subject=${subject}&body=${body}`;
     closeContactModal();
     document.getElementById('c-msg').value = '';
-    addNotification('contact', `Message logged for ${candidate}`, `From ${name} — will be forwarded to candidate`);
-    showToast({ title: 'Message received!', html: `We've logged your message to ${esc(candidate)} and will forward it shortly.` });
+    addNotification('contact', `Message to ${candidate} ready in your email app`, `From ${name} (${email})`);
+    showToast({ title: 'Message ready — almost done!', timeout: 12000,
+      html: `Your email app is opening with the message to ${esc(candidate)} filled in. Press <b>Send</b> there to deliver it. <a href="${mailto}">Didn't open? Click here.</a>` });
+    const a = document.createElement('a'); a.href = mailto; a.style.display = 'none'; document.body.appendChild(a); a.click(); a.remove();
   }
 }
 

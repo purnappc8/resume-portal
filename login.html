@@ -41,7 +41,10 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 
 .btn-primary:hover{background:#0d47a1;}
 .btn-primary:disabled{opacity:.6;cursor:not-allowed;}
 
-.error-box{background:#fff3f3;border:1px solid #ffcdd2;border-radius:8px;padding:10px 14px;color:var(--red);font-size:.88rem;margin-bottom:14px;display:none;}
+.error-box{background:#fff3f3;border:1px solid #ef9a9a;border-left:5px solid #c62828;border-radius:8px;padding:12px 14px;color:var(--red);font-size:.92rem;font-weight:600;margin-bottom:14px;display:none;}
+.error-box a,.error-box button.linklike{color:#1565c0;font-weight:700;background:none;border:none;padding:0;cursor:pointer;font:inherit;text-decoration:underline;}
+@keyframes boxShake{0%,100%{transform:none}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.error-box.shake{animation:boxShake .3s 2;}
 .success-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;color:var(--green);font-size:.88rem;margin-bottom:14px;display:none;}
 
 .divider{text-align:center;font-size:.8rem;color:var(--muted);margin:18px 0;position:relative;}
@@ -104,6 +107,7 @@ footer-note{display:block;text-align:center;font-size:.8rem;color:var(--muted);m
         <input type="checkbox" id="rememberMe" checked> Keep me signed in
       </label>
       <button type="submit" class="btn btn-primary" id="btnLogin">Sign In</button>
+      <button type="button" class="guest-btn" id="btnDemo" onclick="demoLogin()" style="margin-top:8px">🧪 Try the demo account (no sign-up)</button>
     </form>
 
     <!-- SIGNUP FORM -->
@@ -149,9 +153,12 @@ function switchTab(tab) {
   clearMessages();
 }
 
-function showError(msg) {
+function showError(msg, html) {
   const el = document.getElementById('errorBox');
-  el.textContent = msg; el.style.display = 'block';
+  if (html) el.innerHTML = html; else el.textContent = msg;
+  el.style.display = 'block';
+  el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+  el.scrollIntoView({block:'nearest', behavior:'smooth'});
   document.getElementById('successBox').style.display = 'none';
 }
 function showSuccess(msg) {
@@ -195,7 +202,12 @@ async function doLogin() {
 function offlineLogin(email, pwd) {
   try {
     const users = JSON.parse(localStorage.getItem('ttp_users') || '[]');
-    const user = users.find(u => u.email === email && u.pwd === hashSimple(pwd));
+    const known = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    const user = known && known.pwd === hashSimple(pwd) ? known : null;
+    if (known && !user) {
+      showError('', '⚠️ Wrong password for <b>' + email.replace(/[<>&"]/g,'') + '</b>. Try again, or <button type="button" class="linklike" onclick="demoLogin()">use the demo account</button>.');
+      return;
+    }
     if (user) {
       saveSession({token: 'offline_' + Date.now(), email, name: user.name, userId: user.id});
       showSuccess('Signed in (offline mode)! Redirecting…');
@@ -204,9 +216,23 @@ function offlineLogin(email, pwd) {
       // No account found — guide user to create one with their email pre-filled
       switchTab('signup');
       document.getElementById('signupEmail').value = email;
-      showError('No account found for that email. Fill in your name and a password to create one.');
+      showError('', '⚠️ <b>No account found for ' + email.replace(/[<>&"]/g,'') + '.</b> You need an account before you can sign in — fill in your name and a password below to create one (takes 10 seconds), or <button type="button" class="linklike" onclick="demoLogin()">try the demo account</button>.');
+      document.getElementById('signupName').focus();
     }
   } catch { showError('Could not sign in. Please try again.'); }
+}
+
+// One-click demo account so visitors and reviewers can see the signed-in dashboard
+function demoLogin() {
+  const email = 'demo@techtalent.demo', name = 'Demo Recruiter';
+  try {
+    const users = JSON.parse(localStorage.getItem('ttp_users') || '[]');
+    let u = users.find(x => x.email === email);
+    if (!u) { u = {id:'u_demo', name, email, pwd: hashSimple('demo-account'), demo:true}; users.push(u); localStorage.setItem('ttp_users', JSON.stringify(users)); }
+    saveSession({token:'demo_' + Date.now(), email, name, userId: u.id, demo:true});
+  } catch {}
+  showSuccess('Signed in to the demo account! Redirecting to your dashboard…');
+  setTimeout(() => location.href = decodeURIComponent(next), 700);
 }
 
 async function doSignup() {

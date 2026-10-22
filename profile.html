@@ -67,6 +67,9 @@ section h2{font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var
 .toast-wrap{position:fixed;bottom:24px;right:24px;z-index:900;max-width:calc(100vw - 32px);}
 .toast{display:flex;gap:10px;align-items:flex-start;background:#fff;border-left:5px solid var(--green);border-radius:10px;padding:14px 16px;box-shadow:0 6px 24px rgba(11,46,89,.22);font-size:.92rem;line-height:1.45;width:340px;max-width:100%;animation:toastIn .25s ease-out;}
 .toast b{color:var(--blue);}
+.toast.error{border-left-color:#c62828;}
+.toast a{color:#1565c0;font-weight:600;}
+.toast .t-close{background:none;border:none;font-size:1.1rem;color:#555;cursor:pointer;margin-left:auto;}
 @keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .btn-submit[disabled]{opacity:.65;cursor:wait;}
 </style>
@@ -237,29 +240,37 @@ function renderProfile(p) {
 function openContact(){document.getElementById('c-error').style.display='none';document.getElementById('contactModal').classList.add('open');}
 function closeContact(){document.getElementById('contactModal').classList.remove('open');}
 function escH(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function showErr(html){const e=document.getElementById('c-error');e.innerHTML=html;e.style.display='block';}
+function toast(kind, title, html, ms){
+  const w=document.getElementById('toastWrap'); w.innerHTML='';
+  const t=document.createElement('div'); t.className='toast'+(kind==='error'?' error':'');
+  t.setAttribute('role', kind==='error'?'alert':'status');
+  t.innerHTML=`<span>${kind==='error'?'⚠️':'✅'}</span><div><b>${escH(title)}</b><br>${html}</div><button class="t-close" aria-label="Dismiss" onclick="this.parentElement.remove()">×</button>`;
+  w.appendChild(t); if(ms) setTimeout(()=>t.remove(), ms);
+}
+function showErr(html){toast('error','Please check the form',html,6000);}
 async function sendContact(){
   const name=document.getElementById('c-name').value.trim();
   const email=document.getElementById('c-email').value.trim();
   const company=document.getElementById('c-co').value.trim();
   const msg=document.getElementById('c-msg').value.trim();
+  const who=window._profileName||'the candidate';
   const target=window._profileId+'|'+window._profileName;
-  document.getElementById('c-error').style.display='none';
   if(!name||!email||!msg){showErr('Please fill in your name, email and message.');return;}
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showErr('Please enter a valid email so the candidate can reply.');return;}
   const btn=document.querySelector('#contactModal .btn-submit');btn.disabled=true;btn.textContent='Sending…';
   let ok=false;
   try{const r=await fetch(`${API}/contact`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({from:{name,email,company},target,message:msg,sentAt:new Date().toISOString()}),signal:AbortSignal.timeout(5000)});ok=r.ok;}catch{}
   btn.disabled=false;btn.textContent='Send Message';
+  closeContact();document.getElementById('c-msg').value='';
   if(ok){
-    closeContact();document.getElementById('c-msg').value='';
-    const t=document.createElement('div');t.className='toast';
-    t.innerHTML=`<span>✅</span><div><b>Message sent</b><br>${escH(window._profileName||'The candidate')} will get your message and can reply to ${escH(email)}.</div>`;
-    document.getElementById('toastWrap').appendChild(t);setTimeout(()=>t.remove(),5000);
+    toast('ok','Message sent',`${escH(who)} will get your message and can reply to ${escH(email)}.`,6000);
   }else{
-    const subject=encodeURIComponent(`Opportunity for ${window._profileName||'candidate'} (via TechTalent Portal)`);
+    try{const p=JSON.parse(localStorage.getItem('ttp_pending_contacts')||'[]');p.push({from:{name,email,company},target,message:msg,sentAt:new Date().toISOString()});localStorage.setItem('ttp_pending_contacts',JSON.stringify(p));}catch{}
+    const subject=encodeURIComponent(`Opportunity for ${who} (via TechTalent Portal)`);
     const body=encodeURIComponent(`${msg}\n\n— ${name}${company?', '+company:''}\n${email}\n\nCandidate: ${target}`);
-    showErr(`⚠️ <b>Couldn't send right now</b> — your message wasn't delivered. <a href="mailto:purna.padishala@gmail.com?subject=${subject}&body=${body}">Send it by email instead</a>.`);
+    const mailto=`mailto:purna.padishala@gmail.com?subject=${subject}&body=${body}`;
+    toast('ok','Message ready — almost done!',`Your email app is opening with the message to ${escH(who)} filled in. Press <b>Send</b> there to deliver it. <a href="${mailto}">Didn't open? Click here.</a>`,12000);
+    const a=document.createElement('a');a.href=mailto;a.style.display='none';document.body.appendChild(a);a.click();a.remove();
   }
 }
 document.getElementById('contactModal').addEventListener('click',e=>{if(e.target===document.getElementById('contactModal'))closeContact();});
