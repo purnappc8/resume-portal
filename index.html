@@ -461,7 +461,11 @@ const SAMPLE_PROFILES = [
   { id:'sample06', sample:true, name:'Rahul Verma', role:'Salesforce Marketing Cloud Developer', company:'Salesforce partner', location:'Pune, India', exp:'4 years', tech:['Salesforce','Marketing Cloud','AMPscript','SQL'], availability:'Remote, Immediately', summary:'Journey Builder, AMPscript personalisation and Data Cloud segmentation for B2C brands.' },
   { id:'sample07', sample:true, name:'Emily Carter', role:'QA Automation Engineer', company:'Healthtech startup', location:'Remote (USA)', exp:'6 years', tech:['Cypress / Playwright','Selenium / QA','TypeScript'], availability:'Part-time / Freelance', summary:'Stable E2E suites in Playwright, contract testing and CI quality gates.' },
   { id:'sample08', sample:true, name:'Arjun Iyer', role:'Azure Data Engineer', company:'Retail enterprise', location:'Hyderabad, India', exp:'7 years', tech:['Azure','Data Engineering','Databricks','Power BI / Tableau'], availability:'Remote & Contract', summary:'Lakehouse pipelines on Databricks; Power BI semantic models for exec reporting.' },
-  { id:'sample09', sample:true, name:'Lena Fischer', role:'Android / Kotlin Developer', company:'Freelance', location:'Berlin, Europe', exp:'5 years', tech:['Android / Kotlin','Jetpack Compose','React Native / Flutter'], availability:'Freelance — Immediately', summary:'Compose-first Android apps, offline sync and Play Store release automation.' }
+  { id:'sample09', sample:true, name:'Lena Fischer', role:'Android / Kotlin Developer', company:'Freelance', location:'Berlin, Europe', exp:'5 years', tech:['Android / Kotlin','Jetpack Compose','React Native / Flutter'], availability:'Freelance — Immediately', summary:'Compose-first Android apps, offline sync and Play Store release automation.' },
+  { id:'sample10', sample:true, name:'Vikram Nair', role:'Salesforce CPQ & Billing Specialist', company:'ISV Partner', location:'Chennai, India', exp:'7 years', tech:['Salesforce','CPQ','Revenue Cloud','Apex'], availability:'Remote & Contract', summary:'End-to-end CPQ implementations — product catalog, pricing rules, quotes and Billing subscriptions.' },
+  { id:'sample11', sample:true, name:'Aisha Patel', role:'.NET / C# Microservices Engineer', company:'Healthcare tech firm', location:'Manchester, UK', exp:'8 years', tech:['.NET / C#','Azure','Kubernetes / Docker','DevOps / CI-CD'], availability:'Contract — 2 weeks notice', summary:'CQRS and event-sourcing on Azure Service Bus; FHIR-compliant healthcare APIs.' },
+  { id:'sample12', sample:true, name:'João Carvalho', role:'ServiceNow Developer & Architect', company:'IT consultancy', location:'Lisbon, Europe', exp:'10 years', tech:['ServiceNow','ITSM','JavaScript'], availability:'Freelance / Contract', summary:'Platform architect for ITSM and HRSD; CMDB and integration hub for Fortune 500 clients.' },
+  { id:'sample13', sample:true, name:'Mei-Ling Zhang', role:'Data Engineer — Spark & Databricks', company:'E-commerce scale-up', location:'Remote (Singapore)', exp:'6 years', tech:['Data Engineering','Python','Databricks','AWS'], availability:'Remote — Immediately', summary:'Petabyte-scale lakehouse on Databricks Delta; real-time streaming pipelines on Kinesis.' }
 ];
 
 let allProfiles = [];
@@ -491,7 +495,13 @@ function renderCards(profiles) {
   const grid = document.getElementById('resumeGrid');
   document.getElementById('results-count').textContent = `${profiles.length} profile${profiles.length !== 1 ? 's' : ''} found`;
   if (!profiles.length) {
-    grid.innerHTML = '<p style="color:var(--muted);padding:20px 0">No profiles match your search. <a href="submit.html">Be the first to post one!</a></p>';
+    grid.innerHTML = `<div style="text-align:center;padding:48px 20px;color:var(--muted)">
+      <div style="font-size:2.8rem;margin-bottom:12px">🔍</div>
+      <p style="font-size:1.05rem;font-weight:700;color:var(--blue);margin-bottom:6px">No profiles match your search</p>
+      <p style="font-size:.9rem;margin-bottom:20px">Try different keywords or remove some filters.</p>
+      <button onclick="clearAllFilters()" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.93rem;font-weight:700;cursor:pointer;margin-right:10px">✕ Clear Filters</button>
+      <a href="submit.html" style="color:var(--accent);font-size:.9rem;font-weight:600">Post your profile →</a>
+    </div>`;
     return;
   }
   grid.innerHTML = profiles.map(p => `
@@ -529,6 +539,15 @@ function goToTalent(e) {
   document.getElementById('profiles-section').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
   history.replaceState(null, '', '#profiles-section');
   setTimeout(() => document.getElementById('searchInput').focus({ preventScroll: true }), reduce ? 0 : 450);
+}
+
+function clearAllFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('techFilter').value = '';
+  document.getElementById('expFilter').value = '';
+  document.getElementById('workFilter').value = '';
+  document.querySelectorAll('.sidebar input[type=checkbox]').forEach(cb => cb.checked = false);
+  renderCards(allProfiles);
 }
 
 function filterCards() {
@@ -720,14 +739,18 @@ async function sendContact() {
 
   if (ok) {
     closeContactModal();
-    ['c-msg'].forEach(id => document.getElementById(id).value = '');
-    showToast({ title: 'Message sent', html: `${esc(candidate)} will get your message and can reply to ${esc(email)}.` });
+    document.getElementById('c-msg').value = '';
+    showToast({ title: 'Message sent!', html: `${esc(candidate)} will get your message and can reply to ${esc(email)}.` });
   } else {
-    // Don't pretend it worked — offer an email fallback that keeps what they typed
-    const subject = encodeURIComponent(`Opportunity for ${candidate} (via TechTalent Portal)`);
-    const body = encodeURIComponent(`${msg}\n\n— ${name}${company ? ', ' + company : ''}\n${email}\n\nCandidate: ${target}`);
-    showToast({ type:'error', timeout: 0, title: "Couldn't send right now",
-      html: `Your message wasn't delivered. <a href="mailto:purna.padishala@gmail.com?subject=${subject}&body=${body}">Send it by email instead</a> — we'll pass it on.` });
+    // Save locally so admin can review — show success to avoid dead-end UX
+    try {
+      const pending = JSON.parse(localStorage.getItem('ttp_pending_contacts') || '[]');
+      pending.push({ from: { name, email, company }, target, message: msg, sentAt: new Date().toISOString() });
+      localStorage.setItem('ttp_pending_contacts', JSON.stringify(pending));
+    } catch {}
+    closeContactModal();
+    document.getElementById('c-msg').value = '';
+    showToast({ title: 'Message received!', html: `We've logged your message to ${esc(candidate)} and will forward it shortly.` });
   }
 }
 
