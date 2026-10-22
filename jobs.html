@@ -123,8 +123,9 @@ footer a{color:rgba(255,255,255,.9);}
     <a href="dashboard.html" id="nav-dashboard" style="display:none">My Dashboard</a>
     <a href="post-job.html">Post a Job</a>
     <a href="login.html#signup" id="nav-signup" class="btn-outline" style="border:1px solid rgba(255,255,255,.5);border-radius:6px">Sign Up</a>
-    <a href="login.html" id="nav-login" class="btn-primary">Sign In</a>
-    <a href="#" onclick="doLogout()" id="nav-logout" style="display:none">Logout</a>
+    <a href="login.html?next=jobs.html" id="nav-login" class="btn-primary">Sign In</a>
+    <span id="nav-hi" style="display:none;color:rgba(255,255,255,.85);font-size:.9rem;padding:0 6px">Hi, <b id="nav-name">User</b></span>
+    <a href="#" onclick="doLogout();return false" id="nav-logout" style="display:none">Sign Out</a>
 </div>
 </nav>
 
@@ -288,7 +289,19 @@ let currentSource = 'all';
 let jobs = [];
 let applied = new Set(JSON.parse(localStorage.getItem('ttp_applied')||'[]'));
 let saved   = new Set(JSON.parse(localStorage.getItem('ttp_saved')||'[]'));
-let user    = JSON.parse(localStorage.getItem('ttp_user')||'null');
+function getSessionUser() {
+  try {
+    const raw = sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session');
+    const s = raw ? JSON.parse(raw) : null;
+    if (s && s.token && s.token !== 'guest') return { name: s.name || (s.email||'').split('@')[0], email: s.email || '', role: s.role || 'candidate' };
+  } catch {}
+  try { return JSON.parse(localStorage.getItem('ttp_user') || 'null'); } catch { return null; }
+}
+function saveSharedSession(u) {
+  const s = JSON.stringify({ token: 'local_' + Date.now(), name: u.name, email: u.email, role: u.role || 'candidate' });
+  try { sessionStorage.setItem('ttp_session', s); localStorage.setItem('ttp_session', s); localStorage.setItem('ttp_user', JSON.stringify(u)); } catch {}
+}
+let user    = getSessionUser();
 
 // ── Source colors/logos ──────────────────────────────────────────────────────
 const SRC_STYLE = {
@@ -458,7 +471,7 @@ function markApplied(id, btn) {
   const job = jobs.find(j=>j.id===id);
   fetch(`${API}/applied`, {
     method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({jobId:id,jobTitle:job?.title,source:job?.source,url:job?.url,user:localStorage.getItem('ttp_user'),appliedAt:new Date().toISOString()})
+    body: JSON.stringify({jobId:id,jobTitle:job?.title,source:job?.source,url:job?.url,user:JSON.stringify(getSessionUser()),appliedAt:new Date().toISOString()})
   }).catch(()=>{});
   updateDashBanner();
   setTimeout(()=>{
@@ -495,7 +508,9 @@ function updateDashBanner() {
 
 // ── Auth ───────────────────────────────────────────────────────────────────────
 function updateNav() {
-  user = JSON.parse(localStorage.getItem('ttp_user')||'null');
+  user = getSessionUser();
+  document.getElementById('nav-hi').style.display = user ? '' : 'none';
+  if (user) document.getElementById('nav-name').textContent = user.name || user.email || 'User';
   document.getElementById('nav-signup').style.display = user ? 'none' : '';
   document.getElementById('nav-login').style.display  = user ? 'none' : '';
   document.getElementById('nav-logout').style.display = user ? '' : 'none';
@@ -520,9 +535,9 @@ async function doSignup(){
   try{
     const r=await fetch(`${API}/signup`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,pass,role:'candidate',createdAt:new Date().toISOString()}),signal:AbortSignal.timeout(5000)});
     const d=await r.json();
-    if(r.ok){localStorage.setItem('ttp_user',JSON.stringify({name,email,role:'candidate'}));authOk('Welcome, '+name+'!');setTimeout(()=>{closeAuth();updateNav();},1500);}
+    if(r.ok){saveSharedSession({name,email,role:'candidate'});authOk('Welcome, '+name+'!');setTimeout(()=>{closeAuth();updateNav();},1500);}
     else authErr(d.error||'Signup failed.');
-  }catch{localStorage.setItem('ttp_user',JSON.stringify({name,email,role:'candidate'}));authOk('Account created!');setTimeout(()=>{closeAuth();updateNav();},1500);}
+  }catch{saveSharedSession({name,email,role:'candidate'});authOk('Account created!');setTimeout(()=>{closeAuth();updateNav();},1500);}
 }
 async function doLogin(){
   const email=document.getElementById('li-email').value.trim();
@@ -531,11 +546,11 @@ async function doLogin(){
   try{
     const r=await fetch(`${API}/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,pass}),signal:AbortSignal.timeout(5000)});
     const d=await r.json();
-    if(r.ok){localStorage.setItem('ttp_user',JSON.stringify(d.user));authOk('Welcome back, '+d.user.name+'!');setTimeout(()=>{closeAuth();updateNav();},1500);}
+    if(r.ok){saveSharedSession(d.user);authOk('Welcome back, '+d.user.name+'!');setTimeout(()=>{closeAuth();updateNav();},1500);}
     else authErr(d.error||'Invalid credentials.');
   }catch{authErr('Server offline. Sign up first.');}
 }
-function doLogout(){localStorage.removeItem('ttp_user');user=null;updateNav();}
+function doLogout(){try{['ttp_user','ttp_session'].forEach(k=>{localStorage.removeItem(k);sessionStorage.removeItem(k);});}catch{}user=null;updateNav();}
 function authOk(m){const e=document.getElementById('auth-success');e.textContent=m;e.style.display='block';document.getElementById('auth-error').style.display='none';}
 function authErr(m){const e=document.getElementById('auth-error');e.textContent=m;e.style.display='block';document.getElementById('auth-success').style.display='none';}
 
