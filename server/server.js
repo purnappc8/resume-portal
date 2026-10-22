@@ -312,6 +312,27 @@ const server = http.createServer(async (req, res) => {
     console.log(`  -> Job posted: ${job.title} by ${job.company}`);
     return json(res, 201, { ok: true, id: job.id });
   }
+  // -- GET /jobs/posted?email= (jobs posted by a specific user)
+  if (req.method === 'GET' && url === '/jobs/posted') {
+    const all = readJson('jobs.json', []);
+    const mine = qs.email ? all.filter(j => j.postedBy && j.postedBy.email === qs.email) : all.filter(j => j.source === 'TechTalent Portal');
+    const apps = readJson('applications.json', []);
+    const result = mine.map(j => ({ ...j, applicantCount: apps.filter(a => a.jobId === j.id).length }));
+    return json(res, 200, result);
+  }
+
+  // -- GET /applications/for-job?jobId=&email= (applicants for a posted job)
+  if (req.method === 'GET' && url === '/applications/for-job') {
+    const { jobId, email } = qs;
+    if (!jobId) return json(res, 400, { error: 'jobId required' });
+    const jobs = readJson('jobs.json', []);
+    const job  = jobs.find(j => j.id === jobId);
+    if (!job) return json(res, 404, { error: 'Job not found' });
+    if (email && job.postedBy && job.postedBy.email !== email) return json(res, 403, { error: 'Not authorized' });
+    const apps = readJson('applications.json', []);
+    return json(res, 200, apps.filter(a => a.jobId === jobId));
+  }
+
 
   // â”€â”€ DELETE /jobs/:id â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (req.method === 'DELETE' && url.startsWith('/jobs/')) {

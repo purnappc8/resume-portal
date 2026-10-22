@@ -248,6 +248,38 @@ footer a{color:rgba(255,255,255,.9);}
 <!-- AI toast notification -->
 <div class="ai-toast" id="aiToast"></div>
 
+
+<!-- Apply Modal -->
+<div id="applyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:700;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:14px;padding:28px;max-width:440px;width:100%;max-height:90vh;overflow-y:auto;">
+    <h2 id="applyJobTitle" style="font-size:1.1rem;color:var(--blue);margin-bottom:6px;"></h2>
+    <p id="applyJobComp" style="color:var(--muted);font-size:.88rem;margin-bottom:18px;"></p>
+    <div id="applySuccess" style="display:none;background:#d4edda;color:#155724;border-radius:8px;padding:14px;margin-bottom:14px;">
+      ✅ Application sent! The poster will receive your details. Check <a href="dashboard.html?tab=applications" style="color:var(--green);font-weight:700">My Dashboard</a> to track it.
+    </div>
+    <div id="applyForm">
+      <div style="margin-bottom:12px">
+        <label style="display:block;font-size:.85rem;font-weight:700;color:var(--blue);margin-bottom:4px">Your Name *</label>
+        <input id="ap-name" type="text" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:.93rem;background:var(--bg);" placeholder="Full name">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="display:block;font-size:.85rem;font-weight:700;color:var(--blue);margin-bottom:4px">Email *</label>
+        <input id="ap-email" type="email" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:.93rem;background:var(--bg);" placeholder="you@email.com">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="display:block;font-size:.85rem;font-weight:700;color:var(--blue);margin-bottom:4px">Cover Note (optional)</label>
+        <textarea id="ap-cover" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;font-family:inherit;resize:vertical;min-height:80px;" placeholder="Brief intro about yourself and why you're a good fit…"></textarea>
+      </div>
+      <input type="hidden" id="ap-jobid">
+      <div id="applyErr" style="display:none;background:#fdecea;color:#c62828;border-radius:8px;padding:10px;margin-bottom:12px;font-size:.9rem;"></div>
+      <div style="display:flex;gap:10px;margin-top:4px">
+        <button onclick="submitApply()" style="flex:1;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.95rem;cursor:pointer">Send Application</button>
+        <button onclick="closeApplyModal()" style="padding:11px 18px;background:var(--bg);color:var(--muted);border:1px solid var(--border);border-radius:8px;font-weight:600;cursor:pointer">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer>© 2026 TechTalent Portal &nbsp;·&nbsp; <a href="index.html">Browse Talent</a> &nbsp;·&nbsp; <a href="submit.html">Post Resume</a></footer>
 
 <script>
@@ -405,7 +437,9 @@ function renderJobs() {
       <div class="job-actions">
         ${isApplied
           ? `<button class="btn-apply done" disabled>✅ Applied</button>`
-          : `<a class="btn-apply" href="${j.url}" target="_blank" onclick="markApplied('${j.id}',this)">Apply ↗</a>`}
+          : (j.source === 'TechTalent Portal' && !j.applyUrl
+              ? `<button class="btn-apply" onclick="openApplyModal('${j.id}')">✉ Apply Now</button>`
+              : `<a class="btn-apply" href="${j.applyUrl||j.url||'#'}" target="_blank" onclick="markApplied('${j.id}',this)">Apply ↗</a>`)}
         ${!isApplied ? `<button class="btn-ai-apply" onclick="aiApply('${j.id}')">🤖 AI Apply</button>` : ''}
         <button class="btn-save${isSaved?' done':''}" onclick="toggleSave('${j.id}',this)">
           ${isSaved?'🔖 Saved':'🔖 Save'}
@@ -596,6 +630,68 @@ loadJobs();
     btn.href='dashboard.html';
   }
 })();
+
+// ── In-portal Apply Modal ───────────────────────────────────────────────────
+function openApplyModal(jobId) {
+  const job = jobs.find(j => j.id === jobId);
+  if (!job) return;
+  document.getElementById('ap-jobid').value = jobId;
+  document.getElementById('applyJobTitle').textContent = job.title;
+  document.getElementById('applyJobComp').textContent = (job.company||'') + (job.location ? ' · ' + job.location : '');
+  document.getElementById('applySuccess').style.display = 'none';
+  document.getElementById('applyForm').style.display = '';
+  document.getElementById('applyErr').style.display = 'none';
+  // Pre-fill from session
+  const sess = (() => { try { const s = sessionStorage.getItem('ttp_session')||localStorage.getItem('ttp_session'); return s?JSON.parse(s):null; } catch { return null; } })();
+  if (sess) {
+    document.getElementById('ap-name').value  = sess.name  || '';
+    document.getElementById('ap-email').value = sess.email || '';
+  }
+  const modal = document.getElementById('applyModal');
+  modal.style.display = 'flex';
+}
+function closeApplyModal() { document.getElementById('applyModal').style.display = 'none'; }
+document.addEventListener('click', e => { const m = document.getElementById('applyModal'); if (m && e.target === m) closeApplyModal(); });
+
+async function submitApply() {
+  const jobId = document.getElementById('ap-jobid').value;
+  const name  = document.getElementById('ap-name').value.trim();
+  const email = document.getElementById('ap-email').value.trim();
+  const cover = document.getElementById('ap-cover').value.trim();
+  const errEl = document.getElementById('applyErr');
+  if (!name || !email) { errEl.textContent = 'Please enter your name and email.'; errEl.style.display='block'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Enter a valid email address.'; errEl.style.display='block'; return; }
+  errEl.style.display='none';
+  const job = jobs.find(j => j.id === jobId) || {};
+  const payload = {
+    jobId, jobTitle: job.title, source: job.source||'TechTalent Portal', url: job.url,
+    userEmail: email, userName: name, coverNote: cover,
+    user: JSON.stringify({ name, email }),
+    appliedAt: new Date().toISOString()
+  };
+  // Server
+  try {
+    await fetch(`${API}/applied`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload), signal: AbortSignal.timeout(4000) });
+  } catch {}
+  // localStorage tracking
+  applied.add(jobId);
+  localStorage.setItem('ttp_applied', JSON.stringify([...applied]));
+  const apps = JSON.parse(localStorage.getItem('ttp_applications')||'[]');
+  apps.unshift({ ...payload, status: 'Applied' });
+  localStorage.setItem('ttp_applications', JSON.stringify(apps));
+  // UI
+  document.getElementById('applySuccess').style.display = 'block';
+  document.getElementById('applyForm').style.display = 'none';
+  // Update card
+  const card = document.getElementById('jc-' + jobId);
+  if (card) {
+    card.classList.add('applied');
+    const applyBtn = card.querySelector('.btn-apply');
+    if (applyBtn) applyBtn.outerHTML = '<button class="btn-apply done" disabled>✅ Applied</button>';
+  }
+  updateDashBanner();
+}
+
 </script>
 </body>
 </html>

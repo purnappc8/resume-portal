@@ -104,6 +104,22 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 .dash-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700;}
 
 .empty-state{text-align:center;padding:32px;color:var(--muted);}
+.posted-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:12px;}
+.posted-card .p-title{font-size:1rem;font-weight:700;color:var(--blue);margin-bottom:2px;}
+.posted-card .p-meta{font-size:.83rem;color:var(--muted);margin-bottom:8px;}
+.posted-card .p-stats{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px;}
+.posted-card .p-stat .n{font-size:1.3rem;font-weight:800;color:var(--blue);}
+.posted-card .p-stat .l{font-size:.75rem;color:var(--muted);}
+.posted-card .p-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-view-applicants{background:var(--accent);color:#fff;padding:6px 14px;border-radius:6px;font-size:.83rem;font-weight:700;border:none;cursor:pointer;}
+.btn-close-job{background:#fff;color:var(--muted);padding:6px 14px;border-radius:6px;font-size:.83rem;font-weight:600;border:1px solid var(--border);cursor:pointer;}
+.applicant-row{padding:12px 0;border-bottom:1px solid var(--border);}
+.applicant-row:last-child{border-bottom:none;}
+.applicant-name{font-weight:700;color:var(--blue);margin-bottom:2px;}
+.applicant-meta{font-size:.85rem;color:var(--muted);}
+.applicant-actions{margin-top:6px;display:flex;gap:8px;}
+.btn-contact-app{background:var(--accent);color:#fff;padding:4px 12px;border-radius:6px;font-size:.8rem;font-weight:700;text-decoration:none;border:none;cursor:pointer;}
+
 .empty-state .ei{font-size:2.5rem;margin-bottom:8px;}
 </style>
 </head>
@@ -156,10 +172,11 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 
     <!-- TABS -->
     <div class="dash-tabs">
-      <button class="dash-tab active" onclick="showTab('applications')">Applications</button>
-      <button class="dash-tab" onclick="showTab('saved')">Saved Jobs</button>
-      <button class="dash-tab" onclick="showTab('alerts')">Job Alerts</button>
-      <button class="dash-tab" onclick="showTab('profile')">My Profile</button>
+      <button class="dash-tab active" id="tab-btn-applications" onclick="showTab('applications')">📤 My Applications</button>
+      <button class="dash-tab" id="tab-btn-posted" onclick="showTab('posted')">📋 My Posted Jobs</button>
+      <button class="dash-tab" id="tab-btn-saved" onclick="showTab('saved')">🔖 Saved Jobs</button>
+      <button class="dash-tab" id="tab-btn-alerts" onclick="showTab('alerts')">🔔 Alerts</button>
+      <button class="dash-tab" id="tab-btn-profile" onclick="showTab('profile')">👤 My Profile</button>
     </div>
 
     <!-- APPLICATIONS TAB -->
@@ -169,6 +186,15 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
         <a href="jobs.html">Find More Jobs →</a>
       </div>
       <div id="appTableWrap"></div>
+    </div>
+
+    <!-- POSTED JOBS TAB -->
+    <div id="tab-posted" style="display:none">
+      <div class="section-header">
+        <h2>Jobs You Posted</h2>
+        <a href="post-job.html" style="background:var(--accent);color:#fff;padding:7px 16px;border-radius:8px;text-decoration:none;font-size:.85rem;font-weight:700">+ Post a New Job</a>
+      </div>
+      <div id="postedList"></div>
     </div>
 
     <!-- SAVED TAB -->
@@ -210,6 +236,18 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
       </div>
     </div>
 
+
+  <!-- Applicant Modal -->
+  <div id="applicantModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;align-items:center;justify-content:center;padding:20px;">
+    <div style="max-width:600px;width:100%;background:#fff;border-radius:14px;padding:28px;max-height:90vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h2 id="applicantModalTitle" style="font-size:1.1rem;color:var(--blue);">Applicants</h2>
+        <button onclick="closeApplicantModal()" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted)">&#215;</button>
+      </div>
+      <div id="applicantModalBody"></div>
+    </div>
+  </div>
+
   </div><!-- /dashContent -->
 </div>
 
@@ -224,6 +262,11 @@ let alerts       = JSON.parse(localStorage.getItem('ttp_alerts')||'[]');
 const SRC_COLORS = {Indeed:'#2164f3',LinkedIn:'#0a66c2',Upwork:'#14a800',Freelancer:'#0e4fac',Toptal:'#204ecf',Guru:'#f07c00',PeoplePerHour:'#e8360e'};
 
 function init() {
+  // Check URL param to auto-switch tab
+  const urlTab = new URLSearchParams(location.search).get('tab');
+  if (urlTab && ['applications','posted','saved','alerts','profile'].includes(urlTab)) {
+    setTimeout(() => showTab(urlTab), 100);
+  }
   if(!user) {
     document.getElementById('dashContent').style.display='none';
     document.getElementById('loginGate').style.display='block';
@@ -348,13 +391,86 @@ function renderProfile() {
 }
 
 function showTab(name){
-  ['applications','saved','alerts','profile'].forEach(t=>{
-    document.getElementById('tab-'+t).style.display=t===name?'':'none';
+  ['applications','posted','saved','alerts','profile'].forEach(t=>{
+    const el = document.getElementById('tab-'+t);
+    if (el) el.style.display = t===name ? '' : 'none';
   });
-  document.querySelectorAll('.dash-tab').forEach((btn,i)=>{
-    btn.classList.toggle('active',['applications','saved','alerts','profile'][i]===name);
+  document.querySelectorAll('.dash-tab').forEach(btn=>{
+    const id = btn.id.replace('tab-btn-','');
+    btn.classList.toggle('active', id === name);
   });
+  if (name === 'posted') loadPostedJobs();
 }
+
+
+// ── My Posted Jobs ────────────────────────────────────────────────────────────
+async function loadPostedJobs() {
+  const wrap = document.getElementById('postedList');
+  if (!wrap) return;
+  let jobs = [];
+  // Try server first
+  try {
+    const r = await fetch(`${API}/jobs/posted?email=${encodeURIComponent(user.email)}`, { signal: AbortSignal.timeout(3000) });
+    if (r.ok) jobs = await r.json();
+  } catch {}
+  // Merge with localStorage posted jobs
+  const local = JSON.parse(localStorage.getItem('ttp_my_jobs') || '[]');
+  const serverIds = new Set(jobs.map(j => j.id));
+  local.forEach(j => { if (!serverIds.has(j.id)) jobs.push(j); });
+
+  if (!jobs.length) {
+    wrap.innerHTML = `<div class="empty-state"><div class="ei">📋</div><p>You haven't posted any jobs yet.</p><br><a href="post-job.html" style="background:var(--accent);color:#fff;padding:9px 20px;border-radius:8px;text-decoration:none;font-weight:700">Post Your First Job →</a></div>`;
+    return;
+  }
+  wrap.innerHTML = jobs.map(j => `
+    <div class="posted-card">
+      <div class="p-title">${esc(j.title)}</div>
+      <div class="p-meta">${esc(j.company)} · ${esc(j.location||'Remote')} · ${esc(j.type||'Freelance')} · Posted ${new Date(j.postedAt||Date.now()).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div>
+      ${j.skills && j.skills.length ? `<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;">${j.skills.map(s=>`<span style="background:var(--light);color:var(--blue);padding:2px 9px;border-radius:20px;font-size:.77rem;font-weight:600">${esc(s)}</span>`).join('')}</div>` : ''}
+      <div class="p-stats">
+        <div class="p-stat"><div class="n">${j.applicantCount||0}</div><div class="l">Applicants</div></div>
+        <div class="p-stat"><div class="n">${j.status==='closed'?'🔒':'🟢'}</div><div class="l">${j.status==='closed'?'Closed':'Open'}</div></div>
+      </div>
+      <div class="p-actions">
+        <button class="btn-view-applicants" onclick="viewApplicants('${esc(j.id)}','${esc(j.title)}')">👥 View Applicants</button>
+        <a href="jobs.html" style="background:var(--light);color:var(--blue);padding:6px 14px;border-radius:6px;font-size:.83rem;font-weight:600;text-decoration:none;">View on Job Board</a>
+      </div>
+    </div>`).join('');
+}
+
+async function viewApplicants(jobId, jobTitle) {
+  document.getElementById('applicantModalTitle').textContent = `Applicants for: ${jobTitle}`;
+  document.getElementById('applicantModalBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted)">Loading…</div>';
+  const modal = document.getElementById('applicantModal');
+  modal.style.display = 'flex';
+
+  let applicants = [];
+  try {
+    const r = await fetch(`${API}/applications/for-job?jobId=${encodeURIComponent(jobId)}&email=${encodeURIComponent(user.email)}`, { signal: AbortSignal.timeout(3000) });
+    if (r.ok) applicants = await r.json();
+  } catch {}
+
+  if (!applicants.length) {
+    document.getElementById('applicantModalBody').innerHTML = '<div class="empty-state"><div class="ei">👥</div><p>No applications yet for this job.</p><p style="margin-top:8px;font-size:.85rem;">Share the job board link to attract candidates.</p></div>';
+    return;
+  }
+  document.getElementById('applicantModalBody').innerHTML = `
+    <p style="color:var(--muted);font-size:.88rem;margin-bottom:14px;">${applicants.length} applicant${applicants.length!==1?'s':''}</p>
+    ${applicants.map(a => `
+      <div class="applicant-row">
+        <div class="applicant-name">${esc(a.userName||'Anonymous')}</div>
+        <div class="applicant-meta">📧 ${esc(a.userEmail||'—')} · Applied ${new Date(a.appliedAt||Date.now()).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div>
+        ${a.coverNote ? `<div style="margin-top:5px;font-size:.85rem;color:var(--text);background:var(--light);padding:8px 12px;border-radius:6px">"${esc(a.coverNote)}"</div>` : ''}
+        <div class="applicant-actions">
+          <a href="mailto:${esc(a.userEmail||'')}" class="btn-contact-app">📧 Email</a>
+          <span class="status-badge ${a.status==='Shortlisted'?'s-shortlisted':a.status==='Interview'?'s-interview':'s-applied'}">${esc(a.status||'Applied')}</span>
+        </div>
+      </div>`).join('')}`;
+}
+function closeApplicantModal() { document.getElementById('applicantModal').style.display='none'; }
+document.addEventListener('click', e => { const m = document.getElementById('applicantModal'); if (m && e.target === m) closeApplicantModal(); });
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function doLogout(){localStorage.removeItem('ttp_user');window.location.href='index.html';}
 
