@@ -145,6 +145,16 @@ const KEY = 'ttp_session';
 const params = new URLSearchParams(location.search);
 const next = params.get('next') || 'dashboard.html';
 
+// After a successful sign-in: go to the dashboard, or back to the page that sent you here
+function goAfterLogin() {
+  const dest = decodeURIComponent(new URLSearchParams(location.search).get('next') || '');
+  if (!dest || dest === 'dashboard.html') {
+    window.location.href = 'dashboard.html';
+  } else {
+    window.location.href = dest;
+  }
+}
+
 function switchTab(tab) {
   document.getElementById('formLogin').style.display = tab==='login' ? '' : 'none';
   document.getElementById('formSignup').style.display = tab==='signup' ? '' : 'none';
@@ -194,7 +204,7 @@ async function doLogin() {
     if (!r.ok) { showError(data.error || 'Invalid email or password.'); return; }
     saveSession({token: data.token || 'local_' + Date.now(), email, name: data.name || email.split('@')[0], userId: data.userId});
     showSuccess('Signed in! Redirecting…');
-    setTimeout(() => location.href = decodeURIComponent(next), 800);
+    setTimeout(goAfterLogin, 800);
   } catch { offlineLogin(email, pwd); }
   finally { btn.disabled = false; btn.textContent = 'Sign In'; }
 }
@@ -211,7 +221,7 @@ function offlineLogin(email, pwd) {
     if (user) {
       saveSession({token: 'offline_' + Date.now(), email, name: user.name, userId: user.id});
       showSuccess('Signed in (offline mode)! Redirecting…');
-      setTimeout(() => location.href = decodeURIComponent(next), 800);
+      setTimeout(goAfterLogin, 800);
     } else {
       // No account found — guide user to create one with their email pre-filled
       switchTab('signup');
@@ -232,7 +242,7 @@ function demoLogin() {
     saveSession({token:'demo_' + Date.now(), email, name, userId: u.id, demo:true});
   } catch {}
   showSuccess('Signed in to the demo account! Redirecting to your dashboard…');
-  setTimeout(() => location.href = decodeURIComponent(next), 700);
+  setTimeout(goAfterLogin, 700);
 }
 
 async function doSignup() {
@@ -255,7 +265,7 @@ async function doSignup() {
     if (!r.ok) { showError(data.error || 'Could not create account.'); return; }
     saveSession({token: data.token || 'local_' + Date.now(), email, name, userId: data.userId});
     showSuccess('Account created! Redirecting…');
-    setTimeout(() => location.href = decodeURIComponent(next), 800);
+    setTimeout(goAfterLogin, 800);
   } catch { offlineSignup(name, email, pwd); }
   finally { btn.disabled = false; btn.textContent = 'Create Account'; }
 }
@@ -269,7 +279,7 @@ function offlineSignup(name, email, pwd) {
     localStorage.setItem('ttp_users', JSON.stringify(users));
     saveSession({token: 'offline_' + Date.now(), email, name, userId: user.id});
     showSuccess('Account created (offline mode)! Redirecting…');
-    setTimeout(() => location.href = decodeURIComponent(next), 800);
+    setTimeout(goAfterLogin, 800);
   } catch { showError('Could not create account. Server offline.'); }
 }
 
@@ -300,7 +310,7 @@ function linkedInLogin() {
   try { sessionStorage.setItem(KEY, JSON.stringify(session)); localStorage.setItem(KEY, JSON.stringify(session)); } catch {}
   history.replaceState(null, '', location.pathname + location.search);
   showSuccess('Signed in with LinkedIn! Redirecting…');
-  setTimeout(() => location.href = decodeURIComponent(params.get('next') || 'dashboard.html'), 900);
+  setTimeout(goAfterLogin, 900);
 })();
 
 if (location.hash === '#signup') switchTab('signup');

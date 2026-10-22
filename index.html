@@ -811,6 +811,7 @@ async function sendContact() {
     document.getElementById('c-msg').value = '';
     addNotification('contact', `Message sent to ${candidate}`, `From ${name} (${email}) — will reply soon`);
     showToast({ title: 'Message sent!', html: `${esc(candidate)} will get your message and can reply to ${esc(email)}.` });
+    alert('Thank you! Your message has been sent to the candidate.');
   } else {
     // Server not reachable (always the case on the public site): keep a local copy,
     // then open the recruiter's email app pre-filled so the message is really delivered.
@@ -827,6 +828,7 @@ async function sendContact() {
     addNotification('contact', `Message to ${candidate} ready in your email app`, `From ${name} (${email})`);
     showToast({ title: 'Message ready — almost done!', timeout: 12000,
       html: `Your email app is opening with the message to ${esc(candidate)} filled in. Press <b>Send</b> there to deliver it. <a href="${mailto}">Didn't open? Click here.</a>` });
+    alert('Thank you! Your message is ready. Your email app will open next. Press Send there to deliver it to the candidate.');
     const a = document.createElement('a'); a.href = mailto; a.style.display = 'none'; document.body.appendChild(a); a.click(); a.remove();
   }
 }

@@ -264,12 +264,14 @@ async function sendContact(){
   closeContact();document.getElementById('c-msg').value='';
   if(ok){
     toast('ok','Message sent',`${escH(who)} will get your message and can reply to ${escH(email)}.`,6000);
+    alert('Thank you! Your message has been sent to the candidate.');
   }else{
     try{const p=JSON.parse(localStorage.getItem('ttp_pending_contacts')||'[]');p.push({from:{name,email,company},target,message:msg,sentAt:new Date().toISOString()});localStorage.setItem('ttp_pending_contacts',JSON.stringify(p));}catch{}
     const subject=encodeURIComponent(`Opportunity for ${who} (via TechTalent Portal)`);
     const body=encodeURIComponent(`${msg}\n\n— ${name}${company?', '+company:''}\n${email}\n\nCandidate: ${target}`);
     const mailto=`mailto:purna.padishala@gmail.com?subject=${subject}&body=${body}`;
     toast('ok','Message ready — almost done!',`Your email app is opening with the message to ${escH(who)} filled in. Press <b>Send</b> there to deliver it. <a href="${mailto}">Didn't open? Click here.</a>`,12000);
+    alert('Thank you! Your message is ready. Your email app will open next. Press Send there to deliver it to the candidate.');
     const a=document.createElement('a');a.href=mailto;a.style.display='none';document.body.appendChild(a);a.click();a.remove();
   }
 }
