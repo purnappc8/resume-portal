@@ -170,6 +170,30 @@ footer a { color: rgba(255,255,255,.9); }
 /* Scroll target for "Hire Talent" (offset for sticky nav) */
 #profiles-section { scroll-margin-top: 64px; }
 
+/* NOTIFICATION BELL */
+.notif-wrap { position: relative; }
+.notif-btn { background: none; border: none; cursor: pointer; padding: 6px 10px; color: rgba(255,255,255,.8); font-size: 1.15rem; border-radius: 4px; line-height: 1; position: relative; }
+.notif-btn:hover { background: rgba(255,255,255,.15); color: #fff; }
+.notif-badge { position: absolute; top: 2px; right: 2px; background: #e53935; color: #fff; border-radius: 50%; font-size: .62rem; font-weight: 800; width: 15px; height: 15px; display: none; align-items: center; justify-content: center; pointer-events: none; }
+.notif-dropdown { position: absolute; top: calc(100% + 8px); right: 0; width: 340px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 8px 32px rgba(11,46,89,.18); z-index: 300; display: none; max-height: 420px; overflow-y: auto; }
+.notif-dropdown.open { display: block; }
+.notif-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px 10px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: #fff; }
+.notif-header h3 { font-size: .92rem; font-weight: 700; color: var(--blue); }
+.notif-mark-all { background: none; border: none; color: var(--accent); font-size: .8rem; cursor: pointer; font-weight: 600; }
+.notif-item { padding: 12px 16px; border-bottom: 1px solid #f0f4f8; cursor: default; }
+.notif-item.unread { background: #f0f6ff; }
+.n-title { font-weight: 700; font-size: .87rem; color: var(--blue); }
+.n-body { font-size: .81rem; color: var(--muted); margin-top: 2px; }
+.n-time { font-size: .74rem; color: var(--muted); margin-top: 4px; }
+.notif-empty { padding: 28px 16px; text-align: center; color: var(--muted); font-size: .9rem; }
+
+/* SCHEDULE MODAL */
+.sched-result { background: #e8f5e9; border: 1px solid #a5d6a7; border-radius: 8px; padding: 14px; margin-bottom: 14px; display: none; }
+.sched-result p { font-weight: 700; color: var(--green); margin-bottom: 8px; }
+.sched-result a { color: var(--accent); font-weight: 600; }
+.btn-schedule { background: #e8f5e9; color: var(--green); padding: 7px 18px; border-radius: 6px; font-size: .88rem; font-weight: 600; border: 1px solid #a5d6a7; cursor: pointer; }
+.btn-schedule:hover { background: #c8e6c9; }
+
 /* Sample-profile marker */
 .sample-badge { position: absolute; top: 16px; right: 16px; background: #fff4e5; color: #8a5300; font-size: .75rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; border: 1px solid #f3d19c; }
 .sample-note { font-size: .82rem; color: var(--muted); }
@@ -210,6 +234,19 @@ footer a { color: rgba(255,255,255,.9); }
       <a href="dashboard.html" style="color:rgba(255,255,255,.8);text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.9rem">My Dashboard</a>
       <a href="#" onclick="ttpLogout();return false" style="color:rgba(255,255,255,.7);text-decoration:none;padding:6px 10px;border-radius:4px;font-size:.85rem">Sign Out</a>
     </span>
+    <!-- NOTIFICATION BELL -->
+    <div class="notif-wrap">
+      <button class="notif-btn" id="notifBtn" onclick="toggleNotif(event)" title="Notifications" aria-label="Notifications">
+        🔔<span class="notif-badge" id="notifBadge"></span>
+      </button>
+      <div class="notif-dropdown" id="notifDropdown">
+        <div class="notif-header">
+          <h3>🔔 Notifications</h3>
+          <button class="notif-mark-all" onclick="markAllRead()">Mark all read</button>
+        </div>
+        <div id="notifList"></div>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -418,6 +455,37 @@ footer a { color: rgba(255,255,255,.9); }
   </div>
 </div>
 
+<!-- SCHEDULE CALL MODAL -->
+<div class="modal-overlay" id="scheduleModal">
+  <div class="modal">
+    <h2 id="sched-title">Schedule a Call</h2>
+    <p class="subtitle">Request a meeting. You'll get a Google Calendar link to share with the candidate.</p>
+    <div class="form-group"><label>Your Name</label><input type="text" id="s-name" placeholder="Your full name"></div>
+    <div class="form-group"><label>Your Email</label><input type="email" id="s-email" placeholder="your@email.com"></div>
+    <div class="form-group" style="display:flex;gap:10px">
+      <div style="flex:1"><label>Date</label><input type="date" id="s-date" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.93rem;background:var(--bg)"></div>
+      <div style="flex:1"><label>Time</label><input type="time" id="s-time" value="14:00" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.93rem;background:var(--bg)"></div>
+    </div>
+    <div class="form-group"><label>Duration</label>
+      <select id="s-duration" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.93rem;background:var(--bg)">
+        <option value="30">30 minutes</option>
+        <option value="60" selected>1 hour</option>
+        <option value="90">90 minutes</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Notes (optional)</label><textarea id="s-notes" placeholder="Topics to discuss, role details, company info…"></textarea></div>
+    <input type="hidden" id="s-candidate">
+    <div class="sched-result" id="sched-result">
+      <p>✅ Request saved! Open in Google Calendar:</p>
+      <a id="sched-cal-link" href="#" target="_blank" rel="noopener">Open Google Calendar →</a>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-submit" id="sched-submit-btn" onclick="submitSchedule()">📅 Generate Calendar Link</button>
+      <button class="btn-cancel" onclick="closeScheduleModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
 
 <footer>
@@ -525,7 +593,8 @@ function renderCards(profiles) {
         ${p.sample
           ? `<span class="sample-note">Illustrative listing. <a href="submit.html">Post your resume</a> to appear here.</span>`
           : `<a href="${esc(p.profile || 'profile.html?id=' + encodeURIComponent(p.id))}" class="btn-view">View Profile</a>
-             <button class="btn-contact" data-id="${esc(p.id)}" onclick="openContact(this.dataset.id)">Contact</button>
+             <button class="btn-contact" data-id="${esc(p.id)}" onclick="openContact(this.dataset.id)">✉ Contact</button>
+             <button class="btn-schedule" data-id="${esc(p.id)}" onclick="openSchedule(this.dataset.id)">📅 Schedule</button>
              ${p.pdf ? `<a href="${esc(p.pdf)}" download style="font-size:.85rem;color:var(--accent);margin-left:6px">⬇ PDF</a>` : ''}`}
       </div>
     </div>
@@ -740,6 +809,7 @@ async function sendContact() {
   if (ok) {
     closeContactModal();
     document.getElementById('c-msg').value = '';
+    addNotification('contact', `Message sent to ${candidate}`, `From ${name} (${email}) — will reply soon`);
     showToast({ title: 'Message sent!', html: `${esc(candidate)} will get your message and can reply to ${esc(email)}.` });
   } else {
     // Save locally so admin can review — show success to avoid dead-end UX
@@ -750,15 +820,129 @@ async function sendContact() {
     } catch {}
     closeContactModal();
     document.getElementById('c-msg').value = '';
+    addNotification('contact', `Message logged for ${candidate}`, `From ${name} — will be forwarded to candidate`);
     showToast({ title: 'Message received!', html: `We've logged your message to ${esc(candidate)} and will forward it shortly.` });
   }
 }
 
 // Close modals on overlay click
-document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if(e.target===o) { closeModal(); closeContactModal(); } }));
+document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => {
+  if (e.target === o) { closeModal(); closeContactModal(); closeScheduleModal(); }
+}));
+
+// ── Notifications ─────────────────────────────────────────────────────────────
+const NOTIF_KEY = 'ttp_notifications';
+function getNotifications() {
+  try { return JSON.parse(localStorage.getItem(NOTIF_KEY) || '[]'); } catch { return []; }
+}
+function addNotification(type, title, body) {
+  const notifs = getNotifications();
+  notifs.unshift({ id: Date.now().toString(36), type, title, body, read: false, ts: new Date().toISOString() });
+  if (notifs.length > 50) notifs.pop();
+  try { localStorage.setItem(NOTIF_KEY, JSON.stringify(notifs)); } catch {}
+  updateNotifBadge();
+}
+function updateNotifBadge() {
+  const unread = getNotifications().filter(n => !n.read).length;
+  const badge = document.getElementById('notifBadge');
+  if (!badge) return;
+  badge.textContent = unread > 9 ? '9+' : unread;
+  badge.style.display = unread ? 'flex' : 'none';
+}
+function toggleNotif(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('notifDropdown');
+  const wasOpen = dd.classList.contains('open');
+  dd.classList.toggle('open', !wasOpen);
+  if (!wasOpen) renderNotifList();
+}
+function renderNotifList() {
+  const notifs = getNotifications();
+  const list = document.getElementById('notifList');
+  if (!list) return;
+  if (!notifs.length) {
+    list.innerHTML = '<div class="notif-empty">🔕 No notifications yet.<br><small>Contact messages and call requests will appear here.</small></div>';
+    return;
+  }
+  const icons = { contact: '✉️', schedule: '📅' };
+  list.innerHTML = notifs.slice(0, 20).map(n => `
+    <div class="notif-item ${n.read ? '' : 'unread'}">
+      <div class="n-title">${icons[n.type] || '🔔'} ${esc(n.title)}</div>
+      <div class="n-body">${esc(n.body)}</div>
+      <div class="n-time">${new Date(n.ts).toLocaleString()}</div>
+    </div>`).join('');
+}
+function markAllRead() {
+  const notifs = getNotifications().map(n => ({ ...n, read: true }));
+  try { localStorage.setItem(NOTIF_KEY, JSON.stringify(notifs)); } catch {}
+  updateNotifBadge();
+  renderNotifList();
+}
+// Close bell dropdown on outside click
+document.addEventListener('click', e => {
+  const dd = document.getElementById('notifDropdown');
+  if (dd && !e.target.closest('.notif-wrap')) dd.classList.remove('open');
+});
+
+// ── Schedule Call ─────────────────────────────────────────────────────────────
+function openSchedule(id) {
+  const p = allProfiles.find(x => String(x.id) === String(id)) || {};
+  document.getElementById('s-candidate').value = id + '|' + (p.name || '');
+  document.getElementById('sched-title').textContent = p.name ? `📅 Schedule a Call with ${p.name}` : '📅 Schedule a Call';
+  document.getElementById('sched-result').style.display = 'none';
+  document.getElementById('sched-submit-btn').style.display = '';
+  document.getElementById('s-date').min = new Date().toISOString().split('T')[0];
+  document.getElementById('scheduleModal').classList.add('open');
+  document.getElementById('s-name').focus();
+}
+function closeScheduleModal() {
+  document.getElementById('scheduleModal').classList.remove('open');
+}
+function submitSchedule() {
+  const name      = document.getElementById('s-name').value.trim();
+  const email     = document.getElementById('s-email').value.trim();
+  const date      = document.getElementById('s-date').value;
+  const time      = document.getElementById('s-time').value;
+  const duration  = parseInt(document.getElementById('s-duration').value) || 60;
+  const notes     = document.getElementById('s-notes').value.trim();
+  const raw       = document.getElementById('s-candidate').value;
+  const candidate = raw.split('|')[1] || 'the candidate';
+  if (!name || !email || !date || !time) {
+    showToast({ type: 'error', title: 'Missing details', html: 'Please fill in your name, email, date and time.' });
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showToast({ type: 'error', title: 'Invalid email', html: 'Enter a valid email so the candidate can confirm.' });
+    return;
+  }
+  // Build Google Calendar deep-link
+  const start = new Date(`${date}T${time}:00`);
+  const end   = new Date(start.getTime() + duration * 60000);
+  const fmt   = d => d.toISOString().replace(/[-:.]/g, '').slice(0, 15) + 'Z';
+  const calUrl = 'https://calendar.google.com/calendar/render?' + new URLSearchParams({
+    action:  'TEMPLATE',
+    text:    `Call with ${candidate} — TechTalent Portal`,
+    dates:   `${fmt(start)}/${fmt(end)}`,
+    details: `Recruiter: ${name} (${email})\nCandidate: ${candidate}\n\n${notes || 'No additional notes.'}`,
+  });
+  // Save locally
+  try {
+    const reqs = JSON.parse(localStorage.getItem('ttp_schedule_requests') || '[]');
+    reqs.unshift({ id: Date.now().toString(36), recruiter: { name, email }, candidate: raw, date, time, duration, notes, calUrl, createdAt: new Date().toISOString() });
+    localStorage.setItem('ttp_schedule_requests', JSON.stringify(reqs));
+  } catch {}
+  // Notification
+  addNotification('schedule', `Call scheduled with ${candidate}`, `${date} at ${time} (${duration} min) — calendar link ready`);
+  // Show result
+  document.getElementById('sched-cal-link').href = calUrl;
+  document.getElementById('sched-result').style.display = 'block';
+  document.getElementById('sched-submit-btn').style.display = 'none';
+  showToast({ title: 'Call scheduled!', html: `Google Calendar link ready. Check your 🔔 notifications.` });
+}
 
 updateNavForSession();
 loadProfiles();
+updateNotifBadge();
 </script>
 </body>
 </html>
