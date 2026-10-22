@@ -217,38 +217,8 @@ footer a { color: rgba(255,255,255,.9); }
 <body>
 
 <!-- NAV -->
-<nav class="topnav">
-  <a href="index.html" class="logo">Tech<span>Talent</span> Portal</a>
-    <div class="nav-links">
-    <a href="index.html" class="active">Browse Talent</a>
-    <a href="jobs.html">Browse Jobs</a>
-    <a href="resume-builder.html">Resume Builder</a>
-    <a href="submit.html">Post Resume</a>
-    <a href="post-job.html">Post a Job</a>
-    <span id="navLoggedOut" style="display:flex;gap:4px;align-items:center">
-      <a href="login.html" class="btn-outline" style="border:1px solid rgba(255,255,255,.5);border-radius:6px">Sign Up</a>
-      <a href="login.html" class="btn-primary">Sign In</a>
-    </span>
-    <span id="navLoggedIn" style="display:none;gap:4px;align-items:center">
-      <span style="color:rgba(255,255,255,.85);font-size:.9rem">Hi, <b id="navUserName">User</b></span>
-      <a href="dashboard.html" style="color:rgba(255,255,255,.8);text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.9rem">My Dashboard</a>
-      <a href="#" onclick="ttpLogout();return false" style="color:rgba(255,255,255,.7);text-decoration:none;padding:6px 10px;border-radius:4px;font-size:.85rem">Sign Out</a>
-    </span>
-    <!-- NOTIFICATION BELL -->
-    <div class="notif-wrap">
-      <button class="notif-btn" id="notifBtn" onclick="toggleNotif(event)" title="Notifications" aria-label="Notifications">
-        🔔<span class="notif-badge" id="notifBadge"></span>
-      </button>
-      <div class="notif-dropdown" id="notifDropdown">
-        <div class="notif-header">
-          <h3>🔔 Notifications</h3>
-          <button class="notif-mark-all" onclick="markAllRead()">Mark all read</button>
-        </div>
-        <div id="notifList"></div>
-      </div>
-    </div>
-  </div>
-</nav>
+<nav class="topnav" id="siteNav"></nav>
+<script src="nav.js"></script>
 
 <!-- HERO -->
 <section class="hero">
@@ -667,7 +637,7 @@ function updateNavForSession() {
   if (sess && sess.token) {
     document.getElementById('navLoggedOut').style.display = 'none';
     document.getElementById('navLoggedIn').style.display = 'flex';
-    document.getElementById('navUserName').textContent = sess.name || sess.email || 'User';
+    document.getElementById('navUserName').textContent = String(sess.name || sess.email || 'User').split(' ')[0];
   }
 }
 

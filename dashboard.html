@@ -99,7 +99,9 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 .login-gate a{background:var(--accent);color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:1rem;}
 
 /* TABS */
-.dash-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;}
+.dash-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;overflow-x:auto;scrollbar-width:none;}
+.dash-tabs::-webkit-scrollbar{display:none;}
+.dash-tab{white-space:nowrap;flex-shrink:0;}
 .dash-tab{padding:9px 20px;background:none;border:none;cursor:pointer;font-size:.93rem;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-2px;}
 .dash-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700;}
 
@@ -125,16 +127,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 </head>
 <body>
 
-<nav class="topnav">
-  <a href="index.html" class="logo">Tech<span>Talent</span> Portal</a>
-  <div class="nav-links">
-    <a href="index.html">Browse Talent</a>
-    <a href="jobs.html">Freelance Jobs</a>
-    <a href="submit.html">Post Resume</a>
-    <a href="dashboard.html" class="active">My Dashboard</a>
-    <a href="#" onclick="ttpLogout(); return false">Sign Out</a>
-  </div>
-</nav>
+<nav class="topnav" id="siteNav"></nav>
+<script src="nav.js"></script>
 
 <div class="wrap" id="mainWrap">
 
