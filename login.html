@@ -59,6 +59,7 @@ footer-note{display:block;text-align:center;font-size:.8rem;color:var(--muted);m
 .linkedin-btn:hover{background:#004182;}
 .linkedin-btn:active{transform:scale(.98);}
 </style>
+<script src="site.js" defer></script>
 </head>
 <body>
 
@@ -104,8 +105,8 @@ footer-note{display:block;text-align:center;font-size:.8rem;color:var(--muted);m
       <label class="remember">
         <input type="checkbox" id="rememberMe" checked> Keep me signed in
       </label>
-      <button type="submit" class="btn btn-primary" id="btnLogin">Sign In</button>
-      <button type="button" class="guest-btn" id="btnDemo" onclick="demoLogin()" style="margin-top:8px">🧪 Try the demo account (no sign-up)</button>
+      <button data-once type="submit" class="btn btn-primary" id="btnLogin">Sign In</button>
+      <button data-once type="button" class="guest-btn" id="btnDemo" onclick="demoLogin()" style="margin-top:8px">🧪 Try the demo account (no sign-up)</button>
     </form>
 
     <!-- SIGNUP FORM -->
@@ -126,7 +127,7 @@ footer-note{display:block;text-align:center;font-size:.8rem;color:var(--muted);m
         <label>Confirm Password</label>
         <input type="password" id="signupPwd2" placeholder="Repeat password" autocomplete="new-password">
       </div>
-      <button type="submit" class="btn btn-primary" id="btnSignup">Create Account</button>
+      <button data-once type="submit" class="btn btn-primary" id="btnSignup">Create Account</button>
     </form>
 
     <div class="divider">or</div>
@@ -190,6 +191,7 @@ async function doLogin() {
   const email = document.getElementById('loginEmail').value.trim();
   const pwd = document.getElementById('loginPwd').value;
   if (!email || !pwd) { showError('Please enter your email and password.'); return; }
+  if (!ttpValidEmail(email)) { showError('Please enter a full email address, like name@company.com.'); return; }
   const btn = document.getElementById('btnLogin');
   btn.disabled = true; btn.textContent = 'Signing in…';
   clearMessages();
@@ -249,6 +251,7 @@ async function doSignup() {
   const pwd = document.getElementById('signupPwd').value;
   const pwd2 = document.getElementById('signupPwd2').value;
   if (!name || !email || !pwd) { showError('Please fill in all fields.'); return; }
+  if (!ttpValidEmail(email)) { showError('Please enter a full email address, like name@company.com.'); return; }
   if (pwd !== pwd2) { showError('Passwords do not match.'); return; }
   if (pwd.length < 6) { showError('Password must be at least 6 characters.'); return; }
   const btn = document.getElementById('btnSignup');

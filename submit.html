@@ -63,6 +63,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 .claim-box p{font-size:.9rem;color:var(--muted);margin-bottom:12px;}
 .claim-box .alt-link{display:inline-block;margin-top:10px;font-size:.87rem;color:var(--accent);}
 </style>
+<script src="site.js" defer></script>
 </head>
 <body>
 
@@ -185,7 +186,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
       </div>
       <div style="display:flex;gap:10px;margin-top:8px">
         <button class="submit-btn" style="background:var(--muted)" onclick="nextStep(2)">← Back</button>
-        <button class="submit-btn" onclick="submitResume()">🚀 Publish My Profile</button>
+        <button data-once class="submit-btn" onclick="submitResume()">🚀 Publish My Profile</button>
       </div>
     </div>
   </div>
@@ -248,7 +249,7 @@ function nextStep(n) {
     const role=document.getElementById('f-role').value.trim();
     const loc=document.getElementById('f-location').value.trim();
     if(!name||!email||!role||!loc){showErr('Please fill all required (*) fields.');return;}
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showErr('Please enter a valid email address — it identifies your profile.');return;}
+    if(!ttpValidEmail(email)){showErr('Please enter a valid email address — it identifies your profile.');return;}
   }
   if(n===3) {
     const sum=document.getElementById('f-summary').value.trim();

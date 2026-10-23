@@ -111,6 +111,7 @@ footer a{color:rgba(255,255,255,.9);}
 .pf-group input,.pf-group textarea{padding:8px 10px;border:1px solid var(--border);border-radius:7px;font-size:.88rem;font-family:inherit;background:var(--bg);}
 .pf-group textarea{resize:vertical;min-height:70px;}
 </style>
+<script src="site.js" defer></script>
 </head>
 <body>
 
@@ -203,12 +204,12 @@ footer a{color:rgba(255,255,255,.9);}
       <div class="form-group"><label>Full Name</label><input type="text" id="su-name" placeholder="Your name"></div>
       <div class="form-group"><label>Email</label><input type="email" id="su-email" placeholder="you@email.com"></div>
       <div class="form-group"><label>Password</label><input type="password" id="su-pass" placeholder="Min 8 chars"></div>
-      <div class="modal-btns"><button class="btn-submit" onclick="doSignup()">Create Account</button><button class="btn-cancel" onclick="closeAuth()">Cancel</button></div>
+      <div class="modal-btns"><button data-once class="btn-submit" onclick="doSignup()">Create Account</button><button class="btn-cancel" onclick="closeAuth()">Cancel</button></div>
     </div>
     <div id="li-form" style="display:none">
       <div class="form-group"><label>Email</label><input type="email" id="li-email" placeholder="you@email.com"></div>
       <div class="form-group"><label>Password</label><input type="password" id="li-pass" placeholder="Password"></div>
-      <div class="modal-btns"><button class="btn-submit" onclick="doLogin()">Login</button><button class="btn-cancel" onclick="closeAuth()">Cancel</button></div>
+      <div class="modal-btns"><button data-once class="btn-submit" onclick="doLogin()">Login</button><button class="btn-cancel" onclick="closeAuth()">Cancel</button></div>
     </div>
   </div>
 </div>
@@ -262,7 +263,7 @@ footer a{color:rgba(255,255,255,.9);}
       <input type="hidden" id="ap-jobid">
       <div id="applyErr" style="display:none;background:#fdecea;color:#c62828;border-radius:8px;padding:10px;margin-bottom:12px;font-size:.9rem;"></div>
       <div style="display:flex;gap:10px;margin-top:4px">
-        <button onclick="submitApply()" style="flex:1;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.95rem;cursor:pointer">Send Application</button>
+        <button data-once onclick="submitApply()" style="flex:1;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.95rem;cursor:pointer">Send Application</button>
         <button onclick="closeApplyModal()" style="padding:11px 18px;background:var(--bg);color:var(--muted);border:1px solid var(--border);border-radius:8px;font-weight:600;cursor:pointer">Cancel</button>
       </div>
     </div>
@@ -411,7 +412,22 @@ function renderJobs() {
   document.getElementById('resultsCount').textContent = `${filtered.length} job${filtered.length!==1?'s':''} found`;
 
   const list = document.getElementById('jobList');
-  if(!filtered.length){list.innerHTML='<p style="color:var(--muted);padding:20px 0">No jobs match your search.</p>';return;}
+  if(!filtered.length){
+    // Dead-end prevention: say what's filtering, and offer a way out
+    const active = [];
+    if (q) active.push(`“${escJ(q)}”`);
+    if (currentSource !== 'all') active.push(currentSource === 'ai' ? 'AI Import' : escJ(currentSource));
+    [['techFilter'],['typeFilter'],['expFilter']].forEach(([id]) => { const el=document.getElementById(id); if (el.value) active.push(escJ(el.options[el.selectedIndex].text)); });
+    document.querySelectorAll('.sidebar input[type=checkbox]:checked').forEach(c => active.push(escJ(c.parentElement.textContent.trim())));
+    list.innerHTML = `<div class="empty-state" role="status" style="text-align:center;padding:40px 20px;background:#fff;border:1px dashed var(--border);border-radius:12px">
+      <div aria-hidden="true" style="font-size:2.2rem;margin-bottom:8px">🔍</div>
+      <p style="font-size:1.05rem;font-weight:700;color:var(--blue);margin-bottom:6px">No jobs match your search</p>
+      ${active.length ? `<p style="color:var(--muted);font-size:.9rem;margin-bottom:16px">Filtering by: ${active.join(' · ')}. Try removing a filter or using a broader keyword.</p>` : `<p style="color:var(--muted);font-size:.9rem;margin-bottom:16px">Try a broader keyword.</p>`}
+      <button type="button" onclick="clearJobFilters()" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.93rem;font-weight:700;cursor:pointer;margin:4px">Clear all filters</button>
+      <a href="post-job.html" style="display:inline-block;color:var(--accent);font-weight:700;font-size:.93rem;padding:10px 16px;margin:4px">Post a job instead →</a>
+    </div>`;
+    return;
+  }
 
   list.innerHTML = filtered.map(j => {
     const isApplied = applied.has(j.id);
@@ -479,10 +495,20 @@ function toggleSave(id, btn) {
   updateDashBanner();
 }
 
+function escJ(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function clearJobFilters() {
+  document.getElementById('jobSearch').value = '';
+  ['techFilter','typeFilter','expFilter'].forEach(id => document.getElementById(id).value = '');
+  document.querySelectorAll('.sidebar input[type=checkbox]').forEach(c => c.checked = false);
+  currentSource = 'all';
+  document.querySelectorAll('.source-pill').forEach(p => p.classList.toggle('active', p.dataset.src === 'all'));
+  renderJobs();
+  document.getElementById('jobSearch').focus();
+}
 function filterSource(src, el) {
   currentSource = src;
-  document.querySelectorAll('.source-pill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');
+  document.querySelectorAll('.source-pill').forEach(p=>{p.classList.remove('active');p.setAttribute('aria-pressed','false');});
+  el.classList.add('active'); el.setAttribute('aria-pressed','true');
   renderJobs();
 }
 
@@ -520,6 +546,7 @@ async function doSignup(){
   const email=document.getElementById('su-email').value.trim();
   const pass=document.getElementById('su-pass').value;
   if(!name||!email||!pass){authErr('Please fill all fields.');return;}
+  if(!ttpValidEmail(email)){authErr('Please enter a full email address, like name@company.com.');return;}
   try{
     const r=await fetch(`${API}/signup`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,pass,role:'candidate',createdAt:new Date().toISOString()}),signal:AbortSignal.timeout(5000)});
     const d=await r.json();
@@ -531,6 +558,7 @@ async function doLogin(){
   const email=document.getElementById('li-email').value.trim();
   const pass=document.getElementById('li-pass').value;
   if(!email||!pass){authErr('Please enter email and password.');return;}
+  if(!ttpValidEmail(email)){authErr('Please enter a full email address, like name@company.com.');return;}
   try{
     const r=await fetch(`${API}/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,pass}),signal:AbortSignal.timeout(5000)});
     const d=await r.json();
@@ -583,6 +611,7 @@ function saveProfileAndApply() {
     resume:   document.getElementById('pf-resume').value.trim(),
     skills:   document.getElementById('pf-skills').value.trim(),
   };
+  if (pf.email && !ttpValidEmail(pf.email)) { const el=document.getElementById('pf-email'); el.setAttribute('aria-invalid','true'); el.focus(); el.dispatchEvent(new Event('blur')); return; }
   try { localStorage.setItem('ttp_ai_profile', JSON.stringify(pf)); } catch {}
 
   const job = jobs.find(j => j.id === pendingAiJobId);
@@ -663,7 +692,7 @@ async function submitApply() {
   const cover = document.getElementById('ap-cover').value.trim();
   const errEl = document.getElementById('applyErr');
   if (!name || !email) { errEl.textContent = 'Please enter your name and email.'; errEl.style.display='block'; return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Enter a valid email address.'; errEl.style.display='block'; return; }
+  if (!ttpValidEmail(email)) { errEl.textContent = 'Enter a valid email address.'; errEl.style.display='block'; return; }
   errEl.style.display='none';
   const job = jobs.find(j => j.id === jobId) || {};
   const payload = {

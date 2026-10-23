@@ -84,13 +84,31 @@ function parseMultipart(body, boundary) {
 }
 
 // â”€â”€ Parse body â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-function getBody(req) {
+function getBody(req, maxBytes) {
   return new Promise((resolve, reject) => {
-    const chunks = [];
-    req.on('data', c => chunks.push(c));
-    req.on('end', () => resolve(Buffer.concat(chunks)));
+    const chunks = []; let size = 0, tooBig = false;
+    req.on('data', c => {
+      size += c.length;
+      if (size > maxBytes) { tooBig = true; return; }   // keep draining, stop storing
+      chunks.push(c);
+    });
+    req.on('end', () => resolve(tooBig ? null : Buffer.concat(chunks)));
     req.on('error', reject);
   });
+}
+
+// Trim every string in a JSON payload so oversized input can't bloat the data files
+const MAX_FIELD = 5000;
+function clampStrings(v, depth = 0) {
+  if (depth > 6) return undefined;
+  if (typeof v === 'string') return v.length > MAX_FIELD ? v.slice(0, MAX_FIELD) : v;
+  if (Array.isArray(v)) return v.slice(0, 200).map(x => clampStrings(x, depth + 1));
+  if (v && typeof v === 'object') {
+    const out = {};
+    for (const k of Object.keys(v).slice(0, 100)) out[k] = clampStrings(v[k], depth + 1);
+    return out;
+  }
+  return v;
 }
 
 // â”€â”€ CORS headers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -113,11 +131,13 @@ const server = http.createServer(async (req, res) => {
 
   const url = req.url.split('?')[0];
   const qs  = Object.fromEntries(new URL('http://x'+req.url).searchParams);
-  const body = await getBody(req);
+  // /submit carries a PDF (max 5MB); everything else is small JSON
+  const body = await getBody(req, url === '/submit' ? 7 * 1024 * 1024 : 256 * 1024);
+  if (body === null) return json(res, 413, { error: 'Request too large.' });
   let data = {};
   const ct = req.headers['content-type'] || '';
   if (ct.includes('application/json')) {
-    try { data = JSON.parse(body.toString()); } catch {}
+    try { data = clampStrings(JSON.parse(body.toString())) || {}; } catch {}
   }
 
   console.log(`${new Date().toISOString().slice(11,19)} ${req.method} ${url}`);

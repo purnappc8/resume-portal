@@ -42,6 +42,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 .login-gate h2{color:var(--blue);margin-bottom:10px;}
 .login-gate a{background:var(--accent);color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;display:inline-block;margin-top:12px;}
 </style>
+<script src="site.js" defer></script>
 </head>
 <body>
 
@@ -137,7 +138,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
         <input id="f-applyurl" type="url" placeholder="https://... (leave blank to use in-portal applications)">
       </div>
 
-      <button class="btn-submit" id="submitBtn" onclick="submitJob()">📋 Post This Job</button>
+      <button data-once class="btn-submit" id="submitBtn" onclick="submitJob()">📋 Post This Job</button>
     </div>
   </div>
 </div>
@@ -185,6 +186,8 @@ async function submitJob() {
   const company = document.getElementById('f-company').value.trim();
   const desc    = document.getElementById('f-desc').value.trim();
   if (!title || !company || !desc) { showMsg('error', 'Please fill in Job Title, Company, and Description.'); return; }
+  const contactEmail = document.getElementById('f-email').value.trim();
+  if (contactEmail && !ttpValidEmail(contactEmail)) { showMsg('error', 'Please enter a full contact email address, like hiring@company.com.'); document.getElementById('f-email').focus(); return; }
 
   const btn = document.getElementById('submitBtn');
   btn.textContent = 'Posting…'; btn.disabled = true;

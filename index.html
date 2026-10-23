@@ -213,6 +213,7 @@ footer a { color: rgba(255,255,255,.9); }
 @keyframes toastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 .btn-submit[disabled] { opacity: .65; cursor: wait; }
 </style>
+<script src="site.js" defer></script>
 </head>
 <body>
 
@@ -381,7 +382,7 @@ footer a { color: rgba(255,255,255,.9); }
         </select>
       </div>
       <div class="modal-btns">
-        <button type="submit" class="btn-submit">Create Account</button>
+        <button data-once type="submit" class="btn-submit">Create Account</button>
         <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
       </div>
       </form>
@@ -399,7 +400,7 @@ footer a { color: rgba(255,255,255,.9); }
         <input type="password" id="li-pass" placeholder="Your password">
       </div>
       <div class="modal-btns">
-        <button type="submit" class="btn-submit">Login</button>
+        <button data-once type="submit" class="btn-submit">Login</button>
         <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
       </div>
       </form>
@@ -419,7 +420,7 @@ footer a { color: rgba(255,255,255,.9); }
     <div class="form-group"><label>Message</label><textarea id="c-msg" placeholder="Tell them about the opportunity…"></textarea></div>
     <input type="hidden" id="c-target">
     <div class="modal-btns">
-      <button class="btn-submit" onclick="sendContact()">Send Message</button>
+      <button data-once class="btn-submit" onclick="sendContact()">Send Message</button>
       <button class="btn-cancel" onclick="closeContactModal()">Cancel</button>
     </div>
   </div>
@@ -450,7 +451,7 @@ footer a { color: rgba(255,255,255,.9); }
       <a id="sched-cal-link" href="#" target="_blank" rel="noopener">Open Google Calendar →</a>
     </div>
     <div class="modal-btns">
-      <button class="btn-submit" id="sched-submit-btn" onclick="submitSchedule()">📅 Generate Calendar Link</button>
+      <button data-once class="btn-submit" id="sched-submit-btn" onclick="submitSchedule()">📅 Generate Calendar Link</button>
       <button class="btn-cancel" onclick="closeScheduleModal()">Cancel</button>
     </div>
   </div>
@@ -662,6 +663,7 @@ async function doSignup() {
   const pass=document.getElementById('su-pass').value;
   const role=document.getElementById('su-role').value;
   if(!name||!email||!pass){showError('Please fill all fields.');return;}
+  if(!ttpValidEmail(email)){showError('Please enter a full email address, like name@company.com.');return;}
   if(pass.length<6){showError('Password must be at least 6 characters.');return;}
   try {
     const r = await fetch(`${API}/signup`, {
@@ -692,6 +694,7 @@ async function doLogin() {
   const email=document.getElementById('li-email').value.trim();
   const pass=document.getElementById('li-pass').value;
   if(!email||!pass){showError('Please enter email and password.');return;}
+  if(!ttpValidEmail(email)){showError('Please enter a full email address, like name@company.com.');return;}
   try {
     const r = await fetch(`${API}/login`, {
       method:'POST', headers:{'Content-Type':'application/json'},
@@ -759,7 +762,7 @@ async function sendContact() {
     showToast({ type:'error', title:'A few details are missing', html:'Please fill in your name, email and message.' });
     return;
   }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+  if(!ttpValidEmail(email)){
     showToast({ type:'error', title:'Check your email address', html:'We need a valid email so the candidate can reply.' });
     return;
   }
@@ -889,7 +892,7 @@ function submitSchedule() {
     showToast({ type: 'error', title: 'Missing details', html: 'Please fill in your name, email, date and time.' });
     return;
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!ttpValidEmail(email)) {
     showToast({ type: 'error', title: 'Invalid email', html: 'Enter a valid email so the candidate can confirm.' });
     return;
   }
