@@ -38,6 +38,15 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 .filter-item{display:flex;align-items:center;gap:7px;padding:3px 0;cursor:pointer;font-size:.88rem;}
 .filter-item input{accent-color:var(--accent);}
 
+.global-search{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:16px;}
+.global-search .gs-head{font-size:.92rem;color:var(--text);margin-bottom:10px;line-height:1.45;}
+.global-search .gs-head b{color:var(--blue);}
+.global-search .gs-group{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px;}
+.global-search .gs-label{font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;min-width:74px;}
+.global-search a.gs-link{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--border);border-radius:20px;font-size:.85rem;font-weight:600;color:var(--blue);text-decoration:none;background:var(--bg);white-space:nowrap;}
+.global-search a.gs-link:hover{border-color:var(--accent);background:#e8f0fe;}
+.global-search a.gs-link .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.global-search .gs-note{font-size:.75rem;color:var(--muted);margin-top:10px;}
 .results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
 .results-header h2{font-size:.95rem;color:var(--muted);}
 .view-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
@@ -184,6 +193,13 @@ footer a{color:rgba(255,255,255,.9);}
       <div class="dash-stat"><div class="n" id="ds-total">0</div><div class="l">Jobs Available</div></div>
       <a href="dashboard.html" style="margin-left:auto;color:var(--accent);font-size:.9rem;font-weight:700;align-self:center">View Full Dashboard →</a>
     </div>
+    <!-- Search everywhere: same search on the big job sites -->
+    <section class="global-search" id="globalSearch" aria-labelledby="gsHead">
+      <div class="gs-head" id="gsHead">🌐 <b>Search everywhere</b> — run this search on the major job sites:</div>
+      <div class="gs-group" id="gsJobs"><span class="gs-label">Jobs</span></div>
+      <div class="gs-group" id="gsFreelance"><span class="gs-label">Freelance</span></div>
+      <p class="gs-note">Opens the site's own search results in a new tab. Uses your keywords, technology, job type and location filters.</p>
+    </section>
     <div class="results-header">
       <h2 id="resultsCount">Loading jobs…</h2>
     </div>
@@ -332,17 +348,6 @@ const SEED_LISTED_ON = '2026-10-22';
 const MAX_JOB_AGE_DAYS = 30;
 const SEED_JOBS = [
   ...AI_INDEED_JOBS,
-  {id:'j2',title:'Salesforce LWC Developer',company:'TechCorp UK',location:'London (Remote OK)',type:'Freelance',exp:'Mid',tech:['Salesforce','LWC','JavaScript'],salary:'£400–500/day',source:'LinkedIn',url:'https://www.linkedin.com/jobs/search/?keywords=salesforce+lwc+developer',postedDays:2},
-  {id:'j3',title:'Python Backend Developer',company:'StartupX',location:'Remote',type:'Freelance',exp:'Mid',tech:['Python','FastAPI','PostgreSQL'],salary:'$45–65/hr',source:'Upwork',url:'https://www.upwork.com/nx/search/jobs/?q=python+backend+developer',postedDays:0},
-  {id:'j4',title:'React / Node.js Full-Stack',company:'Digital Agency',location:'Remote',type:'Contract',exp:'Mid',tech:['React','Node.js','MongoDB'],salary:'$55–75/hr',source:'Freelancer',url:'https://www.freelancer.com/jobs/javascript/',postedDays:3},
-  {id:'j5',title:'Senior DevOps Engineer (AWS)',company:'FinTech Ltd',location:'Remote',type:'Contract',exp:'Senior',tech:['AWS','Terraform','Kubernetes'],salary:'$90–120/hr',source:'Toptal',url:'https://www.toptal.com/devops',postedDays:1},
-  {id:'j6',title:'Salesforce CPQ Consultant',company:'ISV Partner',location:'India / Remote',type:'Freelance',exp:'Senior',tech:['Salesforce CPQ','Apex','Billing'],salary:'₹80–120/hr',source:'Guru',url:'https://www.guru.com/d/jobs/q/salesforce-cpq/',postedDays:4},
-  {id:'j7',title:'SAP FICO Consultant',company:'Global Client',location:'Hyderabad / Remote',type:'Contract',exp:'Senior',tech:['SAP','FICO','S4 HANA'],salary:'₹5000–7000/day',source:'Indeed',url:'https://www.indeed.com/jobs?q=sap+fico+consultant&l=hyderabad',postedDays:2},
-  {id:'j8',title:'Data Scientist — ML/AI',company:'Analytics Co',location:'Remote',type:'Freelance',exp:'Mid',tech:['Python','TensorFlow','SQL'],salary:'$60–80/hr',source:'PeoplePerHour',url:'https://www.peopleperhour.com/freelance-jobs/it-tech/data-science',postedDays:5},
-  {id:'j9',title:'Java Spring Boot Microservices',company:'Banking Client',location:'Remote',type:'Contract',exp:'Senior',tech:['Java','Spring Boot','Kafka','Docker'],salary:'$70–95/hr',source:'LinkedIn',url:'https://www.linkedin.com/jobs/search/?keywords=java+spring+boot+microservices+freelance',postedDays:1},
-  {id:'j10',title:'Salesforce Admin + Flow Expert',company:'SMB Client',location:'Remote',type:'Part-time',exp:'Mid',tech:['Salesforce','Flow','Admin'],salary:'$35–50/hr',source:'Upwork',url:'https://www.upwork.com/nx/search/jobs/?q=salesforce+admin+flow',postedDays:0},
-  {id:'j11',title:'React Native Mobile Developer',company:'App Startup',location:'Remote',type:'Freelance',exp:'Mid',tech:['React Native','iOS','Android'],salary:'$55–70/hr',source:'Freelancer',url:'https://www.freelancer.com/jobs/mobile/',postedDays:3},
-  {id:'j12',title:'.NET / Azure Developer',company:'Microsoft Partner',location:'UK Remote',type:'Contract',exp:'Senior',tech:['.NET','Azure','C#'],salary:'£450–550/day',source:'Guru',url:'https://www.guru.com/d/jobs/q/net-azure/',postedDays:2},
 ];
 
 // Closed / expired jobs, shared with the dashboard (saved & applied lists)
@@ -461,12 +466,13 @@ function renderJobs() {
     if(tech && !(j.tech||[]).join(' ').toLowerCase().includes(tech.split('/')[0].trim())) return false;
     if(type && !(j.type||'').toLowerCase().includes(type)) return false;
     if(level && !(j.exp||'').toLowerCase().includes(level)) return false;
-    if(locs.length && !locs.some(l=>(j.location||'').toLowerCase().includes(l))) return false;
+    if(locs.length && !locs.some(l=>inRegion(j.location, l))) return false;
     if(showSaved && !saved.has(j.id)) return false;
     return true;
   });
 
   document.getElementById('resultsCount').textContent = `${filtered.length} job${filtered.length!==1?'s':''} found`;
+  updateGlobalSearch();
 
   const list = document.getElementById('jobList');
   if(!filtered.length){
@@ -481,7 +487,7 @@ function renderJobs() {
       <p style="font-size:1.05rem;font-weight:700;color:var(--blue);margin-bottom:6px">No jobs match your search</p>
       ${active.length ? `<p style="color:var(--muted);font-size:.9rem;margin-bottom:16px">Filtering by: ${active.join(' · ')}. Try removing a filter or using a broader keyword.</p>` : `<p style="color:var(--muted);font-size:.9rem;margin-bottom:16px">Try a broader keyword.</p>`}
       <button type="button" onclick="clearJobFilters()" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.93rem;font-weight:700;cursor:pointer;margin:4px">Clear all filters</button>
-      <a href="post-job.html" style="display:inline-block;color:var(--accent);font-weight:700;font-size:.93rem;padding:10px 16px;margin:4px">Post a job instead →</a>
+      <a href="#globalSearch" onclick="document.getElementById('globalSearch').scrollIntoView({behavior:'smooth'});document.querySelector('#gsJobs a').focus({preventScroll:true});return false" style="display:inline-block;color:var(--accent);font-weight:700;font-size:.93rem;padding:10px 16px;margin:4px">Search LinkedIn, Naukri &amp; more ↑</a>
     </div>`;
     return;
   }
@@ -558,6 +564,75 @@ function toggleSave(id, btn) {
   else{saved.add(id);btn.textContent='🔖 Saved';}
   localStorage.setItem('ttp_saved', JSON.stringify([...saved]));
   updateDashBanner();
+}
+
+// ── Location matching for the sidebar filters ───────────────────────────────
+const REGION_RE = {
+  remote: /remote|anywhere|worldwide|work from home|wfh/i,
+  india:  /india|hyderabad|secunderabad|bengaluru|bangalore|mumbai|pune|chennai|delhi|noida|gurgaon|gurugram|kolkata|ahmedabad|kochi|coimbatore|warangal|telangana|karnataka|maharashtra/i,
+  us:     /\b(usa|u\.s\.a?|united states|america)\b|new york|california|texas|kansas|ohio|florida|georgia|atlanta|seattle|boston|chicago|san francisco|austin|denver/i,
+  usState:/,\s*(NY|CA|TX|GA|OH|WA|MA|IL|NJ|VA|NC|FL|CO|AZ|PA|MI|MN|OR)\b/,   // "Atlanta, GA" (case-sensitive)
+  uk:     /\b(uk|u\.k\.|united kingdom|england|scotland|wales|britain)\b|london|cardiff|manchester|cambridge|edinburgh|glasgow|bristol|leeds|birmingham/i
+};
+function inRegion(loc, key) {
+  if (key === 'us') return REGION_RE.us.test(loc || '') || REGION_RE.usState.test(loc || '');
+  const re = REGION_RE[key]; return re ? re.test(loc || '') : (loc || '').toLowerCase().includes(key);
+}
+
+// ── Search everywhere: build the same search for the big job sites ─────────
+const TECH_QUERY = { 'Cloud / AWS': 'AWS cloud', 'Data Science': 'data scientist', 'Mobile': 'mobile developer', '.NET': '.NET developer' };
+function globalQuery() {
+  const kw = document.getElementById('jobSearch').value.trim();
+  const techSel = document.getElementById('techFilter'); const tech = techSel.value ? (TECH_QUERY[techSel.value] || techSel.value) : '';
+  const type = document.getElementById('typeFilter').value;
+  const level = document.getElementById('expFilter').value;
+  const words = [];
+  if (level && /senior|lead/i.test(level)) words.push(level.toLowerCase());
+  if (tech && !kw.toLowerCase().includes(tech.toLowerCase())) words.push(tech);
+  if (kw) words.push(kw);
+  let q = words.join(' ').trim();
+  const role = q || 'software developer';
+  const typeWord = /contract|freelance|part-time/i.test(type) ? type.toLowerCase() : '';
+  const checked = [...document.querySelectorAll('.sidebar input[type=checkbox]:checked')].map(c => c.value.toLowerCase());
+  const remote = checked.includes('remote') || /remote/i.test(type);
+  const region = checked.find(v => ['india','us','uk'].includes(v)) || '';
+  const place = { india: 'India', us: 'United States', uk: 'United Kingdom' }[region] || '';
+  return { q: role, typed: !!q, typeWord, remote, region, place };
+}
+const enc = encodeURIComponent;
+const slug = t => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const GLOBAL_SITES = [
+  // [name, color, group, url builder]
+  ['LinkedIn', '#0a66c2', 'jobs', g => `https://www.linkedin.com/jobs/search/?keywords=${enc((g.q + ' ' + g.typeWord).trim())}&location=${enc(g.place || (g.remote ? '' : 'Worldwide'))}${g.remote ? '&f_WT=2' : ''}`],
+  ['Indeed', '#2164f3', 'jobs', g => `https://${g.region === 'india' ? 'in.' : g.region === 'uk' ? 'uk.' : 'www.'}indeed.com/jobs?q=${enc((g.q + ' ' + g.typeWord).trim())}&l=${enc(g.remote ? 'Remote' : (g.region === 'india' || g.region === 'uk' ? '' : g.place))}`],
+  ['Naukri', '#4a90e2', 'jobs', g => `https://www.naukri.com/${slug(g.q)}-jobs?k=${enc(g.q)}${g.remote ? '&wfhType=2' : ''}`],
+  ['foundit', '#6e2bd9', 'jobs', g => `https://www.foundit.in/srp/results?query=${enc(g.q)}${g.remote ? '&locations=Remote' : ''}`],
+  ['Glassdoor', '#0caa41', 'jobs', g => `https://www.glassdoor.${g.region === 'india' ? 'co.in' : g.region === 'uk' ? 'co.uk' : 'com'}/Job/jobs.htm?sc.keyword=${enc((g.q + ' ' + g.typeWord).trim())}`],
+  ['Google Jobs', '#ea4335', 'jobs', g => `https://www.google.com/search?q=${enc([g.q, g.typeWord, 'jobs', g.remote ? 'remote' : '', g.place].filter(Boolean).join(' '))}&ibp=htl;jobs`],
+  ['Dice', '#cc0000', 'jobs', g => `https://www.dice.com/jobs?q=${enc((g.q + ' ' + g.typeWord).trim())}${g.remote ? '&filters.workplaceTypes=Remote' : (g.region === 'us' ? '&location=United%20States' : '')}`],
+  ['Remote OK', '#01161e', 'jobs', g => `https://remoteok.com/remote-${slug(g.q.split(' ').filter(w => !/^(senior|lead|developer|engineer)$/i.test(w))[0] || 'dev')}-jobs`],
+  ['Upwork', '#14a800', 'freelance', g => `https://www.upwork.com/nx/search/jobs/?q=${enc(g.q)}`],
+  ['Freelancer', '#0e4fac', 'freelance', g => `https://www.freelancer.com/search/projects?q=${enc(g.q)}`],
+  ['PeoplePerHour', '#e8360e', 'freelance', g => `https://www.peopleperhour.com/freelance-jobs?q=${enc(g.q)}`],
+  ['Guru', '#f07c00', 'freelance', g => `https://www.guru.com/d/jobs/q/${slug(g.q)}/`]
+];
+function updateGlobalSearch() {
+  const g = globalQuery();
+  const where = g.remote ? ' (remote)' : g.place ? ` in ${g.place}` : '';
+  document.getElementById('gsHead').innerHTML = g.typed || document.getElementById('techFilter').value
+    ? `🌐 <b>Search everywhere</b> for “${escJ(g.q)}”${escJ(where)}:`
+    : `🌐 <b>Search everywhere</b> — type a skill or role above, or pick a technology, to search the major job sites:`;
+  ['jobs', 'freelance'].forEach(group => {
+    const wrap = document.getElementById(group === 'jobs' ? 'gsJobs' : 'gsFreelance');
+    wrap.querySelectorAll('a').forEach(a => a.remove());
+    GLOBAL_SITES.filter(s => s[2] === group).forEach(([name, color, , build]) => {
+      const a = document.createElement('a');
+      a.className = 'gs-link'; a.href = build(g); a.target = '_blank'; a.rel = 'noopener';
+      a.setAttribute('aria-label', `Search ${name} for ${g.q}${where} (opens in a new tab)`);
+      a.innerHTML = `<span class="dot" style="background:${color}" aria-hidden="true"></span>${escJ(name)} ↗`;
+      wrap.appendChild(a);
+    });
+  });
 }
 
 function escJ(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
