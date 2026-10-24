@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inbox — TechTalent Portal</title>
+<meta name="robots" content="noindex">
+<script src="auth.js"></script>
+<style>
+:root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--light:#e8f0fe;--text:#1a1a1a;--muted:#555;--border:#c5d5e8;--bg:#f7f9fc;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.55;}
+.mail-wrap{max-width:1180px;margin:0 auto;padding:20px 20px 48px;}
+.mail-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+.mail-top h1{font-size:1.45rem;color:var(--blue);}
+.mail-top p{font-size:.85rem;color:var(--muted);}
+.mail-search{flex:1;max-width:380px;min-width:200px;padding:9px 14px;border:1px solid var(--border);border-radius:20px;font-size:.92rem;background:#fff;font-family:inherit;}
+.mail{display:grid;grid-template-columns:200px 360px minmax(0,1fr);background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;min-height:560px;}
+@media(max-width:980px){.mail{grid-template-columns:170px minmax(0,1fr);}.reader{grid-column:1/-1;border-top:1px solid var(--border);}}
+@media(max-width:640px){.mail{grid-template-columns:minmax(0,1fr);min-height:0;}.folders{display:flex;border-right:none!important;border-bottom:1px solid var(--border);overflow-x:auto;}.folders button{flex:0 0 auto;}.list{max-height:none;}}
+.folders{border-right:1px solid var(--border);padding:10px 8px;background:#fbfcfe;}
+.folders button{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:10px 12px;border:none;background:none;border-radius:8px;font-size:.93rem;color:var(--text);cursor:pointer;font-family:inherit;text-align:left;min-height:44px;}
+.folders button:hover{background:var(--light);}
+.folders button.active{background:var(--light);color:var(--blue);font-weight:700;}
+.folders .cnt{font-size:.75rem;background:var(--accent);color:#fff;border-radius:10px;padding:1px 8px;font-weight:700;}
+.folders .cnt:empty{display:none;}
+.folders .note{font-size:.75rem;color:var(--muted);padding:14px 10px 4px;line-height:1.45;}
+.list{border-right:1px solid var(--border);overflow-y:auto;max-height:640px;}
+.list-tools{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:.82rem;color:var(--muted);position:sticky;top:0;background:#fff;}
+.list-tools button{background:none;border:none;color:var(--accent);font-weight:700;cursor:pointer;font-size:.82rem;font-family:inherit;min-height:32px;}
+.msg-row{display:block;width:100%;text-align:left;border:none;border-bottom:1px solid #eef0f3;background:#fff;padding:12px 14px;cursor:pointer;font-family:inherit;color:inherit;}
+.msg-row:hover{background:#f6f9fd;}
+.msg-row.selected{background:#e8f0fe;}
+.msg-row .r1{display:flex;justify-content:space-between;gap:8px;font-size:.82rem;color:var(--muted);}
+.msg-row .who{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.msg-row .subj{font-size:.92rem;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.msg-row .prev{font-size:.82rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.msg-row.unread .subj,.msg-row.unread .who{font-weight:700;color:var(--text);}
+.msg-row.unread{box-shadow:inset 4px 0 0 var(--accent);}
+.empty{padding:40px 20px;text-align:center;color:var(--muted);font-size:.92rem;}
+.empty .ei{font-size:2rem;margin-bottom:8px;}
+.reader{padding:22px 26px;overflow-y:auto;max-height:640px;}
+@media(max-width:640px){.reader{padding:16px;max-height:none;}}
+.reader h2{font-size:1.2rem;color:var(--text);margin-bottom:8px;line-height:1.35;}
+.reader .meta{font-size:.84rem;color:var(--muted);margin-bottom:16px;display:flex;flex-direction:column;gap:2px;}
+.reader .meta b{color:var(--text);font-weight:600;}
+.reader .body{white-space:pre-wrap;word-wrap:break-word;font-size:.95rem;line-height:1.65;border-top:1px solid #eef0f3;padding-top:16px;}
+.reader .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;}
+.reader .actions a,.reader .actions button{border:1px solid var(--border);background:#fff;color:var(--blue);padding:8px 14px;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer;text-decoration:none;font-family:inherit;min-height:40px;display:inline-flex;align-items:center;}
+.reader .actions .primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+.reader .actions .danger{color:#c62828;}
+.back-btn{display:none;}
+@media(max-width:640px){.back-btn{display:inline-flex!important;}}
+.privacy{margin-top:14px;font-size:.8rem;color:var(--muted);}
+</style>
+<script src="site.js" defer></script>
+</head>
+<body>
+<nav class="topnav" id="siteNav"></nav>
+<script src="nav.js"></script>
+
+<main class="mail-wrap" id="main-content">
+  <div class="mail-top">
+    <div>
+      <h1>📬 Inbox</h1>
+      <p id="ownerLine">Private to your account</p>
+    </div>
+    <input class="mail-search" id="mailSearch" type="search" placeholder="Search messages…" aria-label="Search messages" oninput="renderList()">
+  </div>
+
+  <div class="mail">
+    <nav class="folders" aria-label="Folders">
+      <button type="button" id="f-inbox" class="active" onclick="openFolder('inbox')" aria-current="true"><span>📥 Inbox</span><span class="cnt" id="cnt-inbox"></span></button>
+      <button type="button" id="f-sent" onclick="openFolder('sent')"><span>📤 Sent</span><span class="cnt" id="cnt-sent" style="background:#90a4ae"></span></button>
+      <p class="note">Updates about your applications, saved jobs and calls arrive in Inbox. Copies of messages you send are in Sent.</p>
+    </nav>
+
+    <section class="list" aria-label="Messages">
+      <div class="list-tools"><span id="listCount"></span><button type="button" id="markAll" onclick="markAll()">Mark all read</button></div>
+      <div id="msgList" role="list"></div>
+    </section>
+
+    <article class="reader" id="reader" aria-live="polite">
+      <div class="empty"><div class="ei" aria-hidden="true">✉️</div>Select a message to read it.</div>
+    </article>
+  </div>
+
+  <p class="privacy">🔒 Your inbox is kept in this browser and tied to your signed-in account — other accounts on this device can't open it. Messages from recruiters and candidates will start arriving here once member accounts move to the cloud.</p>
+</main>
+
+<script>
+let folder = 'inbox', selected = null;
+const fmt = iso => {
+  const d = new Date(iso), now = new Date();
+  return d.toDateString() === now.toDateString() ? d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+       : d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', ...(d.getFullYear() !== now.getFullYear() ? { year: 'numeric' } : {}) });
+};
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const safeLink = u => /^(https?:\/\/|[\w-]+\.html)/i.test(u || '') ? u : '';
+
+function counts() {
+  const unread = ttpMail.unread();
+  document.getElementById('cnt-inbox').textContent = unread || '';
+  document.getElementById('cnt-sent').textContent = ttpMail.list('sent').length || '';
+}
+function openFolder(f) {
+  folder = f; selected = null;
+  ['inbox', 'sent'].forEach(x => {
+    const b = document.getElementById('f-' + x);
+    b.classList.toggle('active', x === f);
+    if (x === f) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+  });
+  document.getElementById('markAll').style.visibility = f === 'inbox' ? 'visible' : 'hidden';
+  renderList(); showEmptyReader();
+}
+function filtered() {
+  const q = document.getElementById('mailSearch').value.trim().toLowerCase();
+  return ttpMail.list(folder).filter(m => !q || `${m.subject} ${m.body} ${m.to} ${m.from}`.toLowerCase().includes(q));
+}
+function renderList() {
+  const items = filtered();
+  const total = ttpMail.list(folder).length;
+  document.getElementById('listCount').textContent = items.length === total ? `${total} message${total !== 1 ? 's' : ''}` : `${items.length} of ${total}`;
+  const list = document.getElementById('msgList');
+  if (!items.length) {
+    list.innerHTML = `<div class="empty"><div class="ei" aria-hidden="true">${folder === 'inbox' ? '📭' : '📤'}</div>${
+      total ? 'No messages match your search.' : folder === 'inbox'
+        ? 'Nothing here yet. Apply to a job or save one, and updates will show up here.'
+        : 'Messages you send to candidates or employers will be copied here.'}</div>`;
+  } else {
+    list.innerHTML = items.map(m => `
+      <button type="button" role="listitem" class="msg-row${!m.read ? ' unread' : ''}${selected === m.id ? ' selected' : ''}" onclick="openMsg('${esc(m.id)}')" aria-label="${esc((m.read ? '' : 'Unread. ') + m.subject)}">
+        <div class="r1"><span class="who">${ttpMail.icon(m.kind)} ${esc(folder === 'sent' ? 'To: ' + (m.to || '—') : m.from)}</span><span>${fmt(m.ts)}</span></div>
+        <div class="subj">${esc(m.subject)}</div>
+        <div class="prev">${esc(String(m.body).replace(/\s+/g, ' ').slice(0, 90))}</div>
+      </button>`).join('');
+  }
+  counts();
+}
+function showEmptyReader() {
+  document.getElementById('reader').innerHTML = '<div class="empty"><div class="ei" aria-hidden="true">✉️</div>Select a message to read it.</div>';
+}
+function openMsg(id) {
+  const m = ttpMail.list(folder).find(x => x.id === id); if (!m) return showEmptyReader();
+  selected = id;
+  if (!m.read) ttpMail.update(folder, id, { read: true });
+  const link = safeLink(m.link);
+  const linkLabel = /calendar\.google/.test(link) ? '📅 Add to calendar' : /^https?:/.test(link) ? 'Open listing ↗' : 'Open →';
+  document.getElementById('reader').innerHTML = `
+    <button type="button" class="back-btn" onclick="showEmptyReader();document.getElementById('msgList').scrollIntoView()" style="border:none;background:none;color:var(--accent);font-weight:700;margin-bottom:10px;cursor:pointer">← Back</button>
+    <h2>${esc(m.subject)}</h2>
+    <div class="meta">
+      <span><b>${folder === 'sent' ? 'To' : 'From'}:</b> ${esc(folder === 'sent' ? (m.to || '—') : m.from)}</span>
+      <span><b>Date:</b> ${new Date(m.ts).toLocaleString()}</span>
+    </div>
+    <div class="body">${esc(m.body)}</div>
+    <div class="actions">
+      ${link ? `<a class="primary" href="${esc(link)}" ${/^https?:/.test(link) ? 'target="_blank" rel="noopener"' : ''}>${linkLabel}</a>` : ''}
+      ${folder === 'inbox' ? `<button type="button" onclick="toggleRead('${esc(m.id)}')">Mark as unread</button>` : ''}
+      <button type="button" class="danger" onclick="del('${esc(m.id)}')">Delete</button>
+    </div>`;
+  renderList();
+  if (window.matchMedia('(max-width:980px)').matches) document.getElementById('reader').scrollIntoView({ behavior: 'smooth' });
+}
+function toggleRead(id) { ttpMail.update(folder, id, { read: false }); selected = null; renderList(); showEmptyReader(); }
+function del(id) {
+  if (!confirm('Delete this message?')) return;
+  ttpMail.remove(folder, id); selected = null; renderList(); showEmptyReader();
+}
+function markAll() { ttpMail.markAllRead(); renderList(); }
+
+(function init() {
+  if (!window.ttpMail || !ttpMail.owner()) { location.replace('login.html?next=inbox.html'); return; }
+  document.getElementById('ownerLine').textContent = `Private to ${ttpMail.owner()}`;
+  renderList();
+  const hash = decodeURIComponent(location.hash.slice(1));
+  if (hash) openMsg(hash);
+  window.addEventListener('storage', e => { if (e.key && e.key.indexOf('ttp_mail:') === 0) renderList(); });
+})();
+</script>
+</body>
+</html>

@@ -468,6 +468,7 @@ async function loadJobs() {
 
 // Remember title/company/link of saved & applied jobs so the dashboard can list them
 function rememberJob(id) {
+  if (window.ttpMail) ttpMail.track(id);
   const j = jobs.find(x => x.id === id); if (!j) return;
   try {
     const meta = JSON.parse(localStorage.getItem('ttp_job_meta') || '{}');
@@ -563,6 +564,7 @@ function renderJobs() {
 
 function markApplied(id, btn) {
   rememberJob(id);
+  try { const jm = jobs.find(x => x.id === id) || {}; if (window.ttpMail) ttpMail.add('inbox', { kind: 'application', dedupe: 'applied:' + id, subject: `Applied on ${jm.source || 'job site'}: ${jm.title || 'job'}`, body: `You opened ${jm.company || 'this employer'}'s listing to apply on ${new Date().toLocaleString()}.\nWe'll let you know here if this listing closes.`, link: jm.url || '' }); } catch {}
   applied.add(id);
   try {
     const jm = jobs.find(x => x.id === id) || {};
@@ -954,6 +956,10 @@ async function submitApply() {
   apps.unshift({ ...payload, status: 'Applied' });
   localStorage.setItem('ttp_applications', JSON.stringify(apps));
   // UI
+  if (window.ttpMail) {
+    ttpMail.add('sent', { kind: 'application', to: `${job.company || 'Employer'} — ${job.title || 'job'}`, subject: `Application: ${job.title || 'job'}`, body: `${cover || '(No cover note)'}\n\n— ${name}, ${email}`, link: job.url });
+    ttpMail.add('inbox', { kind: 'application', subject: `Application sent: ${job.title || 'job'}`, body: `Your application to ${job.company || 'the employer'} was sent on ${new Date().toLocaleString()}.\nTrack it in My Dashboard → Applications.`, link: 'dashboard.html' });
+  }
   document.getElementById('applySuccess').style.display = 'block';
   document.getElementById('applyForm').style.display = 'none';
   // Update card

@@ -452,6 +452,7 @@ async function markFilled(id){
   // Keep this browser's copies in step (offline posting)
   ['ttp_my_jobs','ttp_local_jobs'].forEach(k=>{try{const a=JSON.parse(localStorage.getItem(k)||'[]');a.forEach(j=>{if(j.id===id){j.status='filled';j.closedAt=new Date().toISOString();}});localStorage.setItem(k,JSON.stringify(a));}catch{}});
   try{const c=JSON.parse(localStorage.getItem('ttp_closed_jobs')||'[]');c.push({id,reason:'Position filled',closedAt:new Date().toISOString()});localStorage.setItem('ttp_closed_jobs',JSON.stringify(c));}catch{}
+  try{ if(window.ttpMail) ttpMail.add('inbox',{kind:'job',subject:'Job marked as filled',body:'The listing has been removed from Browse Jobs.',link:'dashboard.html?tab=posted'}); }catch{}
   loadPostedJobs();
 }
 

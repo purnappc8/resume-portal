@@ -480,6 +480,7 @@ async function sendContact(){
   try{const r=await fetch(`${API}/contact`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({from:{name,email,company},target,message:msg,sentAt:new Date().toISOString()}),signal:AbortSignal.timeout(5000)});ok=r.ok;}catch{}
   btn.disabled=false;btn.textContent='Send Message';
   closeContact();document.getElementById('c-msg').value='';
+  if(window.ttpMail) ttpMail.add('sent',{kind:'contact',to:who,subject:`Opportunity for ${who}`,body:`${msg}\n\n— ${name}${company?', '+company:''}\n${email}\n\n${ok?'Delivered through TechTalent Portal.':'Sent from your own email app (TechTalent Portal opened it pre-filled).'}`});
   if(ok){
     toast('ok','Message sent',`${escH(who)} will get your message and can reply to ${escH(email)}.`,6000);
     alert('Thank you! Your message has been sent to the candidate.');

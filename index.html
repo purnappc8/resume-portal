@@ -782,7 +782,7 @@ async function sendContact() {
   if (ok) {
     closeContactModal();
     document.getElementById('c-msg').value = '';
-    addNotification('contact', `Message sent to ${candidate}`, `From ${name} (${email}) — will reply soon`);
+    keepSent('contact', candidate, `Opportunity for ${candidate}`, `${msg}\n\n— ${name}${company ? ', ' + company : ''}\n${email}\n\nDelivered through TechTalent Portal.`);
     showToast({ title: 'Message sent!', html: `${esc(candidate)} will get your message and can reply to ${esc(email)}.` });
     alert('Thank you! Your message has been sent to the candidate.');
   } else {
@@ -798,7 +798,7 @@ async function sendContact() {
     const mailto = `mailto:purna.padishala@gmail.com?subject=${subject}&body=${body}`;
     closeContactModal();
     document.getElementById('c-msg').value = '';
-    addNotification('contact', `Message to ${candidate} ready in your email app`, `From ${name} (${email})`);
+    keepSent('contact', candidate, `Opportunity for ${candidate}`, `${msg}\n\n— ${name}${company ? ', ' + company : ''}\n${email}\n\nSent from your own email app (TechTalent Portal opened it pre-filled).`);
     showToast({ title: 'Message ready — almost done!', timeout: 12000,
       html: `Your email app is opening with the message to ${esc(candidate)} filled in. Press <b>Send</b> there to deliver it. <a href="${mailto}">Didn't open? Click here.</a>` });
     alert('Thank you! Your message is ready. Your email app will open next. Press Send there to deliver it to the candidate.');
@@ -811,54 +811,12 @@ document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('cli
   if (e.target === o) { closeModal(); closeContactModal(); closeScheduleModal(); }
 }));
 
-// ── Notifications ─────────────────────────────────────────────────────────────
-const NOTIF_KEY = 'ttp_notifications';
-function getNotifications() {
-  try { return JSON.parse(localStorage.getItem(NOTIF_KEY) || '[]'); } catch { return []; }
-}
-function addNotification(type, title, body) {
-  const notifs = getNotifications();
-  notifs.unshift({ id: Date.now().toString(36), type, title, body, read: false, ts: new Date().toISOString() });
-  if (notifs.length > 50) notifs.pop();
-  try { localStorage.setItem(NOTIF_KEY, JSON.stringify(notifs)); } catch {}
-  updateNotifBadge();
-}
-function updateNotifBadge() {
-  const unread = getNotifications().filter(n => !n.read).length;
-  const badge = document.getElementById('notifBadge');
-  if (!badge) return;
-  badge.textContent = unread > 9 ? '9+' : unread;
-  badge.style.display = unread ? 'flex' : 'none';
-}
-function toggleNotif(e) {
-  e.stopPropagation();
-  const dd = document.getElementById('notifDropdown');
-  const wasOpen = dd.classList.contains('open');
-  dd.classList.toggle('open', !wasOpen);
-  if (!wasOpen) renderNotifList();
-}
-function renderNotifList() {
-  const notifs = getNotifications();
-  const list = document.getElementById('notifList');
-  if (!list) return;
-  if (!notifs.length) {
-    list.innerHTML = '<div class="notif-empty">🔕 No notifications yet.<br><small>Contact messages and call requests will appear here.</small></div>';
-    return;
-  }
-  const icons = { contact: '✉️', schedule: '📅' };
-  list.innerHTML = notifs.slice(0, 20).map(n => `
-    <div class="notif-item ${n.read ? '' : 'unread'}">
-      <div class="n-title">${icons[n.type] || '🔔'} ${esc(n.title)}</div>
-      <div class="n-body">${esc(n.body)}</div>
-      <div class="n-time">${new Date(n.ts).toLocaleString()}</div>
-    </div>`).join('');
-}
-function markAllRead() {
-  const notifs = getNotifications().map(n => ({ ...n, read: true }));
-  try { localStorage.setItem(NOTIF_KEY, JSON.stringify(notifs)); } catch {}
-  updateNotifBadge();
-  renderNotifList();
-}
+// ── Notifications → private per-account mailbox (nav.js: window.ttpMail) ──────
+function addNotification(type, title, body) { if (window.ttpMail) ttpMail.add('inbox', { kind: type, subject: title, body }); }
+function updateNotifBadge() { if (window.ttpMail) ttpMail.refreshBadge(); }
+// Copy of a message you sent, kept in your Sent folder (signed-in accounts only)
+function keepSent(kind, to, subject, body, link) { if (window.ttpMail) ttpMail.add('sent', { kind, to, subject, body, link }); }
+
 // Close bell dropdown on outside click
 document.addEventListener('click', e => {
   const dd = document.getElementById('notifDropdown');
@@ -913,7 +871,8 @@ function submitSchedule() {
     localStorage.setItem('ttp_schedule_requests', JSON.stringify(reqs));
   } catch {}
   // Notification
-  addNotification('schedule', `Call scheduled with ${candidate}`, `${date} at ${time} (${duration} min) — calendar link ready`);
+  addNotification('schedule', `Call scheduled with ${candidate}`, `${date} at ${time} (${duration} min).\n\nAdd it to your calendar: ${calUrl}`);
+  keepSent('schedule', candidate, `Call request: ${candidate}`, `${date} at ${time} (${duration} min)\n\n${notes || 'No additional notes.'}\n\n— ${name}, ${email}`, calUrl);
   // Show result
   document.getElementById('sched-cal-link').href = calUrl;
   document.getElementById('sched-result').style.display = 'block';

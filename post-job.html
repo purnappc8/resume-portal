@@ -235,6 +235,7 @@ async function submitJob() {
     ? '✅ Job posted! It is now live on the job board. Go to My Dashboard → My Posted Jobs to track applicants.'
     : '✅ Job saved locally! (Server offline — it will sync when your server restarts.) Check My Dashboard.');
 
+  try { if (window.ttpMail) ttpMail.add('inbox', { kind: 'job', subject: `Job posted: ${payload.title}`, body: `${payload.company} · ${payload.location || 'Remote'}\nIt closes automatically on ${new Date(payload.expiresAt).toLocaleDateString()}. You can mark it as filled any time in My Dashboard → My Posted Jobs.`, link: 'dashboard.html?tab=posted' }); } catch (e) {}
   btn.textContent = '✅ Posted!';
   setTimeout(() => { window.location.href = 'dashboard.html?tab=posted'; }, 2200);
 }

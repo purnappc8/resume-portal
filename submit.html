@@ -355,6 +355,7 @@ async function submitResume() {
   document.getElementById('progress').style.width='100%';
   ['step1','step2','step3'].forEach(id=>document.getElementById(id).style.display='none');
   document.getElementById('successCard').style.display='block';
+  try { if (window.ttpMail) ttpMail.add('inbox', { kind: 'profile', dedupe: 'profile:' + new Date().toDateString(), subject: 'Your profile is published', body: 'Recruiters can now find your profile on Browse Talent.\nKeep it fresh: update your skills and availability any time from Post Resume.', link: 'index.html' }); } catch (e) {}
   if (IS_GUEST) {
     document.getElementById('guestBanner').style.display='none';
     document.getElementById('claimBox').style.display='block';

@@ -10,6 +10,37 @@
  * Hidden stub elements keep older page code that still looks up its previous menu
  * ids (navAuthBtn, navUser, nav-login, …) from failing.
  */
+/* Per-account privacy for personal data kept in this browser.
+ * These keys are transparently stored per signed-in account ("key::email"), so the
+ * next person who signs in on the same computer can't see your saved jobs,
+ * applications, AI-apply profile or posted jobs. Signed-out visitors share a
+ * separate "guest" space. Runs before any page script reads these keys. */
+(function () {
+  if (window.__ttpPrivateStore) return; window.__ttpPrivateStore = true;
+  var PRIVATE = { ttp_saved: 1, ttp_applied: 1, ttp_applications: 1, ttp_job_meta: 1, ttp_ai_profile: 1, ttp_ai_queue: 1,
+                  ttp_my_jobs: 1, ttp_local_jobs: 1, ttp_schedule_requests: 1, ttp_pending_contacts: 1, ttp_submissions: 1 };
+  var P = Storage.prototype, get = P.getItem, set = P.setItem, rem = P.removeItem;
+  function who() {
+    try {
+      var raw = get.call(sessionStorage, 'ttp_session') || get.call(localStorage, 'ttp_session');
+      var s = raw ? JSON.parse(raw) : null;
+      if (s && s.token && s.token !== 'guest' && s.email) return String(s.email).toLowerCase();
+    } catch (e) {}
+    return 'guest';
+  }
+  function ns(k) { return PRIVATE[k] ? k + '::' + who() : k; }
+  P.getItem = function (k) { return get.call(this, ns(k)); };
+  P.setItem = function (k, v) { return set.call(this, ns(k), v); };
+  P.removeItem = function (k) { return rem.call(this, ns(k)); };
+  // Old, shared copies had no owner — move them out of sight instead of handing them to whoever signs in next
+  try {
+    Object.keys(PRIVATE).forEach(function (k) {
+      var v = get.call(localStorage, k);
+      if (v != null) { set.call(localStorage, k + '::unclaimed', v); rem.call(localStorage, k); }
+    });
+  } catch (e) {}
+})();
+
 (function () {
   var nav = document.getElementById('siteNav');
   if (!nav) return;
@@ -98,13 +129,15 @@
       '<span class="nav-auth" id="navLoggedIn" style="display:' + (sess ? 'flex' : 'none') + '">' +
         '<span class="nav-hi">Hi, <b id="navUserName">' + esc(sess ? String(sess.name || (sess.email || '').split('@')[0] || 'User').split(' ')[0] : 'User') + '</b></span>' +
         '<a href="dashboard.html"' + (page === 'dashboard.html' ? ' class="active" aria-current="page"' : '') + '>My Dashboard</a>' +
+        '<a href="inbox.html"' + (page === 'inbox.html' ? ' class="active" aria-current="page"' : '') + '>Inbox</a>' +
         '<a href="#" onclick="ttpNavSignOut();return false">Sign Out</a>' +
       '</span>' +
-      '<div class="notif-wrap">' +
-        '<button class="notif-btn" id="notifBtn" onclick="ttpNavToggleNotif(event)" title="Notifications" aria-label="Notifications">🔔<span class="notif-badge" id="notifBadge"></span></button>' +
+      '<div class="notif-wrap"' + (sess ? '' : ' hidden style="display:none"') + '>' +
+        '<button class="notif-btn" id="notifBtn" onclick="ttpNavToggleNotif(event)" title="Inbox & notifications" aria-label="Inbox and notifications" aria-haspopup="true">🔔<span class="notif-badge" id="notifBadge"></span></button>' +
         '<div class="notif-dropdown" id="notifDropdown">' +
           '<div class="notif-header"><h3>🔔 Notifications</h3><button class="notif-mark-all" onclick="ttpNavMarkAllRead()">Mark all read</button></div>' +
           '<div id="notifList"></div>' +
+          '<a href="inbox.html" class="notif-open-inbox" style="display:block;text-align:center;padding:12px;font-weight:700;color:#1565c0;text-decoration:none;border-top:1px solid #c5d5e8">Open inbox →</a>' +
         '</div>' +
       '</div>' +
     '</div>' +
@@ -125,22 +158,65 @@
   // Pages that still call their own logout get the same behaviour
   if (typeof window.ttpLogout !== 'function') window.ttpLogout = window.ttpNavSignOut;
 
-  // ── Notifications (shared localStorage list, same as the homepage) ─────────
-  var KEY = 'ttp_notifications';
-  function getN() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
+  // ── Private mailbox: inbox + sent, stored per signed-in account ────────────
+  // Nothing is stored for guests or signed-out visitors, and one account never sees
+  // another account's messages in this browser.
+  // (Messages from other members need cloud accounts; the inbox is ready for them.)
+  try { localStorage.removeItem('ttp_notifications'); } catch (e) {}   // old shared list had no owner
+  function owner() {
+    var s = readSession();
+    return s && s.token && s.token !== 'legacy' && s.email ? String(s.email).toLowerCase() : null;
+  }
+  function mkey() { var o = owner(); return o ? 'ttp_mail:' + o : null; }
+  function load() {
+    var k = mkey(); if (!k) return null;
+    try { var d = JSON.parse(localStorage.getItem(k) || 'null'); if (d && d.inbox && d.sent) return d; } catch (e) {}
+    return { inbox: [], sent: [], seen: {} };
+  }
+  function save(d) { var k = mkey(); if (!k) return; try { localStorage.setItem(k, JSON.stringify(d)); } catch (e) {} }
+  var ICONS = { contact: '✉️', schedule: '📅', application: '📤', job: '📋', profile: '👤', closed: '🔒', welcome: '👋', update: '🔔' };
+  window.ttpMail = {
+    owner: owner,
+    icon: function (kind) { return ICONS[kind] || '🔔'; },
+    // folder: 'inbox' | 'sent'; msg: {kind, subject, body, to, from, link, dedupe}
+    add: function (folder, msg) {
+      var d = load(); if (!d) return false;
+      if (msg.dedupe) { if (d.seen[msg.dedupe]) return false; d.seen[msg.dedupe] = 1; }
+      var item = {
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        kind: msg.kind || 'update', subject: String(msg.subject || '').slice(0, 200), body: String(msg.body || '').slice(0, 5000),
+        to: String(msg.to || '').slice(0, 200), from: String(msg.from || (folder === 'sent' ? 'You' : 'TechTalent Portal')).slice(0, 200),
+        link: msg.link || '', ts: new Date().toISOString(), read: folder === 'sent'
+      };
+      d[folder].unshift(item);
+      if (d[folder].length > 200) d[folder].length = 200;
+      save(d); badge(); return true;
+    },
+    list: function (folder) { var d = load(); return d ? d[folder] || [] : []; },
+    update: function (folder, id, patch) { var d = load(); if (!d) return; d[folder].forEach(function (m) { if (m.id === id) Object.assign(m, patch); }); save(d); badge(); },
+    remove: function (folder, id) { var d = load(); if (!d) return; d[folder] = d[folder].filter(function (m) { return m.id !== id; }); save(d); badge(); },
+    markAllRead: function () { var d = load(); if (!d) return; d.inbox.forEach(function (m) { m.read = true; }); save(d); badge(); },
+    // Remember that THIS account saved/applied to a job (for its closed-job alerts)
+    track: function (jobId) { var d = load(); if (!d) return; d.seen['job:' + jobId] = 1; save(d); },
+    tracks: function (jobId) { var d = load(); return !!(d && d.seen['job:' + jobId]); },
+    unread: function () { return this.list('inbox').filter(function (m) { return !m.read; }).length; },
+    refreshBadge: function () { badge(); }
+  };
+
   function badge() {
     var b = document.getElementById('notifBadge'); if (!b) return;
-    var n = getN().filter(function (x) { return !x.read; }).length;
+    var n = owner() ? window.ttpMail.unread() : 0;
     b.textContent = n > 9 ? '9+' : n; b.style.display = n ? 'flex' : 'none';
+    var btn = document.getElementById('notifBtn');
+    if (btn) btn.setAttribute('aria-label', n ? 'Inbox and notifications, ' + n + ' unread' : 'Inbox and notifications');
   }
   function render() {
     var list = document.getElementById('notifList'); if (!list) return;
-    var items = getN();
-    if (!items.length) { list.innerHTML = '<div class="notif-empty">🔕 No notifications yet.<br><small>Contact messages and call requests will appear here.</small></div>'; return; }
-    var icons = { contact: '✉️', schedule: '📅' };
-    list.innerHTML = items.slice(0, 20).map(function (n) {
-      return '<div class="notif-item ' + (n.read ? '' : 'unread') + '"><div class="n-title">' + (icons[n.type] || '🔔') + ' ' + esc(n.title) +
-        '</div><div class="n-body">' + esc(n.body) + '</div><div class="n-time">' + new Date(n.ts).toLocaleString() + '</div></div>';
+    var items = window.ttpMail.list('inbox');
+    if (!items.length) { list.innerHTML = '<div class="notif-empty">🔕 No notifications yet.<br><small>Updates about your applications, messages and jobs appear here.</small></div>'; return; }
+    list.innerHTML = items.slice(0, 6).map(function (n) {
+      return '<a href="inbox.html#' + esc(n.id) + '" class="notif-item ' + (n.read ? '' : 'unread') + '" style="display:block;text-decoration:none;color:inherit"><div class="n-title">' + window.ttpMail.icon(n.kind) + ' ' + esc(n.subject) +
+        '</div><div class="n-body">' + esc(String(n.body).slice(0, 120)) + '</div><div class="n-time">' + new Date(n.ts).toLocaleString() + '</div></a>';
     }).join('');
   }
   window.ttpNavToggleNotif = function (e) {
@@ -148,17 +224,31 @@
     var dd = document.getElementById('notifDropdown');
     var open = !dd.classList.contains('open');
     dd.classList.toggle('open', open);
+    document.getElementById('notifBtn').setAttribute('aria-expanded', open ? 'true' : 'false');
     if (open) render();
   };
-  window.ttpNavMarkAllRead = function () {
-    try { localStorage.setItem(KEY, JSON.stringify(getN().map(function (n) { n.read = true; return n; }))); } catch (e) {}
-    badge(); render();
-  };
+  window.ttpNavMarkAllRead = function () { window.ttpMail.markAllRead(); render(); };
   document.addEventListener('click', function (e) {
     var dd = document.getElementById('notifDropdown');
     if (dd && !e.target.closest('.notif-wrap')) dd.classList.remove('open');
   });
-  // Keep the badge in sync when another tab or page adds a notification
-  window.addEventListener('storage', function (e) { if (e.key === KEY) badge(); });
+  window.addEventListener('storage', function (e) { if (e.key && e.key.indexOf('ttp_mail:') === 0) badge(); });
+
+  // Alerts generated for you: saved/applied jobs that have since closed
+  if (owner()) {
+    try {
+      var closed = JSON.parse(localStorage.getItem('ttp_closed_jobs') || '[]');
+      var meta = JSON.parse(localStorage.getItem('ttp_job_meta') || '{}');
+      closed.forEach(function (c) {
+        if (!window.ttpMail.tracks(c.id)) return;   // only jobs this account saved/applied to
+        var m = meta[c.id] || c;
+        window.ttpMail.add('inbox', { kind: 'closed', dedupe: 'closed:' + c.id, subject: 'Job closed: ' + (m.title || 'a job you saved'),
+          body: (m.company ? m.company + ' — ' : '') + (c.reason || 'This listing is no longer available.') + '\n\nIt has been removed from Browse Jobs. You can find similar roles there.', link: 'jobs.html' });
+      });
+      var sNow = readSession();
+      window.ttpMail.add('inbox', { kind: 'welcome', dedupe: 'welcome', subject: 'Welcome to your inbox',
+        body: 'Hi ' + String((sNow && sNow.name) || 'there').split(' ')[0] + ',\n\nThis inbox is private to your account. You\'ll find updates here about your applications, saved jobs that close, calls you schedule, and copies of messages you send (under Sent).\n\nMessages from recruiters and candidates will also arrive here once member accounts move to the cloud.' });
+    } catch (e) {}
+  }
   badge();
 })();
