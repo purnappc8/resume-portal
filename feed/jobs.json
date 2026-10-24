@@ -1,23 +1,24 @@
 {
- "updatedAt": "2026-10-24T19:49:44.011Z",
+ "updatedAt": "2026-10-24T19:53:46.457Z",
  "refreshEveryHours": 3,
  "attribution": "Jobs from Remote OK (remoteok.com), Remotive (remotive.com) and Arbeitnow (arbeitnow.com). Each job links to its original listing.",
  "sources": {
   "Remote OK": {
    "status": "ok",
-   "fetchedAt": "2026-10-24T19:49:44.011Z",
+   "fetchedAt": "2026-10-24T19:53:46.457Z",
    "count": 15,
    "scanned": 99
   },
   "Remotive": {
-   "status": "ok",
+   "status": "reused",
    "fetchedAt": "2026-10-24T19:49:44.011Z",
-   "count": 20,
-   "scanned": 40
+   "count": 5,
+   "scanned": 40,
+   "note": "Remotive is fetched at most 4×/day"
   },
   "Arbeitnow": {
    "status": "ok",
-   "fetchedAt": "2026-10-24T19:49:44.011Z",
+   "fetchedAt": "2026-10-24T19:53:46.457Z",
    "count": 60,
    "scanned": 900
   }
