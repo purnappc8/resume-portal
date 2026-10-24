@@ -38,6 +38,27 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 .filter-item{display:flex;align-items:center;gap:7px;padding:3px 0;cursor:pointer;font-size:.88rem;}
 .filter-item input{accent-color:var(--accent);}
 
+.web-results{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:16px;}
+.web-results h3{font-size:1rem;color:var(--blue);margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.web-results .wr-sub{font-size:.8rem;color:var(--muted);margin-bottom:10px;}
+.wr-item{display:flex;gap:12px;padding:11px 0;border-top:1px solid #eef0f3;}
+.wr-item:first-of-type{border-top:none;}
+.wr-item .wr-main{flex:1;min-width:0;}
+.wr-item .wr-title{font-weight:700;color:var(--blue);font-size:.95rem;text-decoration:none;}
+.wr-item .wr-title:hover{text-decoration:underline;}
+.wr-item .wr-meta{font-size:.82rem;color:var(--muted);margin-top:2px;}
+.wr-item .wr-snip{font-size:.82rem;color:#444;margin-top:4px;}
+.wr-item .wr-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+.wr-badge{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--light);color:var(--blue);}
+.wr-badge.sal{background:#d4edda;color:var(--green);}
+.wr-apply{align-self:center;white-space:nowrap;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:.85rem;padding:8px 14px;border-radius:8px;}
+.wr-apply:hover{background:#0d47a1;}
+.wr-more{display:block;width:100%;margin-top:8px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px;font-weight:700;color:var(--blue);cursor:pointer;font-family:inherit;}
+.wr-status{font-size:.88rem;color:var(--muted);padding:6px 0;}
+.wr-skel{height:58px;border-radius:8px;margin:8px 0;background:linear-gradient(90deg,#eef1f5 25%,#f6f8fa 50%,#eef1f5 75%);background-size:200%;animation:wrShim 1.4s infinite;}
+@keyframes wrShim{0%{background-position:200%}100%{background-position:-200%}}
+@media (prefers-reduced-motion:reduce){.wr-skel{animation:none}}
+@media (max-width:600px){.wr-item{flex-direction:column;gap:8px}.wr-apply{align-self:flex-start}}
 .global-search{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:16px;}
 .global-search .gs-head{font-size:.92rem;color:var(--text);margin-bottom:10px;line-height:1.45;}
 .global-search .gs-head b{color:var(--blue);}
@@ -193,6 +214,13 @@ footer a{color:rgba(255,255,255,.9);}
       <div class="dash-stat"><div class="n" id="ds-total">0</div><div class="l">Jobs Available</div></div>
       <a href="dashboard.html" style="margin-left:auto;color:var(--accent);font-size:.9rem;font-weight:700;align-self:center">View Full Dashboard →</a>
     </div>
+    <!-- Results from across the web (Jooble / Adzuna / JSearch via our search service) -->
+    <section class="web-results" id="webResults" hidden aria-live="polite" aria-labelledby="wrHead">
+      <h3 id="wrHead">🌐 From across the web</h3>
+      <div class="wr-sub" id="wrSub"></div>
+      <div id="wrList"></div>
+    </section>
+
     <!-- Search everywhere: same search on the big job sites -->
     <section class="global-search" id="globalSearch" aria-labelledby="gsHead">
       <div class="gs-head" id="gsHead">🌐 <b>Search everywhere</b> — run this search on the major job sites:</div>
@@ -473,6 +501,7 @@ function renderJobs() {
 
   document.getElementById('resultsCount').textContent = `${filtered.length} job${filtered.length!==1?'s':''} found`;
   updateGlobalSearch();
+  if (typeof scheduleWebSearch === 'function' && jobs.length) scheduleWebSearch(false);
 
   const list = document.getElementById('jobList');
   if(!filtered.length){
@@ -615,6 +644,80 @@ const GLOBAL_SITES = [
   ['Freelancer', '#0e4fac', 'freelance', g => `https://www.freelancer.com/search/projects?q=${enc(g.q)}`],
   ['PeoplePerHour', '#e8360e', 'freelance', g => `https://www.peopleperhour.com/freelance-jobs?q=${enc(g.q)}`]
 ];
+// ── Results from across the web ─────────────────────────────────────────────
+// Our search service (worker/search-worker.js on Cloudflare) asks Jooble, Adzuna and
+// JSearch at once and returns one list. Set its address here once it is deployed.
+const WEB_SEARCH_URL = '';   // e.g. 'https://techtalent-search.<you>.workers.dev'
+function webSearchUrl() {
+  // For local testing only: ?ws=http://localhost:8787
+  if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { const o = new URLSearchParams(location.search).get('ws'); if (o) return o; }
+  return WEB_SEARCH_URL;
+}
+let wrTimer = null, wrSeq = 0, wrShown = 10, wrLast = null;
+function scheduleWebSearch(immediate) {
+  clearTimeout(wrTimer);
+  wrTimer = setTimeout(runWebSearch, immediate ? 0 : 900);
+}
+async function runWebSearch() {
+  const base = webSearchUrl(); const box = document.getElementById('webResults');
+  if (!base) { box.hidden = true; return; }
+  const g = globalQuery();
+  if (!g.typed && !document.getElementById('techFilter').value) { box.hidden = true; return; }
+  const type = (document.getElementById('typeFilter').value || '').toLowerCase();
+  const loc = g.remote ? 'remote' : g.region;
+  const params = new URLSearchParams({ q: g.q, ...(loc ? { loc } : {}), ...(/^(contract|freelance|part-time)$/.test(type) ? { type } : {}) });
+  const key = 'ttp_ws_' + params;
+  const seq = ++wrSeq; wrShown = 10;
+  box.hidden = false;
+  document.getElementById('wrHead').innerHTML = `🌐 From across the web <span style="font-weight:400;color:var(--muted);font-size:.85rem">for “${escJ(g.q)}”${g.remote ? ' (remote)' : g.place ? ' in ' + escJ(g.place) : ''}</span>`;
+  // Same search this session? Use it again (saves the free quotas)
+  let data = null;
+  try { const c = JSON.parse(sessionStorage.getItem(key) || 'null'); if (c && Date.now() - c.t < 30 * 6e4) data = c.d; } catch {}
+  if (!data) {
+    document.getElementById('wrSub').textContent = 'Searching Jooble, Adzuna and Google-for-Jobs sources…';
+    document.getElementById('wrList').innerHTML = '<div class="wr-skel"></div><div class="wr-skel"></div><div class="wr-skel"></div>';
+    try {
+      const r = await fetch(`${base.replace(/\/$/, '')}/search?${params}`, { signal: AbortSignal.timeout(15000) });
+      data = await r.json();
+      if (!r.ok && !(data && data.results)) throw new Error(data && data.error || 'HTTP ' + r.status);
+      try { sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), d: data })); } catch {}
+    } catch (e) {
+      if (seq !== wrSeq) return;
+      document.getElementById('wrSub').textContent = '';
+      document.getElementById('wrList').innerHTML = `<p class="wr-status">Couldn't reach the web search right now. Use the job-site links below instead.</p>`;
+      return;
+    }
+  }
+  if (seq !== wrSeq) return;   // a newer search started meanwhile
+  wrLast = data; renderWebResults();
+}
+function renderWebResults() {
+  const data = wrLast || {}; const res = (data.results || []).filter(j => /^https?:\/\//.test(j.url || ''));
+  const names = { jooble: 'Jooble', adzuna: 'Adzuna', jsearch: 'JSearch' };
+  const ok = Object.entries(data.sources || {}).filter(([, v]) => v.ok).map(([k]) => names[k] || k);
+  document.getElementById('wrSub').textContent = res.length
+    ? `${res.length} job${res.length > 1 ? 's' : ''} from ${ok.join(', ') || 'job search services'}${data.cached ? ' · saved search' : ''} · opens the original listing`
+    : '';
+  if (!res.length) {
+    document.getElementById('wrList').innerHTML = `<p class="wr-status">No web results for this search. Try fewer words, or the job-site links below.</p>`;
+    return;
+  }
+  document.getElementById('wrList').innerHTML = res.slice(0, wrShown).map(j => {
+    const age = j.postedAt ? ageDays(j.postedAt) : null;
+    const when = age == null ? '' : age === 0 ? 'Today' : age === 1 ? 'Yesterday' : `${age}d ago`;
+    const via = j.via && j.via.toLowerCase() !== (j.provider || '').toLowerCase() ? `${j.via} via ${j.provider}` : (j.provider || j.via || '');
+    return `<article class="wr-item">
+      <div class="wr-main">
+        <a class="wr-title" href="${escJ(j.url)}" target="_blank" rel="noopener">${escJ(j.title)}</a>
+        <div class="wr-meta">${escJ(j.company)}${j.location ? ' · 📍 ' + escJ(j.location) : ''}${when ? ' · ' + when : ''}</div>
+        ${j.snippet ? `<div class="wr-snip">${escJ(j.snippet)}…</div>` : ''}
+        <div class="wr-badges">${j.type ? `<span class="wr-badge">${escJ(j.type)}</span>` : ''}${j.salary ? `<span class="wr-badge sal">${escJ(j.salary)}</span>` : ''}<span class="wr-badge" style="background:#f3f4f6;color:#555">${escJ(via)}</span></div>
+      </div>
+      <a class="wr-apply" href="${escJ(j.url)}" target="_blank" rel="noopener" aria-label="View and apply: ${escJ(j.title)} at ${escJ(j.company)} (opens the original listing)">View &amp; apply ↗</a>
+    </article>`;
+  }).join('') + (res.length > wrShown ? `<button type="button" class="wr-more" onclick="wrShown+=10;renderWebResults()">Show more web results (${res.length - wrShown} more)</button>` : '');
+}
+
 function updateGlobalSearch() {
   const g = globalQuery();
   const where = g.remote ? ' (remote)' : g.place ? ` in ${g.place}` : '';

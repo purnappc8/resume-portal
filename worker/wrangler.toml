@@ -1,0 +1,11 @@
+# Optional: deploy from a terminal with `npx wrangler deploy` (inside this folder).
+# The Cloudflare dashboard works just as well — see README.md.
+name = "techtalent-search"
+main = "search-worker.js"
+compatibility_date = "2024-09-23"
+
+# Secrets are NOT stored here. Add them with:
+#   npx wrangler secret put JOOBLE_KEY
+#   npx wrangler secret put ADZUNA_APP_ID
+#   npx wrangler secret put ADZUNA_APP_KEY
+#   npx wrangler secret put RAPIDAPI_KEY      (optional, JSearch)
