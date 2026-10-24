@@ -613,8 +613,7 @@ const GLOBAL_SITES = [
   ['Remote OK', '#01161e', 'jobs', g => `https://remoteok.com/remote-${slug(g.q.split(' ').filter(w => !/^(senior|lead|developer|engineer)$/i.test(w))[0] || 'dev')}-jobs`],
   ['Upwork', '#14a800', 'freelance', g => `https://www.upwork.com/nx/search/jobs/?q=${enc(g.q)}`],
   ['Freelancer', '#0e4fac', 'freelance', g => `https://www.freelancer.com/search/projects?q=${enc(g.q)}`],
-  ['PeoplePerHour', '#e8360e', 'freelance', g => `https://www.peopleperhour.com/freelance-jobs?q=${enc(g.q)}`],
-  ['Guru', '#f07c00', 'freelance', g => `https://www.guru.com/d/jobs/q/${slug(g.q)}/`]
+  ['PeoplePerHour', '#e8360e', 'freelance', g => `https://www.peopleperhour.com/freelance-jobs?q=${enc(g.q)}`]
 ];
 function updateGlobalSearch() {
   const g = globalQuery();
