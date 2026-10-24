@@ -24,6 +24,7 @@
     try {
       var raw = get.call(sessionStorage, 'ttp_session') || get.call(localStorage, 'ttp_session');
       var s = raw ? JSON.parse(raw) : null;
+      if (s && s.token && s.token !== 'guest' && s.role === 'recruiter' && s.username) return 'recruiter:' + String(s.username).toLowerCase();   // recruiters share a group email
       if (s && s.token && s.token !== 'guest' && s.email) return String(s.email).toLowerCase();
     } catch (e) {}
     return 'guest';
@@ -40,6 +41,33 @@
     });
   } catch (e) {}
 })();
+
+/* Site settings shared by all pages */
+window.TTP_CONFIG = window.TTP_CONFIG || {
+  // Recruiter accounts service (worker/accounts-worker.js). Leave empty until it is deployed:
+  // while empty, contacting candidates works as before (no recruiter sign-in required).
+  RECRUITER_API_URL: ''
+};
+// Local testing only: ?recruiterApi=http://localhost:8788 (remembered for this tab)
+if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+  try {
+    var _o = new URLSearchParams(location.search).get('recruiterApi');
+    if (_o) sessionStorage.setItem('ttp_test_recruiter_api', _o);
+    window.TTP_CONFIG.RECRUITER_API_URL = sessionStorage.getItem('ttp_test_recruiter_api') || window.TTP_CONFIG.RECRUITER_API_URL;
+  } catch (e) {}
+}
+/* Recruiters must be signed in to contact candidates — once recruiter accounts are live. */
+window.ttpRecruiterGate = function (what) {
+  if (!window.TTP_CONFIG.RECRUITER_API_URL) return true;
+  try {
+    var raw = sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session');
+    var s = raw ? JSON.parse(raw) : null;
+    if (s && s.role === 'recruiter' && s.token && (!s.expiresAt || Date.parse(s.expiresAt) > Date.now())) return true;
+  } catch (e) {}
+  var back = encodeURIComponent((location.pathname.split('/').pop() || 'index.html') + location.search);
+  if (confirm('Only verified recruiters can ' + (what || 'contact candidates') + '.\n\nSign in to your recruiter account, or ask your organization to add you?')) location.href = 'recruiter.html?next=' + back;
+  return false;
+};
 
 (function () {
   var nav = document.getElementById('siteNav');
@@ -68,6 +96,7 @@
   var here = encodeURIComponent(page);
   var LINKS = [
     ['index.html', 'Browse Talent'],
+    ['recruiter.html', 'Recruiters'],
     ['jobs.html', 'Browse Jobs'],
     ['resume-builder.html', 'Resume Builder'],
     ['submit.html', 'Post Resume'],
@@ -165,6 +194,7 @@
   try { localStorage.removeItem('ttp_notifications'); } catch (e) {}   // old shared list had no owner
   function owner() {
     var s = readSession();
+    if (s && s.token && s.role === 'recruiter' && s.username) return 'recruiter:' + String(s.username).toLowerCase();
     return s && s.token && s.token !== 'legacy' && s.email ? String(s.email).toLowerCase() : null;
   }
   function mkey() { var o = owner(); return o ? 'ttp_mail:' + o : null; }

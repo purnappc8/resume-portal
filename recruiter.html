@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recruiter Portal — TechTalent Portal</title>
+<meta name="description" content="Recruiter accounts for organizations: group-email verified, limited seats, each recruiter with their own login.">
+<style>
+:root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--light:#e8f0fe;--text:#1a1a1a;--muted:#555;--border:#c5d5e8;--bg:#f7f9fc;--red:#c62828;}
+*{box-sizing:border-box;margin:0;padding:0;}
+[hidden]{display:none !important;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.55;}
+.hero{background:linear-gradient(135deg,#0b2e59,#1565c0 60%,#0d8a5a);color:#fff;text-align:center;padding:44px 20px 36px;}
+.hero h1{font-size:2rem;font-weight:800;margin-bottom:8px;}
+.hero p{opacity:.9;max-width:620px;margin:0 auto;}
+.wrap{max-width:1000px;margin:-22px auto 48px;padding:0 16px;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start;}
+@media(max-width:860px){.wrap{grid-template-columns:minmax(0,1fr);}}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;box-shadow:0 2px 12px rgba(11,46,89,.06);}
+.tabs{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:18px;}
+.tabs button{flex:1;padding:11px 8px;border:none;background:#fff;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;font-size:.92rem;min-height:44px;}
+.tabs button.active{background:var(--accent);color:#fff;}
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:.86rem;font-weight:600;color:var(--blue);margin-bottom:4px;}
+.form-group input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.95rem;font-family:inherit;background:var(--bg);}
+.form-group input:focus{outline:none;border-color:var(--accent);background:#fff;}
+.hint{font-size:.78rem;color:var(--muted);margin-top:3px;}
+.btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;font-size:1rem;cursor:pointer;font-family:inherit;min-height:46px;}
+.btn:hover{background:#0d47a1;}
+.btn[disabled]{background:#90a4ae;cursor:not-allowed;}
+.msg{border-radius:10px;padding:12px 14px;font-size:.92rem;margin-bottom:14px;display:none;}
+.msg.ok{display:block;background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.msg.err{display:block;background:#fff3f3;border:1px solid #ef9a9a;border-left:5px solid var(--red);color:var(--red);font-weight:600;}
+.msg.info{display:block;background:var(--light);border:1px solid var(--border);color:var(--blue);}
+.side h3{font-size:1rem;color:var(--blue);margin-bottom:10px;}
+.side ol{padding-left:18px;font-size:.9rem;color:#333;}
+.side li{margin:7px 0;}
+.side .note{font-size:.8rem;color:var(--muted);margin-top:12px;}
+.team-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid #eef0f3;font-size:.92rem;}
+.team-row:first-child{border-top:none;}
+.pill{font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:10px;}
+.pill.active{background:#e8f5e9;color:var(--green);}
+.pill.pending{background:#fff4e5;color:#8a5300;}
+.seats{display:flex;gap:4px;margin:8px 0 4px;}
+.seats span{flex:1;height:8px;border-radius:4px;background:#e3e8ef;}
+.seats span.used{background:var(--accent);}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:6px 0;font-size:.92rem;}
+.kv b{color:var(--muted);font-weight:600;}
+</style>
+<script src="site.js" defer></script>
+</head>
+<body>
+<nav class="topnav" id="siteNav"></nav>
+<script src="nav.js"></script>
+
+<header class="hero">
+  <h1>Recruiter Portal</h1>
+  <p>Verified recruiters only. Your organization signs up with its group email, each recruiter gets their own login, and every new recruiter is approved from that group mailbox.</p>
+</header>
+
+<main class="wrap" id="main-content">
+  <section class="card" aria-live="polite">
+    <div id="setupNote" class="msg info" hidden>Recruiter accounts are being set up. Sign-in opens shortly — until then you can contact candidates as before.</div>
+    <div id="statusMsg" class="msg" role="status"></div>
+
+    <!-- Signed-in view -->
+    <div id="accountView" hidden>
+      <h2 style="color:var(--blue);font-size:1.3rem;margin-bottom:4px">Hi, <span id="acName"></span></h2>
+      <p style="color:var(--muted);font-size:.9rem;margin-bottom:16px">Signed in as <b id="acUser"></b> · <span id="acOrg"></span></p>
+      <div class="kv"><b>Organization email</b><span id="acGroup"></span></div>
+      <div class="kv"><b>Recruiter seats</b><span id="acSeats"></span></div>
+      <div class="seats" id="seatBar" aria-hidden="true"></div>
+      <h3 style="margin:18px 0 6px;color:var(--blue);font-size:1rem">Your team</h3>
+      <div id="teamList"></div>
+      <p class="hint" style="margin-top:10px">New recruiters join with "Join your organization" — the request is emailed to your group mailbox for approval.</p>
+      <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+        <a href="index.html#profiles-section" class="btn" style="width:auto;padding:12px 20px;text-decoration:none;display:inline-flex;align-items:center">Browse candidates →</a>
+        <button type="button" class="btn" style="width:auto;padding:12px 20px;background:#fff;color:var(--accent);border:1px solid var(--accent)" onclick="signOut()">Sign out</button>
+      </div>
+    </div>
+
+    <!-- Forms -->
+    <div id="formsView">
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" id="t-login" class="active" onclick="tab('login')">Sign in</button>
+        <button type="button" role="tab" id="t-join" onclick="tab('join')">Join your organization</button>
+        <button type="button" role="tab" id="t-org" onclick="tab('org')">Register organization</button>
+      </div>
+
+      <form id="f-login" onsubmit="submitLogin(event)">
+        <div class="form-group"><label for="l-user">Username</label><input id="l-user" autocomplete="username" required maxlength="30"></div>
+        <div class="form-group"><label for="l-pass">Password</label><input id="l-pass" type="password" autocomplete="current-password" required maxlength="128"></div>
+        <button class="btn" data-once>Sign in</button>
+      </form>
+
+      <form id="f-join" onsubmit="submitJoin(event)" hidden>
+        <p class="hint" style="margin-bottom:12px">Your organization must already be registered. Your request goes to its group mailbox for approval.</p>
+        <div class="form-group"><label for="j-group">Organization group email</label><input id="j-group" type="email" placeholder="hiring@yourcompany.com" required></div>
+        <div class="form-group"><label for="j-name">Your name</label><input id="j-name" autocomplete="name" required maxlength="60"></div>
+        <div class="form-group"><label for="j-user">Choose a username</label><input id="j-user" autocomplete="username" required maxlength="30"><div class="hint">3–30 characters: letters, numbers, dot, dash or underscore.</div></div>
+        <div class="form-group"><label for="j-pass">Choose a password</label><input id="j-pass" type="password" autocomplete="new-password" required maxlength="128"><div class="hint">At least 10 characters, with letters and numbers.</div></div>
+        <button class="btn" data-once>Request to join</button>
+      </form>
+
+      <form id="f-org" onsubmit="submitOrg(event)" hidden>
+        <p class="hint" style="margin-bottom:12px">Use a shared company mailbox (like hiring@ or talent@). Free email addresses can't register.</p>
+        <div class="form-group"><label for="o-name">Organization name</label><input id="o-name" autocomplete="organization" required maxlength="80"></div>
+        <div class="form-group"><label for="o-group">Group email</label><input id="o-group" type="email" placeholder="hiring@yourcompany.com" required></div>
+        <div class="form-group"><label for="o-pname">Your name</label><input id="o-pname" autocomplete="name" required maxlength="60"></div>
+        <div class="form-group"><label for="o-user">Choose a username</label><input id="o-user" autocomplete="username" required maxlength="30"></div>
+        <div class="form-group"><label for="o-pass">Choose a password</label><input id="o-pass" type="password" autocomplete="new-password" required maxlength="128"><div class="hint">At least 10 characters, with letters and numbers.</div></div>
+        <button class="btn" data-once>Register organization</button>
+      </form>
+    </div>
+  </section>
+
+  <aside class="card side">
+    <h3>How it works</h3>
+    <ol>
+      <li><b>Register</b> your organization with its group email, e.g. hiring@yourcompany.com.</li>
+      <li>Someone with access to that mailbox <b>confirms</b> it. You become the first recruiter.</li>
+      <li>Colleagues <b>join</b> with their own username and password. Each request is emailed to the group mailbox to <b>approve or decline</b>.</li>
+      <li>Each organization has a <b>limited number of recruiter seats</b>.</li>
+    </ol>
+    <p class="note">🔒 Passwords are stored securely (hashed). Accounts lock for 15 minutes after 5 wrong passwords. Only signed-in recruiters can contact candidates.</p>
+  </aside>
+</main>
+
+<script>
+const API = (window.TTP_CONFIG && TTP_CONFIG.RECRUITER_API_URL || '').replace(/\/$/, '');
+const $ = id => document.getElementById(id);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const STATUS = {
+  'org-verified': ['ok', 'Organization confirmed. The first recruiter can now sign in.'],
+  'approved': ['ok', 'Recruiter approved. They can sign in now.'],
+  'declined': ['info', 'Request declined. That person won\'t get access.'],
+  'seats-full': ['err', 'Couldn\'t approve: all recruiter seats are in use. Free a seat and ask them to request again.'],
+  'already-decided': ['info', 'This request was already approved or declined.'],
+  'link-invalid': ['err', 'That link has expired or was already used. Nothing was changed.']
+};
+function show(kind, text) { const m = $('statusMsg'); m.className = 'msg ' + kind; m.textContent = text; m.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+function tab(t) {
+  ['login', 'join', 'org'].forEach(x => { $('f-' + x).hidden = x !== t; $('t-' + x).classList.toggle('active', x === t); $('t-' + x).setAttribute('aria-selected', x === t); });
+  $('statusMsg').className = 'msg';
+}
+async function api(path, data, token) {
+  if (!API) throw new Error('Recruiter accounts are being set up. Please try again soon.');
+  const r = await fetch(API + path, {
+    method: data ? 'POST' : 'GET',
+    headers: { ...(data ? { 'Content-Type': 'application/json' } : {}), ...(token ? { Authorization: 'Bearer ' + token } : {}) },
+    body: data ? JSON.stringify(data) : undefined, signal: AbortSignal.timeout(15000)
+  });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok || d.error) { const e = new Error(d.error || 'Something went wrong. Please try again.'); e.code = d.code; throw e; }
+  return d;
+}
+function recSession() { try { const s = JSON.parse(localStorage.getItem('ttp_session') || 'null'); return s && s.role === 'recruiter' ? s : null; } catch { return null; } }
+function saveSession(d) {
+  const s = JSON.stringify({ token: d.token, role: 'recruiter', username: d.recruiter.username, name: d.recruiter.name, email: d.org.groupEmail, org: d.org.name, expiresAt: d.expiresAt });
+  try { sessionStorage.setItem('ttp_session', s); localStorage.setItem('ttp_session', s); } catch {}
+}
+async function submitLogin(e) {
+  e.preventDefault();
+  try {
+    const d = await api('/login', { username: $('l-user').value.trim(), password: $('l-pass').value });
+    saveSession(d);
+    const next = new URLSearchParams(location.search).get('next');
+    if (next && /^[\w-]+\.html(\?[\w=&%.-]*)?$/.test(next)) { location.href = next; return; }
+    location.reload();
+  } catch (err) { show('err', err.message); }
+}
+async function submitJoin(e) {
+  e.preventDefault();
+  if (!ttpValidEmail($('j-group').value)) return show('err', 'Enter your organization\'s group email, like hiring@yourcompany.com.');
+  try {
+    const d = await api('/join', { groupEmail: $('j-group').value.trim(), name: $('j-name').value.trim(), username: $('j-user').value.trim(), password: $('j-pass').value });
+    $('f-join').reset(); show('ok', d.message);
+  } catch (err) { show('err', err.message); }
+}
+async function submitOrg(e) {
+  e.preventDefault();
+  if (!ttpValidEmail($('o-group').value)) return show('err', 'Enter a group email, like hiring@yourcompany.com.');
+  try {
+    const d = await api('/org/register', { orgName: $('o-name').value.trim(), groupEmail: $('o-group').value.trim(), name: $('o-pname').value.trim(), username: $('o-user').value.trim(), password: $('o-pass').value });
+    $('f-org').reset(); show('ok', d.message);
+  } catch (err) { show('err', err.message); }
+}
+async function signOut() {
+  const s = recSession();
+  try { if (s) await api('/logout', {}, s.token); } catch {}
+  if (window.ttpNavSignOut) ttpNavSignOut(); else location.href = 'index.html';
+}
+async function loadAccount(s) {
+  try {
+    const d = await api('/me', null, s.token);
+    $('formsView').hidden = true; $('accountView').hidden = false;
+    $('acName').textContent = d.recruiter.name; $('acUser').textContent = d.recruiter.username; $('acOrg').textContent = d.org.name;
+    $('acGroup').textContent = d.org.groupEmail; $('acSeats').textContent = `${d.org.seatsUsed} of ${d.org.seatLimit} in use`;
+    $('seatBar').innerHTML = Array.from({ length: d.org.seatLimit }, (_, i) => `<span class="${i < d.org.seatsUsed ? 'used' : ''}"></span>`).join('');
+    $('teamList').innerHTML = (d.team || []).map(t => `<div class="team-row"><span>${esc(t.name)} <span style="color:var(--muted)">· ${esc(t.username)}</span></span><span class="pill ${esc(t.status)}">${t.status === 'active' ? 'Active' : 'Waiting for approval'}</span></div>`).join('');
+  } catch (err) {
+    if (err.code === 'no_session') { try { localStorage.removeItem('ttp_session'); sessionStorage.removeItem('ttp_session'); } catch {} show('info', 'Your session ended. Please sign in again.'); }
+    else show('err', err.message);
+  }
+}
+(function init() {
+  if (!API) { $('setupNote').hidden = false; document.querySelectorAll('#formsView .btn').forEach(b => b.disabled = true); }
+  const st = new URLSearchParams(location.search).get('status');
+  if (st && STATUS[st]) show(...STATUS[st]);
+  if (new URLSearchParams(location.search).get('next')) show('info', 'Sign in with your recruiter account to contact candidates.');
+  const s = recSession();
+  if (s && API) loadAccount(s);
+  if (location.hash === '#join') tab('join'); else if (location.hash === '#register') tab('org');
+})();
+</script>
+</body>
+</html>

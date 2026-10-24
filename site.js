@@ -47,7 +47,7 @@
     '  input[type=checkbox],input[type=radio]{width:22px;height:22px;}',
     '  .card-actions a,.card-actions button,.job-actions a,.job-actions button{min-height:44px;display:inline-flex;align-items:center;}',
     '  .source-pills,.filter-pills{gap:10px !important;}',
-    '  #siteNav .logo,footer a,.btn-pill,.ttp-skip,.otw-box a,.see-more,.copy-btn,.show-all,.linklike{min-height:44px;display:inline-flex !important;align-items:center;}',
+    '  #siteNav .logo,footer a,.btn-pill,.ttp-skip,.otw-box a,.see-more,.copy-btn,.show-all,.linklike,.gs-link,.wr-apply,.wr-title{min-height:44px;display:inline-flex !important;align-items:center;}',
     '  footer a{padding:0 6px;}',
     '}'
   ].join('\n');

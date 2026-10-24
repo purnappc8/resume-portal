@@ -725,6 +725,7 @@ function showError(m){ const el=document.getElementById('error-msg'); el.textCon
 
 // ── Contact Modal ─────────────────────────────────────────────────────────────
 function openContact(id) {
+  if (window.ttpRecruiterGate && !ttpRecruiterGate('contact candidates')) return;
   const p = allProfiles.find(x => String(x.id) === String(id)) || {};
   document.getElementById('c-target').value = id + '|' + (p.name || '');
   document.getElementById('contact-success').style.display = 'none';
@@ -825,6 +826,7 @@ document.addEventListener('click', e => {
 
 // ── Schedule Call ─────────────────────────────────────────────────────────────
 function openSchedule(id) {
+  if (window.ttpRecruiterGate && !ttpRecruiterGate('schedule calls with candidates')) return;
   const p = allProfiles.find(x => String(x.id) === String(id)) || {};
   document.getElementById('s-candidate').value = id + '|' + (p.name || '');
   document.getElementById('sched-title').textContent = p.name ? `📅 Schedule a Call with ${p.name}` : '📅 Schedule a Call';

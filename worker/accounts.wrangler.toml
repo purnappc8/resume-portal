@@ -1,0 +1,15 @@
+# Optional CLI deploy:  npx wrangler deploy -c accounts.wrangler.toml   (inside this folder)
+name = "techtalent-accounts"
+main = "accounts-worker.js"
+compatibility_date = "2024-09-23"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "techtalent-accounts"
+database_id = "PASTE-THE-DATABASE-ID-HERE"   # shown after: npx wrangler d1 create techtalent-accounts
+
+[vars]
+MAIL_FROM = "your-verified-sender@example.com"   # the sender you verified in Brevo
+MAIL_FROM_NAME = "TechTalent Portal"
+SEAT_LIMIT = "5"
+# Secret (not here): npx wrangler secret put BREVO_API_KEY -c accounts.wrangler.toml

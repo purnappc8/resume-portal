@@ -56,3 +56,63 @@ Until this is set, Browse Jobs simply doesn't show the web-results section; the
 ## Endpoints
 - `GET /search?q=salesforce developer&loc=india|us|uk|remote&type=contract|freelance|part-time|full-time&page=1`
 - `GET /health`
+
+---
+
+# Recruiter accounts ("Recruiter Portal")
+
+`accounts-worker.js` runs the recruiter portal (`recruiter.html`):
+
+- An organization registers with its **group email** on its own company domain
+  (free addresses like Gmail are refused). Nothing works until someone **confirms
+  from that group mailbox**.
+- Each organization has a **seat limit** (default 5) for active + pending recruiters.
+- Each recruiter has their **own username and password**; their account email is
+  the group email.
+- A new recruiter's request is **emailed only to the group email** with
+  Approve / Decline. They can't sign in until approved.
+- Passwords are hashed (PBKDF2-SHA256); 5 wrong passwords lock the account for 15 minutes.
+- Email links open a confirmation page — the action happens on the button, so
+  mail scanners that pre-open links can't approve anyone.
+- Once live, **only signed-in recruiters can contact candidates** or schedule calls.
+
+## Setup (about 15 minutes)
+
+### 1. Email sending — Brevo (free)
+1. Sign up at https://www.brevo.com (free plan).
+2. **Senders, domains & dedicated IPs → Senders → Add a sender**: use an address you
+   own (e.g. your Gmail) and confirm the verification email.
+3. **SMTP & API → API keys → Generate a new API key**. Keep it for step 3.
+
+### 2. Database + worker (Cloudflare)
+1. Cloudflare → **Storage & Databases → D1 → Create database** → name `techtalent-accounts`.
+2. Open it → **Console** → paste everything from `accounts-schema.sql` → **Execute**.
+3. **Workers & Pages → Create → Create Worker** → name `techtalent-accounts` → Deploy →
+   **Edit code** → paste `accounts-worker.js` → Deploy.
+4. Worker → **Settings → Bindings → Add → D1 database** → variable name `DB` →
+   database `techtalent-accounts`.
+
+### 3. Settings (Worker → Settings → Variables and Secrets)
+| Name | Type | Value |
+|---|---|---|
+| `BREVO_API_KEY` | **Secret** | your Brevo API key |
+| `MAIL_FROM` | Text | the sender you verified in Brevo |
+| `MAIL_FROM_NAME` | Text | `TechTalent Portal` (optional) |
+| `SEAT_LIMIT` | Text | `5` (optional) |
+
+Deploy again, then open `https://techtalent-accounts.<your-subdomain>.workers.dev/health`
+— it should show `"database": true, "email": true`.
+
+### 4. Switch it on
+In `nav.js` set:
+```js
+RECRUITER_API_URL: 'https://techtalent-accounts.<your-subdomain>.workers.dev'
+```
+From then on, recruiters sign in at **Recruiters** in the menu, and contacting
+candidates requires a recruiter account.
+
+### Changing one organization's seat limit
+D1 → `techtalent-accounts` → Console:
+```sql
+UPDATE orgs SET seat_limit = 10 WHERE group_email = 'hiring@company.com';
+```

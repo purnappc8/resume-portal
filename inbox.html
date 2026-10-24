@@ -171,7 +171,10 @@ function markAll() { ttpMail.markAllRead(); renderList(); }
 
 (function init() {
   if (!window.ttpMail || !ttpMail.owner()) { location.replace('login.html?next=inbox.html'); return; }
-  document.getElementById('ownerLine').textContent = `Private to ${ttpMail.owner()}`;
+  const o = ttpMail.owner();
+  let label = o;
+  try { const ss = JSON.parse(sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session') || 'null'); if (ss && ss.role === 'recruiter') label = `${ss.username} (recruiter, ${ss.org || ss.email})`; } catch {}
+  document.getElementById('ownerLine').textContent = `Private to ${label}`;
   renderList();
   const hash = decodeURIComponent(location.hash.slice(1));
   if (hash) openMsg(hash);

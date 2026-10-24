@@ -455,7 +455,7 @@ async function shareProfile(){
   catch { prompt('Copy this profile link:', url); }
 }
 
-function openContact(){document.getElementById('c-error').style.display='none';document.getElementById('contactModal').classList.add('open');}
+function openContact(){if(window.ttpRecruiterGate&&!ttpRecruiterGate('contact candidates'))return;document.getElementById('c-error').style.display='none';document.getElementById('contactModal').classList.add('open');}
 function closeContact(){document.getElementById('contactModal').classList.remove('open');}
 function escH(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function toast(kind, title, html, ms){
