@@ -155,7 +155,10 @@ const server = http.createServer(async (req, res) => {
     const portalJobs = readJson('jobs.json', []);
     const liveJobs   = readCache(DATA_DIR);
     const seen = new Set();
-    const merged = [...portalJobs, ...liveJobs].filter(j => {
+    const now = Date.now();
+    // Hide filled/closed portal jobs and anything past its expiry date
+    const openPortal = portalJobs.filter(j => j.status !== 'filled' && j.status !== 'closed' && !(j.expiresAt && Date.parse(j.expiresAt) < now));
+    const merged = [...openPortal, ...liveJobs].filter(j => {
       const key = (j.url || j.id || '').split('?')[0];
       if (!key || seen.has(key)) return false;
       seen.add(key);
@@ -325,13 +328,27 @@ const server = http.createServer(async (req, res) => {
       applyUrl:    data.applyUrl    || '',
       source:      'TechTalent Portal',
       postedBy:    data.postedBy    || 'anonymous',
-      postedAt:    data.postedAt    || new Date().toISOString()
+      postedAt:    data.postedAt    || new Date().toISOString(),
+      expiresAt:   data.expiresAt   || new Date(Date.now() + 30 * 864e5).toISOString(),
+      status:      'open'
     };
     jobs.unshift(job);
     writeJson('jobs.json', jobs);
     console.log(`  -> Job posted: ${job.title} by ${job.company}`);
     return json(res, 201, { ok: true, id: job.id });
   }
+  // -- POST /jobs/close {id, email} — the poster marks their job as filled
+  if (req.method === 'POST' && url === '/jobs/close') {
+    const jobs = readJson('jobs.json', []);
+    const job = jobs.find(j => j.id === data.id);
+    if (!job) return json(res, 404, { error: 'Job not found.' });
+    const owner = job.postedBy && job.postedBy.email;
+    if (!owner || !data.email || owner.toLowerCase() !== String(data.email).toLowerCase()) return json(res, 403, { error: 'Only the person who posted this job can close it.' });
+    job.status = 'filled'; job.closedAt = new Date().toISOString();
+    writeJson('jobs.json', jobs);
+    return json(res, 200, { ok: true });
+  }
+
   // -- GET /jobs/posted?email= (jobs posted by a specific user)
   if (req.method === 'GET' && url === '/jobs/posted') {
     const all = readJson('jobs.json', []);

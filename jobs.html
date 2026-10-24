@@ -120,7 +120,7 @@ footer a{color:rgba(255,255,255,.9);}
 
 <div class="page-header">
   <h1>🌐 Freelance Jobs — All Technologies</h1>
-  <p>Jobs aggregated from Indeed, LinkedIn, Upwork, Freelancer.com, Toptal and more. Click to apply — we track your applications.</p>
+  <p id="feedInfo">Jobs aggregated from Indeed, LinkedIn, Upwork, Freelancer.com, Toptal and more. Click to apply — we track your applications.</p>
   <div class="source-pills" id="sourcePills">
     <span class="source-pill active" data-src="all" onclick="filterSource('all',this)">All Sources</span>
     <span class="source-pill" data-src="Indeed" onclick="filterSource('Indeed',this)">Indeed</span>
@@ -302,6 +302,7 @@ const SRC_STYLE = {
   Guru:         {bg:'#f07c00', label:'Gu'},
   PeoplePerHour:{bg:'#e8360e', label:'PP'},
   RemoteOK:     {bg:'#01161e', label:'RO'},
+  'Remote OK':  {bg:'#01161e', label:'RO'},
   Remotive:     {bg:'#0057a8', label:'Rm'},
   Arbeitnow:    {bg:'#6200ea', label:'AN'},
   TheMuse:      {bg:'#d81b60', label:'TM'},
@@ -325,6 +326,10 @@ const AI_INDEED_JOBS = [
 ];
 
 // ── Seed jobs (fallback + diversity) ────────────────────────────────────────
+// Built-in jobs were added on this date; each expires 30 days after its posting date.
+// Their links are also checked daily by scripts/refresh-jobs.js (closed ones are hidden).
+const SEED_LISTED_ON = '2026-10-22';
+const MAX_JOB_AGE_DAYS = 30;
 const SEED_JOBS = [
   ...AI_INDEED_JOBS,
   {id:'j2',title:'Salesforce LWC Developer',company:'TechCorp UK',location:'London (Remote OK)',type:'Freelance',exp:'Mid',tech:['Salesforce','LWC','JavaScript'],salary:'£400–500/day',source:'LinkedIn',url:'https://www.linkedin.com/jobs/search/?keywords=salesforce+lwc+developer',postedDays:2},
@@ -340,51 +345,103 @@ const SEED_JOBS = [
   {id:'j12',title:'.NET / Azure Developer',company:'Microsoft Partner',location:'UK Remote',type:'Contract',exp:'Senior',tech:['.NET','Azure','C#'],salary:'£450–550/day',source:'Guru',url:'https://www.guru.com/d/jobs/q/net-azure/',postedDays:2},
 ];
 
+// Closed / expired jobs, shared with the dashboard (saved & applied lists)
+let closedJobs = new Map();
+function rememberClosed() {
+  try { localStorage.setItem('ttp_closed_jobs', JSON.stringify([...closedJobs.values()].slice(-300))); } catch {}
+}
+function ageDays(iso) { const t = Date.parse(iso); return isNaN(t) ? null : Math.max(0, Math.floor((Date.now() - t) / 864e5)); }
+function timeAgo(iso) {
+  const m = Math.round((Date.now() - Date.parse(iso)) / 6e4);
+  if (isNaN(m)) return '';
+  if (m < 60) return m <= 1 ? 'just now' : `${m} min ago`;
+  const h = Math.round(m / 60); if (h < 24) return `${h} hour${h > 1 ? 's' : ''} ago`;
+  const d = Math.round(h / 24); return `${d} day${d > 1 ? 's' : ''} ago`;
+}
+
 async function loadJobs() {
   document.getElementById('resultsCount').textContent = 'Loading live jobs...';
+
+  // 1. Cloud feed — refreshed every 3 hours on GitHub (scripts/refresh-jobs.js)
+  let feed = null;
+  try {
+    const r = await fetch(`feed/jobs.json?v=${Math.floor(Date.now() / 6e5)}`, { signal: AbortSignal.timeout(8000) });
+    if (r.ok) feed = await r.json();
+  } catch {}
+
+  // 2. Your PC server, when it's running (portal-posted jobs + its own live fetch)
   let serverJobs = [];
   try {
-    const r = await fetch(`${API}/jobs`, {signal:AbortSignal.timeout(6000)});
+    const r = await fetch(`${API}/jobs`, {signal:AbortSignal.timeout(4000)});
     if (r.ok) {
       const data = await r.json();
       if (Array.isArray(data) && data.length) serverJobs = data;
     }
   } catch {}
 
-  if (serverJobs.length) {
-    // Merge: server already deduped; add any seed jobs not already in server list
-    const serverUrls = new Set(serverJobs.map(j => (j.url||'').split('?')[0]));
-    const seedOnly = SEED_JOBS.filter(j => !serverUrls.has((j.url||'').split('?')[0]));
-    jobs = [...serverJobs, ...seedOnly];
+  // Closed jobs: dropped by their feed, dead links, or too old
+  closedJobs = new Map();
+  try { JSON.parse(localStorage.getItem('ttp_closed_jobs') || '[]').forEach(c => closedJobs.set(c.id, c)); } catch {}
+  (feed?.closed || []).forEach(c => closedJobs.set(c.id, c));
+  Object.entries(feed?.builtIn || {}).forEach(([id, st]) => { if (st.status === 'closed') closedJobs.set(id, { id, reason: st.reason || 'Listing removed', closedAt: st.closedAt }); });
 
-    // Add source pills for new sources
-    const knownSrcs = new Set(['all','Indeed','LinkedIn','Upwork','Freelancer','Toptal','Guru','PeoplePerHour','ai']);
-    serverJobs.forEach(j => {
-      if (j.source && !knownSrcs.has(j.source)) {
-        knownSrcs.add(j.source);
-        if (!SRC_STYLE[j.source]) SRC_STYLE[j.source] = {bg:'#455a64', label: j.source.slice(0,2)};
-        const pills = document.getElementById('sourcePills');
-        if (pills && !document.querySelector('.source-pill[data-src="' + j.source + '"]')) {
-          const p = document.createElement('span');
-          p.className = 'source-pill'; p.dataset.src = j.source;
-          p.textContent = j.source;
-          p.onclick = function(){ filterSource(j.source, this); };
-          pills.appendChild(p);
-        }
-      }
-    });
+  const listed = Date.parse(SEED_LISTED_ON);
+  const seeds = SEED_JOBS.map(j => ({ ...j, postedAt: j.postedAt || new Date(listed - (j.postedDays || 0) * 864e5).toISOString() }));
+  const all = [...serverJobs, ...(feed?.jobs || []), ...seeds];
 
-    // Banner update showing live count
-    const liveCount = serverJobs.filter(j => j.fetchedAt).length;
-    if (liveCount > 0) {
-      const hdr = document.querySelector('.page-header p');
-      if (hdr) hdr.innerHTML = '<b style="color:#7ec8f7">' + liveCount + ' live jobs</b> auto-fetched from RemoteOK, Remotive, Arbeitnow, Indeed RSS &amp; TheMuse &mdash; refreshes every 2h';
+  const seen = new Set();
+  jobs = all.filter(j => {
+    const key = (j.url || j.id || '').split('?')[0].toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    if (closedJobs.has(j.id) || j.status === 'closed' || j.status === 'filled') {
+      if (!closedJobs.has(j.id)) closedJobs.set(j.id, { id: j.id, title: j.title, company: j.company, url: j.url, reason: j.status === 'filled' ? 'Position filled' : 'Closed' });
+      return false;
     }
-  } else {
-    jobs = SEED_JOBS;
+    const age = j.postedAt ? ageDays(j.postedAt) : null;
+    const expired = (j.expiresAt && Date.parse(j.expiresAt) < Date.now()) || (age !== null && age > MAX_JOB_AGE_DAYS);
+    if (expired) { closedJobs.set(j.id, { id: j.id, title: j.title, company: j.company, url: j.url, reason: 'Expired (older than 30 days)', closedAt: new Date().toISOString() }); return false; }
+    if (age !== null) j.postedDays = age;
+    return true;
+  }).sort((a, b) => (a.postedDays ?? 99) - (b.postedDays ?? 99));
+  rememberClosed();
+
+  // Source filter pills for feeds not in the default list
+  const knownSrcs = new Set([...document.querySelectorAll('.source-pill')].map(p => p.dataset.src));
+  jobs.forEach(j => {
+    if (!j.source || knownSrcs.has(j.source)) return;
+    knownSrcs.add(j.source);
+    if (!SRC_STYLE[j.source]) SRC_STYLE[j.source] = {bg:'#455a64', label: j.source.slice(0,2)};
+    const pills = document.getElementById('sourcePills');
+    if (pills) {
+      const p = document.createElement('span');
+      p.className = 'source-pill'; p.dataset.src = j.source; p.textContent = j.source;
+      p.onclick = function(){ filterSource(j.source, this); };
+      pills.appendChild(p);
+    }
+  });
+
+  // Header: how fresh the list is, and where the jobs come from (feed terms ask for credit)
+  const liveCount = jobs.filter(j => j.live || j.fetchedAt).length;
+  if (feed && feed.updatedAt) {
+    document.getElementById('feedInfo').innerHTML =
+      `<b style="color:#7ec8f7">${liveCount} live jobs</b> from <a href="https://remoteok.com" target="_blank" rel="noopener" style="color:#fff">Remote OK</a>, ` +
+      `<a href="https://remotive.com" target="_blank" rel="noopener" style="color:#fff">Remotive</a> &amp; <a href="https://www.arbeitnow.com" target="_blank" rel="noopener" style="color:#fff">Arbeitnow</a>, plus hand-picked roles. ` +
+      `Updated ${timeAgo(feed.updatedAt)} · refreshes every 3 hours · closed jobs are removed automatically.`;
   }
   updateDashBanner();
   renderJobs();
+}
+
+// Remember title/company/link of saved & applied jobs so the dashboard can list them
+function rememberJob(id) {
+  const j = jobs.find(x => x.id === id); if (!j) return;
+  try {
+    const meta = JSON.parse(localStorage.getItem('ttp_job_meta') || '{}');
+    meta[id] = { id, title: j.title, company: j.company, location: j.location, type: j.type, source: j.source, url: j.applyUrl || j.url };
+    const keys = Object.keys(meta); if (keys.length > 300) keys.slice(0, keys.length - 300).forEach(k => delete meta[k]);
+    localStorage.setItem('ttp_job_meta', JSON.stringify(meta));
+  } catch {}
 }
 
 function renderJobs() {
@@ -433,43 +490,50 @@ function renderJobs() {
     const isApplied = applied.has(j.id);
     const isSaved   = saved.has(j.id);
     const s = SRC_STYLE[j.source] || {bg:'#607d8b',label:'?'};
-    const daysAgo = j.postedDays===0?'Today':j.postedDays===1?'Yesterday':`${j.postedDays}d ago`;
+    const daysAgo = j.postedDays==null ? '' : j.postedDays===0?'Today':j.postedDays===1?'Yesterday':`${j.postedDays}d ago`;
+    const E = escJ, jid = E(j.id), href = E(j.applyUrl||j.url||'#');
     return `
-    <div class="job-card${isApplied?' applied':''}" id="jc-${j.id}">
+    <div class="job-card${isApplied?' applied':''}" id="jc-${jid}">
       ${isApplied
         ? '<span class="applied-badge">✅ Applied</span>'
-        : `<span class="source-badge" style="background:${s.bg};color:#fff">${j.source}</span>`}
+        : `<span class="source-badge" style="background:${s.bg};color:#fff">${E(j.source)}</span>`}
       <div class="job-top">
-        <div class="job-logo" style="background:${s.bg}">${s.label}</div>
+        <div class="job-logo" style="background:${s.bg}" aria-hidden="true">${E(s.label)}</div>
         <div class="job-info">
-          <div class="job-title">${j.title}</div>
-          <div class="job-company">${j.company}</div>
-          <div class="job-meta">📍 ${j.location} &nbsp;·&nbsp; ${j.type} &nbsp;·&nbsp; ${j.exp||''} &nbsp;·&nbsp; ${daysAgo}</div>
+          <div class="job-title">${E(j.title)}</div>
+          <div class="job-company">${E(j.company)}</div>
+          <div class="job-meta">📍 ${E(j.location)} &nbsp;·&nbsp; ${E(j.type)}${j.exp?` &nbsp;·&nbsp; ${E(j.exp)}`:''}${daysAgo?` &nbsp;·&nbsp; ${daysAgo}`:''}</div>
         </div>
       </div>
       <div class="job-tags">
-        ${(j.tech||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}
-        ${j.salary?`<span class="jtag" style="background:#d4edda;color:var(--green)">${j.salary}</span>`:''}
+        ${(j.tech||[]).map(t=>`<span class="jtag">${E(t)}</span>`).join('')}
+        ${j.salary?`<span class="jtag" style="background:#d4edda;color:var(--green)">${E(j.salary)}</span>`:''}
       </div>
       <div class="job-actions">
         ${isApplied
           ? `<button class="btn-apply done" disabled>✅ Applied</button>`
           : (j.source === 'TechTalent Portal' && !j.applyUrl
-              ? `<button class="btn-apply" onclick="openApplyModal('${j.id}')">✉ Apply Now</button>`
-              : `<a class="btn-apply" href="${j.applyUrl||j.url||'#'}" target="_blank" onclick="markApplied('${j.id}',this)">Apply ↗</a>`)}
-        ${!isApplied ? `<button class="btn-ai-apply" onclick="aiApply('${j.id}')">🤖 AI Apply</button>` : ''}
-        <button class="btn-save${isSaved?' done':''}" onclick="toggleSave('${j.id}',this)">
+              ? `<button class="btn-apply" onclick="openApplyModal('${jid}')">✉ Apply Now</button>`
+              : `<a class="btn-apply" href="${href}" target="_blank" rel="noopener" onclick="markApplied('${jid}',this)">Apply ↗</a>`)}
+        ${!isApplied ? `<button class="btn-ai-apply" onclick="aiApply('${jid}')">🤖 AI Apply</button>` : ''}
+        <button class="btn-save${isSaved?' done':''}" onclick="toggleSave('${jid}',this)">
           ${isSaved?'🔖 Saved':'🔖 Save'}
         </button>
         ${j.ai ? `<span style="font-size:.75rem;background:#e8f5e9;color:#1b5e20;padding:2px 8px;border-radius:10px;font-weight:700;margin-left:4px">🤖 AI Import</span>` : ''}
-        <span style="font-size:.82rem;color:var(--muted);margin-left:auto">via ${j.source}</span>
+        <span style="font-size:.82rem;color:var(--muted);margin-left:auto">via ${j.live && j.url ? `<a href="${E(j.url)}" target="_blank" rel="noopener" style="color:var(--accent)">${E(j.source)}</a>` : E(j.source)}</span>
       </div>
     </div>`;
   }).join('');
 }
 
 function markApplied(id, btn) {
+  rememberJob(id);
   applied.add(id);
+  try {
+    const jm = jobs.find(x => x.id === id) || {};
+    const apps = JSON.parse(localStorage.getItem('ttp_applications') || '[]');
+    if (!apps.some(a => a.jobId === id)) { apps.unshift({ jobId: id, jobTitle: jm.title, company: jm.company, source: jm.source, url: jm.applyUrl || jm.url, appliedAt: new Date().toISOString(), status: 'Applied' }); localStorage.setItem('ttp_applications', JSON.stringify(apps)); }
+  } catch {}
   localStorage.setItem('ttp_applied', JSON.stringify([...applied]));
   // Tell server
   const job = jobs.find(j=>j.id===id);
@@ -489,6 +553,7 @@ function markApplied(id, btn) {
 }
 
 function toggleSave(id, btn) {
+  rememberJob(id);
   if(saved.has(id)){saved.delete(id);btn.textContent='🔖 Save';}
   else{saved.add(id);btn.textContent='🔖 Saved';}
   localStorage.setItem('ttp_saved', JSON.stringify([...saved]));

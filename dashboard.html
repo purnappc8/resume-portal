@@ -252,6 +252,10 @@ let user = (function(){ try { const s = sessionStorage.getItem('ttp_session') ||
 const appliedIds = new Set(JSON.parse(localStorage.getItem('ttp_applied')||'[]'));
 const savedIds   = new Set(JSON.parse(localStorage.getItem('ttp_saved')||'[]'));
 let applications = JSON.parse(localStorage.getItem('ttp_applications')||'[]');
+// Jobs the Browse Jobs page found closed/expired, and saved details of jobs you saved or applied to
+const closedJobs = new Map((()=>{try{return JSON.parse(localStorage.getItem('ttp_closed_jobs')||'[]')}catch{return []}})().map(c=>[c.id,c]));
+const jobMeta = (()=>{try{return JSON.parse(localStorage.getItem('ttp_job_meta')||'{}')}catch{return {}}})();
+function dEsc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 let alerts       = JSON.parse(localStorage.getItem('ttp_alerts')||'[]');
 
 const SRC_COLORS = {Indeed:'#2164f3',LinkedIn:'#0a66c2',Upwork:'#14a800',Freelancer:'#0e4fac',Toptal:'#204ecf',Guru:'#f07c00',PeoplePerHour:'#e8360e'};
@@ -302,7 +306,7 @@ function renderApplications() {
   }
 
   // Build rows: merge API data with localStorage applied IDs
-  const rows = applications.length ? applications : [...appliedIds].map(id=>({jobId:id,jobTitle:'Job #'+id,source:'Portal',url:'#',appliedAt:new Date().toISOString(),status:'Applied'}));
+  const rows = applications.length ? applications : [...appliedIds].map(id=>{const m=jobMeta[id]||{};return {jobId:id,jobTitle:m.title||'Job #'+id,source:m.source||'Portal',url:m.url||'#',appliedAt:new Date().toISOString(),status:'Applied'};});
 
   const viewed     = rows.filter(r=>r.status&&r.status!=='Applied').length;
   const shortlisted= rows.filter(r=>['Shortlisted','Interview'].includes(r.status)).length;
@@ -318,15 +322,16 @@ function renderApplications() {
       ${rows.map(r=>{
         const d=new Date(r.appliedAt);
         const dateStr=isNaN(d)?'—':d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'2-digit'});
-        const status=r.status||'Applied';
-        const cls={'Applied':'s-applied','Viewed':'s-viewed','Shortlisted':'s-shortlisted','Rejected':'s-rejected','Interview':'s-interview'}[status]||'s-applied';
+        const closed=closedJobs.get(r.jobId);
+        const status=closed && (!r.status || r.status==='Applied') ? 'Job closed' : (r.status||'Applied');
+        const cls={'Applied':'s-applied','Viewed':'s-viewed','Shortlisted':'s-shortlisted','Rejected':'s-rejected','Interview':'s-interview','Job closed':'s-rejected'}[status]||'s-applied';
         const col=SRC_COLORS[r.source]||'#607d8b';
         return `<tr>
-          <td><strong>${r.jobTitle||r.jobId}</strong></td>
-          <td><span class="source-dot" style="background:${col}"></span>${r.source||'—'}</td>
+          <td><strong>${dEsc(r.jobTitle||r.jobId)}</strong>${r.company?`<br><span style="color:var(--muted);font-size:.8rem">${dEsc(r.company)}</span>`:''}</td>
+          <td><span class="source-dot" style="background:${col}"></span>${dEsc(r.source||'—')}</td>
           <td>${dateStr}</td>
-          <td><span class="status-badge ${cls}">${status}</span></td>
-          <td>${r.url&&r.url!=='#'?`<a href="${r.url}" target="_blank" style="color:var(--accent);font-size:.82rem">View Job ↗</a>`:'—'}</td>
+          <td><span class="status-badge ${cls}" ${closed?`title="${dEsc(closed.reason||'No longer listed')}"`:''}>${dEsc(status)}</span></td>
+          <td>${closed?'<span style="color:var(--muted);font-size:.8rem">No longer listed</span>':(r.url&&r.url!=='#'?`<a href="${dEsc(r.url)}" target="_blank" rel="noopener" style="color:var(--accent);font-size:.82rem">View Job ↗</a>`:'—')}</td>
         </tr>`;
       }).join('')}
     </tbody>
@@ -338,19 +343,19 @@ function renderSaved() {
   if(!savedIds.size){el.innerHTML=`<div class="empty-state"><div class="ei">🔖</div><p>No saved jobs. <a href="jobs.html" style="color:var(--accent)">Browse jobs →</a></p></div>`;return;}
   // Get job details from localStorage
   const SEED=[{id:'j1',title:'Salesforce Revenue Cloud Developer',company:'Confidential',location:'Remote',type:'Contract',source:'Indeed',url:'https://www.indeed.com/jobs?q=salesforce+revenue+cloud'},{id:'j2',title:'Salesforce LWC Developer',company:'TechCorp UK',location:'Remote',type:'Freelance',source:'LinkedIn',url:'https://www.linkedin.com/jobs/search/?keywords=salesforce+lwc'},{id:'j3',title:'Python Backend Developer',company:'StartupX',location:'Remote',type:'Freelance',source:'Upwork',url:'https://www.upwork.com/nx/search/jobs/?q=python'},{id:'j5',title:'Senior DevOps Engineer (AWS)',company:'FinTech Ltd',location:'Remote',type:'Contract',source:'Toptal',url:'https://www.toptal.com/devops'}];
-  const savedJobs=SEED.filter(j=>savedIds.has(j.id));
+  const savedJobs=[...savedIds].map(id=>jobMeta[id]||SEED.find(j=>j.id===id)||closedJobs.get(id)).filter(Boolean);
   if(!savedJobs.length){el.innerHTML=`<div class="empty-state"><div class="ei">🔖</div><p>Saved jobs not loaded. <a href="jobs.html" style="color:var(--accent)">Go to jobs page →</a></p></div>`;return;}
-  el.innerHTML=savedJobs.map(j=>`
-    <div class="saved-card">
+  el.innerHTML=savedJobs.map(j=>{const c=closedJobs.get(j.id);return `
+    <div class="saved-card"${c?' style="opacity:.7"':''}>
       <div class="saved-info">
-        <div class="s-title">${j.title}</div>
-        <div class="s-meta">${j.company} · ${j.location} · ${j.type} · via ${j.source}</div>
+        <div class="s-title">${dEsc(j.title)} ${c?`<span class="status-badge s-rejected" title="${dEsc(c.reason||'')}">Closed</span>`:''}</div>
+        <div class="s-meta">${[j.company,j.location,j.type,j.source&&('via '+j.source)].filter(Boolean).map(dEsc).join(' · ')}${c?` · ${dEsc(c.reason||'No longer listed')}`:''}</div>
       </div>
       <div class="saved-btns">
-        <a href="${j.url}" target="_blank" class="btn-sm btn-apply-sm">Apply ↗</a>
-        <button class="btn-sm btn-unsave" onclick="unsave('${j.id}',this)">Remove</button>
+        ${c?'':`<a href="${dEsc(j.url)}" target="_blank" rel="noopener" class="btn-sm btn-apply-sm">Apply ↗</a>`}
+        <button class="btn-sm btn-unsave" onclick="unsave('${dEsc(j.id)}',this)">Remove</button>
       </div>
-    </div>`).join('');
+    </div>`;}).join('');
 }
 function unsave(id,btn){savedIds.delete(id);localStorage.setItem('ttp_saved',JSON.stringify([...savedIds]));btn.closest('.saved-card').remove();document.getElementById('stat-saved').textContent=savedIds.size;}
 
@@ -424,13 +429,30 @@ async function loadPostedJobs() {
       ${j.skills && j.skills.length ? `<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;">${j.skills.map(s=>`<span style="background:var(--light);color:var(--blue);padding:2px 9px;border-radius:20px;font-size:.77rem;font-weight:600">${esc(s)}</span>`).join('')}</div>` : ''}
       <div class="p-stats">
         <div class="p-stat"><div class="n">${j.applicantCount||0}</div><div class="l">Applicants</div></div>
-        <div class="p-stat"><div class="n">${j.status==='closed'?'🔒':'🟢'}</div><div class="l">${j.status==='closed'?'Closed':'Open'}</div></div>
+        ${(()=>{const st=postedStatus(j);return `<div class="p-stat"><div class="n">${st.icon}</div><div class="l">${st.label}</div></div>`+(j.expiresAt?`<div class="p-stat"><div class="n" style="font-size:.95rem;padding-top:6px">${new Date(j.expiresAt).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</div><div class="l">${st.key==='open'?'Expires':'Expiry'}</div></div>`:'');})()}
       </div>
       <div class="p-actions">
         <button class="btn-view-applicants" onclick="viewApplicants('${esc(j.id)}','${esc(j.title)}')">👥 View Applicants</button>
         <a href="jobs.html" style="background:var(--light);color:var(--blue);padding:6px 14px;border-radius:6px;font-size:.83rem;font-weight:600;text-decoration:none;">View on Job Board</a>
+        ${postedStatus(j).key==='open'?`<button data-once onclick="markFilled('${esc(j.id)}')" style="background:#fff;color:#1b8a4a;border:1px solid #1b8a4a;padding:6px 14px;border-radius:6px;font-size:.83rem;font-weight:700;cursor:pointer">✓ Mark as filled</button>`:''}
       </div>
     </div>`).join('');
+}
+
+// Posted-job status: filled (by poster), expired (30 days), or open
+function postedStatus(j){
+  if (j.status==='filled'||j.status==='closed') return {key:'filled',icon:'🔒',label:'Filled'};
+  const exp = j.expiresAt ? Date.parse(j.expiresAt) : (j.postedAt ? Date.parse(j.postedAt)+30*864e5 : null);
+  if (exp && exp < Date.now()) return {key:'expired',icon:'⌛',label:'Expired'};
+  return {key:'open',icon:'🟢',label:'Open'};
+}
+async function markFilled(id){
+  if (!confirm('Mark this job as filled? It will be removed from Browse Jobs.')) return;
+  try { await fetch(`${API}/jobs/close`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,email:user.email,reason:'filled'}),signal:AbortSignal.timeout(4000)}); } catch {}
+  // Keep this browser's copies in step (offline posting)
+  ['ttp_my_jobs','ttp_local_jobs'].forEach(k=>{try{const a=JSON.parse(localStorage.getItem(k)||'[]');a.forEach(j=>{if(j.id===id){j.status='filled';j.closedAt=new Date().toISOString();}});localStorage.setItem(k,JSON.stringify(a));}catch{}});
+  try{const c=JSON.parse(localStorage.getItem('ttp_closed_jobs')||'[]');c.push({id,reason:'Position filled',closedAt:new Date().toISOString()});localStorage.setItem('ttp_closed_jobs',JSON.stringify(c));}catch{}
+  loadPostedJobs();
 }
 
 async function viewApplicants(jobId, jobTitle) {

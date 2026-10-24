@@ -37,7 +37,7 @@ function norm(id, title, company, location, type, exp, tech, salary, source, url
     url:        url      || '#',
     desc:       (desc    || '').slice(0,300),
     postedDays: typeof postedDays === 'number' ? postedDays : 0,
-    ai:         true,
+    live:       true,
     fetchedAt:  new Date().toISOString()
   };
 }
@@ -71,7 +71,7 @@ function extractTech(text) {
     ['Rust','rust lang'],
   ];
   const t = (text||'').toLowerCase();
-  return MAP.filter(([,,...kws]) => kws.some(kw => t.includes(kw))).map(([label]) => label);
+  return MAP.filter(([, ...kws]) => kws.some(kw => t.includes(kw))).map(([label]) => label);
 }
 
 // ── Source 1: RemoteOK JSON API ─────────────────────────────────────────────

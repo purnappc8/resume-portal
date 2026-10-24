@@ -203,7 +203,9 @@ async function submitJob() {
     email:       document.getElementById('f-email').value.trim(),
     applyUrl:    document.getElementById('f-applyurl').value.trim(),
     postedBy:    { name: user.name, email: user.email, userId: user.id },
-    postedAt:    new Date().toISOString()
+    postedAt:    new Date().toISOString(),
+    expiresAt:   new Date(Date.now() + 30*864e5).toISOString(),   // listing closes after 30 days
+    status:      'open'
   };
 
   // Try server first, fall back to localStorage
