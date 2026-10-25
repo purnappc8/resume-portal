@@ -1,28 +1,106 @@
 {
- "updatedAt": "2026-10-25T20:56:43.378Z",
+ "updatedAt": "2026-10-25T23:20:09.949Z",
  "refreshEveryHours": 3,
  "attribution": "Jobs from Remote OK (remoteok.com), Remotive (remotive.com) and Arbeitnow (arbeitnow.com). Each job links to its original listing.",
  "sources": {
   "Remote OK": {
    "status": "ok",
-   "fetchedAt": "2026-10-25T20:56:43.378Z",
+   "fetchedAt": "2026-10-25T23:20:09.949Z",
    "count": 16,
    "scanned": 99
   },
   "Remotive": {
-   "status": "ok",
+   "status": "reused",
    "fetchedAt": "2026-10-25T20:56:43.378Z",
-   "count": 20,
-   "scanned": 40
+   "count": 5,
+   "scanned": 40,
+   "note": "Remotive is fetched at most 4×/day"
   },
   "Arbeitnow": {
    "status": "ok",
-   "fetchedAt": "2026-10-25T20:56:43.378Z",
+   "fetchedAt": "2026-10-25T23:20:09.949Z",
    "count": 60,
    "scanned": 900
   }
  },
  "jobs": [
+  {
+   "id": "live_Arbeitnow_projektmanager-power-bi-mit-entscheidung",
+   "title": "Projektmanager (m/w/d) Power BI mit Entscheidungsbefugnis",
+   "company": "Weiler Consult GmbH",
+   "location": "Berlin (Remote)",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/weiler-consult-gmbh/projektmanager-power-bi-mit-entscheidungsbefugnis-berlin-425898",
+   "postedAt": "2026-10-25T22:00:36.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-technical-support-engineer-22092",
+   "title": "Technical Support Engineer",
+   "company": "Plaid",
+   "location": "London Office",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/plaid/remote-technical-support-engineer-22092",
+   "postedAt": "2026-10-25T21:40:32.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_forward-deployed-engineer-london-128990",
+   "title": "Forward Deployed Engineer",
+   "company": "True Talent Solutions Partners",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/true-talent-solutions-partners/forward-deployed-engineer-london-128990",
+   "postedAt": "2026-10-25T21:40:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_computational-scientist-scientific-machi",
+   "title": "Computational Scientist / Scientific Machine Learning",
+   "company": "Fusionality",
+   "location": "Lausanne",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/fusionality/computational-scientist-scientific-machine-learning-lausanne-323897",
+   "postedAt": "2026-10-25T21:17:29.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_data-ml-engineer-fusion-data-lausanne-47",
+   "title": "Data/ML engineer, fusion data",
+   "company": "Fusionality",
+   "location": "Lausanne",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "Data"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/fusionality/data-ml-engineer-fusion-data-lausanne-479954",
+   "postedAt": "2026-10-25T21:02:24.000Z",
+   "live": true
+  },
   {
    "id": "live_Arbeitnow_senior-data-engineer-central-data-analyt",
    "title": "Senior Data Engineer - Central Data & Analytics Team",
@@ -751,86 +829,6 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.fr/jobs/companies/odaseva/lead-automation-engineer-paris-188197",
    "postedAt": "2026-10-25T12:07:45.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_front-end-developer-junior-paris-250036",
-   "title": "Front-end Developer Junior",
-   "company": "Odaseva",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Junior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/odaseva/front-end-developer-junior-paris-250036",
-   "postedAt": "2026-10-25T12:07:45.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_software-engineer-go-rust-or-scala-infra",
-   "title": "Software Engineer Go, Rust or Scala (Infrastructure - Foundation) - Permanent (H/F/X)",
-   "company": "Veepee",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "Rust"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/veepee/software-engineer-go-rust-or-scala-infrastructure-foundation-permanent-paris-107459",
-   "postedAt": "2026-10-25T12:07:44.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-ios-engineer-product-team-freelan",
-   "title": "Senior iOS Engineer - Product Team - Freelance (W/M/X)",
-   "company": "Veepee",
-   "location": "Paris",
-   "type": "Freelance",
-   "exp": "Senior",
-   "tech": [
-    "iOS"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/veepee/senior-ios-engineer-product-team-freelance-paris-498349",
-   "postedAt": "2026-10-25T12:07:44.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-ai-engineer-paris-186206",
-   "title": "Senior AI Engineer - H/F/X",
-   "company": "Veepee",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/veepee/senior-ai-engineer-paris-186206",
-   "postedAt": "2026-10-25T12:07:44.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_security-engineer-purple-team-specialist",
-   "title": "Security Engineer - Purple Team specialist H/F",
-   "company": "Veepee",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/veepee/security-engineer-purple-team-specialist-h-f-paris-275920",
-   "postedAt": "2026-10-25T12:07:44.000Z",
    "live": true
   },
   {
@@ -3007,6 +3005,51 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.fr/jobs/companies/matera/staff-security-engineer-cdi-paris-69905",
    "closedAt": "2026-10-25T20:56:43.378Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_front-end-developer-junior-paris-250036",
+   "title": "Front-end Developer Junior",
+   "company": "Odaseva",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/odaseva/front-end-developer-junior-paris-250036",
+   "closedAt": "2026-10-25T23:20:09.949Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_software-engineer-go-rust-or-scala-infra",
+   "title": "Software Engineer Go, Rust or Scala (Infrastructure - Foundation) - Permanent (H/F/X)",
+   "company": "Veepee",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/veepee/software-engineer-go-rust-or-scala-infrastructure-foundation-permanent-paris-107459",
+   "closedAt": "2026-10-25T23:20:09.949Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-ios-engineer-product-team-freelan",
+   "title": "Senior iOS Engineer - Product Team - Freelance (W/M/X)",
+   "company": "Veepee",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/veepee/senior-ios-engineer-product-team-freelance-paris-498349",
+   "closedAt": "2026-10-25T23:20:09.949Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-ai-engineer-paris-186206",
+   "title": "Senior AI Engineer - H/F/X",
+   "company": "Veepee",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/veepee/senior-ai-engineer-paris-186206",
+   "closedAt": "2026-10-25T23:20:09.949Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_security-engineer-purple-team-specialist",
+   "title": "Security Engineer - Purple Team specialist H/F",
+   "company": "Veepee",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/veepee/security-engineer-purple-team-specialist-h-f-paris-275920",
+   "closedAt": "2026-10-25T23:20:09.949Z",
    "reason": "No longer listed by Arbeitnow"
   }
  ],
