@@ -1,34 +1,127 @@
 {
- "updatedAt": "2026-10-24T23:21:11.234Z",
+ "updatedAt": "2026-10-25T04:52:39.684Z",
  "refreshEveryHours": 3,
  "attribution": "Jobs from Remote OK (remoteok.com), Remotive (remotive.com) and Arbeitnow (arbeitnow.com). Each job links to its original listing.",
  "sources": {
   "Remote OK": {
    "status": "ok",
-   "fetchedAt": "2026-10-24T23:21:11.234Z",
-   "count": 15,
+   "fetchedAt": "2026-10-25T04:52:39.684Z",
+   "count": 16,
    "scanned": 99
   },
   "Remotive": {
-   "status": "reused",
-   "fetchedAt": "2026-10-24T19:49:44.011Z",
-   "count": 5,
-   "scanned": 40,
-   "note": "Remotive is fetched at most 4×/day"
+   "status": "ok",
+   "fetchedAt": "2026-10-25T04:52:39.684Z",
+   "count": 20,
+   "scanned": 40
   },
   "Arbeitnow": {
    "status": "ok",
-   "fetchedAt": "2026-10-24T23:21:11.234Z",
+   "fetchedAt": "2026-10-25T04:52:39.684Z",
    "count": 60,
    "scanned": 900
   }
  },
  "jobs": [
   {
-   "id": "live_Arbeitnow_senior-software-engineer-c-net-491395",
-   "title": "Senior Software Engineer – C# / .NET",
-   "company": "Threecolts",
-   "location": "Remote",
+   "id": "live_Arbeitnow_software-engineer-ii-oxford-53842",
+   "title": "Software Engineer II",
+   "company": "tripadvisor",
+   "location": "Oxford",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/tripadvisor/software-engineer-ii-oxford-53842",
+   "postedAt": "2026-10-25T03:55:19.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_ai-platform-engineer-schiphol-rijk-48206",
+   "title": "AI Platform Engineer",
+   "company": "Schubergphilis",
+   "location": "Schiphol-Rijk",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/schubergphilis/ai-platform-engineer-schiphol-rijk-482062",
+   "postedAt": "2026-10-25T03:55:19.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-ai-support-engineer-paris-325847",
+   "title": "Senior AI Support Engineer (Paris)",
+   "company": "Dust",
+   "location": "Paris",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/dust/senior-ai-support-engineer-paris-325847",
+   "postedAt": "2026-10-25T03:40:14.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_engineering-manager-hamburg-316393",
+   "title": "Engineering Manager",
+   "company": "Sunday Gmbh",
+   "location": "Hamburg",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/sunday-gmbh/engineering-manager-hamburg-316393",
+   "postedAt": "2026-10-25T03:40:12.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-devops-engineer-all-genders-berli",
+   "title": "Senior DevOps Engineer (all genders)",
+   "company": "Sunday Natural",
+   "location": "Berlin",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AWS",
+    "DevOps"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/sunday-natural/senior-devops-engineer-all-genders-berlin-333778",
+   "postedAt": "2026-10-25T03:40:11.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-cloud-security-engineer-291881",
+   "title": "Cloud Security Engineer",
+   "company": "Ygo",
+   "location": "Remote EU",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/ygo/remote-cloud-security-engineer-291881",
+   "postedAt": "2026-10-25T03:40:11.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-net-developer-luzern-129651",
+   "title": "Senior .NET Developer",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Luzern, Luzern, Switzerland",
    "type": "Full-time",
    "exp": "Senior",
    "tech": [
@@ -36,577 +129,64 @@
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/threecolts/senior-software-engineer-c-net-491395",
-   "postedAt": "2026-10-24T20:55:32.000Z",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/senior-net-developer-luzern-129651",
+   "postedAt": "2026-10-25T03:31:09.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_senior-rf-engineer-kassel-hesse-299711",
-   "title": "Senior RF Engineer",
-   "company": "Axon",
-   "location": "Kassel, Hesse",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/axon/senior-rf-engineer-kassel-hesse-299711",
-   "postedAt": "2026-10-24T20:55:30.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-software-engineer-analytics-data-",
-   "title": "Senior Software Engineer - Analytics Data Platform",
-   "company": "Datadog",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Python",
-    "AI/ML",
-    "Data",
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/datadog/senior-software-engineer-analytics-data-platform-paris-24911",
-   "postedAt": "2026-10-24T20:55:30.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_software-engineer-backend-385985",
-   "title": "Software Engineer, Backend",
-   "company": "Sevenroomsuk",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/sevenroomsuk/software-engineer-backend-385985",
-   "postedAt": "2026-10-24T20:55:28.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_software-engineer-triton-bristol-149068",
-   "title": "Software Engineer - Triton",
-   "company": "Graphcore",
-   "location": "Bristol",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/graphcore/software-engineer-triton-bristol-149068",
-   "postedAt": "2026-10-24T20:55:28.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-software-engineer-bristol-edinbur",
-   "title": "Senior Software Engineer",
-   "company": "Kaluza",
-   "location": "Bristol; Edinburgh; London",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/kaluza/senior-software-engineer-bristol-edinburgh-london-17458",
-   "postedAt": "2026-10-24T20:55:27.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-cyber-security-engineer-london-48",
-   "title": "Senior Cyber Security Engineer",
-   "company": "Checkout.com",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/checkoutcom/senior-cyber-security-engineer-london-489714",
-   "postedAt": "2026-10-24T20:40:17.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-full-stack-product-engineer-paris",
-   "title": "Senior Full-Stack Product Engineer",
-   "company": "The Flex",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/the-flex/senior-full-stack-product-engineer-paris-157871",
-   "postedAt": "2026-10-24T20:40:17.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_product-engineer-paris-152402",
-   "title": "Product Engineer",
-   "company": "The Flex",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/the-flex/product-engineer-paris-152402",
-   "postedAt": "2026-10-24T20:40:17.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-software-engineer-paris-16114",
-   "title": "Senior Software Engineer",
-   "company": "The Flex",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/the-flex/senior-software-engineer-paris-16114",
-   "postedAt": "2026-10-24T20:40:17.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-software-engineer-i-paris-123796",
-   "title": "Senior Software Engineer I",
-   "company": "Checkout.com",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/checkoutcom/senior-software-engineer-i-paris-123796",
-   "postedAt": "2026-10-24T20:40:17.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_composite-development-engineer-germany-4",
-   "title": "Composite Development Engineer",
-   "company": "Stealthrocketrystartup",
-   "location": "Germany",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/stealthrocketrystartup/composite-development-engineer-germany-484809",
-   "postedAt": "2026-10-24T20:40:15.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-mechanical-engineer-flight-struct",
-   "title": "Senior Mechanical Engineer (Flight Structures)",
-   "company": "Stealthrocketrystartup",
-   "location": "Germany",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/stealthrocketrystartup/senior-mechanical-engineer-flight-structures-germany-92367",
-   "postedAt": "2026-10-24T20:40:15.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_graduate-structures-engineer-germany-279",
-   "title": "Graduate Structures Engineer",
-   "company": "Stealthrocketrystartup",
-   "location": "Germany",
-   "type": "Full-time",
-   "exp": "Junior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/stealthrocketrystartup/graduate-structures-engineer-germany-279752",
-   "postedAt": "2026-10-24T20:40:15.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_mechanical-design-engineer-germany-70429",
-   "title": "Mechanical Design Engineer",
-   "company": "Stealthrocketrystartup",
-   "location": "Germany",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/stealthrocketrystartup/mechanical-design-engineer-germany-70429",
-   "postedAt": "2026-10-24T20:40:15.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_ai-project-manager-zurich-184257",
-   "title": "AI Project Manager",
-   "company": "ParetoLabs",
-   "location": "Zürich",
+   "id": "live_Arbeitnow_senior-generative-ai-engineer-zurich-195",
+   "title": "Senior Generative AI Engineer",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Zurich, Zürich, Switzerland",
    "type": "Contract",
-   "exp": "Mid",
+   "exp": "Senior",
    "tech": [
+    "DevOps",
     "AI/ML"
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.ch/jobs/companies/paretolabs/ai-project-manager-zurich-184257",
-   "postedAt": "2026-10-24T20:30:33.000Z",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/senior-generative-ai-engineer-zurich-195416",
+   "postedAt": "2026-10-25T03:31:09.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_werkstudentin-ai-automation-energy-berli",
-   "title": "Werkstudent:in AI & Automation - Energy (m/w/d)",
-   "company": "1KOMMA5˚",
-   "location": "Berlin",
-   "type": "Internship",
-   "exp": "Junior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/1komma50/werkstudentin-ai-automation-energy-berlin-339347",
-   "postedAt": "2026-10-24T18:47:24.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-platform-engineer-lille-btwin-vil",
-   "title": "Senior Platform Engineer",
-   "company": "Decathlontechnology",
-   "location": "Lille - Btwin Village, Nord; Paris, Paris",
+   "id": "live_Arbeitnow_senior-sap-integration-architect-zurich-",
+   "title": "Senior SAP Integration Architect",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Zurich, Zürich, Switzerland",
    "type": "Full-time",
    "exp": "Senior",
-   "tech": [],
+   "tech": [
+    "SAP"
+   ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/decathlontechnology/senior-platform-engineer-lille-btwin-village-nord-paris-paris-103310",
-   "postedAt": "2026-10-24T17:55:27.000Z",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/senior-sap-integration-architect-zurich-310147",
+   "postedAt": "2026-10-25T03:31:09.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_trading-data-software-engineer-amsterdam",
-   "title": "Trading Data Software Engineer",
-   "company": "Imc",
-   "location": "Amsterdam",
+   "id": "live_Arbeitnow_senior-java-developer-performance-focuse",
+   "title": "Senior Java Developer (Performance Focused)",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Zurich, Zürich, Switzerland",
    "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/imc/trading-data-software-engineer-amsterdam-497034",
-   "postedAt": "2026-10-24T17:55:26.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_java-software-engineer-amsterdam-443240",
-   "title": "Java Software Engineer",
-   "company": "Imc",
-   "location": "Amsterdam",
-   "type": "Full-time",
-   "exp": "Mid",
+   "exp": "Senior",
    "tech": [
     "Java"
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/imc/java-software-engineer-amsterdam-443240",
-   "postedAt": "2026-10-24T17:55:26.000Z",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/senior-java-developer-performance-focused-zurich-218150",
+   "postedAt": "2026-10-25T03:31:09.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_ai-enabled-software-engineer-104696",
-   "title": "AI - Enabled Software Engineer",
-   "company": "Mark43",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/mark43/ai-enabled-software-engineer-104696",
-   "postedAt": "2026-10-24T17:55:24.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-android-engineer-amsterdam-1452",
-   "title": "Senior Android Engineer",
-   "company": "Talk360",
-   "location": "Amsterdam, Noord-Holland, Netherlands",
-   "type": "Contract",
-   "exp": "Senior",
-   "tech": [
-    "Android"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/talk360/senior-android-engineer-amsterdam-1452",
-   "postedAt": "2026-10-24T17:51:48.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-php-backend-developer-zoetermeer-",
-   "title": "Senior PHP Backend Developer",
-   "company": "SHIFTBASE B.V.",
-   "location": "Zoetermeer, Zuid-Holland, Netherlands",
-   "type": "Contract",
-   "exp": "Senior",
-   "tech": [
-    "PHP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/shiftbase-bv/senior-php-backend-developer-zoetermeer-249736",
-   "postedAt": "2026-10-24T17:51:48.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_stage-data-engineer-reporting-bi-f-h-mar",
-   "title": "STAGE - Data Engineer/Reporting BI F/H - Mars 2027",
-   "company": "FLEURY MICHON",
-   "location": "Pouzauges, Pays de la Loire, France",
-   "type": "Internship",
-   "exp": "Mid",
-   "tech": [
-    "Data"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/fleury-michon/stage-data-engineer-reporting-bi-f-h-mars-2027-pouzauges-468050",
-   "postedAt": "2026-10-24T17:51:47.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-mechanical-systems-engineer-all-g",
-   "title": "Senior Mechanical Systems Engineer (all genders)",
-   "company": "væridion",
-   "location": "Munich HQ",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/vaeridion/senior-mechanical-systems-engineer-all-genders-munich-64254",
-   "postedAt": "2026-10-24T17:40:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_security-engineer-london-326971",
-   "title": "Security Engineer",
-   "company": "Cuspai",
-   "location": "Cambridge, UK",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML",
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/cuspai/security-engineer-london-326971",
-   "postedAt": "2026-10-24T17:40:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_performance-engineer-london-237596",
-   "title": "Performance Engineer",
-   "company": "Cuspai",
-   "location": "Cambridge, UK",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/cuspai/performance-engineer-london-237596",
-   "postedAt": "2026-10-24T17:40:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_platform-engineer-london-424820",
-   "title": "Platform Engineer",
-   "company": "Cuspai",
-   "location": "Cambridge, UK",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/cuspai/platform-engineer-london-424820",
-   "postedAt": "2026-10-24T17:40:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_data-engineer-london-281157",
-   "title": "Data Engineer",
-   "company": "Cuspai",
-   "location": "Cambridge, UK",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML",
-    "Data"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/cuspai/data-engineer-london-281157",
-   "postedAt": "2026-10-24T17:40:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_go-to-market-associate-enterprise-ai-lon",
-   "title": "Go-to-Market Associate (Enterprise AI)",
-   "company": "Spaitial",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Junior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/spaitial/go-to-market-associate-enterprise-ai-london-3280",
-   "postedAt": "2026-10-24T17:40:12.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_frontend-developer-intern-zurich-262783",
-   "title": "Frontend Developer Intern",
-   "company": "ParetoLabs",
-   "location": "Zürich",
-   "type": "Internship",
-   "exp": "Junior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.ch/jobs/companies/paretolabs/frontend-developer-intern-zurich-262783",
-   "postedAt": "2026-10-24T16:00:46.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-ai-solution-engineer-berlin-36620",
-   "title": "(Senior) AI Solution Engineer (w/m/d)",
-   "company": "Workist GmbH",
-   "location": "Berlin",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/workist-gmbh/senior-ai-solution-engineer-berlin-366207",
-   "postedAt": "2026-10-24T15:00:57.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_red-team-security-engineer-443040",
-   "title": "Red Team Security Engineer",
-   "company": "Gomotive",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML",
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/gomotive/red-team-security-engineer-443040",
-   "postedAt": "2026-10-24T14:55:35.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-solution-architect-enterprise-138",
-   "title": "Senior Solution Architect - Enterprise",
-   "company": "Elastic",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/elastic/senior-solution-architect-enterprise-138608",
-   "postedAt": "2026-10-24T14:55:33.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_consulting-architect-security-emea-publi",
-   "title": "Consulting Architect - Security (EMEA / Public Sector eligible )",
-   "company": "Elastic",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML",
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/elastic/consulting-architect-security-emea-public-sector-eligible-446692",
-   "postedAt": "2026-10-24T14:55:33.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-java-engineer-distributed-systems",
-   "title": "Senior Java Engineer - Distributed Systems, Serverless - Elasticsearch",
-   "company": "Elastic",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Java",
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.ch/jobs/companies/elastic/senior-java-engineer-distributed-systems-serverless-elasticsearch-244252",
-   "postedAt": "2026-10-24T14:55:33.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-software-engineer-platform-integr",
-   "title": "Senior Software Engineer - Platform Integration, Robot Software",
-   "company": "Wayve",
-   "location": "London, United Kingdom",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/wayve/senior-software-engineer-platform-integration-robot-software-london-united-kingdom-88727",
-   "postedAt": "2026-10-24T14:40:15.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_devops-engineer-w-m-remote-451955",
-   "title": "DevOps Engineer W/M (remote) 🇪🇺",
-   "company": "Pennylane SAS",
-   "location": "Remote",
+   "id": "live_Arbeitnow_iot-embedded-systems-engineer-bern-25701",
+   "title": "IoT Embedded Systems Engineer",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Bern, Berne, Switzerland",
    "type": "Full-time",
    "exp": "Mid",
    "tech": [
@@ -614,349 +194,775 @@
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/pennylane-sas/devops-engineer-w-m-remote-451955",
-   "postedAt": "2026-10-24T14:40:15.000Z",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/iot-embedded-systems-engineer-bern-257010",
+   "postedAt": "2026-10-25T03:31:09.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_full-stack-engineer-ai-authoring-platfor",
-   "title": "Full-Stack Engineer — AI Authoring Platform",
-   "company": "Tracium GmbH",
-   "location": "Berlin (Remote)",
-   "type": "Freelance",
+   "id": "live_Arbeitnow_system-engineer-cloud-network-security-s",
+   "title": "System Engineer - Cloud, Network & Security (m/w/d)",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Steinhausen, Zug, Switzerland",
+   "type": "Full-time",
    "exp": "Mid",
    "tech": [
-    "AI/ML"
+    "DevOps",
+    "Security"
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/tracium-gmbh/full-stack-engineer-ai-authoring-platform-berlin-234521",
-   "postedAt": "2026-10-24T14:00:46.000Z",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/system-engineer-cloud-network-security-steinhausen-278659",
+   "postedAt": "2026-10-25T03:31:09.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_senior-ai-engineer-document-intelligence",
-   "title": "Senior AI Engineer — Document Intelligence",
-   "company": "Tracium GmbH",
-   "location": "Berlin (Remote)",
-   "type": "Freelance",
+   "id": "live_Arbeitnow_dynamics-365-crm-solution-architect-zuri",
+   "title": "Dynamics 365 CRM Solution Architect",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Zurich, Zürich, Switzerland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/dynamics-365-crm-solution-architect-zurich-313467",
+   "postedAt": "2026-10-25T03:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_sap-s-4hana-solution-architect-logistics",
+   "title": "SAP S/4HANA Solution Architect – Logistics",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Zurich, Zürich, Switzerland",
+   "type": "Full-time",
    "exp": "Senior",
    "tech": [
-    "AI/ML"
+    "SAP"
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/tracium-gmbh/senior-ai-engineer-document-intelligence-berlin-227489",
-   "postedAt": "2026-10-24T14:00:46.000Z",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/sap-s-4hana-solution-architect-logistics-zurich-239574",
+   "postedAt": "2026-10-25T03:31:09.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_senior-data-engineer-document-ai-pipelin",
-   "title": "Senior Data Engineer — Document & AI Pipelines",
-   "company": "Tracium GmbH",
-   "location": "Berlin (Remote)",
-   "type": "Freelance",
+   "id": "live_Arbeitnow_it-solution-architect-bern-381469",
+   "title": "IT Solution Architect",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Bern, Berne, Switzerland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "DevOps"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/it-solution-architect-bern-381469",
+   "postedAt": "2026-10-25T03:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-software-test-engineer-bern-48704",
+   "title": "Software Test Engineer",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Remote job (Remote)",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/remote-software-test-engineer-bern-487044",
+   "postedAt": "2026-10-25T03:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-servicenow-ai-architect-zurich-49",
+   "title": "ServiceNow AI Architect",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Remote job (Remote)",
+   "type": "Full-time",
    "exp": "Senior",
    "tech": [
     "AI/ML",
-    "Data"
+    "ServiceNow"
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/tracium-gmbh/senior-data-engineer-document-ai-pipelines-berlin-58783",
-   "postedAt": "2026-10-24T14:00:46.000Z",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/remote-servicenow-ai-architect-zurich-494295",
+   "postedAt": "2026-10-25T03:31:09.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_working-student-ai-engineering-document-",
-   "title": "Working Student — AI Engineering & Document Intelligence",
-   "company": "Tracium GmbH",
-   "location": "Berlin (Remote)",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/tracium-gmbh/working-student-ai-engineering-document-intelligence-berlin-378393",
-   "postedAt": "2026-10-24T13:30:52.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-fullstack-entwickler-php-symfony-",
-   "title": "Senior Fullstack-Entwickler (m/w/d) – PHP/Symfony & React – Berlin",
-   "company": "MRP My Recruitment Partners Ltd.",
-   "location": "Berlin",
+   "id": "live_Arbeitnow_remote-servicenow-crm-architect-zurich-2",
+   "title": "ServiceNow CRM Architect",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Remote job (Remote)",
    "type": "Full-time",
    "exp": "Senior",
    "tech": [
-    "React",
-    "PHP",
-    "DevOps",
-    "SQL"
+    "ServiceNow"
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/mrp-my-recruitment-partners-ltd/senior-fullstack-entwickler-php-symfony-react-berlin-170553",
-   "postedAt": "2026-10-24T13:20:05.000Z",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/remote-servicenow-crm-architect-zurich-276543",
+   "postedAt": "2026-10-25T03:31:09.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_senior-bi-data-engineer-amsterdam-125714",
-   "title": "Senior BI/Data Engineer",
-   "company": "Testendouble",
-   "location": "Amsterdam",
+   "id": "live_Arbeitnow_senior-network-engineer-zurich-176101",
+   "title": "Senior Network Engineer",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Zurich, Zürich, Switzerland",
    "type": "Full-time",
    "exp": "Senior",
    "tech": [
-    "Data"
+    "DevOps"
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/testendouble/senior-bi-data-engineer-amsterdam-125714",
-   "postedAt": "2026-10-24T11:55:26.000Z",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/senior-network-engineer-zurich-176101",
+   "postedAt": "2026-10-25T03:31:09.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_senior-data-engineer-london-444043",
-   "title": "Senior Data Engineer",
-   "company": "sonyinteractiveentertainmentglobal",
-   "location": "London",
-   "type": "Full-time",
+   "id": "live_Arbeitnow_senior-java-angular-engineer-zurich-4329",
+   "title": "Senior Java/Angular Engineer",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Zurich, Zürich, Switzerland",
+   "type": "Contract",
    "exp": "Senior",
-   "tech": [
-    "Data"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/sonyinteractiveentertainmentglobal/senior-data-engineer-london-444043",
-   "postedAt": "2026-10-24T11:55:25.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-bi-visualisation-developer-london",
-   "title": "Senior BI & Visualisation Developer",
-   "company": "sonyinteractiveentertainmentglobal",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/sonyinteractiveentertainmentglobal/senior-bi-visualisation-developer-london-427834",
-   "postedAt": "2026-10-24T11:55:25.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_software-developer-java-nodejs-web-devel",
-   "title": "Software Developer Java/ Node.JS (Web Development Team)",
-   "company": "jetbrains",
-   "location": "Berlin; Munich",
-   "type": "Full-time",
-   "exp": "Mid",
    "tech": [
     "Java",
-    "Node.js"
+    "Angular",
+    "DevOps",
+    "Security"
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/jetbrains/software-developer-java-nodejs-web-development-team-berlin-munich-101048",
-   "postedAt": "2026-10-24T11:55:24.000Z",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/senior-java-angular-engineer-zurich-432990",
+   "postedAt": "2026-10-25T03:31:09.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_graduate-technology-strategy-analyst-phy",
-   "title": "Graduate Technology Strategy Analyst, Physical Sciences / Engineering (2027 start)",
-   "company": "Cambridgeconsultantslimited",
-   "location": "Remote",
+   "id": "live_Arbeitnow_business-engineer-investment-and-pension",
+   "title": "Business Engineer Investment and Pension",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Zurich, Zürich, Switzerland",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/business-engineer-investment-and-pension-zurich-286964",
+   "postedAt": "2026-10-25T03:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_business-engineer-banking-processes-zuri",
+   "title": "Business Engineer Banking Processes",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Zurich, Zürich, Switzerland",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/business-engineer-banking-processes-zurich-431696",
+   "postedAt": "2026-10-25T03:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_solution-architect-zurich-111138",
+   "title": "Solution Architect",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Zurich, Zürich, Switzerland",
+   "type": "Contract",
+   "exp": "Senior",
+   "tech": [
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/solution-architect-zurich-111138",
+   "postedAt": "2026-10-25T03:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_cloud-and-platform-engineer-zurich-46976",
+   "title": "Cloud and Platform Engineer",
+   "company": "SwissPeak Partners GmbH",
+   "location": "Zurich, Zürich, Switzerland",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "Azure",
+    "DevOps",
+    "Kubernetes",
+    "Terraform"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/swisspeak-partners-gmbh/cloud-and-platform-engineer-zurich-469761",
+   "postedAt": "2026-10-25T03:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_ai-solution-architect-eindhoven-352116",
+   "title": "AI Solution Architect",
+   "company": "Itility B.V.",
+   "location": "Eindhoven, Noord-Brabant, Netherlands",
+   "type": "Contract",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/itility-bv/ai-solution-architect-eindhoven-352116",
+   "postedAt": "2026-10-25T03:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_fullstack-engineer-united-kingdom-158685",
+   "title": "Fullstack Engineer",
+   "company": "Kpler",
+   "location": "United Kingdom",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/kpler/fullstack-engineer-united-kingdom-158685",
+   "postedAt": "2026-10-25T03:07:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_backend-engineer-united-kingdom-429067",
+   "title": "Backend Engineer",
+   "company": "Kpler",
+   "location": "United Kingdom",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/kpler/backend-engineer-united-kingdom-429067",
+   "postedAt": "2026-10-25T03:07:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_staff-product-designer-platform-design-l",
+   "title": "Staff Product Designer - Platform Design",
+   "company": "Spotify",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/spotify/staff-product-designer-platform-design-london-228872",
+   "postedAt": "2026-10-25T03:07:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-backend-engineer-content-platform",
+   "title": "Senior Backend Engineer - Content Platform",
+   "company": "Spotify",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/spotify/senior-backend-engineer-content-platform-london-193582",
+   "postedAt": "2026-10-25T03:07:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_product-manager-data-platform-london-261",
+   "title": "Product Manager - Data Platform",
+   "company": "Spotify",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/spotify/product-manager-data-platform-london-261080",
+   "postedAt": "2026-10-25T03:07:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_principal-product-manager-core-experienc",
+   "title": "Principal Product Manager - Core Experience Platform",
+   "company": "Spotify",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/spotify/principal-product-manager-core-experience-platform-london-431366",
+   "postedAt": "2026-10-25T03:07:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_principal-product-manager-content-platfo",
+   "title": "Principal Product Manager - Content Platform",
+   "company": "Spotify",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/spotify/principal-product-manager-content-platform-london-361667",
+   "postedAt": "2026-10-25T03:07:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_machine-learning-engineer-subscriptions-",
+   "title": "Machine Learning Engineer - Subscriptions",
+   "company": "Spotify",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/spotify/machine-learning-engineer-subscriptions-london-157660",
+   "postedAt": "2026-10-25T03:07:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_engineering-manager-experimentation-lond",
+   "title": "Engineering Manager - Experimentation",
+   "company": "Spotify",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/spotify/engineering-manager-experimentation-london-319985",
+   "postedAt": "2026-10-25T03:07:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_data-scientist-company-planning-executio",
+   "title": "Data Scientist, Company Planning & Execution",
+   "company": "Spotify",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/spotify/data-scientist-company-planning-execution-london-129395",
+   "postedAt": "2026-10-25T03:07:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_data-scientist-business-analytics-london",
+   "title": "Data Scientist - Business Analytics",
+   "company": "Spotify",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/spotify/data-scientist-business-analytics-london-208192",
+   "postedAt": "2026-10-25T03:07:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_junior-full-stack-engineer-london-143121",
+   "title": "Junior Full Stack Engineer",
+   "company": "Bloom & Wild Group",
+   "location": "London",
    "type": "Full-time",
    "exp": "Junior",
-   "tech": [],
+   "tech": [
+    "TypeScript",
+    "Angular",
+    "Ruby",
+    "DevOps"
+   ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/cambridgeconsultantslimited/graduate-technology-strategy-analyst-physical-sciences-engineering-2027-start-389045",
-   "postedAt": "2026-10-24T11:55:21.000Z",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/bloom-wild-group/junior-full-stack-engineer-london-143121",
+   "postedAt": "2026-10-25T03:07:32.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_principal-software-engineer-hybrid-londo",
-   "title": "Principal Software Engineer (Hybrid)",
-   "company": "8Thlightrebuild",
+   "id": "live_Arbeitnow_rust-software-engineer-london-153138",
+   "title": "Rust Software Engineer",
+   "company": "Prima",
    "location": "London",
    "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
+   "exp": "Mid",
+   "tech": [
+    "Rust"
+   ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/8thlightrebuild/principal-software-engineer-hybrid-london-41987",
-   "postedAt": "2026-10-24T11:55:18.000Z",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/prima/rust-software-engineer-london-153138",
+   "postedAt": "2026-10-25T03:07:32.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_lead-software-engineer-hybrid-london-303",
-   "title": "Lead Software Engineer (Hybrid)",
-   "company": "8Thlightrebuild",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/8thlightrebuild/lead-software-engineer-hybrid-london-303831",
-   "postedAt": "2026-10-24T11:55:18.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_technical-product-manager-developer-expe",
-   "title": "Technical Product Manager, Developer Experience & Product-Led Growth",
-   "company": "Telnyx",
+   "id": "live_Arbeitnow_elixir-software-engineer-london-471776",
+   "title": "Elixir Software Engineer",
+   "company": "Prima",
    "location": "London",
    "type": "Full-time",
    "exp": "Mid",
    "tech": [],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/telnyx/technical-product-manager-developer-experience-product-led-growth-london-218988",
-   "postedAt": "2026-10-24T11:55:18.000Z",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/prima/elixir-software-engineer-london-471776",
+   "postedAt": "2026-10-25T03:07:32.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_engineering-lead-london-306771",
-   "title": "Engineering Lead",
-   "company": "Flock",
+   "id": "live_Arbeitnow_back-end-engineer-london-380628",
+   "title": "Back End Engineer",
+   "company": "Prima",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/prima/back-end-engineer-london-380628",
+   "postedAt": "2026-10-25T03:07:32.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-manager-data-engineering-uk-readi",
+   "title": "Senior Manager, Data Engineering",
+   "company": "Keyloop",
+   "location": "UK (Reading)",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/keyloop/senior-manager-data-engineering-uk-reading-265759",
+   "postedAt": "2026-10-25T03:07:31.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-associate-software-engineer-londo",
+   "title": "Senior Associate, Software Engineer",
+   "company": "Wisdomtree UK",
    "location": "London",
    "type": "Full-time",
    "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/wisdomtree-uk/senior-associate-software-engineer-london-108301",
+   "postedAt": "2026-10-25T03:07:30.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_solutions-engineer-emea-london-65187",
+   "title": "Solutions Engineer, EMEA",
+   "company": "Iru",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/iru/solutions-engineer-emea-london-65187",
+   "postedAt": "2026-10-25T03:07:30.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_forward-deployed-engineer-united-kingdom",
+   "title": "Forward Deployed Engineer",
+   "company": "Snaplogic",
+   "location": "United Kingdom",
+   "type": "Full-time",
+   "exp": "Mid",
    "tech": [
     "AI/ML"
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/flock/engineering-lead-london-306771",
-   "postedAt": "2026-10-24T11:40:14.000Z",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/snaplogic/forward-deployed-engineer-united-kingdom-76617",
+   "postedAt": "2026-10-25T03:07:29.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_forward-deployed-engineer-all-genders-bo",
-   "title": "Forward Deployed Engineer (all genders)",
-   "company": "Thorit",
-   "location": "Böblingen Headquater",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/thorit/forward-deployed-engineer-all-genders-boblingen-99884",
-   "postedAt": "2026-10-24T11:40:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_defect-inspection-engineer-aachen-199794",
-   "title": "Defect Inspection Engineer (f/m/d)",
-   "company": "Black Semiconductor GmbH",
-   "location": "Aachen, Germany",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/black-semiconductor-gmbh/defect-inspection-engineer-aachen-199794",
-   "postedAt": "2026-10-24T11:40:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_founding-lead-engineer-ai-workflow-autom",
-   "title": "Founding Lead Engineer — AI & Workflow Automation",
-   "company": "Founders Factory",
-   "location": "Berlin",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/founders-factory/founding-lead-engineer-ai-workflow-automation-berlin-289939",
-   "postedAt": "2026-10-24T11:40:12.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_engineering-manager-london-476157",
-   "title": "Engineering Manager",
-   "company": "Legal Counsel - 12 month FTC at Rightmove Greenhouse",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/legal-counsel-12-month-ftc-at-rightmove-greenhouse/engineering-manager-london-476157",
-   "postedAt": "2026-10-24T08:55:28.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_associate-data-scientist-london-88840",
-   "title": "Associate Data Scientist",
-   "company": "Legal Counsel - 12 month FTC at Rightmove Greenhouse",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Junior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/legal-counsel-12-month-ftc-at-rightmove-greenhouse/associate-data-scientist-london-88840",
-   "postedAt": "2026-10-24T08:55:28.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-data-scientist-cardiff-345766",
-   "title": "Senior Data Scientist",
-   "company": "Monzoreferrals",
-   "location": "Cardiff",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/monzoreferrals/senior-data-scientist-cardiff-345766",
-   "postedAt": "2026-10-24T08:55:28.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_software-engineer-embedded-systems-all-g",
-   "title": "Software Engineer – Embedded Systems (All genders)",
-   "company": "Skdse",
+   "id": "live_Arbeitnow_engineering-manager-embedded-munich-bava",
+   "title": "Engineering Manager Embedded",
+   "company": "Qwello.eu",
    "location": "Munich, Bavaria",
    "type": "Full-time",
    "exp": "Mid",
-   "tech": [
-    "AI/ML",
-    "Security"
-   ],
+   "tech": [],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/skdse/software-engineer-embedded-systems-all-genders-munich-bavaria-376950",
-   "postedAt": "2026-10-24T08:55:25.000Z",
+   "url": "https://www.arbeitnow.com/jobs/companies/qwelloeu/engineering-manager-embedded-munich-bavaria-210410",
+   "postedAt": "2026-10-25T03:07:28.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_senior-robotics-software-engineer-all-ge",
-   "title": "(Senior) Robotics Software Engineer (All genders)",
-   "company": "Skdse",
-   "location": "Berlin; Munich, Bavaria",
+   "id": "live_Arbeitnow_remote-senior-security-engineer-appsec-5",
+   "title": "Senior Security Engineer - AppSec (d/f/m)",
+   "company": "Vivenu",
+   "location": "Remote Germany",
    "type": "Full-time",
    "exp": "Senior",
    "tech": [
-    "AI/ML",
     "Security"
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/skdse/senior-robotics-software-engineer-all-genders-berlin-munich-bavaria-20921",
-   "postedAt": "2026-10-24T08:55:25.000Z",
+   "url": "https://www.arbeitnow.com/jobs/companies/vivenu/remote-senior-security-engineer-appsec-5689",
+   "postedAt": "2026-10-25T03:07:28.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-senior-platform-engineer-428111",
+   "title": "Senior Platform Engineer (d/f/m)",
+   "company": "Vivenu",
+   "location": "Remote Germany",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/vivenu/remote-senior-platform-engineer-428111",
+   "postedAt": "2026-10-25T03:07:28.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-full-stack-engineer-uk-313527",
+   "title": "Senior Full Stack Engineer (UK)",
+   "company": "Controlup",
+   "location": "UK",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/controlup/senior-full-stack-engineer-uk-313527",
+   "postedAt": "2026-10-25T03:07:27.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-engineering-manager-leicester-306",
+   "title": "Senior Engineering Manager",
+   "company": "Clearer",
+   "location": "Leicester",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/clearer/senior-engineering-manager-leicester-306281",
+   "postedAt": "2026-10-25T03:07:27.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_principal-engineer-application-engineeri",
+   "title": "Principal Engineer, Application Engineering (f/m/d)",
+   "company": "Hop",
+   "location": "Munich",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/hop/principal-engineer-application-engineering-munich-469710",
+   "postedAt": "2026-10-25T03:07:26.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_forward-deployed-engineer-amsterdam-1772",
+   "title": "Forward Deployed Engineer",
+   "company": "Auterion",
+   "location": "Amsterdam",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/auterion/forward-deployed-engineer-amsterdam-177250",
+   "postedAt": "2026-10-24T23:55:22.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_software-engineer-i-new-grad-2027-instru",
+   "title": "Software Engineer I (New Grad 2027) - Instruments team",
+   "company": "Affirm",
+   "location": "Remote",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/affirm/software-engineer-i-new-grad-2027-instruments-team-60083",
+   "postedAt": "2026-10-24T23:55:20.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_research-engineer-zurich-318019",
+   "title": "Research Engineer (m/f/d)",
+   "company": "Sereact GmbH",
+   "location": "Zurich",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/sereact-gmbh/research-engineer-zurich-318019",
+   "postedAt": "2026-10-24T23:40:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_analytics-engineer-amsterdam-55461",
+   "title": "Analytics Engineer",
+   "company": "Mollie",
+   "location": "Amsterdam",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/mollie/analytics-engineer-amsterdam-55461",
+   "postedAt": "2026-10-24T23:40:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_valve-test-engineer-bordeaux-296786",
+   "title": "Valve Test Engineer",
+   "company": "The Exploration Company",
+   "location": "Bordeaux, France",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/the-exploration-company/valve-test-engineer-bordeaux-296786",
+   "postedAt": "2026-10-24T23:40:13.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-ai-researcher-llm-post-training-f",
+   "title": "Senior AI Researcher: LLM post-training for hallucination reduction (f/m/d)",
+   "company": "Alephalpha",
+   "location": "Heidelberg",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/alephalpha/senior-ai-researcher-llm-post-training-for-hallucination-reduction-heidelberg-353789",
+   "postedAt": "2026-10-24T23:40:12.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-ai-rd-engineer-model-training-hei",
+   "title": "Senior AI R&D Engineer – Model Training (f/m/d)",
+   "company": "Alephalpha",
+   "location": "Heidelberg",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/alephalpha/senior-ai-rd-engineer-model-training-heidelberg-480943",
+   "postedAt": "2026-10-24T23:40:12.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-ai-researcher-pre-training-heidel",
+   "title": "Senior AI Researcher- Pre-training (f/m/d)",
+   "company": "Alephalpha",
+   "location": "Heidelberg",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/alephalpha/senior-ai-researcher-pre-training-heidelberg-447574",
+   "postedAt": "2026-10-24T23:40:12.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-ai-rd-engineer-performance-pre-tr",
+   "title": "Senior AI R&D Engineer - Performance - Pre-training (f/m/d)",
+   "company": "Alephalpha",
+   "location": "Heidelberg",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/alephalpha/senior-ai-rd-engineer-performance-pre-training-heidelberg-497680",
+   "postedAt": "2026-10-24T23:40:12.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_technical-support-engineer-germany-18856",
+   "title": "Technical Support Engineer (m/f/d)",
+   "company": "Sereact GmbH",
+   "location": "Germany",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/sereact-gmbh/technical-support-engineer-germany-188563",
+   "postedAt": "2026-10-24T23:40:12.000Z",
+   "live": true
+  },
+  {
+   "id": "live_RemoteOK_1137568",
+   "title": "Solutions Engineer",
+   "company": "Onebrief",
+   "location": "Remote",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Python",
+    "Go",
+    "Docker",
+    "AI/ML"
+   ],
+   "salary": "$180K–$220K",
+   "source": "Remote OK",
+   "url": "https://remoteOK.com/remote-jobs/remote-solutions-engineer-onebrief-1137568",
+   "postedAt": "2026-10-24T00:00:02+00:00",
    "live": true
   },
   {
@@ -1485,6 +1491,546 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.com/jobs/companies/mozilla/senior-software-engineer-privacy-23607",
    "closedAt": "2026-10-24T23:21:11.234Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-software-engineer-c-net-491395",
+   "title": "Senior Software Engineer – C# / .NET",
+   "company": "Threecolts",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/threecolts/senior-software-engineer-c-net-491395",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-rf-engineer-kassel-hesse-299711",
+   "title": "Senior RF Engineer",
+   "company": "Axon",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/axon/senior-rf-engineer-kassel-hesse-299711",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-software-engineer-analytics-data-",
+   "title": "Senior Software Engineer - Analytics Data Platform",
+   "company": "Datadog",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/datadog/senior-software-engineer-analytics-data-platform-paris-24911",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_software-engineer-backend-385985",
+   "title": "Software Engineer, Backend",
+   "company": "Sevenroomsuk",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/sevenroomsuk/software-engineer-backend-385985",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_software-engineer-triton-bristol-149068",
+   "title": "Software Engineer - Triton",
+   "company": "Graphcore",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/graphcore/software-engineer-triton-bristol-149068",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-software-engineer-bristol-edinbur",
+   "title": "Senior Software Engineer",
+   "company": "Kaluza",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/kaluza/senior-software-engineer-bristol-edinburgh-london-17458",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-cyber-security-engineer-london-48",
+   "title": "Senior Cyber Security Engineer",
+   "company": "Checkout.com",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/checkoutcom/senior-cyber-security-engineer-london-489714",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-full-stack-product-engineer-paris",
+   "title": "Senior Full-Stack Product Engineer",
+   "company": "The Flex",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/the-flex/senior-full-stack-product-engineer-paris-157871",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_product-engineer-paris-152402",
+   "title": "Product Engineer",
+   "company": "The Flex",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/the-flex/product-engineer-paris-152402",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-software-engineer-paris-16114",
+   "title": "Senior Software Engineer",
+   "company": "The Flex",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/the-flex/senior-software-engineer-paris-16114",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-software-engineer-i-paris-123796",
+   "title": "Senior Software Engineer I",
+   "company": "Checkout.com",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/checkoutcom/senior-software-engineer-i-paris-123796",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_composite-development-engineer-germany-4",
+   "title": "Composite Development Engineer",
+   "company": "Stealthrocketrystartup",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/stealthrocketrystartup/composite-development-engineer-germany-484809",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-mechanical-engineer-flight-struct",
+   "title": "Senior Mechanical Engineer (Flight Structures)",
+   "company": "Stealthrocketrystartup",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/stealthrocketrystartup/senior-mechanical-engineer-flight-structures-germany-92367",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_graduate-structures-engineer-germany-279",
+   "title": "Graduate Structures Engineer",
+   "company": "Stealthrocketrystartup",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/stealthrocketrystartup/graduate-structures-engineer-germany-279752",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_mechanical-design-engineer-germany-70429",
+   "title": "Mechanical Design Engineer",
+   "company": "Stealthrocketrystartup",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/stealthrocketrystartup/mechanical-design-engineer-germany-70429",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_ai-project-manager-zurich-184257",
+   "title": "AI Project Manager",
+   "company": "ParetoLabs",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/paretolabs/ai-project-manager-zurich-184257",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_werkstudentin-ai-automation-energy-berli",
+   "title": "Werkstudent:in AI & Automation - Energy (m/w/d)",
+   "company": "1KOMMA5˚",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/1komma50/werkstudentin-ai-automation-energy-berlin-339347",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-platform-engineer-lille-btwin-vil",
+   "title": "Senior Platform Engineer",
+   "company": "Decathlontechnology",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/decathlontechnology/senior-platform-engineer-lille-btwin-village-nord-paris-paris-103310",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_trading-data-software-engineer-amsterdam",
+   "title": "Trading Data Software Engineer",
+   "company": "Imc",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/imc/trading-data-software-engineer-amsterdam-497034",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_java-software-engineer-amsterdam-443240",
+   "title": "Java Software Engineer",
+   "company": "Imc",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/imc/java-software-engineer-amsterdam-443240",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_ai-enabled-software-engineer-104696",
+   "title": "AI - Enabled Software Engineer",
+   "company": "Mark43",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/mark43/ai-enabled-software-engineer-104696",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-android-engineer-amsterdam-1452",
+   "title": "Senior Android Engineer",
+   "company": "Talk360",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/talk360/senior-android-engineer-amsterdam-1452",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-php-backend-developer-zoetermeer-",
+   "title": "Senior PHP Backend Developer",
+   "company": "SHIFTBASE B.V.",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/shiftbase-bv/senior-php-backend-developer-zoetermeer-249736",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_stage-data-engineer-reporting-bi-f-h-mar",
+   "title": "STAGE - Data Engineer/Reporting BI F/H - Mars 2027",
+   "company": "FLEURY MICHON",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/fleury-michon/stage-data-engineer-reporting-bi-f-h-mars-2027-pouzauges-468050",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-mechanical-systems-engineer-all-g",
+   "title": "Senior Mechanical Systems Engineer (all genders)",
+   "company": "væridion",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/vaeridion/senior-mechanical-systems-engineer-all-genders-munich-64254",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_security-engineer-london-326971",
+   "title": "Security Engineer",
+   "company": "Cuspai",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/cuspai/security-engineer-london-326971",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_performance-engineer-london-237596",
+   "title": "Performance Engineer",
+   "company": "Cuspai",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/cuspai/performance-engineer-london-237596",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_platform-engineer-london-424820",
+   "title": "Platform Engineer",
+   "company": "Cuspai",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/cuspai/platform-engineer-london-424820",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_data-engineer-london-281157",
+   "title": "Data Engineer",
+   "company": "Cuspai",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/cuspai/data-engineer-london-281157",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_go-to-market-associate-enterprise-ai-lon",
+   "title": "Go-to-Market Associate (Enterprise AI)",
+   "company": "Spaitial",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/spaitial/go-to-market-associate-enterprise-ai-london-3280",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_frontend-developer-intern-zurich-262783",
+   "title": "Frontend Developer Intern",
+   "company": "ParetoLabs",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/paretolabs/frontend-developer-intern-zurich-262783",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-ai-solution-engineer-berlin-36620",
+   "title": "(Senior) AI Solution Engineer (w/m/d)",
+   "company": "Workist GmbH",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/workist-gmbh/senior-ai-solution-engineer-berlin-366207",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_red-team-security-engineer-443040",
+   "title": "Red Team Security Engineer",
+   "company": "Gomotive",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/gomotive/red-team-security-engineer-443040",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-solution-architect-enterprise-138",
+   "title": "Senior Solution Architect - Enterprise",
+   "company": "Elastic",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/elastic/senior-solution-architect-enterprise-138608",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_consulting-architect-security-emea-publi",
+   "title": "Consulting Architect - Security (EMEA / Public Sector eligible )",
+   "company": "Elastic",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/elastic/consulting-architect-security-emea-public-sector-eligible-446692",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-java-engineer-distributed-systems",
+   "title": "Senior Java Engineer - Distributed Systems, Serverless - Elasticsearch",
+   "company": "Elastic",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/elastic/senior-java-engineer-distributed-systems-serverless-elasticsearch-244252",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-software-engineer-platform-integr",
+   "title": "Senior Software Engineer - Platform Integration, Robot Software",
+   "company": "Wayve",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/wayve/senior-software-engineer-platform-integration-robot-software-london-united-kingdom-88727",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_devops-engineer-w-m-remote-451955",
+   "title": "DevOps Engineer W/M (remote) 🇪🇺",
+   "company": "Pennylane SAS",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/pennylane-sas/devops-engineer-w-m-remote-451955",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_full-stack-engineer-ai-authoring-platfor",
+   "title": "Full-Stack Engineer — AI Authoring Platform",
+   "company": "Tracium GmbH",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/tracium-gmbh/full-stack-engineer-ai-authoring-platform-berlin-234521",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-ai-engineer-document-intelligence",
+   "title": "Senior AI Engineer — Document Intelligence",
+   "company": "Tracium GmbH",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/tracium-gmbh/senior-ai-engineer-document-intelligence-berlin-227489",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-data-engineer-document-ai-pipelin",
+   "title": "Senior Data Engineer — Document & AI Pipelines",
+   "company": "Tracium GmbH",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/tracium-gmbh/senior-data-engineer-document-ai-pipelines-berlin-58783",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_working-student-ai-engineering-document-",
+   "title": "Working Student — AI Engineering & Document Intelligence",
+   "company": "Tracium GmbH",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/tracium-gmbh/working-student-ai-engineering-document-intelligence-berlin-378393",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-fullstack-entwickler-php-symfony-",
+   "title": "Senior Fullstack-Entwickler (m/w/d) – PHP/Symfony & React – Berlin",
+   "company": "MRP My Recruitment Partners Ltd.",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/mrp-my-recruitment-partners-ltd/senior-fullstack-entwickler-php-symfony-react-berlin-170553",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-bi-data-engineer-amsterdam-125714",
+   "title": "Senior BI/Data Engineer",
+   "company": "Testendouble",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/testendouble/senior-bi-data-engineer-amsterdam-125714",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-data-engineer-london-444043",
+   "title": "Senior Data Engineer",
+   "company": "sonyinteractiveentertainmentglobal",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/sonyinteractiveentertainmentglobal/senior-data-engineer-london-444043",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-bi-visualisation-developer-london",
+   "title": "Senior BI & Visualisation Developer",
+   "company": "sonyinteractiveentertainmentglobal",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/sonyinteractiveentertainmentglobal/senior-bi-visualisation-developer-london-427834",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_software-developer-java-nodejs-web-devel",
+   "title": "Software Developer Java/ Node.JS (Web Development Team)",
+   "company": "jetbrains",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/jetbrains/software-developer-java-nodejs-web-development-team-berlin-munich-101048",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_graduate-technology-strategy-analyst-phy",
+   "title": "Graduate Technology Strategy Analyst, Physical Sciences / Engineering (2027 start)",
+   "company": "Cambridgeconsultantslimited",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/cambridgeconsultantslimited/graduate-technology-strategy-analyst-physical-sciences-engineering-2027-start-389045",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_principal-software-engineer-hybrid-londo",
+   "title": "Principal Software Engineer (Hybrid)",
+   "company": "8Thlightrebuild",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/8thlightrebuild/principal-software-engineer-hybrid-london-41987",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_lead-software-engineer-hybrid-london-303",
+   "title": "Lead Software Engineer (Hybrid)",
+   "company": "8Thlightrebuild",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/8thlightrebuild/lead-software-engineer-hybrid-london-303831",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_technical-product-manager-developer-expe",
+   "title": "Technical Product Manager, Developer Experience & Product-Led Growth",
+   "company": "Telnyx",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/telnyx/technical-product-manager-developer-experience-product-led-growth-london-218988",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_engineering-lead-london-306771",
+   "title": "Engineering Lead",
+   "company": "Flock",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/flock/engineering-lead-london-306771",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_forward-deployed-engineer-all-genders-bo",
+   "title": "Forward Deployed Engineer (all genders)",
+   "company": "Thorit",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/thorit/forward-deployed-engineer-all-genders-boblingen-99884",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_defect-inspection-engineer-aachen-199794",
+   "title": "Defect Inspection Engineer (f/m/d)",
+   "company": "Black Semiconductor GmbH",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/black-semiconductor-gmbh/defect-inspection-engineer-aachen-199794",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_founding-lead-engineer-ai-workflow-autom",
+   "title": "Founding Lead Engineer — AI & Workflow Automation",
+   "company": "Founders Factory",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/founders-factory/founding-lead-engineer-ai-workflow-automation-berlin-289939",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_engineering-manager-london-476157",
+   "title": "Engineering Manager",
+   "company": "Legal Counsel - 12 month FTC at Rightmove Greenhouse",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/legal-counsel-12-month-ftc-at-rightmove-greenhouse/engineering-manager-london-476157",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_associate-data-scientist-london-88840",
+   "title": "Associate Data Scientist",
+   "company": "Legal Counsel - 12 month FTC at Rightmove Greenhouse",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/legal-counsel-12-month-ftc-at-rightmove-greenhouse/associate-data-scientist-london-88840",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-data-scientist-cardiff-345766",
+   "title": "Senior Data Scientist",
+   "company": "Monzoreferrals",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/monzoreferrals/senior-data-scientist-cardiff-345766",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_software-engineer-embedded-systems-all-g",
+   "title": "Software Engineer – Embedded Systems (All genders)",
+   "company": "Skdse",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/skdse/software-engineer-embedded-systems-all-genders-munich-bavaria-376950",
+   "closedAt": "2026-10-25T04:52:39.684Z",
+   "reason": "No longer listed by Arbeitnow"
+  },
+  {
+   "id": "live_Arbeitnow_senior-robotics-software-engineer-all-ge",
+   "title": "(Senior) Robotics Software Engineer (All genders)",
+   "company": "Skdse",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/skdse/senior-robotics-software-engineer-all-genders-berlin-munich-bavaria-20921",
+   "closedAt": "2026-10-25T04:52:39.684Z",
    "reason": "No longer listed by Arbeitnow"
   }
  ],
