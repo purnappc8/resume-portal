@@ -519,6 +519,17 @@ async function loadProfiles() {
   } catch {
     // offline — show seed
   }
+  // Confirmed candidates stored in the cloud (their email is never sent to the browser)
+  const CLOUD = window.ttpApi && ttpApi();
+  if (CLOUD) {
+    try {
+      const r = await fetch(`${CLOUD}/candidates`, { signal: AbortSignal.timeout(6000) });
+      const d = await r.json();
+      const cloud = (d.candidates || []).map(c => ({ ...c, profile: 'profile.html?id=' + encodeURIComponent(c.id) }));
+      const seen = new Set(real.map(p => (p.name || '').toLowerCase()));
+      real = [...real, ...cloud.filter(c => !seen.has((c.name || '').toLowerCase()))];
+    } catch {}
+  }
   allProfiles = real.length < MIN_REAL_PROFILES ? [...real, ...SAMPLE_PROFILES] : real;
   renderCards(allProfiles);
   document.getElementById('resumeGrid').removeAttribute('aria-busy');
@@ -770,6 +781,28 @@ async function sendContact() {
     return;
   }
   const btn = document.querySelector('#contactModal .btn-submit');
+  // Cloud candidate: the accounts service emails THIS candidate only (their address stays private)
+  if (cand.cloud && window.ttpApi && ttpApi()) {
+    let sess = null; try { sess = JSON.parse(sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session') || 'null'); } catch {}
+    if (!sess || sess.role !== 'recruiter') { closeContactModal(); ttpRecruiterGate('contact candidates'); return; }
+    btn.disabled = true; btn.textContent = 'Sending…';
+    let d = {}, resp = null;
+    try {
+      resp = await fetch(`${ttpApi()}/messages`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + sess.token },
+        body: JSON.stringify({ candidateId: cand.id, subject: `Opportunity for ${candidate}`, body: `${msg}\n\n— ${name}${company ? ', ' + company : ''}` }), signal: AbortSignal.timeout(15000) });
+      d = await resp.json().catch(() => ({}));
+    } catch { resp = null; }
+    btn.disabled = false; btn.textContent = 'Send Message';
+    if (!resp || !resp.ok || d.error) {
+      if (d.code === 'no_session') { closeContactModal(); try { localStorage.removeItem('ttp_session'); sessionStorage.removeItem('ttp_session'); } catch {} ttpRecruiterGate('contact candidates'); return; }
+      showToast({ type: 'error', title: 'Message not sent', html: esc(d.error || 'We could not reach the server. Please try again.') }); return;
+    }
+    closeContactModal(); document.getElementById('c-msg').value = '';
+    keepSent('contact', candidate, `Opportunity for ${candidate}`, `${msg}\n\n— ${name}${company ? ', ' + company : ''}\n\nDelivered privately to ${candidate} by TechTalent Portal. Replies go to your organization's group email.`);
+    showToast({ title: 'Message sent', html: esc(d.message) });
+    alert(`Thank you! Your message has been sent to ${candidate}.`);
+    return;
+  }
   btn.disabled = true; btn.textContent = 'Sending…';
   let ok = false;
   try {
@@ -855,6 +888,24 @@ function submitSchedule() {
   }
   if (!ttpValidEmail(email)) {
     showToast({ type: 'error', title: 'Invalid email', html: 'Enter a valid email so the candidate can confirm.' });
+    return;
+  }
+  // Cloud candidate: send the proposed call privately to THIS candidate
+  if (cand.cloud && window.ttpApi && ttpApi()) {
+    let sess = null; try { sess = JSON.parse(sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session') || 'null'); } catch {}
+    if (!sess || sess.role !== 'recruiter') { closeScheduleModal(); ttpRecruiterGate('schedule calls with candidates'); return; }
+    const when = new Date(`${date}T${time}:00`);
+    fetch(`${ttpApi()}/messages`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + sess.token },
+      body: JSON.stringify({ candidateId: cand.id, kind: 'call', subject: `Call request: ${when.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}`,
+        body: `I'd like to schedule a ${duration}-minute call on ${when.toLocaleString('en-IN', { dateStyle: 'full', timeStyle: 'short' })} (your local time may differ).\n\n${notes || ''}\n\nReply to this email to confirm or suggest another time.\n— ${name}` }),
+      signal: AbortSignal.timeout(15000) })
+      .then(r => r.json().then(d => ({ ok: r.ok, d }))).then(({ ok, d }) => {
+        if (!ok || d.error) return showToast({ type: 'error', title: 'Call request not sent', html: esc(d.error || 'Please try again.') });
+        addNotification('schedule', `Call request sent to ${candidate}`, `${date} at ${time} (${duration} min). They'll reply to your organization's email.`);
+        keepSent('schedule', candidate, `Call request: ${candidate}`, `${date} at ${time} (${duration} min)\n\n${notes || 'No additional notes.'}`);
+        showToast({ title: 'Call request sent', html: `${esc(candidate)} got your proposed time by email and can reply to confirm.` });
+        closeScheduleModal();
+      }).catch(() => showToast({ type: 'error', title: 'Call request not sent', html: 'We could not reach the server. Please try again.' }));
     return;
   }
   // Build Google Calendar deep-link

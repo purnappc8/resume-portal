@@ -76,6 +76,18 @@ Until this is set, Browse Jobs simply doesn't show the web-results section; the
   mail scanners that pre-open links can't approve anyone.
 - Once live, **only signed-in recruiters can contact candidates** or schedule calls.
 
+### Candidates (same service)
+- **Post Resume** stores the profile here; it's **published only after the candidate
+  confirms by email**. Their email and phone are **never** shown publicly.
+- A change submitted with an existing email waits for the owner's confirmation
+  (nobody can overwrite someone else's profile).
+- A recruiter's message or call request is emailed **only to that candidate**, with
+  **Reply-To set to the recruiter's group email**. Limits: 3 per candidate per day,
+  50 per recruiter per day.
+- Candidates open their **Inbox** with an emailed sign-in link (no password) and see
+  only their own messages. They can **hide** or **delete** their profile and data.
+- Resume PDFs aren't stored in the cloud yet (candidates can add their LinkedIn).
+
 ## Setup (about 15 minutes)
 
 ### 1. Email sending — Brevo (free)
@@ -86,7 +98,8 @@ Until this is set, Browse Jobs simply doesn't show the web-results section; the
 
 ### 2. Database + worker (Cloudflare)
 1. Cloudflare → **Storage & Databases → D1 → Create database** → name `techtalent-accounts`.
-2. Open it → **Console** → paste everything from `accounts-schema.sql` → **Execute**.
+2. Open it → **Console** → paste everything from `accounts-schema.sql` → **Execute**
+   (it creates the organization, recruiter, candidate and message tables).
 3. **Workers & Pages → Create → Create Worker** → name `techtalent-accounts` → Deploy →
    **Edit code** → paste `accounts-worker.js` → Deploy.
 4. Worker → **Settings → Bindings → Add → D1 database** → variable name `DB` →

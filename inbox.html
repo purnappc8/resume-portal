@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Inbox — TechTalent Portal</title>
 <meta name="robots" content="noindex">
+<script>
+// Arriving from a candidate's emailed sign-in link: #ctok=<session>&cexp=<expiry>
+(function () {
+  var h = new URLSearchParams(location.hash.slice(1)), t = h.get('ctok');
+  if (!t || !/^[a-f0-9]{48}$/.test(t)) return;
+  var s = JSON.stringify({ token: t, role: 'candidate', email: '', name: 'Candidate', expiresAt: h.get('cexp') || '' });
+  try { sessionStorage.setItem('ttp_session', s); localStorage.setItem('ttp_session', s); } catch (e) {}
+  history.replaceState(null, '', location.pathname);   // remove the token from the address bar
+})();
+</script>
 <script src="auth.js"></script>
 <style>
 :root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--light:#e8f0fe;--text:#1a1a1a;--muted:#555;--border:#c5d5e8;--bg:#f7f9fc;}
@@ -68,6 +78,13 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
     <input class="mail-search" id="mailSearch" type="search" placeholder="Search messages…" aria-label="Search messages" oninput="renderList()">
   </div>
 
+  <section id="candPanel" hidden style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:.9rem">
+    <span>👤 Your profile is <b id="candVis">visible to recruiters</b>.</span>
+    <button type="button" id="candToggle" onclick="toggleVisibility()" style="border:1px solid var(--border);background:#fff;color:var(--blue);padding:7px 12px;border-radius:8px;font-weight:700;cursor:pointer;min-height:40px">Hide my profile</button>
+    <button type="button" onclick="deleteProfile()" style="border:1px solid #ef9a9a;background:#fff;color:#c62828;padding:7px 12px;border-radius:8px;font-weight:700;cursor:pointer;min-height:40px">Delete my profile &amp; data</button>
+    <span style="color:var(--muted);font-size:.8rem;flex-basis:100%">Recruiters never see your email. When you reply to a message, your reply goes from your own email to the recruiter's company.</span>
+  </section>
+
   <div class="mail">
     <nav class="folders" aria-label="Folders">
       <button type="button" id="f-inbox" class="active" onclick="openFolder('inbox')" aria-current="true"><span>📥 Inbox</span><span class="cnt" id="cnt-inbox"></span></button>
@@ -85,11 +102,52 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
     </article>
   </div>
 
-  <p class="privacy">🔒 Your inbox is kept in this browser and tied to your signed-in account — other accounts on this device can't open it. Messages from recruiters and candidates will start arriving here once member accounts move to the cloud.</p>
+  <p class="privacy" id="privacyNote">🔒 Your inbox is kept in this browser and tied to your signed-in account — other accounts on this device can't open it. Messages from recruiters and candidates will start arriving here once member accounts move to the cloud.</p>
 </main>
 
 <script>
 let folder = 'inbox', selected = null;
+let remote = [], candMe = null;   // messages recruiters sent this candidate (from the accounts service)
+const API = window.ttpApi ? ttpApi() : '';
+function sess() { try { return JSON.parse(sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session') || 'null'); } catch { return null; } }
+function isRemote(id) { return String(id).startsWith('srv_'); }
+function allIn(f) { return f === 'inbox' ? [...remote, ...ttpMail.list('inbox')].sort((a, b) => Date.parse(b.ts) - Date.parse(a.ts)) : ttpMail.list(f); }
+async function loadRemote() {
+  const s = sess();
+  if (!API || !s || s.role !== 'candidate') return;
+  try {
+    const r = await fetch(`${API}/candidate/messages`, { headers: { Authorization: 'Bearer ' + s.token }, signal: AbortSignal.timeout(15000) });
+    const d = await r.json().catch(() => ({}));
+    if (r.status === 401) { try { localStorage.removeItem('ttp_session'); sessionStorage.removeItem('ttp_session'); } catch {} location.replace('login.html?status=link-invalid#candidate'); return; }
+    if (!r.ok) return;
+    candMe = d.me;
+    if (!s.email || s.email !== d.me.email) {   // first visit from the sign-in link: remember who this is, then redraw
+      const ns = JSON.stringify({ ...s, email: d.me.email, name: d.me.name });
+      try { sessionStorage.setItem('ttp_session', ns); localStorage.setItem('ttp_session', ns); } catch {}
+      location.replace('inbox.html'); return;
+    }
+    remote = (d.messages || []).map(m => ({ id: 'srv_' + m.id, srvId: m.id, kind: m.kind === 'call' ? 'schedule' : 'contact', subject: m.subject, body: m.body, from: m.from, replyTo: m.replyTo, ts: m.at, read: m.read }));
+    document.getElementById('candPanel').hidden = false; document.getElementById('candPanel').style.display = 'flex';
+    paintVisibility(d.me.status !== 'hidden');
+    document.getElementById('privacyNote').textContent = '🔒 Messages from verified recruiters are delivered to you only. Recruiters never see your email address unless you reply.';
+    renderList();
+  } catch {}
+}
+function paintVisibility(v) {
+  document.getElementById('candVis').textContent = v ? 'visible to recruiters' : 'hidden from recruiters';
+  document.getElementById('candToggle').textContent = v ? 'Hide my profile' : 'Show my profile again';
+  document.getElementById('candToggle').dataset.v = v ? '1' : '0';
+}
+async function toggleVisibility() {
+  const v = document.getElementById('candToggle').dataset.v !== '1';
+  const r = await fetch(`${API}/candidate/visibility`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + sess().token }, body: JSON.stringify({ visible: v }) }).catch(() => null);
+  if (r && r.ok) paintVisibility(v);
+}
+async function deleteProfile() {
+  if (!confirm('Delete your profile, your email and all messages? This cannot be undone.')) return;
+  const r = await fetch(`${API}/candidate/delete`, { method: 'POST', headers: { Authorization: 'Bearer ' + sess().token } }).catch(() => null);
+  if (r && r.ok) { alert('Your profile and data have been deleted.'); if (window.ttpNavSignOut) ttpNavSignOut(); else location.href = 'index.html'; }
+}
 const fmt = iso => {
   const d = new Date(iso), now = new Date();
   return d.toDateString() === now.toDateString() ? d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
@@ -99,8 +157,10 @@ const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const safeLink = u => /^(https?:\/\/|[\w-]+\.html)/i.test(u || '') ? u : '';
 
 function counts() {
-  const unread = ttpMail.unread();
+  const unread = ttpMail.unread() + remote.filter(m => !m.read).length;
   document.getElementById('cnt-inbox').textContent = unread || '';
+  try { sessionStorage.setItem('ttp_remote_unread', String(remote.filter(m => !m.read).length)); } catch {}
+  if (window.ttpMail) ttpMail.refreshBadge();
   document.getElementById('cnt-sent').textContent = ttpMail.list('sent').length || '';
 }
 function openFolder(f) {
@@ -115,11 +175,11 @@ function openFolder(f) {
 }
 function filtered() {
   const q = document.getElementById('mailSearch').value.trim().toLowerCase();
-  return ttpMail.list(folder).filter(m => !q || `${m.subject} ${m.body} ${m.to} ${m.from}`.toLowerCase().includes(q));
+  return allIn(folder).filter(m => !q || `${m.subject} ${m.body} ${m.to} ${m.from}`.toLowerCase().includes(q));
 }
 function renderList() {
   const items = filtered();
-  const total = ttpMail.list(folder).length;
+  const total = allIn(folder).length;
   document.getElementById('listCount').textContent = items.length === total ? `${total} message${total !== 1 ? 's' : ''}` : `${items.length} of ${total}`;
   const list = document.getElementById('msgList');
   if (!items.length) {
@@ -141,9 +201,12 @@ function showEmptyReader() {
   document.getElementById('reader').innerHTML = '<div class="empty"><div class="ei" aria-hidden="true">✉️</div>Select a message to read it.</div>';
 }
 function openMsg(id) {
-  const m = ttpMail.list(folder).find(x => x.id === id); if (!m) return showEmptyReader();
+  const m = allIn(folder).find(x => x.id === id); if (!m) return showEmptyReader();
   selected = id;
-  if (!m.read) ttpMail.update(folder, id, { read: true });
+  if (!m.read) {
+    if (isRemote(id)) { m.read = true; fetch(`${API}/candidate/messages/read`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + sess().token }, body: JSON.stringify({ id: m.srvId }) }).catch(() => {}); }
+    else ttpMail.update(folder, id, { read: true });
+  }
   const link = safeLink(m.link);
   const linkLabel = /calendar\.google/.test(link) ? '📅 Add to calendar' : /^https?:/.test(link) ? 'Open listing ↗' : 'Open →';
   document.getElementById('reader').innerHTML = `
@@ -155,9 +218,10 @@ function openMsg(id) {
     </div>
     <div class="body">${esc(m.body)}</div>
     <div class="actions">
+      ${m.replyTo ? `<a class="primary" href="mailto:${esc(m.replyTo)}?subject=${encodeURIComponent('Re: ' + m.subject)}">↩ Reply by email</a>` : ''}
       ${link ? `<a class="primary" href="${esc(link)}" ${/^https?:/.test(link) ? 'target="_blank" rel="noopener"' : ''}>${linkLabel}</a>` : ''}
-      ${folder === 'inbox' ? `<button type="button" onclick="toggleRead('${esc(m.id)}')">Mark as unread</button>` : ''}
-      <button type="button" class="danger" onclick="del('${esc(m.id)}')">Delete</button>
+      ${folder === 'inbox' && !isRemote(m.id) ? `<button type="button" onclick="toggleRead('${esc(m.id)}')">Mark as unread</button>` : ''}
+      ${!isRemote(m.id) ? `<button type="button" class="danger" onclick="del('${esc(m.id)}')">Delete</button>` : ''}
     </div>`;
   renderList();
   if (window.matchMedia('(max-width:980px)').matches) document.getElementById('reader').scrollIntoView({ behavior: 'smooth' });
@@ -170,6 +234,8 @@ function del(id) {
 function markAll() { ttpMail.markAllRead(); renderList(); }
 
 (function init() {
+  const s0 = sess();
+  if (s0 && s0.role === 'candidate' && !s0.email) { loadRemote(); return; }   // just arrived from the sign-in link
   if (!window.ttpMail || !ttpMail.owner()) { location.replace('login.html?next=inbox.html'); return; }
   const o = ttpMail.owner();
   let label = o;
@@ -178,6 +244,7 @@ function markAll() { ttpMail.markAllRead(); renderList(); }
   renderList();
   const hash = decodeURIComponent(location.hash.slice(1));
   if (hash) openMsg(hash);
+  loadRemote();
   window.addEventListener('storage', e => { if (e.key && e.key.indexOf('ttp_mail:') === 0) renderList(); });
 })();
 </script>

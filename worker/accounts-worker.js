@@ -21,6 +21,11 @@
  *   MAIL_FROM_NAME  optional, default "TechTalent Portal"
  *   SITE_URL        optional, default https://purnappc8.github.io/resume-portal/
  *   SEAT_LIMIT      optional default seats per organization (5)
+ *
+ * Candidates: profiles are stored here with the email kept PRIVATE. A profile is
+ * published only after the candidate confirms by email. Messages from signed-in
+ * recruiters are emailed to that candidate only (reply-to = the recruiter's group
+ * email) and appear in the candidate's inbox (email sign-in link, no password).
  */
 
 const ALLOWED_ORIGINS = ['https://purnappc8.github.io', 'http://localhost:8812', 'http://127.0.0.1:8812'];
@@ -55,6 +60,31 @@ export default {
       }
 
       if (m === 'POST' && p === '/org/register') return json(await registerOrg(await body(request), env, url), 200, cors);
+
+      // ── Candidates ──
+      if (m === 'GET' && ['/candidate/confirm', '/candidate/signin'].includes(p)) return candidatePage(p, url.searchParams.get('t') || '', env);
+      if (m === 'POST' && p === '/candidate/confirm') {
+        const form = await request.formData().catch(() => null);
+        const status = await confirmCandidate(form ? String(form.get('t') || '') : '', env);
+        return Response.redirect(`${site}submit.html?status=${encodeURIComponent(status)}`, 303);
+      }
+      if (m === 'POST' && p === '/candidate/signin') {
+        const form = await request.formData().catch(() => null);
+        const r = await candidateSignin(form ? String(form.get('t') || '') : '', env);
+        // Session token travels in the URL fragment (#), which browsers never send to servers or logs
+        return Response.redirect(r ? `${site}inbox.html#ctok=${r.token}&cexp=${encodeURIComponent(r.expiresAt)}` : `${site}login.html?status=link-invalid#candidate`, 303);
+      }
+      if (m === 'POST' && p === '/candidates') return json(await submitCandidate(await body(request, 12000), env, url), 200, cors);
+      if (m === 'GET' && p === '/candidates') return json(await listCandidates(env), 200, cors);   // no caching: hiding/deleting a profile takes effect at once
+      if (m === 'GET' && /^\/candidates\/cand_[a-f0-9]{24}$/.test(p)) return json(await oneCandidate(p.split('/')[2], env), 200, cors);
+      if (m === 'POST' && p === '/candidate/login') return json(await candidateLoginLink(await body(request), env, url), 200, cors);
+      if (m === 'GET' && p === '/candidate/messages') return json(await candidateMessages(request, env), 200, cors);
+      if (m === 'POST' && p === '/candidate/messages/read') return json(await candidateMarkRead(request, await body(request), env), 200, cors);
+      if (m === 'POST' && p === '/candidate/visibility') return json(await candidateVisibility(request, await body(request), env), 200, cors);
+      if (m === 'POST' && p === '/candidate/delete') return json(await candidateDelete(request, env), 200, cors);
+      if (m === 'POST' && p === '/candidate/logout') return json(await candidateLogout(request, env), 200, cors);
+      // ── Recruiter → candidate messages ──
+      if (m === 'POST' && p === '/messages') return json(await sendCandidateMessage(request, await body(request, 8000), env, site), 200, cors);
       if (m === 'POST' && p === '/join') return json(await join(await body(request), env, url), 200, cors);
       if (m === 'POST' && p === '/login') return json(await login(await body(request), env), 200, cors);
       if (m === 'GET' && p === '/me') return json(await me(request, env), 200, cors);
@@ -231,10 +261,202 @@ async function confirmPage(path, t, env) {
   return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8', 'X-Frame-Options': 'DENY', 'Referrer-Policy': 'no-referrer', 'Cache-Control': 'no-store' } });
 }
 
+// ── Candidates ──────────────────────────────────────────────────────────────
+// Public fields only — the email and phone are never returned by any public endpoint.
+const MSG_PER_RECRUITER_DAY = 50, MSG_PER_PAIR_DAY = 3, RESEND_GAP_MIN = 10;
+function publicProfile(b) {
+  const list = (v, n, len) => (Array.isArray(v) ? v : String(v || '').split(','))
+    .map(x => String(x).replace(/\s+/g, ' ').trim()).filter(Boolean).slice(0, n).map(x => x.slice(0, len));
+  const linkedin = String(b.linkedin || '').trim();
+  const name = text(b.name, 2, 60, 'Full name');
+  return {
+    name,
+    initials: name.split(' ').map(x => x[0]).join('').slice(0, 2).toUpperCase(),
+    role: text(b.role, 2, 80, 'Current role'),
+    company: String(b.company || '').trim().slice(0, 80),
+    location: text(b.location, 2, 80, 'Location'),
+    exp: String(b.exp || '').trim().slice(0, 30),
+    domain: String(b.domain || '').trim().slice(0, 60),
+    tech: list(b.tech, 20, 40),
+    summary: String(b.summary || '').trim().slice(0, 1500),
+    availability: String(b.availability || '').trim().slice(0, 120),
+    linkedin: /^(https?:\/\/)?([\w-]+\.)?linkedin\.com\/[\w\-/%.]+$/i.test(linkedin) ? (linkedin.startsWith('http') ? linkedin : 'https://' + linkedin) : '',
+    open: true
+  };
+}
+function plainEmail(v, label = 'Email') {
+  v = String(v || '').trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-z]{2,}$/.test(v) || v.length > 254) fail(`Enter a valid ${label.toLowerCase()}, like name@example.com.`, 'bad_email');
+  return v;
+}
+async function recentlySent(env, refId, kind, days) {
+  // A link of this kind was issued in the last RESEND_GAP_MIN minutes? (stops email bombing)
+  const since = new Date(Date.now() + days * DAY - RESEND_GAP_MIN * 6e4).toISOString();
+  return !!(await env.DB.prepare('SELECT 1 FROM tokens WHERE ref_id = ? AND kind = ? AND expires_at > ? AND used_at IS NULL').bind(refId, kind, since).first());
+}
+
+async function submitCandidate(b, env, url) {
+  const email = plainEmail(b.email);
+  const prof = publicProfile(b);
+  const phone = String(b.phone || '').replace(/[^\d+\-() ]/g, '').slice(0, 20);
+  const now = iso();
+  let cand = await env.DB.prepare('SELECT * FROM candidates WHERE email = ?').bind(email).first();
+  if (cand && await recentlySent(env, cand.id, 'cand_confirm', LINK_DAYS))
+    return { ok: true, message: `We already sent a confirmation to ${email} a few minutes ago. Please check that inbox (and spam).` };
+  if (!cand) {
+    const idv = 'cand_' + hex(12);
+    await env.DB.prepare('INSERT INTO candidates (id,email,phone,name,profile_json,pending_json,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?)')
+      .bind(idv, email, phone, prof.name, '{}', JSON.stringify(prof), 'pending', now, now).run();
+    cand = { id: idv, status: 'pending' };
+  } else {
+    // Someone may be trying to change another person's profile — the change waits for the owner's confirmation
+    await env.DB.prepare('UPDATE candidates SET pending_json = ?, phone = COALESCE(NULLIF(?, \'\'), phone), updated_at = ? WHERE id = ?').bind(JSON.stringify(prof), phone, now, cand.id).run();
+  }
+  const t = await newToken(env, 'cand_confirm', cand.id, LINK_DAYS);
+  const isUpdate = cand.status !== 'pending';
+  await sendMail(env, email, isUpdate ? 'Confirm the changes to your TechTalent profile' : 'Confirm your email to publish your TechTalent profile',
+    `<p>Hi ${h(prof.name.split(' ')[0])},</p>
+     <p>${isUpdate ? 'Someone (hopefully you) submitted changes to your profile on TechTalent Portal.' : 'Thanks for posting your profile on TechTalent Portal.'} Please confirm it's you:</p>
+     <p>${button(`${url.origin}/candidate/confirm?t=${t}`, isUpdate ? 'Confirm changes' : 'Confirm & publish my profile')}</p>
+     <p style="color:#555;font-size:13px">Your email address stays private — recruiters can't see it. When a verified recruiter contacts you, we'll email you here and you can reply directly to them.<br>
+     If this wasn't you, ignore this email and nothing will change. The link expires in ${LINK_DAYS} days.</p>`);
+  return { ok: true, message: `Check your inbox: we emailed ${email}. Click the link there to ${isUpdate ? 'confirm your changes' : 'publish your profile'}.` };
+}
+
+async function confirmCandidate(t, env) {
+  const tok = await useToken(env, t, 'cand_confirm');
+  if (!tok) return 'link-invalid';
+  const c = await env.DB.prepare('SELECT * FROM candidates WHERE id = ?').bind(tok.ref_id).first();
+  if (!c) return 'link-invalid';
+  const now = iso();
+  await env.DB.prepare("UPDATE candidates SET profile_json = COALESCE(pending_json, profile_json), name = COALESCE(json_extract(pending_json,'$.name'), name), pending_json = NULL, status = CASE WHEN status = 'hidden' THEN 'hidden' ELSE 'active' END, verified_at = COALESCE(verified_at, ?), updated_at = ? WHERE id = ?")
+    .bind(now, now, c.id).run();
+  return c.status === 'pending' ? 'profile-published' : 'profile-updated';
+}
+
+async function listCandidates(env) {
+  const r = await env.DB.prepare("SELECT id, profile_json, verified_at, updated_at FROM candidates WHERE status = 'active' ORDER BY updated_at DESC LIMIT 500").all();
+  return { ok: true, candidates: (r.results || []).map(row => ({ id: row.id, ...JSON.parse(row.profile_json || '{}'), verified: !!row.verified_at, updatedAt: row.updated_at, cloud: true })) };
+}
+async function oneCandidate(idv, env) {
+  const row = await env.DB.prepare("SELECT id, profile_json, verified_at, updated_at FROM candidates WHERE id = ? AND status = 'active'").bind(idv).first();
+  if (!row) fail('Profile not found.', 'not_found', 404);
+  return { ok: true, candidate: { id: row.id, ...JSON.parse(row.profile_json || '{}'), verified: !!row.verified_at, updatedAt: row.updated_at, cloud: true } };
+}
+
+// Candidates sign in with an emailed link (no password to remember or leak)
+async function candidateLoginLink(b, env, url) {
+  const email = plainEmail(b.email);
+  const generic = { ok: true, message: `If ${email} has a confirmed profile, we've emailed a sign-in link. It works for 30 minutes.` };
+  const c = await env.DB.prepare("SELECT * FROM candidates WHERE email = ? AND status IN ('active','hidden')").bind(email).first();
+  if (!c) { await sha256(email); return generic; }           // same response either way (no account probing)
+  if (await recentlySent(env, c.id, 'cand_signin', 1 / 48)) return generic;
+  const t = await newToken(env, 'cand_signin', c.id, 1 / 48);   // 30 minutes
+  await sendMail(env, email, 'Your TechTalent sign-in link',
+    `<p>Hi ${h(String(c.name).split(' ')[0])},</p><p>Use this link to open your TechTalent inbox:</p><p>${button(`${url.origin}/candidate/signin?t=${t}`, 'Sign in')}</p>
+     <p style="color:#555;font-size:13px">The link works once, for 30 minutes. If you didn't ask for it, ignore this email.</p>`);
+  return generic;
+}
+async function candidateSignin(t, env) {
+  const tok = await useToken(env, t, 'cand_signin');
+  if (!tok) return null;
+  const token = await newToken(env, 'cand_session', tok.ref_id, SESSION_DAYS);
+  return { token, expiresAt: new Date(Date.now() + SESSION_DAYS * DAY).toISOString() };
+}
+async function candidateUser(request, env) {
+  const t = bearer(request);
+  if (!t) fail('Please sign in.', 'no_session', 401);
+  const row = await env.DB.prepare("SELECT c.* FROM tokens t JOIN candidates c ON c.id = t.ref_id WHERE t.token_hash = ? AND t.kind = 'cand_session' AND t.used_at IS NULL AND t.expires_at > ?").bind(await sha256(t), iso()).first();
+  if (!row) fail('Your session has ended. Please sign in again.', 'no_session', 401);
+  return row;
+}
+async function candidateMessages(request, env) {
+  const c = await candidateUser(request, env);
+  const r = await env.DB.prepare("SELECT m.id, m.kind, m.subject, m.body, m.created_at, m.read_at, r.display_name AS recruiter, o.name AS org, o.group_email FROM messages m JOIN recruiters r ON r.id = m.recruiter_id JOIN orgs o ON o.id = m.org_id WHERE m.candidate_id = ? ORDER BY m.created_at DESC LIMIT 200").bind(c.id).all();
+  return {
+    ok: true,
+    me: { id: c.id, name: c.name, email: c.email, status: c.status },
+    messages: (r.results || []).map(x => ({ id: x.id, kind: x.kind, subject: x.subject, body: x.body, at: x.created_at, read: !!x.read_at, from: `${x.recruiter} · ${x.org}`, replyTo: x.group_email }))
+  };
+}
+async function candidateMarkRead(request, b, env) {
+  const c = await candidateUser(request, env);
+  await env.DB.prepare('UPDATE messages SET read_at = COALESCE(read_at, ?) WHERE id = ? AND candidate_id = ?').bind(iso(), String(b.id || ''), c.id).run();
+  return { ok: true };
+}
+async function candidateVisibility(request, b, env) {
+  const c = await candidateUser(request, env);
+  await env.DB.prepare('UPDATE candidates SET status = ?, updated_at = ? WHERE id = ?').bind(b.visible ? 'active' : 'hidden', iso(), c.id).run();
+  return { ok: true, visible: !!b.visible };
+}
+async function candidateDelete(request, env) {
+  const c = await candidateUser(request, env);
+  await env.DB.batch([
+    env.DB.prepare('DELETE FROM messages WHERE candidate_id = ?').bind(c.id),
+    env.DB.prepare('DELETE FROM tokens WHERE ref_id = ?').bind(c.id),
+    env.DB.prepare('DELETE FROM candidates WHERE id = ?').bind(c.id)
+  ]);
+  return { ok: true };
+}
+async function candidateLogout(request, env) {
+  const t = bearer(request);
+  if (t) await env.DB.prepare("UPDATE tokens SET used_at = ? WHERE token_hash = ? AND kind = 'cand_session'").bind(iso(), await sha256(t)).run();
+  return { ok: true };
+}
+
+// ── Recruiter → candidate: delivered ONLY to that candidate's private address ──
+async function sendCandidateMessage(request, b, env, site) {
+  const rec = await sessionUser(request, env);                  // signed-in, approved recruiter only
+  const candId = String(b.candidateId || '');
+  if (!/^cand_[a-f0-9]{24}$/.test(candId)) fail('Unknown candidate.', 'bad_candidate');
+  const kind = b.kind === 'call' ? 'call' : 'message';
+  const subject = text(b.subject || (kind === 'call' ? 'Call request' : 'Opportunity'), 2, 140, 'Subject');
+  const msg = text(b.body, 5, 3000, 'Message');
+  const c = await env.DB.prepare("SELECT * FROM candidates WHERE id = ? AND status = 'active'").bind(candId).first();
+  if (!c) fail('This candidate isn\'t available for messages.', 'not_available', 404);
+  const dayAgo = new Date(Date.now() - DAY).toISOString();
+  const mine = await env.DB.prepare('SELECT COUNT(*) AS n FROM messages WHERE recruiter_id = ? AND created_at > ?').bind(rec.id, dayAgo).first();
+  if (mine.n >= MSG_PER_RECRUITER_DAY) fail(`Daily limit reached (${MSG_PER_RECRUITER_DAY} messages). Try again tomorrow.`, 'rate_limited', 429);
+  const pair = await env.DB.prepare('SELECT COUNT(*) AS n FROM messages WHERE recruiter_id = ? AND candidate_id = ? AND created_at > ?').bind(rec.id, candId, dayAgo).first();
+  if (pair.n >= MSG_PER_PAIR_DAY) fail(`You've already messaged ${c.name} ${MSG_PER_PAIR_DAY} times today. Please wait for a reply.`, 'rate_limited', 429);
+
+  const idv = id('msg'), now = iso();
+  await env.DB.prepare('INSERT INTO messages (id,candidate_id,recruiter_id,org_id,kind,subject,body,created_at) VALUES (?,?,?,?,?,?,?,?)')
+    .bind(idv, candId, rec.id, rec.org_id, kind, subject, msg, now).run();
+  try {
+    await sendMail(env, c.email, `${rec.org_name}: ${subject}`,
+      `<p>Hi ${h(String(c.name).split(' ')[0])},</p>
+       <p><b>${h(rec.display_name)}</b>, a verified recruiter at <b>${h(rec.org_name)}</b>, sent you a ${kind === 'call' ? 'call request' : 'message'} on TechTalent Portal:</p>
+       <div style="border-left:4px solid #1565c0;background:#f3f7fd;padding:12px 16px;margin:14px 0;white-space:pre-wrap">${h(msg)}</div>
+       <p><b>Reply to this email</b> to answer ${h(rec.org_name)} directly (${h(rec.group_email)}).</p>
+       <p>${button(`${site}login.html#candidate`, 'Open my TechTalent inbox')}</p>
+       <p style="color:#555;font-size:13px">Your email address is not shown to recruiters until you reply. Don't want messages? Sign in to your inbox and hide or delete your profile.</p>`,
+      { email: rec.group_email, name: `${rec.display_name} (${rec.org_name})` });
+  } catch (e) {
+    await env.DB.prepare('DELETE FROM messages WHERE id = ?').bind(idv).run();   // not delivered → don't keep it
+    throw e;
+  }
+  return { ok: true, id: idv, message: `Sent to ${c.name}. They'll get it by email and can reply to ${rec.group_email}.` };
+}
+
+async function candidatePage(path, t, env) {
+  const kind = path === '/candidate/confirm' ? 'cand_confirm' : 'cand_signin';
+  const row = /^[a-f0-9]{48}$/.test(t) ? await env.DB.prepare('SELECT * FROM tokens WHERE token_hash = ? AND kind = ?').bind(await sha256(t), kind).first() : null;
+  const valid = row && !row.used_at && Date.parse(row.expires_at) >= Date.now();
+  const title = !valid ? 'This link has expired or was already used' : kind === 'cand_confirm' ? 'Confirm your TechTalent profile' : 'Sign in to TechTalent';
+  const detail = !valid ? (kind === 'cand_signin' ? 'Request a new sign-in link from the sign-in page.' : 'Nothing was changed.') : kind === 'cand_confirm' ? 'Your profile goes live (or your changes are applied) when you press the button.' : 'Press the button to open your inbox.';
+  const action = valid ? (kind === 'cand_confirm' ? 'Confirm' : 'Open my inbox') : '';
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${h(title)}</title>
+  <style>body{font-family:Segoe UI,Arial,sans-serif;background:#f7f9fc;margin:0;padding:40px 16px;color:#1a1a1a}.c{max-width:460px;margin:auto;background:#fff;border:1px solid #c5d5e8;border-radius:14px;padding:28px}
+  h1{font-size:1.25rem;color:#0b2e59;margin:0 0 10px}p{color:#555;line-height:1.5}button{background:#1565c0;color:#fff;border:0;border-radius:8px;padding:12px 20px;font-weight:700;font-size:1rem;cursor:pointer;min-height:44px}</style></head>
+  <body><div class="c"><h1>${h(title)}</h1><p>${h(detail)}</p>${action ? `<form method="POST"><input type="hidden" name="t" value="${h(t)}"><button>${h(action)}</button></form>` : ''}<p style="font-size:.8rem;margin-top:22px">TechTalent Portal</p></div></body></html>`;
+  return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8', 'X-Frame-Options': 'DENY', 'Referrer-Policy': 'no-referrer', 'Cache-Control': 'no-store' } });
+}
+
 // ── Helpers ─────────────────────────────────────────────────────────────────
 function fail(message, code, status = 400) { const e = new Error(message); e.userError = true; e.code = code; e.status = status; throw e; }
 function json(o, s, headers) { return new Response(JSON.stringify(o), { status: s, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', ...headers } }); }
-async function body(req) { const t = await req.text(); if (t.length > 4000) fail('Request too large.', 'too_large', 413); try { return JSON.parse(t || '{}'); } catch { fail('Invalid request.', 'bad_json'); } }
+async function body(req, max = 4000) { const t = await req.text(); if (t.length > max) fail('Request too large.', 'too_large', 413); try { return JSON.parse(t || '{}'); } catch { fail('Invalid request.', 'bad_json'); } }
 function text(v, min, max, label) { v = String(v || '').replace(/\s+/g, ' ').trim(); if (v.length < min || v.length > max) fail(`${label} must be ${min}–${max} characters.`, 'bad_input'); return v; }
 function uname(v) { v = String(v || '').trim().toLowerCase(); if (!/^[a-z0-9][a-z0-9._-]{2,29}$/.test(v)) fail('Username: 3–30 characters — letters, numbers, dot, dash or underscore.', 'bad_username'); return v; }
 function pass(v) { v = String(v || ''); if (v.length < 10 || v.length > 128 || !/[A-Za-z]/.test(v) || !/\d/.test(v)) fail('Password: at least 10 characters, with letters and numbers.', 'weak_password'); return v; }
@@ -284,7 +506,7 @@ async function useToken(env, t, kind) {
 function bearer(req) { const m = (req.headers.get('Authorization') || '').match(/^Bearer ([a-f0-9]{48})$/); return m ? m[1] : null; }
 function h(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 function button(href, label, bg = '#1565c0') { return `<a href="${h(href)}" style="display:inline-block;background:${bg};color:#fff;text-decoration:none;font-weight:700;padding:11px 20px;border-radius:8px">${h(label)}</a>`; }
-async function sendMail(env, to, subject, html) {
+async function sendMail(env, to, subject, html, replyTo) {
   if (!env.BREVO_API_KEY || !env.MAIL_FROM) fail('Email isn\'t set up yet, so we can\'t send the confirmation. Please try again later.', 'email_not_configured', 503);
   const r = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
@@ -292,6 +514,7 @@ async function sendMail(env, to, subject, html) {
     body: JSON.stringify({
       sender: { email: env.MAIL_FROM, name: env.MAIL_FROM_NAME || 'TechTalent Portal' },
       to: [{ email: to }], subject,
+      ...(replyTo ? { replyTo: { email: replyTo.email, name: replyTo.name } } : {}),
       htmlContent: `<div style="font-family:Segoe UI,Arial,sans-serif;font-size:15px;color:#1a1a1a;max-width:560px">${html}</div>`
     }),
     signal: AbortSignal.timeout(10000)

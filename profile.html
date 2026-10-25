@@ -312,7 +312,14 @@ const DEFAULT = {
 async function loadProfile() {
   const id = new URLSearchParams(location.search).get('id') || 'purna001';
   let profile = DEFAULT;
-  if (id !== 'purna001') {
+  if (/^cand_[a-f0-9]{24}$/.test(id) && window.ttpApi && ttpApi()) {
+    // Candidate stored in the cloud (public fields only — their email stays private)
+    try {
+      const r = await fetch(`${ttpApi()}/candidates/${encodeURIComponent(id)}`, { signal: AbortSignal.timeout(6000) });
+      const d = await r.json();
+      if (d.candidate) profile = d.candidate;
+    } catch {}
+  } else if (id !== 'purna001') {
     try {
       const r = await fetch(`${API}/profiles`, {signal:AbortSignal.timeout(3000)});
       const all = await r.json();
@@ -476,7 +483,27 @@ async function sendContact(){
   const target=window._profileId+'|'+window._profileName;
   if(!name||!email||!msg){showErr('Please fill in your name, email and message.');return;}
   if(!ttpValidEmail(email)){showErr('Please enter a valid email so the candidate can reply.');return;}
-  const btn=document.querySelector('#contactModal .btn-submit');btn.disabled=true;btn.textContent='Sending…';
+  const btn=document.querySelector('#contactModal .btn-submit');
+  const P=window._profile||{};
+  if(P.cloud&&window.ttpApi&&ttpApi()){
+    // Delivered privately to THIS candidate by the accounts service
+    let sess=null;try{sess=JSON.parse(sessionStorage.getItem('ttp_session')||localStorage.getItem('ttp_session')||'null');}catch{}
+    if(!sess||sess.role!=='recruiter'){closeContact();ttpRecruiterGate('contact candidates');return;}
+    btn.disabled=true;btn.textContent='Sending…';
+    let d={},resp=null;
+    try{resp=await fetch(`${ttpApi()}/messages`,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+sess.token},body:JSON.stringify({candidateId:P.id,subject:`Opportunity for ${who}`,body:`${msg}\n\n— ${name}${company?', '+company:''}`}),signal:AbortSignal.timeout(15000)});d=await resp.json().catch(()=>({}));}catch{resp=null;}
+    btn.disabled=false;btn.textContent='Send Message';
+    if(!resp||!resp.ok||d.error){
+      if(d.code==='no_session'){closeContact();try{localStorage.removeItem('ttp_session');sessionStorage.removeItem('ttp_session');}catch{}ttpRecruiterGate('contact candidates');return;}
+      showErr(escH(d.error||'We could not reach the server. Please try again.'));return;
+    }
+    closeContact();document.getElementById('c-msg').value='';
+    if(window.ttpMail) ttpMail.add('sent',{kind:'contact',to:who,subject:`Opportunity for ${who}`,body:`${msg}\n\n— ${name}${company?', '+company:''}\n\nDelivered privately to ${who} by TechTalent Portal. Replies go to your organization's group email.`});
+    toast('ok','Message sent',escH(d.message),6000);
+    alert(`Thank you! Your message has been sent to ${who}.`);
+    return;
+  }
+  btn.disabled=true;btn.textContent='Sending…';
   let ok=false;
   try{const r=await fetch(`${API}/contact`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({from:{name,email,company},target,message:msg,sentAt:new Date().toISOString()}),signal:AbortSignal.timeout(5000)});ok=r.ok;}catch{}
   btn.disabled=false;btn.textContent='Send Message';

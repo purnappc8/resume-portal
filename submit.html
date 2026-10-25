@@ -194,8 +194,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
   <!-- SUCCESS -->
   <div id="successCard" class="success-card">
     <div class="icon">🎉</div>
-    <h2>Profile Published!</h2>
-    <p>Your resume is now live on TechTalent Portal and visible to recruiters worldwide.</p>
+    <h2 id="successTitle">Profile Published!</h2>
+    <p id="successText">Your resume is now live on TechTalent Portal and visible to recruiters worldwide.</p>
     <p style="margin-top:12px"><a href="index.html" style="color:var(--accent);font-weight:700">← Back to Portal</a></p>
     <!-- Optional, never required: shown after a guest upload -->
     <div class="claim-box" id="claimBox" style="display:none">
@@ -329,6 +329,31 @@ async function submitResume() {
     initials: document.getElementById('f-name').value.trim().split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase()
   };
 
+  // Cloud accounts live → store the profile in the cloud (email stays private);
+  // it is published once the candidate confirms from their own inbox.
+  const CLOUD = window.ttpApi && ttpApi();
+  if (CLOUD) {
+    if (!ttpValidEmail(profile.email)) { showErr('Please enter a valid email — we send a confirmation link there.'); return; }
+    let d = {}, resp = null;
+    try {
+      resp = await fetch(`${CLOUD}/candidates`, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: profile.name, email: profile.email, phone: profile.phone, linkedin: profile.linkedin, role: profile.role,
+          company: profile.company, location: profile.location, exp: profile.exp, domain: profile.domain, tech: profile.tech,
+          summary: profile.summary, availability: profile.availability }), signal: AbortSignal.timeout(15000) });
+      d = await resp.json().catch(() => ({}));
+    } catch { resp = null; }
+    if (!resp || !resp.ok || d.error) { showErr((d && d.error) || 'We could not reach the server. Please try again in a minute.'); return; }
+    document.getElementById('progress').style.width = '100%';
+    ['step1','step2','step3'].forEach(id => document.getElementById(id).style.display = 'none');
+    document.getElementById('successTitle').textContent = '📧 Check your email';
+    document.getElementById('successText').textContent = d.message + ' Your email address stays private — recruiters contact you through TechTalent, and you reply directly to them.';
+    document.querySelector('#successCard .icon').textContent = '✉️';
+    document.getElementById('successCard').style.display = 'block';
+    try { if (window.ttpMail) ttpMail.add('inbox', { kind: 'profile', subject: 'Confirm your email to publish your profile', body: d.message, link: 'index.html' }); } catch (e) {}
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+
   let r = null;
   try {
     const fd = new FormData();
@@ -362,6 +387,20 @@ async function submitResume() {
   }
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+// Returning from the confirmation link in the email
+(function(){
+  const st = new URLSearchParams(location.search).get('status');
+  const MSG = { 'profile-published': ['🎉 Your profile is live!', 'Recruiters can now find you on Browse Talent. When a verified recruiter messages you, we email you and you can reply directly.'],
+                'profile-updated': ['✅ Changes saved', 'Your updated profile is now live.'],
+                'link-invalid': ['That link has expired or was already used', 'Nothing was changed. Submit the form again to get a new link.'] };
+  if (!MSG[st]) return;
+  ['step1','step2','step3'].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+  document.getElementById('successTitle').textContent = MSG[st][0];
+  document.getElementById('successText').textContent = MSG[st][1];
+  if (st === 'link-invalid') document.querySelector('#successCard .icon').textContent = '⚠️';
+  document.getElementById('successCard').style.display = 'block';
+})();
 
 function showErr(m){const e=document.getElementById('error-msg');e.textContent=m;e.style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
 function hideErr(){document.getElementById('error-msg').style.display='none';}

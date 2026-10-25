@@ -44,10 +44,12 @@
 
 /* Site settings shared by all pages */
 window.TTP_CONFIG = window.TTP_CONFIG || {
-  // Recruiter accounts service (worker/accounts-worker.js). Leave empty until it is deployed:
-  // while empty, contacting candidates works as before (no recruiter sign-in required).
+  // Accounts service (worker/accounts-worker.js): recruiter accounts, candidate profiles,
+  // private recruiter → candidate messages. Leave empty until it is deployed — while
+  // empty, the site works as before (local profiles, no recruiter sign-in required).
   RECRUITER_API_URL: ''
 };
+window.ttpApi = function () { return (window.TTP_CONFIG.RECRUITER_API_URL || '').replace(/\/$/, ''); };
 // Local testing only: ?recruiterApi=http://localhost:8788 (remembered for this tab)
 if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
   try {
@@ -178,7 +180,15 @@ window.ttpRecruiterGate = function (what) {
 
   // ── Sign out (clears every session key the site has used) ──────────────────
   window.ttpNavSignOut = function () {
-    ['ttp_session', 'ttp_user', 'ttp_impersonating'].forEach(function (k) {
+    // End the server-side session too (recruiter or candidate), without waiting
+    try {
+      var cur = readSession(), api = window.ttpApi && window.ttpApi();
+      if (api && cur && /^[a-f0-9]{48}$/.test(cur.token || '')) {
+        var path = cur.role === 'candidate' ? '/candidate/logout' : cur.role === 'recruiter' ? '/logout' : '';
+        if (path) fetch(api + path, { method: 'POST', headers: { Authorization: 'Bearer ' + cur.token }, keepalive: true }).catch(function () {});
+      }
+    } catch (e) {}
+    ['ttp_session', 'ttp_user', 'ttp_impersonating', 'ttp_remote_unread'].forEach(function (k) {
       try { localStorage.removeItem(k); } catch (e) {}
       try { sessionStorage.removeItem(k); } catch (e) {}
     });
@@ -235,7 +245,7 @@ window.ttpRecruiterGate = function (what) {
 
   function badge() {
     var b = document.getElementById('notifBadge'); if (!b) return;
-    var n = owner() ? window.ttpMail.unread() : 0;
+    var n = owner() ? window.ttpMail.unread() + (parseInt(sessionStorage.getItem('ttp_remote_unread') || '0', 10) || 0) : 0;   // + recruiter messages (candidates)
     b.textContent = n > 9 ? '9+' : n; b.style.display = n ? 'flex' : 'none';
     var btn = document.getElementById('notifBtn');
     if (btn) btn.setAttribute('aria-label', n ? 'Inbox and notifications, ' + n + ' unread' : 'Inbox and notifications');

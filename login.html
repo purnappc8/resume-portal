@@ -130,6 +130,17 @@ footer-note{display:block;text-align:center;font-size:.8rem;color:var(--muted);m
       <button data-once type="submit" class="btn btn-primary" id="btnSignup">Create Account</button>
     </form>
 
+    <!-- Candidates with a published profile: email sign-in link (shown when cloud accounts are live) -->
+    <section id="candidate" hidden style="margin-top:18px;border:1px solid var(--border);border-radius:10px;padding:14px">
+      <h2 style="font-size:1rem;color:var(--blue);margin-bottom:4px">Candidate? Open your inbox</h2>
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:10px">We'll email you a one-time sign-in link — no password needed. Messages from recruiters wait for you there.</p>
+      <div id="candMsg" style="display:none;font-size:.88rem;border-radius:8px;padding:10px;margin-bottom:10px"></div>
+      <form onsubmit="candidateLink(event)" style="display:flex;gap:8px;flex-wrap:wrap">
+        <input type="email" id="candEmail" placeholder="The email on your profile" autocomplete="email" required style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-family:inherit">
+        <button type="submit" class="btn btn-primary" data-once style="width:auto;padding:10px 16px">Email me a link</button>
+      </form>
+    </section>
+
     <div class="divider">or</div>
     <button class="guest-btn" onclick="location.href='submit.html'" style="margin-bottom:8px">📄 Post your resume without an account</button>
     <button class="guest-btn" onclick="guestAccess()">👀 Browse as Guest</button>
@@ -142,6 +153,28 @@ const API = 'http://localhost:4747';
 const KEY = 'ttp_session';
 
 const params = new URLSearchParams(location.search);
+// Candidate email sign-in link
+(function () {
+  if (!(window.ttpApi && ttpApi())) return;
+  const box = document.getElementById('candidate'); box.hidden = false;
+  if (location.hash === '#candidate') setTimeout(() => { box.scrollIntoView({ behavior: 'smooth' }); document.getElementById('candEmail').focus(); }, 300);
+  if (params.get('status') === 'link-invalid') candSay('err', 'That sign-in link has expired or was already used. Request a new one below.');
+})();
+function candSay(kind, text) {
+  const m = document.getElementById('candMsg'); m.style.display = 'block'; m.textContent = text;
+  m.style.background = kind === 'err' ? '#fff3f3' : '#e8f5e9'; m.style.color = kind === 'err' ? '#c62828' : '#1b5e20';
+}
+async function candidateLink(e) {
+  e.preventDefault();
+  const email = document.getElementById('candEmail').value.trim();
+  if (!ttpValidEmail(email)) return candSay('err', 'Please enter a full email address, like name@example.com.');
+  try {
+    const r = await fetch(`${ttpApi()}/candidate/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }), signal: AbortSignal.timeout(15000) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || d.error) return candSay('err', d.error || 'Please try again.');
+    candSay('ok', d.message + ' Check spam if you don\'t see it.');
+  } catch { candSay('err', 'We could not reach the server. Please try again.'); }
+}
 const next = params.get('next') || 'dashboard.html';
 
 // After a successful sign-in: go to the dashboard, or back to the page that sent you here

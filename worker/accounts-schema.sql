@@ -37,3 +37,32 @@ CREATE TABLE IF NOT EXISTS tokens (
   used_at     TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_tokens_ref ON tokens(ref_id, kind);
+
+-- ── Candidates (public profile + PRIVATE email) and recruiter → candidate messages ──
+CREATE TABLE IF NOT EXISTS candidates (
+  id            TEXT PRIMARY KEY,               -- cand_xxx (public)
+  email         TEXT NOT NULL UNIQUE,           -- private: never returned by public endpoints
+  phone         TEXT,                           -- private
+  name          TEXT NOT NULL,
+  profile_json  TEXT NOT NULL,                  -- public fields (role, skills, summary…)
+  pending_json  TEXT,                           -- an update waiting for email confirmation
+  status        TEXT NOT NULL DEFAULT 'pending',-- pending | active | hidden
+  verified_at   TEXT,
+  created_at    TEXT NOT NULL,
+  updated_at    TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_candidates_status ON candidates(status, updated_at);
+
+CREATE TABLE IF NOT EXISTS messages (
+  id            TEXT PRIMARY KEY,
+  candidate_id  TEXT NOT NULL REFERENCES candidates(id),
+  recruiter_id  TEXT NOT NULL REFERENCES recruiters(id),
+  org_id        TEXT NOT NULL REFERENCES orgs(id),
+  kind          TEXT NOT NULL DEFAULT 'message', -- message | call
+  subject       TEXT NOT NULL,
+  body          TEXT NOT NULL,
+  created_at    TEXT NOT NULL,
+  read_at       TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_messages_candidate ON messages(candidate_id, created_at);
+CREATE INDEX IF NOT EXISTS idx_messages_recruiter ON messages(recruiter_id, created_at);
