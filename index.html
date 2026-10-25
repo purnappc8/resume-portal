@@ -195,7 +195,7 @@ footer a { color: rgba(255,255,255,.9); }
 .btn-schedule:hover { background: #c8e6c9; }
 
 /* Sample-profile marker */
-.sample-badge { position: absolute; top: 16px; right: 16px; background: #fff4e5; color: #8a5300; font-size: .75rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; border: 1px solid #f3d19c; }
+.sample-badge { position: absolute; top: 16px; right: 16px; background: #f1f3f6; color: #5f6b7a; font-size: .72rem; font-weight: 600; padding: 2px 9px; border-radius: 20px; border: 1px solid #e0e4ea; }
 .sample-note { font-size: .82rem; color: var(--muted); }
 .sample-note a { color: var(--accent); font-weight: 600; }
 
@@ -464,6 +464,7 @@ footer a { color: rgba(255,255,255,.9); }
   <a href="submit.html">Post Resume</a> &nbsp;·&nbsp; <a href="mailto:purna.padishala@gmail.com">Contact Admin</a>
 </footer>
 
+<script src="samples.js"></script>
 <script>
 // ── Config ──────────────────────────────────────────────────────────────────
 const API = 'http://localhost:4747'; // Local storage API running on your PC
@@ -492,21 +493,7 @@ const SEED = [
 // They are clearly badged "Sample" in the UI and can't be contacted.
 // Once there are MIN_REAL_PROFILES real profiles, samples stop being shown.
 const MIN_REAL_PROFILES = 10;
-const SAMPLE_PROFILES = [
-  { id:'sample01', sample:true, name:'Ananya Rao', role:'Senior Java / Spring Boot Engineer', company:'Fintech product company', location:'Bengaluru, India', exp:'8 years', tech:['Java','Spring Boot','Kafka','AWS','Kubernetes / Docker'], availability:'Open to Remote & Contract', summary:'Builds high-throughput payment microservices. Event-driven design with Kafka, observability on AWS.' },
-  { id:'sample02', sample:true, name:'Daniel Hughes', role:'React & TypeScript Frontend Developer', company:'Freelance', location:'London, UK', exp:'6 years', tech:['React','TypeScript','Next.js','Node.js'], availability:'Freelance / Contract — Immediately', summary:'Design-system minded frontend engineer. Accessible, fast React apps for SaaS dashboards.' },
-  { id:'sample03', sample:true, name:'Priya Menon', role:'Data Scientist — NLP & GenAI', company:'Analytics consultancy', location:'Remote (India)', exp:'5 years', tech:['Python','Data Science / ML','Generative AI / LLM','PyTorch'], availability:'Remote, within 2 weeks', summary:'Ships RAG and classification models to production. Strong on evaluation and MLOps hygiene.' },
-  { id:'sample04', sample:true, name:'Marcus Chen', role:'DevOps / Platform Engineer', company:'Cloud consultancy', location:'Austin, USA', exp:'9 years', tech:['AWS','Terraform','Kubernetes / Docker','DevOps / CI-CD'], availability:'Freelance / Contract', summary:'Infrastructure-as-code, GitOps pipelines and cost-optimised EKS platforms for scale-ups.' },
-  { id:'sample05', sample:true, name:'Sofia Martínez', role:'SAP S/4HANA FICO Consultant', company:'Independent', location:'Madrid, Europe', exp:'11 years', tech:['SAP','S/4HANA','FICO'], availability:'Contract — within 1 month', summary:'Led four S/4HANA finance migrations end to end, from blueprint through hypercare.' },
-  { id:'sample06', sample:true, name:'Rahul Verma', role:'Salesforce Marketing Cloud Developer', company:'Salesforce partner', location:'Pune, India', exp:'4 years', tech:['Salesforce','Marketing Cloud','AMPscript','SQL'], availability:'Remote, Immediately', summary:'Journey Builder, AMPscript personalisation and Data Cloud segmentation for B2C brands.' },
-  { id:'sample07', sample:true, name:'Emily Carter', role:'QA Automation Engineer', company:'Healthtech startup', location:'Remote (USA)', exp:'6 years', tech:['Cypress / Playwright','Selenium / QA','TypeScript'], availability:'Part-time / Freelance', summary:'Stable E2E suites in Playwright, contract testing and CI quality gates.' },
-  { id:'sample08', sample:true, name:'Arjun Iyer', role:'Azure Data Engineer', company:'Retail enterprise', location:'Hyderabad, India', exp:'7 years', tech:['Azure','Data Engineering','Databricks','Power BI / Tableau'], availability:'Remote & Contract', summary:'Lakehouse pipelines on Databricks; Power BI semantic models for exec reporting.' },
-  { id:'sample09', sample:true, name:'Lena Fischer', role:'Android / Kotlin Developer', company:'Freelance', location:'Berlin, Europe', exp:'5 years', tech:['Android / Kotlin','Jetpack Compose','React Native / Flutter'], availability:'Freelance — Immediately', summary:'Compose-first Android apps, offline sync and Play Store release automation.' },
-  { id:'sample10', sample:true, name:'Vikram Nair', role:'Salesforce CPQ & Billing Specialist', company:'ISV Partner', location:'Chennai, India', exp:'7 years', tech:['Salesforce','CPQ','Revenue Cloud','Apex'], availability:'Remote & Contract', summary:'End-to-end CPQ implementations — product catalog, pricing rules, quotes and Billing subscriptions.' },
-  { id:'sample11', sample:true, name:'Aisha Patel', role:'.NET / C# Microservices Engineer', company:'Healthcare tech firm', location:'Manchester, UK', exp:'8 years', tech:['.NET / C#','Azure','Kubernetes / Docker','DevOps / CI-CD'], availability:'Contract — 2 weeks notice', summary:'CQRS and event-sourcing on Azure Service Bus; FHIR-compliant healthcare APIs.' },
-  { id:'sample12', sample:true, name:'João Carvalho', role:'ServiceNow Developer & Architect', company:'IT consultancy', location:'Lisbon, Europe', exp:'10 years', tech:['ServiceNow','ITSM','JavaScript'], availability:'Freelance / Contract', summary:'Platform architect for ITSM and HRSD; CMDB and integration hub for Fortune 500 clients.' },
-  { id:'sample13', sample:true, name:'Mei-Ling Zhang', role:'Data Engineer — Spark & Databricks', company:'E-commerce scale-up', location:'Remote (Singapore)', exp:'6 years', tech:['Data Engineering','Python','Databricks','AWS'], availability:'Remote — Immediately', summary:'Petabyte-scale lakehouse on Databricks Delta; real-time streaming pipelines on Kinesis.' }
-];
+const SAMPLE_PROFILES = window.TTP_SAMPLES || [];   // samples.js
 
 let allProfiles = [];
 
@@ -557,7 +544,7 @@ function renderCards(profiles) {
   }
   grid.innerHTML = profiles.map(p => `
     <div class="resume-card" data-tech="${esc((p.tech||[]).join(','))}" data-loc="${esc(p.location)}" data-exp="${esc(p.exp)}">
-      ${p.sample ? '<span class="sample-badge" title="Illustrative profile to show how listings look">Sample profile</span>'
+      ${p.sample ? '<span class="sample-badge" title="Example listing showing how profiles look. Not a real candidate.">Example</span>'
                  : (p.open ? '<span class="open-badge">✅ Open to Work</span>' : '')}
       <div class="card-top">
         <div class="avatar">${esc(p.initials || p.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</div>
@@ -574,7 +561,8 @@ function renderCards(profiles) {
       <p style="color:var(--muted);font-size:.88rem;margin-top:10px">${esc(p.summary)}</p>
       <div class="card-actions">
         ${p.sample
-          ? `<span class="sample-note">Illustrative listing. <a href="submit.html">Post your resume</a> to appear here.</span>`
+          ? `<a href="profile.html?id=${encodeURIComponent(p.id)}" class="btn-view">View Profile</a>
+             <span class="sample-note">Example listing · can't be contacted</span>`
           : `<a href="${esc(p.profile || 'profile.html?id=' + encodeURIComponent(p.id))}" class="btn-view">View Profile</a>
              <button class="btn-contact" data-id="${esc(p.id)}" onclick="openContact(this.dataset.id)">✉ Contact</button>
              <button class="btn-schedule" data-id="${esc(p.id)}" onclick="openSchedule(this.dataset.id)">📅 Schedule</button>

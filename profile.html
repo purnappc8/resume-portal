@@ -252,6 +252,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
   </div>
 </div>
 
+<script src="samples.js"></script>
 <script>
 const API = 'http://localhost:4747';
 const BASE = 'https://purnappc8.github.io/resume-portal/';
@@ -312,7 +313,10 @@ const DEFAULT = {
 async function loadProfile() {
   const id = new URLSearchParams(location.search).get('id') || 'purna001';
   let profile = DEFAULT;
-  if (/^cand_[a-f0-9]{24}$/.test(id) && window.ttpApi && ttpApi()) {
+  if (/^sample\d+$/.test(id)) {
+    const ex = (window.TTP_SAMPLES || []).find(x => x.id === id);
+    if (ex) profile = { ...ex, open: false, headline: ex.role, experience: [{ title: ex.role, company: ex.company, date: ex.exp, points: [ex.summary] }] };
+  } else if (/^cand_[a-f0-9]{24}$/.test(id) && window.ttpApi && ttpApi()) {
     // Candidate stored in the cloud (public fields only — their email stays private)
     try {
       const r = await fetch(`${ttpApi()}/candidates/${encodeURIComponent(id)}`, { signal: AbortSignal.timeout(6000) });
@@ -354,6 +358,17 @@ function renderProfile(p) {
   const initials = (p.initials || name.split(' ').map(x=>x[0]).join('').slice(0,2)).toUpperCase();
   document.title = `${name} — TechTalent Portal`;
   window._profileId = p.id; window._profileName = name; window._profile = p;
+  // Example listings: say so plainly and switch off contact
+  const ex = !!p.sample;
+  let note = document.getElementById('exampleNote');
+  if (ex && !note) {
+    note = document.createElement('div'); note.id = 'exampleNote'; note.setAttribute('role', 'note');
+    note.style.cssText = 'background:#f1f3f6;border:1px solid #e0e4ea;color:#3d4753;border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:.9rem';
+    note.innerHTML = 'ℹ️ <b>Example profile.</b> This illustrates how candidate profiles look on TechTalent — it isn\'t a real person and can\'t be contacted. <a href="index.html#profiles-section" style="color:#1565c0;font-weight:700">Browse real candidates</a> · <a href="submit.html" style="color:#1565c0;font-weight:700">Post your own profile</a>';
+    document.querySelector('.pf-wrap > div').prepend(note);
+  }
+  document.querySelectorAll('[onclick="openContact()"]').forEach(b => { b.style.display = ex ? 'none' : ''; });
+  if (ex) { const otw = document.getElementById('otwBox'); if (otw) otw.classList.add('hidden'); }
 
   // Top card
   $('pfPhoto').innerHTML = p.photo ? `<img src="${escH(p.photo)}" alt="${escH(name)}">` : escH(initials);
