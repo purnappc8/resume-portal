@@ -304,6 +304,7 @@ const DEFAULT = {
     { t: 'Built TechTalent Portal', d: 'Open-source IT talent & freelance job board', link: 'https://purnappc8.github.io/resume-portal/' }
   ],
   pdf: 'Purnachandar_Padishala_Salesforce_Developer_Resume.pdf',
+  contactEmail: 'purna.padishala@gmail.com',   // messages for this candidate go here only
   linkedin: 'https://linkedin.com/in/purnappc',
   website: 'https://purnappc8.github.io/resume-portal/'
 };
@@ -345,7 +346,7 @@ function renderProfile(p) {
   const name = p.name || 'Candidate';
   const initials = (p.initials || name.split(' ').map(x=>x[0]).join('').slice(0,2)).toUpperCase();
   document.title = `${name} — TechTalent Portal`;
-  window._profileId = p.id; window._profileName = name;
+  window._profileId = p.id; window._profileName = name; window._profile = p;
 
   // Top card
   $('pfPhoto').innerHTML = p.photo ? `<img src="${escH(p.photo)}" alt="${escH(name)}">` : escH(initials);
@@ -479,20 +480,23 @@ async function sendContact(){
   let ok=false;
   try{const r=await fetch(`${API}/contact`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({from:{name,email,company},target,message:msg,sentAt:new Date().toISOString()}),signal:AbortSignal.timeout(5000)});ok=r.ok;}catch{}
   btn.disabled=false;btn.textContent='Send Message';
-  closeContact();document.getElementById('c-msg').value='';
-  if(window.ttpMail) ttpMail.add('sent',{kind:'contact',to:who,subject:`Opportunity for ${who}`,body:`${msg}\n\n— ${name}${company?', '+company:''}\n${email}\n\n${ok?'Delivered through TechTalent Portal.':'Sent from your own email app (TechTalent Portal opened it pre-filled).'}`});
-  if(ok){
-    toast('ok','Message sent',`${escH(who)} will get your message and can reply to ${escH(email)}.`,6000);
-    alert('Thank you! Your message has been sent to the candidate.');
-  }else{
-    try{const p=JSON.parse(localStorage.getItem('ttp_pending_contacts')||'[]');p.push({from:{name,email,company},target,message:msg,sentAt:new Date().toISOString()});localStorage.setItem('ttp_pending_contacts',JSON.stringify(p));}catch{}
-    const subject=encodeURIComponent(`Opportunity for ${who} (via TechTalent Portal)`);
-    const body=encodeURIComponent(`${msg}\n\n— ${name}${company?', '+company:''}\n${email}\n\nCandidate: ${target}`);
-    const mailto=`mailto:purna.padishala@gmail.com?subject=${subject}&body=${body}`;
-    toast('ok','Message ready — almost done!',`Your email app is opening with the message to ${escH(who)} filled in. Press <b>Send</b> there to deliver it. <a href="${mailto}">Didn't open? Click here.</a>`,12000);
-    alert('Thank you! Your message is ready. Your email app will open next. Press Send there to deliver it to the candidate.');
-    const a=document.createElement('a');a.href=mailto;a.style.display='none';document.body.appendChild(a);a.click();a.remove();
+  const p=window._profile||{};
+  const to=p.contactEmail&&ttpValidEmail(p.contactEmail)?p.contactEmail:'';
+  closeContact();
+  if(!to){
+    // Never route a candidate's message to anyone else
+    const li=p.linkedin&&/^https?:\/\//.test(p.linkedin)?` <a href="${escH(p.linkedin)}" target="_blank" rel="noopener">Reach them on LinkedIn ↗</a>`:'';
+    toast('error',`${who} can't be messaged here yet`,`Your message was <b>not</b> sent to anyone. Direct messages to this candidate open once member accounts are live.${li}`,0);
+    return;
   }
+  document.getElementById('c-msg').value='';
+  if(window.ttpMail) ttpMail.add('sent',{kind:'contact',to:`${who} <${to}>`,subject:`Opportunity for ${who}`,body:`${msg}\n\n— ${name}${company?', '+company:''}\n${email}\n\nAddressed to ${who} (${to}) — sent from your own email app.`});
+  const subject=encodeURIComponent(`Opportunity for ${who} (via TechTalent Portal)`);
+  const body=encodeURIComponent(`Hi ${String(who).split(' ')[0]},\n\n${msg}\n\n— ${name}${company?', '+company:''}\n${email}\n\n(Sent via TechTalent Portal)`);
+  const mailto=`mailto:${encodeURIComponent(to)}?subject=${subject}&body=${body}`;
+  toast('ok','Message ready — almost done!',`Your email app is opening with the message addressed to ${escH(who)}. Press <b>Send</b> there to deliver it. <a href="${mailto}">Didn't open? Click here.</a>`,12000);
+  alert(`Thank you! Your message to ${who} is ready. Your email app will open next, addressed to ${who} — press Send there to deliver it.`);
+  const a=document.createElement('a');a.href=mailto;a.style.display='none';document.body.appendChild(a);a.click();a.remove();
 }
 document.getElementById('contactModal').addEventListener('click',e=>{if(e.target===document.getElementById('contactModal'))closeContact();});
 
