@@ -30,8 +30,25 @@ const LINK_CHECK = !process.argv.includes('--no-link-check');
 
 const MAX_AGE_DAYS = 30;          // drop jobs older than this
 const KEEP_CLOSED_DAYS = 21;      // remember closed jobs this long (for saved/applied lists)
-const PER_SOURCE_CAP = { 'Remote OK': 120, Remotive: 120, Arbeitnow: 60 };  // keep a fair mix (Arbeitnow is mostly Germany)
-const REMOTIVE_MIN_GAP_H = 5.5;   // Remotive asks for ≤ 4 fetches a day
+// Per feed: cap = max jobs kept; minGapH = don't fetch more often than this;
+// complete = we receive the feed's whole list, so a job missing from it has closed.
+// For partial feeds (we only take the newest slice) a missing job is NOT treated as
+// closed — it stays until its expiry date or until it is 30 days old.
+const FEED_CONFIG = {
+  'Remote OK': { cap: 120, complete: true },
+  Remotive:    { cap: 120, complete: true,  minGapH: 5.5 },   // asks for ≤ 4 fetches a day
+  Arbeitnow:   { cap: 150, complete: false },
+  Himalayas:   { cap: 900, complete: false, minGapH: 23 },    // data refreshes daily; asks not to poll more
+  Jobicy:      { cap: 150, complete: false, minGapH: 5.5 }
+};
+// Himalayas keyword searches (global, plus India-specific) — run once a day
+// [query, pages of 20]. Plain "salesforce" mostly finds sales roles, so use specific Salesforce roles.
+const HIMALAYAS_QUERIES = [['salesforce developer', 3], ['salesforce administrator', 2], ['salesforce consultant', 2], ['salesforce architect', 2],
+  ['java', 2], ['python', 2], ['react', 2], ['node.js', 2], ['devops', 2], ['aws', 2], ['azure', 2], ['data engineer', 2], ['data scientist', 2],
+  ['machine learning', 2], ['sap', 2], ['qa automation', 2], ['.net', 2], ['android', 1], ['ios', 1], ['golang', 1], ['security engineer', 2],
+  ['servicenow', 1], ['full stack', 2], ['cloud engineer', 2]];
+const HIMALAYAS_INDIA = [['salesforce developer', 2], ['salesforce consultant', 1], ['java', 2], ['python', 2], ['devops', 2], ['react', 1],
+  ['data engineer', 2], ['sap', 1], ['qa', 1], ['full stack', 1], ['cloud', 1], ['.net', 1]];
 const LINK_CHECK_GAP_H = 20;      // check built-in job links about once a day
 const UA = 'TechTalentPortal/1.0 (+https://purnappc8.github.io/resume-portal/)';
 const DAY = 864e5, HOUR = 36e5;
@@ -100,6 +117,7 @@ function make(o) {
     source: o.source,
     url: o.url,
     postedAt: o.postedAt,
+    ...(o.expiresAt ? { expiresAt: o.expiresAt } : {}),
     live: true
   };
 }
@@ -145,6 +163,51 @@ const FEEDS = {
       if (!d.links || !d.links.next) break;
     }
     return out;
+  },
+  Himalayas: async () => {
+    const out = [];
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    const run = async (q, country, pages) => {
+      for (let page = 1; page <= pages; page++) {
+        const p = new URLSearchParams({ q, limit: '20', page: String(page), sort: 'recent' });
+        if (country) p.set('country', country);
+        let d;
+        try { d = await getJSON(`https://himalayas.app/jobs/api/search?${p}`); } catch (e) { if (/429/.test(e.message)) return 'limited'; throw e; }
+        (d.jobs || []).forEach(j => {
+          const cur = j.currency && j.currency !== 'USD' ? j.currency + ' ' : '$';
+          const pay = j.minSalary || j.maxSalary ? money(+j.minSalary || 0, +j.maxSalary || 0).split('$').join(cur) + (j.salaryPeriod && j.salaryPeriod !== 'annual' ? '/' + j.salaryPeriod : '') : '';
+          const where = j.locationRestrictions || [];
+          out.push({
+            id: (j.guid || '').split('/').slice(-3).join('-') || j.title, title: j.title, company: j.companyName,
+            location: 'Remote — ' + (where.slice(0, 3).join(', ') || 'Worldwide') + (where.length > 3 ? ' +' : ''),
+            tags: [...(j.categories || []), ...(j.seniority || [])].slice(0, 10), desc: clean(j.excerpt, 300), type: j.employmentType,
+            salary: pay, url: j.guid || j.applicationLink, postedAt: j.pubDate ? new Date(j.pubDate * 1000).toISOString() : null,
+            expiresAt: j.expiryDate ? new Date(j.expiryDate * 1000).toISOString() : null, source: 'Himalayas'
+          });
+        });
+        if ((d.jobs || []).length < 20) break;
+        await sleep(400);
+      }
+    };
+    for (const [q, pages] of HIMALAYAS_QUERIES) if (await run(q, '', pages) === 'limited') break;
+    for (const [q, pages] of HIMALAYAS_INDIA) if (await run(q, 'India', pages) === 'limited') break;
+    return out;
+  },
+  Jobicy: async () => {
+    const out = [];
+    for (const industry of ['dev', 'data-science', 'engineering']) {
+      const d = await getJSON(`https://jobicy.com/api/v2/remote-jobs?count=50&industry=${industry}`);
+      (d.jobs || []).forEach(j => {
+        const cur = j.salaryCurrency && j.salaryCurrency !== 'USD' ? j.salaryCurrency + ' ' : '$';
+        out.push({
+          id: j.id, title: j.jobTitle, company: j.companyName, location: 'Remote — ' + (j.jobGeo || 'Anywhere'),
+          tags: [].concat(j.jobIndustry || [], j.jobLevel || []), desc: clean(j.jobExcerpt, 300), type: [].concat(j.jobType || []).join(' '),
+          salary: j.annualSalaryMin || j.annualSalaryMax ? money(+j.annualSalaryMin || 0, +j.annualSalaryMax || 0).split('$').join(cur) : '',
+          url: j.url, postedAt: j.pubDate ? new Date(j.pubDate).toISOString() : null, source: 'Jobicy'
+        });
+      });
+    }
+    return out;
   }
 };
 
@@ -171,14 +234,20 @@ async function linkStatus(url) {
   const now = Date.now();
   let prev = { jobs: [], closed: [], sources: {}, builtIn: {} };
   try { prev = Object.assign(prev, JSON.parse(fs.readFileSync(OUT, 'utf8'))); } catch { log('no previous file — first run'); }
+  // Earlier versions treated partial feeds as complete and wrongly marked still-open jobs
+  // "No longer listed". Drop those markers so nobody sees an open job as closed.
+  prev.closed = (prev.closed || []).filter(c => !(FEED_CONFIG[c.source] && !FEED_CONFIG[c.source].complete && /^No longer listed/.test(c.reason || '')));
 
   const sources = {}, open = [];
   for (const [name, fetcher] of Object.entries(FEEDS)) {
     const last = prev.sources[name] || {};
     const prevJobs = prev.jobs.filter(j => j.source === name);
-    if (name === 'Remotive' && last.fetchedAt && now - Date.parse(last.fetchedAt) < REMOTIVE_MIN_GAP_H * HOUR) {
-      sources[name] = { ...last, status: 'reused', count: prevJobs.length, note: 'Remotive is fetched at most 4×/day' };
-      open.push(...prevJobs);
+    const cfg = FEED_CONFIG[name] || { cap: 100, complete: false };
+    const stillValid = j => (!j.postedAt || now - Date.parse(j.postedAt) <= MAX_AGE_DAYS * DAY) && (!j.expiresAt || Date.parse(j.expiresAt) > now);
+    if (cfg.minGapH && last.fetchedAt && now - Date.parse(last.fetchedAt) < cfg.minGapH * HOUR) {
+      const prevKept = prevJobs.filter(stillValid);
+      sources[name] = { ...last, status: 'reused', count: prevKept.length, note: `fetched at most every ${cfg.minGapH} h (source's request)` };
+      open.push(...prevKept);
       log(`${name}: reused ${prevJobs.length} (fetched ${((now - Date.parse(last.fetchedAt)) / HOUR).toFixed(1)}h ago)`);
       continue;
     }
@@ -188,16 +257,24 @@ async function linkStatus(url) {
       const jobs = raw.map(make).filter(j => j.url && isTech(j.title, j.tech))
         .filter(j => !j.postedAt || now - Date.parse(j.postedAt) <= MAX_AGE_DAYS * DAY)
         .sort((a, b) => Date.parse(b.postedAt || 0) - Date.parse(a.postedAt || 0))
-        .slice(0, PER_SOURCE_CAP[name] || 100);
+        .filter(j => !j.expiresAt || Date.parse(j.expiresAt) > now)
+        .slice(0, cfg.cap);
       if (!jobs.length) throw new Error(`no tech jobs in ${raw.length} results`);
-      sources[name] = { status: 'ok', fetchedAt: new Date(now).toISOString(), count: jobs.length, scanned: raw.length };
-      open.push(...jobs);
-      // Closed: listed last time, not listed now (this feed answered normally)
       const nowIds = new Set(jobs.map(j => j.id));
-      prevJobs.filter(j => !nowIds.has(j.id)).forEach(j => {
-        const tooOld = j.postedAt && now - Date.parse(j.postedAt) > MAX_AGE_DAYS * DAY;
-        prev.closed.push({ id: j.id, title: j.title, company: j.company, source: j.source, url: j.url, closedAt: new Date(now).toISOString(), reason: tooOld ? 'Older than 30 days' : 'No longer listed by ' + name });
-      });
+      const closeIt = (j, reason) => prev.closed.push({ id: j.id, title: j.title, company: j.company, source: j.source, url: j.url, closedAt: new Date(now).toISOString(), reason });
+      let merged = jobs;
+      if (cfg.complete) {
+        // Whole feed received: a job that disappeared has closed
+        prevJobs.filter(j => !nowIds.has(j.id)).forEach(j => closeIt(j, stillValid(j) ? 'No longer listed by ' + name : 'Older than 30 days'));
+      } else {
+        // Partial feed: keep earlier jobs until they expire or turn 30 days old
+        const carried = prevJobs.filter(j => !nowIds.has(j.id));
+        carried.filter(j => !stillValid(j)).forEach(j => closeIt(j, j.expiresAt && Date.parse(j.expiresAt) <= now ? 'Listing expired' : 'Older than 30 days'));
+        merged = [...jobs, ...carried.filter(stillValid)]
+          .sort((a, b) => Date.parse(b.postedAt || 0) - Date.parse(a.postedAt || 0)).slice(0, Math.round(cfg.cap * 1.5));
+      }
+      sources[name] = { status: 'ok', fetchedAt: new Date(now).toISOString(), count: merged.length, scanned: raw.length };
+      open.push(...merged);
       log(`${name}: ${jobs.length} tech jobs (scanned ${raw.length})`);
     } catch (e) {
       // Outage ≠ closure: keep what we had
@@ -240,7 +317,7 @@ async function linkStatus(url) {
   const out = {
     updatedAt: new Date(now).toISOString(),
     refreshEveryHours: 3,
-    attribution: 'Jobs from Remote OK (remoteok.com), Remotive (remotive.com) and Arbeitnow (arbeitnow.com). Each job links to its original listing.',
+    attribution: 'Jobs from Remote OK (remoteok.com), Remotive (remotive.com), Arbeitnow (arbeitnow.com), Himalayas (himalayas.app) and Jobicy (jobicy.com). Each job links to its original listing.',
     sources, jobs, closed, builtIn
   };
   fs.mkdirSync(path.dirname(OUT), { recursive: true });

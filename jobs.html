@@ -347,6 +347,8 @@ const SRC_STYLE = {
   PeoplePerHour:{bg:'#e8360e', label:'PP'},
   RemoteOK:     {bg:'#01161e', label:'RO'},
   'Remote OK':  {bg:'#01161e', label:'RO'},
+  Himalayas:    {bg:'#4f46e5', label:'Hi'},
+  Jobicy:       {bg:'#0f766e', label:'Jc'},
   Remotive:     {bg:'#0057a8', label:'Rm'},
   Arbeitnow:    {bg:'#6200ea', label:'AN'},
   TheMuse:      {bg:'#d81b60', label:'TM'},
@@ -458,9 +460,12 @@ async function loadJobs() {
   const liveCount = jobs.filter(j => j.live || j.fetchedAt).length;
   if (feed && feed.updatedAt) {
     document.getElementById('feedInfo').innerHTML =
-      `<b style="color:#7ec8f7">${liveCount} live jobs</b> from <a href="https://remoteok.com" target="_blank" rel="noopener" style="color:#fff">Remote OK</a>, ` +
-      `<a href="https://remotive.com" target="_blank" rel="noopener" style="color:#fff">Remotive</a> &amp; <a href="https://www.arbeitnow.com" target="_blank" rel="noopener" style="color:#fff">Arbeitnow</a>, plus hand-picked roles. ` +
-      `Updated ${timeAgo(feed.updatedAt)} · refreshes every 3 hours · closed jobs are removed automatically.`;
+      `🌐 <b style="color:#7ec8f7">Wide search across ${liveCount} live jobs</b> from ` +
+      [['Himalayas','https://himalayas.app'],['Arbeitnow','https://www.arbeitnow.com'],['Jobicy','https://jobicy.com'],['Remote OK','https://remoteok.com'],['Remotive','https://remotive.com']]
+        .map(([n,u]) => `<a href="${u}" target="_blank" rel="noopener" style="color:#fff">${n}</a>`).join(', ') +
+      `, plus hand-picked roles. Updated ${timeAgo(feed.updatedAt)} · refreshed automatically · closed jobs removed.`;
+    const si = document.getElementById('jobSearch');
+    if (si) si.placeholder = `🔍  Search ${liveCount}+ jobs from 5 job boards — title, skill, company…`;
   }
   updateDashBanner();
   renderJobs();
@@ -479,6 +484,7 @@ function rememberJob(id) {
 }
 
 function renderJobs() {
+  if (!keepJobsPage) jobsShown = JOBS_PAGE;   // new search/filter → start from the top
   const q     = document.getElementById('jobSearch').value.toLowerCase();
   const tech  = document.getElementById('techFilter').value.toLowerCase();
   const type  = document.getElementById('typeFilter').value.toLowerCase();
@@ -522,7 +528,10 @@ function renderJobs() {
     return;
   }
 
-  list.innerHTML = filtered.map(j => {
+  // Wide search returns hundreds of jobs — show them in pages
+  const total = filtered.length;
+  const page = filtered.slice(0, jobsShown);
+  list.innerHTML = page.map(j => {
     const isApplied = applied.has(j.id);
     const isSaved   = saved.has(j.id);
     const s = SRC_STYLE[j.source] || {bg:'#607d8b',label:'?'};
@@ -559,7 +568,16 @@ function renderJobs() {
         <span style="font-size:.82rem;color:var(--muted);margin-left:auto">via ${j.live && j.url ? `<a href="${E(j.url)}" target="_blank" rel="noopener" style="color:var(--accent)">${E(j.source)}</a>` : E(j.source)}</span>
       </div>
     </div>`;
-  }).join('');
+  }).join('') + (total > jobsShown
+    ? `<button type="button" class="show-more-jobs" onclick="showMoreJobs()" style="display:block;width:100%;margin:6px 0 4px;padding:12px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--accent);font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit;min-height:44px">Show ${Math.min(JOBS_PAGE, total - jobsShown)} more jobs (${total - jobsShown} remaining)</button>`
+    : '');
+}
+const JOBS_PAGE = 40;
+let jobsShown = JOBS_PAGE, keepJobsPage = false;
+function showMoreJobs() {
+  const y = window.scrollY;
+  jobsShown += JOBS_PAGE; keepJobsPage = true; renderJobs(); keepJobsPage = false;
+  window.scrollTo(0, y);
 }
 
 function markApplied(id, btn) {
