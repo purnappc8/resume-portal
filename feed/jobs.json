@@ -1,11 +1,11 @@
 {
- "updatedAt": "2026-10-26T04:33:13.843Z",
+ "updatedAt": "2026-10-26T04:56:48.633Z",
  "refreshEveryHours": 3,
  "attribution": "Jobs from Remote OK (remoteok.com), Remotive (remotive.com), Arbeitnow (arbeitnow.com), Himalayas (himalayas.app) and Jobicy (jobicy.com). Each job links to its original listing.",
  "sources": {
   "Remote OK": {
    "status": "ok",
-   "fetchedAt": "2026-10-26T04:33:13.843Z",
+   "fetchedAt": "2026-10-26T04:56:48.633Z",
    "count": 16,
    "scanned": 99
   },
@@ -18,8 +18,8 @@
   },
   "Arbeitnow": {
    "status": "ok",
-   "fetchedAt": "2026-10-26T04:33:13.843Z",
-   "count": 150,
+   "fetchedAt": "2026-10-26T04:56:48.633Z",
+   "count": 165,
    "scanned": 900
   },
   "Himalayas": {
@@ -258,6 +258,85 @@
    "live": true
   },
   {
+   "id": "live_Arbeitnow_staff-application-security-engineer-3423",
+   "title": "Staff Application Security Engineer",
+   "company": "Samsara",
+   "location": "Remote",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/samsara/staff-application-security-engineer-342314",
+   "postedAt": "2026-10-26T03:55:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_sr-software-engineer-cloud-platform-5492",
+   "title": "Sr. Software Engineer, Cloud Platform",
+   "company": "Samsara",
+   "location": "Remote",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/samsara/sr-software-engineer-cloud-platform-54921",
+   "postedAt": "2026-10-26T03:55:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-principal-security-researcher-195",
+   "title": "Principal Security Researcher",
+   "company": "gitlab",
+   "location": "Remote",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/gitlab/remote-principal-security-researcher-195565",
+   "postedAt": "2026-10-26T03:55:18.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-forward-deployed-engineer-emea-13",
+   "title": "Forward Deployed Engineer - EMEA",
+   "company": "gitlab",
+   "location": "Remote",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/gitlab/remote-forward-deployed-engineer-emea-133259",
+   "postedAt": "2026-10-26T03:55:18.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_ai-architect-260070",
+   "title": "AI Architect",
+   "company": "shifttechnology",
+   "location": "Remote",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML",
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/shifttechnology/ai-architect-260070",
+   "postedAt": "2026-10-26T03:55:18.000Z",
+   "live": true
+  },
+  {
    "id": "live_Himalayas_lanteris-space-llc-jobs-avionics-staff-c",
    "title": "Avionics/ Staff Command and Data Handling Engineer",
    "company": "Lanteris Space LLC",
@@ -328,6 +407,82 @@
    "url": "https://himalayas.app/companies/acklen-avenue/jobs/talent-database-sr-full-stack-developer-india-only",
    "postedAt": "2026-10-26T03:44:00.000Z",
    "expiresAt": "2026-12-25T03:44:00.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_staff-solutions-engineer-embedded-financ",
+   "title": "Staff Solutions Engineer - Embedded Finance",
+   "company": "Airwallex",
+   "location": "NL - Amsterdam",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/airwallex/staff-solutions-engineer-embedded-finance-amsterdam-158753",
+   "postedAt": "2026-10-26T03:40:18.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_manager-applied-ai-architects-paris-1555",
+   "title": "Manager, Applied AI Architects",
+   "company": "OpenAI",
+   "location": "Paris, France",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/openai/manager-applied-ai-architects-paris-155571",
+   "postedAt": "2026-10-26T03:40:17.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_security-legal-specialist-customer-care-",
+   "title": "🌐 Security & Legal Specialist - Customer Care",
+   "company": "Alan",
+   "location": "Anywhere in France",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/alan/security-legal-specialist-customer-care-anywhere-in-france-255516",
+   "postedAt": "2026-10-26T03:40:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_cto-founder-associate-internship-paris-f",
+   "title": "CTO Founder Associate - internship",
+   "company": "Alan",
+   "location": "Paris, France",
+   "type": "Internship",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/alan/cto-founder-associate-internship-paris-france-374798",
+   "postedAt": "2026-10-26T03:40:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-product-engineer-berlin-253211",
+   "title": "Senior Product Engineer",
+   "company": "Cosuno",
+   "location": "Berlin/Remote",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cosuno/senior-product-engineer-berlin-253211",
+   "postedAt": "2026-10-26T03:40:14.000Z",
    "live": true
   },
   {
@@ -4530,22 +4685,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_solutions-architect-uk-61338",
-   "title": "Solutions Architect",
-   "company": "Firemon",
-   "location": "UK",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/firemon/solutions-architect-uk-61338",
-   "postedAt": "2026-10-25T12:07:45.000Z",
-   "live": true
-  },
-  {
    "id": "live_Arbeitnow_senior-backend-core-engineer-paris-29066",
    "title": "Senior Backend Core Engineer",
    "company": "Odaseva",
@@ -4606,6 +4745,22 @@
    "salary": "",
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.fr/jobs/companies/odaseva/front-end-developer-junior-paris-250036",
+   "postedAt": "2026-10-25T12:07:45.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_solutions-architect-uk-61338",
+   "title": "Solutions Architect",
+   "company": "Firemon",
+   "location": "UK",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/firemon/solutions-architect-uk-61338",
    "postedAt": "2026-10-25T12:07:45.000Z",
    "live": true
   },
