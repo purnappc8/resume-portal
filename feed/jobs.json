@@ -1,37 +1,40 @@
 {
- "updatedAt": "2026-10-26T04:28:53.428Z",
+ "updatedAt": "2026-10-26T04:33:13.843Z",
  "refreshEveryHours": 3,
  "attribution": "Jobs from Remote OK (remoteok.com), Remotive (remotive.com), Arbeitnow (arbeitnow.com), Himalayas (himalayas.app) and Jobicy (jobicy.com). Each job links to its original listing.",
  "sources": {
   "Remote OK": {
    "status": "ok",
-   "fetchedAt": "2026-10-26T04:28:53.428Z",
+   "fetchedAt": "2026-10-26T04:33:13.843Z",
    "count": 16,
    "scanned": 99
   },
   "Remotive": {
-   "status": "ok",
+   "status": "reused",
    "fetchedAt": "2026-10-26T04:28:53.428Z",
-   "count": 20,
-   "scanned": 40
+   "count": 5,
+   "scanned": 40,
+   "note": "fetched at most every 5.5 h (source's request)"
   },
   "Arbeitnow": {
    "status": "ok",
-   "fetchedAt": "2026-10-26T04:28:53.428Z",
+   "fetchedAt": "2026-10-26T04:33:13.843Z",
    "count": 150,
    "scanned": 900
   },
   "Himalayas": {
-   "status": "ok",
+   "status": "reused",
    "fetchedAt": "2026-10-26T04:28:53.428Z",
-   "count": 737,
-   "scanned": 956
+   "count": 379,
+   "scanned": 956,
+   "note": "fetched at most every 23 h (source's request)"
   },
   "Jobicy": {
-   "status": "ok",
+   "status": "reused",
    "fetchedAt": "2026-10-26T04:28:53.428Z",
-   "count": 123,
-   "scanned": 150
+   "count": 75,
+   "scanned": 150,
+   "note": "fetched at most every 5.5 h (source's request)"
   }
  },
  "jobs": [
