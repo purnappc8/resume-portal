@@ -161,6 +161,7 @@ window.ttpRecruiterGate = function (what) {
         '<span class="nav-hi">Hi, <b id="navUserName">' + esc(sess ? String(sess.name || (sess.email || '').split('@')[0] || 'User').split(' ')[0] : 'User') + '</b></span>' +
         '<a href="dashboard.html"' + (page === 'dashboard.html' ? ' class="active" aria-current="page"' : '') + '>My Dashboard</a>' +
         '<a href="inbox.html"' + (page === 'inbox.html' ? ' class="active" aria-current="page"' : '') + '>Inbox</a>' +
+        '<a href="account.html"' + (page === 'account.html' ? ' class="active" aria-current="page"' : '') + '>My Profile</a>' +
         '<a href="#" onclick="ttpNavSignOut();return false">Sign Out</a>' +
       '</span>' +
       '<div class="notif-wrap"' + (sess ? '' : ' hidden style="display:none"') + '>' +

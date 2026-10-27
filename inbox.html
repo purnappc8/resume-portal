@@ -78,13 +78,6 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
     <input class="mail-search" id="mailSearch" type="search" placeholder="Search messages…" aria-label="Search messages" oninput="renderList()">
   </div>
 
-  <section id="candPanel" hidden style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:.9rem">
-    <span>👤 Your profile is <b id="candVis">visible to recruiters</b>.</span>
-    <button type="button" id="candToggle" onclick="toggleVisibility()" style="border:1px solid var(--border);background:#fff;color:var(--blue);padding:7px 12px;border-radius:8px;font-weight:700;cursor:pointer;min-height:40px">Hide my profile</button>
-    <button type="button" onclick="deleteProfile()" style="border:1px solid #ef9a9a;background:#fff;color:#c62828;padding:7px 12px;border-radius:8px;font-weight:700;cursor:pointer;min-height:40px">Delete my profile &amp; data</button>
-    <span style="color:var(--muted);font-size:.8rem;flex-basis:100%">Recruiters never see your email. When you reply to a message, your reply goes from your own email to the recruiter's company.</span>
-  </section>
-
   <div class="mail">
     <nav class="folders" aria-label="Folders">
       <button type="button" id="f-inbox" class="active" onclick="openFolder('inbox')" aria-current="true"><span>📥 Inbox</span><span class="cnt" id="cnt-inbox"></span></button>
@@ -127,26 +120,9 @@ async function loadRemote() {
       location.replace('inbox.html'); return;
     }
     remote = (d.messages || []).map(m => ({ id: 'srv_' + m.id, srvId: m.id, kind: m.kind === 'call' ? 'schedule' : 'contact', subject: m.subject, body: m.body, from: m.from, replyTo: m.replyTo, ts: m.at, read: m.read }));
-    document.getElementById('candPanel').hidden = false; document.getElementById('candPanel').style.display = 'flex';
-    paintVisibility(d.me.status !== 'hidden');
-    document.getElementById('privacyNote').textContent = '🔒 Messages from verified recruiters are delivered to you only. Recruiters never see your email address unless you reply.';
+    document.getElementById('privacyNote').innerHTML = '🔒 Messages from verified recruiters are delivered to you only. Recruiters never see your email address unless you reply. To hide or delete your profile, go to <a href="account.html" style="color:var(--accent);font-weight:700">My Profile</a>.';
     renderList();
   } catch {}
-}
-function paintVisibility(v) {
-  document.getElementById('candVis').textContent = v ? 'visible to recruiters' : 'hidden from recruiters';
-  document.getElementById('candToggle').textContent = v ? 'Hide my profile' : 'Show my profile again';
-  document.getElementById('candToggle').dataset.v = v ? '1' : '0';
-}
-async function toggleVisibility() {
-  const v = document.getElementById('candToggle').dataset.v !== '1';
-  const r = await fetch(`${API}/candidate/visibility`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + sess().token }, body: JSON.stringify({ visible: v }) }).catch(() => null);
-  if (r && r.ok) paintVisibility(v);
-}
-async function deleteProfile() {
-  if (!confirm('Delete your profile, your email and all messages? This cannot be undone.')) return;
-  const r = await fetch(`${API}/candidate/delete`, { method: 'POST', headers: { Authorization: 'Bearer ' + sess().token } }).catch(() => null);
-  if (r && r.ok) { alert('Your profile and data have been deleted.'); if (window.ttpNavSignOut) ttpNavSignOut(); else location.href = 'index.html'; }
 }
 const fmt = iso => {
   const d = new Date(iso), now = new Date();

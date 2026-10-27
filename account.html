@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Profile — TechTalent Portal</title>
+<meta name="robots" content="noindex">
+<script src="auth.js"></script>
+<style>
+:root{--blue:#0b2e59;--accent:#1565c0;--green:#1b8a4a;--light:#e8f0fe;--text:#1a1a1a;--muted:#555;--border:#c5d5e8;--bg:#f7f9fc;--red:#c62828;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.55;}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px 56px;}
+h1{font-size:1.45rem;color:var(--blue);margin-bottom:4px;}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:18px;}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:16px;}
+.card h2{font-size:1.05rem;color:var(--blue);margin-bottom:10px;}
+.me{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.avatar{width:64px;height:64px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;flex:0 0 auto;}
+.me .name{font-size:1.15rem;font-weight:700;}
+.me .email{color:var(--muted);font-size:.88rem;}
+.pill{display:inline-block;font-size:.78rem;font-weight:700;border-radius:12px;padding:2px 10px;margin-top:4px;}
+.pill.on{background:#e6f4ea;color:var(--green);}
+.pill.off{background:#fdecea;color:var(--red);}
+.pill.wait{background:#fff4e5;color:#a15c00;}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 16px;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;text-decoration:none;font-family:inherit;border:1px solid var(--border);background:#fff;color:var(--blue);}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn.danger{border-color:#ef9a9a;color:var(--red);}
+.btn[disabled]{opacity:.6;cursor:wait;}
+.setting{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 0;border-top:1px solid #eef0f3;}
+.setting:first-of-type{border-top:none;padding-top:4px;}
+.setting p{font-size:.86rem;color:var(--muted);max-width:460px;}
+.setting b{display:block;font-size:.95rem;color:var(--text);}
+.note{font-size:.82rem;color:var(--muted);}
+.msg{margin-top:12px;font-size:.88rem;padding:10px 12px;border-radius:8px;background:var(--light);color:var(--blue);}
+.msg.err{background:#fdecea;color:var(--red);}
+[hidden]{display:none !important;}
+.loading{color:var(--muted);padding:30px 0;text-align:center;}
+</style>
+<script src="site.js" defer></script>
+</head>
+<body>
+<nav class="topnav" id="siteNav"></nav>
+<script src="nav.js"></script>
+
+<main class="wrap" id="main-content">
+  <h1>👤 My Profile</h1>
+  <p class="sub">Your profile, privacy and account settings.</p>
+
+  <div id="loading" class="loading">Loading your profile…</div>
+
+  <!-- Candidate with a cloud profile -->
+  <section id="candView" hidden>
+    <div class="card">
+      <div class="me">
+        <div class="avatar" id="cAvatar">?</div>
+        <div>
+          <div class="name" id="cName"></div>
+          <div class="email">🔒 <span id="cEmail"></span> · only you can see this</div>
+          <span class="pill" id="cStatus"></span>
+        </div>
+      </div>
+      <div class="row">
+        <a class="btn primary" id="cViewLink" href="#">View my public profile</a>
+        <a class="btn" href="submit.html">Edit my profile</a>
+        <a class="btn" href="inbox.html">Open inbox</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Privacy</h2>
+      <div class="setting">
+        <div><b id="visTitle">Profile visible to recruiters</b><p id="visText">Verified recruiters can find your profile and send you messages. They never see your email address.</p></div>
+        <button type="button" class="btn" id="visBtn" onclick="toggleVisibility()">Hide my profile</button>
+      </div>
+      <div class="setting">
+        <div><b>Replies</b><p>When you reply to a recruiter's message, your reply goes from your own email to the recruiter's company — so they only see your email if you choose to reply.</p></div>
+      </div>
+      <div id="visMsg" class="msg" hidden role="status"></div>
+    </div>
+
+    <div class="card">
+      <h2>Delete account</h2>
+      <div class="setting">
+        <div><b>Delete my profile &amp; data</b><p>Permanently removes your profile, your email address and every message recruiters sent you. This can't be undone.</p></div>
+        <button type="button" class="btn danger" id="delBtn" onclick="deleteProfile()">Delete my profile &amp; data</button>
+      </div>
+      <div id="delMsg" class="msg err" hidden role="alert"></div>
+    </div>
+  </section>
+
+  <!-- Recruiter -->
+  <section id="recView" hidden>
+    <div class="card">
+      <div class="me">
+        <div class="avatar" id="rAvatar">R</div>
+        <div><div class="name" id="rName"></div><div class="email" id="rOrg"></div><span class="pill on">Verified recruiter</span></div>
+      </div>
+      <div class="row">
+        <a class="btn primary" href="recruiter.html">Recruiter portal</a>
+        <a class="btn" href="index.html">Browse talent</a>
+        <a class="btn" href="inbox.html">Open inbox</a>
+      </div>
+      <p class="note" style="margin-top:14px">Seats, approvals and colleagues are managed from the recruiter portal. Approval emails always go to your organization's group email.</p>
+    </div>
+  </section>
+
+  <!-- Signed in, but no cloud profile yet -->
+  <section id="basicView" hidden>
+    <div class="card">
+      <div class="me">
+        <div class="avatar" id="bAvatar">?</div>
+        <div><div class="name" id="bName"></div><div class="email">🔒 <span id="bEmail"></span></div></div>
+      </div>
+      <p class="note" style="margin-top:14px">You haven't published a candidate profile yet. Post one so verified recruiters can find you — your email stays private.</p>
+      <div class="row">
+        <a class="btn primary" href="submit.html">Post my profile</a>
+        <a class="btn" href="dashboard.html">My dashboard</a>
+        <a class="btn" href="login.html#candidate">I already have a profile — email me a sign-in link</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const API = window.ttpApi ? ttpApi() : '';
+const $ = id => document.getElementById(id);
+function sess() { try { return JSON.parse(sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session') || 'null'); } catch { return null; } }
+const initials = n => String(n || '?').trim().split(/\s+/).map(x => x[0]).join('').slice(0, 2).toUpperCase() || '?';
+function show(id) { $('loading').hidden = true; ['candView', 'recView', 'basicView'].forEach(x => $(x).hidden = x !== id); }
+function note(id, text) { const el = $(id); el.textContent = text; el.hidden = !text; }
+
+function paintVisibility(status) {
+  const pending = status === 'pending', visible = status === 'active';
+  $('cStatus').className = 'pill ' + (pending ? 'wait' : visible ? 'on' : 'off');
+  $('cStatus').textContent = pending ? 'Waiting for email confirmation' : visible ? 'Visible to recruiters' : 'Hidden from recruiters';
+  $('visTitle').textContent = visible ? 'Profile visible to recruiters' : pending ? 'Profile not published yet' : 'Profile hidden from recruiters';
+  $('visText').textContent = pending ? 'Click the confirmation link we emailed you to publish your profile.'
+    : visible ? 'Verified recruiters can find your profile and send you messages. They never see your email address.'
+    : "Recruiters can't find or message you. Your profile and messages are kept until you show it again or delete it.";
+  $('visBtn').textContent = visible ? 'Hide my profile' : 'Show my profile again';
+  $('visBtn').hidden = pending;
+  $('visBtn').dataset.v = visible ? '1' : '0';
+}
+
+async function toggleVisibility() {
+  const btn = $('visBtn'), v = btn.dataset.v !== '1';
+  btn.disabled = true; note('visMsg', '');
+  const r = await fetch(`${API}/candidate/visibility`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + sess().token }, body: JSON.stringify({ visible: v }) }).catch(() => null);
+  btn.disabled = false;
+  if (r && r.ok) { paintVisibility(v ? 'active' : 'hidden'); note('visMsg', v ? '✓ Your profile is visible to recruiters again.' : '✓ Your profile is now hidden from recruiters.'); }
+  else note('visMsg', "Couldn't update that right now. Please try again.");
+}
+
+async function deleteProfile() {
+  if (!confirm('Delete your profile, your email and all messages? This cannot be undone.')) return;
+  const btn = $('delBtn'); btn.disabled = true; note('delMsg', '');
+  const r = await fetch(`${API}/candidate/delete`, { method: 'POST', headers: { Authorization: 'Bearer ' + sess().token } }).catch(() => null);
+  if (r && r.ok) { alert('Your profile and data have been deleted.'); if (window.ttpNavSignOut) ttpNavSignOut(); else location.href = 'index.html'; return; }
+  btn.disabled = false; note('delMsg', "Couldn't delete right now. Please try again in a moment.");
+}
+
+(async function init() {
+  const s = sess();
+  if (!s) { location.replace('login.html?next=account.html'); return; }
+  if (s.role === 'recruiter') {
+    $('rName').textContent = s.name || s.username || 'Recruiter';
+    $('rAvatar').textContent = initials(s.name || s.username);
+    $('rOrg').textContent = [s.username && '@' + s.username, s.org || s.email].filter(Boolean).join(' · ');
+    show('recView'); return;
+  }
+  if (s.role === 'candidate' && API) {
+    try {
+      const r = await fetch(`${API}/candidate/messages`, { headers: { Authorization: 'Bearer ' + s.token }, signal: AbortSignal.timeout(15000) });
+      if (r.status === 401) { try { localStorage.removeItem('ttp_session'); sessionStorage.removeItem('ttp_session'); } catch {} location.replace('login.html?status=link-invalid#candidate'); return; }
+      const d = await r.json().catch(() => ({}));
+      if (r.ok && d.me) {
+        $('cName').textContent = d.me.name; $('cAvatar').textContent = initials(d.me.name);
+        $('cEmail').textContent = d.me.email;
+        $('cViewLink').href = 'profile.html?id=' + encodeURIComponent(d.me.id);
+        paintVisibility(d.me.status);
+        show('candView'); return;
+      }
+    } catch {}
+  }
+  const name = s.name || String(s.email || '').split('@')[0] || 'You';
+  $('bName').textContent = name; $('bAvatar').textContent = initials(name); $('bEmail').textContent = s.email || '';
+  show('basicView');
+})();
+</script>
+</body>
+</html>
