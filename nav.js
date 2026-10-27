@@ -47,7 +47,7 @@ window.TTP_CONFIG = window.TTP_CONFIG || {
   // Accounts service (worker/accounts-worker.js): recruiter accounts, candidate profiles,
   // private recruiter → candidate messages. Leave empty until it is deployed — while
   // empty, the site works as before (local profiles, no recruiter sign-in required).
-  RECRUITER_API_URL: ''
+  RECRUITER_API_URL: 'https://techtalent-accounts.purna-padishala.workers.dev'
 };
 window.ttpApi = function () { return (window.TTP_CONFIG.RECRUITER_API_URL || '').replace(/\/$/, ''); };
 // Local testing only: ?recruiterApi=http://localhost:8788 (remembered for this tab)
