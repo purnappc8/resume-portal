@@ -1,23 +1,24 @@
 {
- "updatedAt": "2026-10-26T20:35:15.398Z",
+ "updatedAt": "2026-10-27T00:32:47.556Z",
  "refreshEveryHours": 3,
  "attribution": "Jobs from Remote OK (remoteok.com), Remotive (remotive.com), Arbeitnow (arbeitnow.com), Himalayas (himalayas.app) and Jobicy (jobicy.com). Each job links to its original listing.",
  "sources": {
   "Remote OK": {
    "status": "ok",
-   "fetchedAt": "2026-10-26T20:35:15.398Z",
+   "fetchedAt": "2026-10-27T00:32:47.556Z",
    "count": 17,
    "scanned": 99
   },
   "Remotive": {
-   "status": "ok",
+   "status": "reused",
    "fetchedAt": "2026-10-26T20:35:15.398Z",
-   "count": 20,
-   "scanned": 40
+   "count": 5,
+   "scanned": 40,
+   "note": "fetched at most every 5.5 h (source's request)"
   },
   "Arbeitnow": {
    "status": "ok",
-   "fetchedAt": "2026-10-26T20:35:15.398Z",
+   "fetchedAt": "2026-10-27T00:32:47.556Z",
    "count": 225,
    "scanned": 900
   },
@@ -29,13 +30,201 @@
    "note": "fetched at most every 23 h (source's request)"
   },
   "Jobicy": {
-   "status": "ok",
+   "status": "reused",
    "fetchedAt": "2026-10-26T20:35:15.398Z",
-   "count": 161,
-   "scanned": 150
+   "count": 108,
+   "scanned": 150,
+   "note": "fetched at most every 5.5 h (source's request)"
   }
  },
  "jobs": [
+  {
+   "id": "live_Arbeitnow_staff-engineer-eu-infrastructure-london-",
+   "title": "Staff Engineer, EU Infrastructure",
+   "company": "Wolt - English",
+   "location": "London, England, United Kingdom",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/wolt-english/staff-engineer-eu-infrastructure-london-91046",
+   "postedAt": "2026-10-26T22:45:26.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_golang-backend-engineer-financial-produc",
+   "title": "Golang Backend Engineer, Financial Product Fraud",
+   "company": "Deliveroo",
+   "location": "London, England, United Kingdom",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Go"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/deliveroo/golang-backend-engineer-financial-product-fraud-london-14945",
+   "postedAt": "2026-10-26T22:45:26.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_cdi-ux-ai-designer-artefact-3000-paris-9",
+   "title": "CDI - UX/AI Designer - Artefact 3000 - Paris",
+   "company": "Artefactjobs",
+   "location": "9th arrondissement of Paris, 75009, Paris",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/artefactjobs/cdi-ux-ai-designer-artefact-3000-paris-9th-arrondissement-of-paris-75009-paris-113496",
+   "postedAt": "2026-10-26T21:55:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_software-engineer-ii-security-belfast-no",
+   "title": "Software Engineer II, Security",
+   "company": "Everquote",
+   "location": "Belfast, Northern Ireland",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/everquote/software-engineer-ii-security-belfast-northern-ireland-244283",
+   "postedAt": "2026-10-26T21:55:28.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_software-engineer-perception-gilching-13",
+   "title": "Software Engineer - Perception (m/f/d)",
+   "company": "Quantum-Systems GmbH",
+   "location": "Gilching, Bayern, Germany",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/software-engineer-perception-gilching-137183",
+   "postedAt": "2026-10-26T21:51:29.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-senior-backend-engineer-paris-287",
+   "title": "Senior Backend Engineer",
+   "company": "Payflows",
+   "location": "Remote job (Remote)",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/payflows/remote-senior-backend-engineer-paris-287438",
+   "postedAt": "2026-10-26T21:51:29.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_devops-infra-lead-paris-224625",
+   "title": "DevOps / Infra Lead",
+   "company": "Payflows",
+   "location": "Paris, Île-de-France, France",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "DevOps",
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/payflows/devops-infra-lead-paris-224625",
+   "postedAt": "2026-10-26T21:51:29.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_test-engineer-automated-systems-ludwigsb",
+   "title": "Test Engineer - Automated Systems (f/m/d)",
+   "company": "Instagrid",
+   "location": "Ludwigsburg, Baden-Württemberg, Germany",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/instagrid/test-engineer-automated-systems-ludwigsburg-93053",
+   "postedAt": "2026-10-26T21:51:28.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_customer-solutions-engineer-rotterdam-93",
+   "title": "Customer Solutions Engineer",
+   "company": "Payter B.V.",
+   "location": "Rotterdam, Zuid-Holland, Nederland",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/payter-bv/customer-solutions-engineer-rotterdam-93891",
+   "postedAt": "2026-10-26T21:51:27.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-software-entwickler-php-symfony-r",
+   "title": "Senior Software-Entwickler (m/w/d) – PHP/Symfony & React – Berlin - Hybrid",
+   "company": "MRP My Recruitment Partners Ltd.",
+   "location": "Berlin, Brandenburg, Germany",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "React",
+    "PHP",
+    "DevOps",
+    "SQL"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/mrp-my-recruitment-partners-ltd/senior-software-entwickler-php-symfony-react-berlin-hybrid-207674",
+   "postedAt": "2026-10-26T21:51:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_biztalk-and-azure-integration-developer-",
+   "title": "Biztalk and Azure integration Developer",
+   "company": "Kryptos Technologies limited",
+   "location": "Eindhoven",
+   "type": "Freelance",
+   "exp": "Mid",
+   "tech": [
+    "Azure"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/kryptos-technologies-limited/biztalk-and-azure-integration-developer-eindhoven-378254",
+   "postedAt": "2026-10-26T21:30:37.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_gtm-manager-ai-startup-berlin-58998",
+   "title": "GTM Manager - AI Startup",
+   "company": "Logicc",
+   "location": "Berlin (Remote)",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/logicc/gtm-manager-ai-startup-berlin-58998",
+   "postedAt": "2026-10-26T21:01:09.000Z",
+   "live": true
+  },
   {
    "id": "live_Arbeitnow_staff-engineer-data-platform-experience-",
    "title": "Staff Engineer - Data Platform Experience",
@@ -402,6 +591,20 @@
    "live": true
   },
   {
+   "id": "live_Arbeitnow_senior-engineering-manager-amsterdam-185",
+   "title": "Senior Engineering Manager",
+   "company": "Mollie",
+   "location": "Amsterdam",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/mollie/senior-engineering-manager-amsterdam-185168",
+   "postedAt": "2026-10-26T18:40:14.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_ai-applied-researcher-paris-188980",
    "title": "AI Applied Researcher",
    "company": "Hexa",
@@ -414,20 +617,6 @@
    "salary": "",
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.fr/jobs/companies/hexa/ai-applied-researcher-paris-188980",
-   "postedAt": "2026-10-26T18:40:14.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-engineering-manager-amsterdam-185",
-   "title": "Senior Engineering Manager",
-   "company": "Mollie",
-   "location": "Amsterdam",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/mollie/senior-engineering-manager-amsterdam-185168",
    "postedAt": "2026-10-26T18:40:14.000Z",
    "live": true
   },
@@ -1521,20 +1710,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_test-engineer-automated-systems-ludwigsb",
-   "title": "Test Engineer - Automated Systems (f/m/d)",
-   "company": "Instagrid",
-   "location": "Ludwigsburg",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/instagrid/test-engineer-automated-systems-ludwigsburg-75986",
-   "postedAt": "2026-10-26T10:20:12.000Z",
-   "live": true
-  },
-  {
    "id": "live_Arbeitnow_backend-softwareentwickler-berlin-188211",
    "title": "Backend Softwareentwickler (m/w/d)",
    "company": "Firstlead GmbH",
@@ -1944,25 +2119,6 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.co.uk/jobs/companies/smarkets/senior-devsecops-engineer-london-321566",
    "postedAt": "2026-10-26T06:40:10.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-software-entwickler-php-symfony-r",
-   "title": "Senior Software-Entwickler (m/w/d) – PHP/Symfony & React – Berlin - Hybrid",
-   "company": "MRP My Recruitment Partners Ltd.",
-   "location": "Berlin",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "React",
-    "PHP",
-    "DevOps",
-    "SQL"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/mrp-my-recruitment-partners-ltd/senior-software-entwickler-php-symfony-react-berlin-hybrid-495904",
-   "postedAt": "2026-10-26T06:20:05.000Z",
    "live": true
   },
   {
@@ -7982,188 +8138,6 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/test-automation-engineer-gilching-9716",
    "postedAt": "2026-10-25T09:31:16.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_cdi-genai-engineer-intermediaire-senior-",
-   "title": "CDI - GenAI Engineer (Intermédiaire / Senior)",
-   "company": "Matera",
-   "location": "Paris, Île-de-France, France",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/matera/cdi-genai-engineer-intermediaire-senior-paris-265315",
-   "postedAt": "2026-10-25T09:31:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_staff-software-engineer-backend-cdi-pari",
-   "title": "Staff Software Engineer - Backend (CDI)",
-   "company": "Matera",
-   "location": "Paris, Île-de-France, France",
-   "type": "Contract",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/matera/staff-software-engineer-backend-cdi-paris-430263",
-   "postedAt": "2026-10-25T09:31:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_staff-security-engineer-cdi-paris-69905",
-   "title": "Staff Security Engineer (CDI)",
-   "company": "Matera",
-   "location": "Paris, Île-de-France, France",
-   "type": "Contract",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/matera/staff-security-engineer-cdi-paris-69905",
-   "postedAt": "2026-10-25T09:31:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-engineering-manager-supply-domain",
-   "title": "Senior Engineering Manager, Supply Domain (all genders)",
-   "company": "Distribusion Technologies",
-   "location": "Berlin, Berlin, Germany",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/distribusion-technologies/senior-engineering-manager-supply-domain-all-genders-berlin-442689",
-   "postedAt": "2026-10-25T09:31:12.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_project-engineer-alblasserdam-436218",
-   "title": "Project Engineer",
-   "company": "AEP International",
-   "location": "Alblasserdam",
-   "type": "Contract",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/aep-international/project-engineer-alblasserdam-436218",
-   "postedAt": "2026-10-25T09:31:06.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_data-scientist-kaggle-drivendata-remote-",
-   "title": "Data Scientist (Kaggle/DrivenData) (Remote-Worldwide)",
-   "company": "Your Software Supplier",
-   "location": "Amsterdam (Remote)",
-   "type": "Freelance",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/your-software-supplier/data-scientist-kaggle-drivendata-remote-worldwide-amsterdam-169939",
-   "postedAt": "2026-10-25T09:31:06.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_afstudeeropdracht-hbo-digitale-bouwplaat",
-   "title": "Afstudeeropdracht HBO – Digitale Bouwplaats & AI",
-   "company": "RECO",
-   "location": "Koudekerk aan den Rijn",
-   "type": "Internship",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/reco/afstudeeropdracht-hbo-digitale-bouwplaats-ai-koudekerk-aan-den-rijn-348350",
-   "postedAt": "2026-10-25T09:31:03.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_it-support-cloud-specialist-dordrecht-33",
-   "title": "IT Support & Cloud Specialist",
-   "company": "AV Werving & Selectie",
-   "location": "Dordrecht",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/av-werving-selectie/it-support-cloud-specialist-dordrecht-338823",
-   "postedAt": "2026-10-25T09:31:01.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_net-developer-ridderkerk-21815",
-   "title": ".NET Developer",
-   "company": "Verzuimdata B.V.",
-   "location": "Ridderkerk",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    ".NET"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/verzuimdata-bv/net-developer-ridderkerk-21815",
-   "postedAt": "2026-10-25T09:31:01.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_netwerk-engineer-telecom-alphen-aan-den-",
-   "title": "Netwerk Engineer Telecom",
-   "company": "Staffplanning B.V.",
-   "location": "Alphen aan den Rijn",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/staffplanning-bv/netwerk-engineer-telecom-alphen-aan-den-rijn-43028",
-   "postedAt": "2026-10-25T09:31:00.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_salesforce-nonprofit-support-consultant-",
-   "title": "Salesforce nonprofit support consultant",
-   "company": "CISIS Goede Doelen Consultancy",
-   "location": "Zaandijk",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "Salesforce"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/cisis-goede-doelen-consultancy/salesforce-nonprofit-support-consultant-zaandijk-465104",
-   "postedAt": "2026-10-25T09:31:00.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_business-developer-b2b-retail-utrecht-41",
-   "title": "Business Developer B2B & Retail",
-   "company": "MarketLeap B.V.",
-   "location": "Utrecht",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "Data"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/marketleap-bv/business-developer-b2b-retail-utrecht-416432",
-   "postedAt": "2026-10-25T09:30:55.000Z",
    "live": true
   },
   {
