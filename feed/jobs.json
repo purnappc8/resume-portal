@@ -1,41 +1,2469 @@
 {
- "updatedAt": "2026-10-28T05:53:08.500Z",
+ "updatedAt": "2026-10-28T13:08:13.469Z",
  "refreshEveryHours": 3,
  "attribution": "Jobs from Remote OK (remoteok.com), Remotive (remotive.com), Arbeitnow (arbeitnow.com), Himalayas (himalayas.app) and Jobicy (jobicy.com). Each job links to its original listing.",
  "sources": {
   "Remote OK": {
    "status": "ok",
-   "fetchedAt": "2026-10-28T05:53:08.500Z",
+   "fetchedAt": "2026-10-28T13:08:13.469Z",
    "count": 18,
    "scanned": 99
   },
   "Remotive": {
    "status": "ok",
-   "fetchedAt": "2026-10-28T05:53:08.500Z",
-   "count": 20,
-   "scanned": 40
+   "fetchedAt": "2026-10-28T13:08:13.469Z",
+   "count": 24,
+   "scanned": 44
   },
   "Arbeitnow": {
    "status": "ok",
-   "fetchedAt": "2026-10-28T05:53:08.500Z",
+   "fetchedAt": "2026-10-28T13:08:13.469Z",
    "count": 225,
    "scanned": 900
   },
   "Himalayas": {
-   "status": "reused",
-   "fetchedAt": "2026-10-27T09:08:13.951Z",
-   "count": 609,
-   "scanned": 1004,
-   "note": "fetched at most every 23 h (source's request)"
+   "status": "ok",
+   "fetchedAt": "2026-10-28T13:08:13.469Z",
+   "count": 1079,
+   "scanned": 944
   },
   "Jobicy": {
    "status": "ok",
-   "fetchedAt": "2026-10-28T05:53:08.500Z",
-   "count": 188,
+   "fetchedAt": "2026-10-28T13:08:13.469Z",
+   "count": 196,
    "scanned": 150
   }
  },
  "jobs": [
+  {
+   "id": "live_Himalayas_ecpi-university-jobs-online-electronics-",
+   "title": "Online Electronics Engineering Technology Adjunct Faculty",
+   "company": "ECPI University",
+   "location": "Remote — United States",
+   "type": "Part-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/ecpi-university/jobs/online-electronics-engineering-technology-adjunct-faculty",
+   "postedAt": "2026-10-28T11:31:11.000Z",
+   "expiresAt": "2026-12-27T11:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_geico-jobs-jobs-senior-principal-data-an",
+   "title": "Senior Principal Data Analyst",
+   "company": "GEICO",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$100K–$300K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/geico-jobs/jobs/senior-principal-data-analyst",
+   "postedAt": "2026-10-28T11:30:46.000Z",
+   "expiresAt": "2026-12-27T11:30:44.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_vrinda-international-jobs-sap-crm-functi",
+   "title": "SAP CRM Functional Lead",
+   "company": "Vrinda International",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/vrinda-international/jobs/sap-crm-functional-lead",
+   "postedAt": "2026-10-28T11:11:38.000Z",
+   "expiresAt": "2026-12-27T11:11:37.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_nvidia-jobs-software-engineering-intern-",
+   "title": "Software Engineering Intern, AI Agents and Backend Infrastructure – 2027",
+   "company": "NVIDIA",
+   "location": "Remote — United Kingdom",
+   "type": "Internship",
+   "exp": "Junior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/nvidia/jobs/software-engineering-intern-ai-agents-and-backend-infrastructure-2027",
+   "postedAt": "2026-10-28T11:04:58.000Z",
+   "expiresAt": "2026-12-27T11:04:57.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_the-hanover-insurance-group-jobs-senior-",
+   "title": "Senior Data Engineer (REMOTE OR MA BASED)",
+   "company": "The Hanover Insurance Group",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Data"
+   ],
+   "salary": "$105K–$130K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/the-hanover-insurance-group/jobs/senior-data-engineer-remote-or-ma-based",
+   "postedAt": "2026-10-28T11:04:30.000Z",
+   "expiresAt": "2026-12-27T11:04:27.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_g2i-jobs-senior-software-engineer-ai-tra",
+   "title": "Senior Software Engineer, AI Training - United States",
+   "company": "G2i",
+   "location": "Remote — Canada, United States",
+   "type": "Contract",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$0K–$0K/hourly",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/g2i/jobs/senior-software-engineer-ai-training-united-states",
+   "postedAt": "2026-10-28T11:02:32.000Z",
+   "expiresAt": "2026-12-27T11:02:31.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_humana-jobs-senior-software-engineer-wor",
+   "title": "Senior Software Engineer - Workday",
+   "company": "Humana",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$107K–$147K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/humana/jobs/senior-software-engineer-workday",
+   "postedAt": "2026-10-28T11:00:25.000Z",
+   "expiresAt": "2026-12-27T11:00:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_red-cell-partners-jobs-director-producti",
+   "title": "Director, Production and Infrastructure Engineering",
+   "company": "Red Cell Partners",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "DevOps",
+    "Security"
+   ],
+   "salary": "$240K–$290K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/red-cell-partners/jobs/director-production-and-infrastructure-engineering",
+   "postedAt": "2026-10-28T10:55:40.000Z",
+   "expiresAt": "2026-12-27T10:55:38.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_shyftlabs-jobs-forward-deployed-data-arc",
+   "title": "Forward Deployed - Data Architect",
+   "company": "ShyftLabs",
+   "location": "Remote — Canada",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "CAD 160K–CAD 190K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/shyftlabs/jobs/forward-deployed-data-architect",
+   "postedAt": "2026-10-28T10:55:34.000Z",
+   "expiresAt": "2026-12-27T10:55:32.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-oracle-i",
+   "title": "Oracle Integration Cloud Developer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$100K–$170K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/oracle-integration-cloud-developer-5452752699",
+   "postedAt": "2026-10-28T10:54:50.000Z",
+   "expiresAt": "2026-12-27T10:54:49.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_kled-ai-jobs-ai-generated-images-found-i",
+   "title": "AI-Generated Images Found in the Wild (Paid Data Task, Remote, Contract)",
+   "company": "Kled AI",
+   "location": "Remote — United Kingdom",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$0K–$0K/hourly",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/kled-ai/jobs/ai-generated-images-found-in-the-wild-paid-data-task-remote-contract",
+   "postedAt": "2026-10-28T10:49:38.000Z",
+   "expiresAt": "2026-12-27T10:49:37.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_momsmeals-jobs-manager-software-engineer",
+   "title": "Manager - Software Engineering (Salesforce Engineering)",
+   "company": "Mom's Meals",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Salesforce"
+   ],
+   "salary": "$143K–$178K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/momsmeals/jobs/manager-software-engineering-salesforce-engineering",
+   "postedAt": "2026-10-28T10:46:48.000Z",
+   "expiresAt": "2026-12-27T10:46:47.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_sybridge-technologies-jobs-network-secur",
+   "title": "Network & Security Engineer",
+   "company": "SyBridge Technologies",
+   "location": "Remote — Pakistan",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "Security"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/sybridge-technologies/jobs/network-security-engineer",
+   "postedAt": "2026-10-28T10:42:35.000Z",
+   "expiresAt": "2026-12-27T10:42:34.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_sprchrgr-jobs-finance-engineer-502794336",
+   "title": "Finance Engineer",
+   "company": "SPRCHRGR",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "$150K–$180K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/sprchrgr/jobs/finance-engineer-502794336",
+   "postedAt": "2026-10-28T10:31:13.000Z",
+   "expiresAt": "2026-12-27T10:31:11.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-ml-data-",
+   "title": "ML Data Engineer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "Data"
+   ],
+   "salary": "$100K–$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/ml-data-engineer-4042334478",
+   "postedAt": "2026-10-28T10:29:59.000Z",
+   "expiresAt": "2026-12-27T10:29:58.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_armada-jobs-physical-security-facilities",
+   "title": "Physical Security – Facilities Lead",
+   "company": "Armada",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML",
+    "Security"
+   ],
+   "salary": "$163K–$204K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/armada/jobs/physical-security-facilities-lead",
+   "postedAt": "2026-10-28T10:27:20.000Z",
+   "expiresAt": "2026-12-27T10:27:19.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_sci-serviclients-jobs-senior-bmc-helix-i",
+   "title": "Senior BMC Helix ITSM Engineer",
+   "company": "SCI Serviclients",
+   "location": "Remote — Spain",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "EUR 39K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/sci-serviclients/jobs/senior-bmc-helix-itsm-engineer",
+   "postedAt": "2026-10-28T10:23:05.000Z",
+   "expiresAt": "2026-12-27T10:23:04.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_nesto-be-jobs-product-manager-ai-platfor",
+   "title": "Product Manager - AI Platform",
+   "company": "Nesto",
+   "location": "Remote — Canada",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/nesto-be/jobs/product-manager-ai-platform",
+   "postedAt": "2026-10-28T10:16:01.000Z",
+   "expiresAt": "2026-12-27T10:15:58.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_kled-ai-jobs-fraud-ml-engineer",
+   "title": "Fraud/ML Engineer",
+   "company": "Kled AI",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$150K–$250K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/kled-ai/jobs/fraud-ml-engineer",
+   "postedAt": "2026-10-28T10:06:05.000Z",
+   "expiresAt": "2026-12-27T10:06:03.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_caspar-health-jobs-senior-software-engin",
+   "title": "Senior Software Engineer (all identities) - Healthcare Integrations",
+   "company": "Caspar Health",
+   "location": "Remote — Germany",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/caspar-health/jobs/senior-software-engineer-all-identities-healthcare-integrations-4008038064",
+   "postedAt": "2026-10-28T10:04:21.000Z",
+   "expiresAt": "2026-12-27T10:04:20.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_neuraflash-jobs-product-owner-ai-aws-del",
+   "title": "Product Owner, AI & AWS Delivery",
+   "company": "NeuraFlash",
+   "location": "Remote — Canada",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Salesforce",
+    "AWS",
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/neuraflash/jobs/product-owner-ai-aws-delivery-7000991050",
+   "postedAt": "2026-10-28T09:59:21.000Z",
+   "expiresAt": "2026-12-27T09:59:18.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_mindera-jobs-fullstack-software-engineer",
+   "title": "Fullstack Software Engineer (Node.js + React)",
+   "company": "Mindera",
+   "location": "Remote — Brazil",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "React",
+    "Node.js"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/mindera/jobs/fullstack-software-engineer-node-js-react",
+   "postedAt": "2026-10-28T09:57:08.000Z",
+   "expiresAt": "2026-12-27T09:57:06.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_principal-engineer-mobile-platform-backe",
+   "title": "Principal Engineer, Mobile Platform & Backend Systems",
+   "company": "Alphasense",
+   "location": "London, Greater London",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/alphasense/principal-engineer-mobile-platform-backend-systems-london-greater-london-143036",
+   "postedAt": "2026-10-28T09:55:30.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_solutions-architect-search-specialist-26",
+   "title": "Solutions Architect - Search Specialist",
+   "company": "Elastic",
+   "location": "Remote",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/elastic/solutions-architect-search-specialist-261556",
+   "postedAt": "2026-10-28T09:55:28.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_stage-software-engineer-paris-9th-arrond",
+   "title": "Stage Software Engineer - Paris - H/F/X",
+   "company": "Artefact",
+   "location": "9th arrondissement of Paris, 75009, Paris",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/artefact/stage-software-engineer-paris-9th-arrondissement-of-paris-75009-paris-289162",
+   "postedAt": "2026-10-28T09:55:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_data-scientist-intern-paris-9th-arrondis",
+   "title": "Data Scientist Intern - Paris",
+   "company": "Artefact",
+   "location": "9th arrondissement of Paris, 75009, Paris",
+   "type": "Internship",
+   "exp": "Junior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/artefact/data-scientist-intern-paris-9th-arrondissement-of-paris-75009-paris-108149",
+   "postedAt": "2026-10-28T09:55:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_stage-software-engineer-paris-9th-arrond",
+   "title": "Stage Software Engineer - Paris - H/F/X",
+   "company": "Artefactlinkedin",
+   "location": "9th arrondissement of Paris, 75009, Paris",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/artefactlinkedin/stage-software-engineer-paris-9th-arrondissement-of-paris-75009-paris-368230",
+   "postedAt": "2026-10-28T09:55:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-data-ai-strategy-berli",
+   "title": "Senior Consultant (m/f/d) Data & AI Strategy",
+   "company": "Artefactlinkedin",
+   "location": "Berlin, Berlin; München, Bavaria",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/artefactlinkedin/senior-consultant-data-ai-strategy-berlin-berlin-munchen-bavaria-388589",
+   "postedAt": "2026-10-28T09:55:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_consulting-manager-data-ai-strategy-berl",
+   "title": "Consulting Manager (m/f/d) Data & AI Strategy",
+   "company": "Artefactlinkedin",
+   "location": "Berlin, Berlin; München, Bavaria",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/artefactlinkedin/consulting-manager-data-ai-strategy-berlin-berlin-munchen-bavaria-336340",
+   "postedAt": "2026-10-28T09:55:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_tech-lead-berlin-berlin-146815",
+   "title": "Tech Lead (m/f/d)",
+   "company": "Superchat",
+   "location": "Berlin, Berlin",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/superchat/tech-lead-berlin-berlin-146815",
+   "postedAt": "2026-10-28T09:55:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_g2i-jobs-remote-developer-g2i-talent-poo",
+   "title": "Remote Developer | G2i Talent Pool",
+   "company": "G2i",
+   "location": "Remote — Worldwide",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/g2i/jobs/remote-developer-g2i-talent-pool",
+   "postedAt": "2026-10-28T09:50:46.000Z",
+   "expiresAt": "2026-12-27T09:50:45.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_innovaccer-jobs-4786-customer-engineerin",
+   "title": "4786-Customer Engineering Manager",
+   "company": "Innovaccer",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/innovaccer/jobs/4786-customer-engineering-manager",
+   "postedAt": "2026-10-28T09:47:15.000Z",
+   "expiresAt": "2026-12-27T09:47:13.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_gorilla-logic-jobs-technical-engineering",
+   "title": "Technical Engineering Manager - SD, Remote: Colombia - Costa Rica, Fulltime",
+   "company": "Gorilla Logic",
+   "location": "Remote — Colombia",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "DevOps"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/gorilla-logic/jobs/technical-engineering-manager-sd-remote-colombia-costa-rica-fulltime-6794858708",
+   "postedAt": "2026-10-28T09:47:15.000Z",
+   "expiresAt": "2026-12-27T09:47:13.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-parallel",
+   "title": "Parallel Computing Engineer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$130K–$180K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/parallel-computing-engineer-9117475146",
+   "postedAt": "2026-10-28T09:42:55.000Z",
+   "expiresAt": "2026-12-27T09:42:54.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_mspbots-ai-jobs-ai-product-manager",
+   "title": "AI Product Manager",
+   "company": "MSPbots.ai",
+   "location": "Remote — Philippines",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/mspbots-ai/jobs/ai-product-manager",
+   "postedAt": "2026-10-28T09:42:33.000Z",
+   "expiresAt": "2026-12-27T09:42:32.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bare-international-jobs-power-bi-develop",
+   "title": "Power BI Developer (Contract)",
+   "company": "BARE International",
+   "location": "Remote — India",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bare-international/jobs/power-bi-developer-contract",
+   "postedAt": "2026-10-28T09:41:17.000Z",
+   "expiresAt": "2026-12-27T09:41:16.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_founding-ai-engineer-at-plato-backed-by-",
+   "title": "Founding AI Engineer @Plato (backed by Hexa)",
+   "company": "Hexa",
+   "location": "Paris",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/hexa/founding-ai-engineer-at-plato-backed-by-hexa-paris-15394",
+   "postedAt": "2026-10-28T09:40:14.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_staff-go-backend-developer-hamburg-26788",
+   "title": "Staff Go Backend Developer (f/m/d)",
+   "company": "adjoe",
+   "location": "Hamburg",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/adjoe/staff-go-backend-developer-hamburg-267889",
+   "postedAt": "2026-10-28T09:40:13.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_tenstorrent-jobs-copy-of-field-applicati",
+   "title": "Copy of Field Application Engineer, South East Asia",
+   "company": "Tenstorrent",
+   "location": "Remote — Malaysia",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/tenstorrent/jobs/copy-of-field-application-engineer-south-east-asia",
+   "postedAt": "2026-10-28T09:39:53.000Z",
+   "expiresAt": "2026-12-27T09:39:52.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_target-group-jobs-senior-data-analyst",
+   "title": "Senior Data Analyst",
+   "company": "Target Group",
+   "location": "Remote — United Kingdom",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "GBP 48K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/target-group/jobs/senior-data-analyst",
+   "postedAt": "2026-10-28T09:39:18.000Z",
+   "expiresAt": "2026-12-27T09:39:16.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_sigl-io-jobs-senior-php-engineer",
+   "title": "Senior PHP Engineer",
+   "company": "SIGL:IO",
+   "location": "Remote — Turkey",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "PHP"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/sigl-io/jobs/senior-php-engineer",
+   "postedAt": "2026-10-28T09:38:04.000Z",
+   "expiresAt": "2026-12-27T09:38:01.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_icorepioneer-jobs-frontend-developers",
+   "title": "Frontend Developers",
+   "company": "iCore",
+   "location": "Remote — India",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "React"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/icorepioneer/jobs/frontend-developers",
+   "postedAt": "2026-10-28T09:38:01.000Z",
+   "expiresAt": "2026-12-27T09:37:59.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_m-kopa-jobs-senior-backend-engineer-mobi",
+   "title": "Senior Backend Engineer - Mobility",
+   "company": "M-KOPA",
+   "location": "Remote — Ireland, Portugal, Spain +",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Java",
+    "Android"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/m-kopa/jobs/senior-backend-engineer-mobility-8033516156",
+   "postedAt": "2026-10-28T09:35:31.000Z",
+   "expiresAt": "2026-12-27T09:35:30.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_hercules-jobs-ai-native-growth-hacker",
+   "title": "AI-native Growth Hacker",
+   "company": "Hercules",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$100K–$200K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/hercules/jobs/ai-native-growth-hacker",
+   "postedAt": "2026-10-28T09:29:31.000Z",
+   "expiresAt": "2026-12-27T09:29:30.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_g2i-jobs-frontend-developer-g2i-talent-p",
+   "title": "Frontend Developer - G2i Talent Pool",
+   "company": "G2i",
+   "location": "Remote — Worldwide",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "React"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/g2i/jobs/frontend-developer-g2i-talent-pool",
+   "postedAt": "2026-10-28T09:25:06.000Z",
+   "expiresAt": "2026-12-27T09:25:05.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_massive-rocket-jobs-principal-data-archi",
+   "title": "Principal Data Architect",
+   "company": "Massive Rocket",
+   "location": "Remote — Brazil",
+   "type": "Contract",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML",
+    "Data"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/massive-rocket/jobs/principal-data-architect",
+   "postedAt": "2026-10-28T09:23:15.000Z",
+   "expiresAt": "2026-12-27T09:23:14.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_rise8-jobs-platform-engineer-iii",
+   "title": "Platform Engineer III",
+   "company": "Rise8",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "DevOps"
+   ],
+   "salary": "$144K–$180K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/rise8/jobs/platform-engineer-iii",
+   "postedAt": "2026-10-28T09:22:20.000Z",
+   "expiresAt": "2026-12-27T09:22:18.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_jeeves-jobs-senior-backend-engineer",
+   "title": "Senior Backend Engineer",
+   "company": "Jeeves",
+   "location": "Remote — Canada",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/jeeves/jobs/senior-backend-engineer",
+   "postedAt": "2026-10-28T09:21:30.000Z",
+   "expiresAt": "2026-12-27T09:21:28.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_future-processing-jobs-senior-machine-le",
+   "title": "Senior Machine Learning Engineer",
+   "company": "Future Processing",
+   "location": "Remote — Poland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "PLN 0K–PLN 0K/hourly",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/future-processing/jobs/senior-machine-learning-engineer",
+   "postedAt": "2026-10-28T09:20:00.000Z",
+   "expiresAt": "2026-12-27T09:19:58.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_viseo-spain-jobs-senior-java-developer-m",
+   "title": "Senior Java Developer (Multinacional)",
+   "company": "VISEO - Spain",
+   "location": "Remote — Spain",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Java"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/viseo-spain/jobs/senior-java-developer-multinacional",
+   "postedAt": "2026-10-28T09:19:44.000Z",
+   "expiresAt": "2026-12-27T09:19:42.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_general-dynamics-information-technology-",
+   "title": "Senior SharePoint Developer",
+   "company": "General Dynamics Information Technology",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$98K–$115K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/general-dynamics-information-technology/jobs/senior-sharepoint-developer",
+   "postedAt": "2026-10-28T09:16:04.000Z",
+   "expiresAt": "2026-12-27T09:16:03.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_mckesson-jobs-sr-software-engineer-ident",
+   "title": "Sr. Software Engineer, Identity & Access Management",
+   "company": "McKesson",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Security"
+   ],
+   "salary": "$131K–$218K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/mckesson/jobs/sr-software-engineer-identity-access-management",
+   "postedAt": "2026-10-28T09:15:55.000Z",
+   "expiresAt": "2026-12-27T09:15:53.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_paralucent-jobs-business-analyst-sap-fin",
+   "title": "Business Analyst (SAP Finance) -Remote India (PL5346)",
+   "company": "Paralucent",
+   "location": "Remote — India",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/paralucent/jobs/business-analyst-sap-finance-remote-india-pl5346",
+   "postedAt": "2026-10-28T09:13:07.000Z",
+   "expiresAt": "2026-12-27T09:13:04.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_alten-jobs-senior-scientific-data-archit",
+   "title": "Senior Scientific Data Architect & Data Modeler (all gender)",
+   "company": "ALTEN",
+   "location": "Remote — Germany",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/alten/jobs/senior-scientific-data-architect-data-modeler-all-gender-4352781013",
+   "postedAt": "2026-10-28T09:11:36.000Z",
+   "expiresAt": "2026-12-27T09:11:35.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-systems-",
+   "title": "Systems Reliability Engineer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "DevOps",
+    "AI/ML"
+   ],
+   "salary": "$100K–$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/systems-reliability-engineer-644474699",
+   "postedAt": "2026-10-28T09:11:21.000Z",
+   "expiresAt": "2026-12-27T09:11:20.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_collectors-jobs-senior-software-engineer",
+   "title": "Senior Software Engineer - Grading Operations",
+   "company": "Collectors",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/collectors/jobs/senior-software-engineer-grading-operations-2043835334",
+   "postedAt": "2026-10-28T09:10:24.000Z",
+   "expiresAt": "2026-12-27T09:10:23.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_envirotrac-jobs-ai-engineer-remote-posit",
+   "title": "AI Engineer - Remote Position",
+   "company": "EnviroTrac",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$120K–$140K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/envirotrac/jobs/ai-engineer-remote-position",
+   "postedAt": "2026-10-28T09:05:00.000Z",
+   "expiresAt": "2026-12-27T09:04:59.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-nlp-ai-e",
+   "title": "NLP AI Engineer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$130K–$180K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/nlp-ai-engineer-6031623923",
+   "postedAt": "2026-10-28T09:04:05.000Z",
+   "expiresAt": "2026-12-27T09:04:04.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_g2i-jobs-full-stack-developer-g2i-talent",
+   "title": "Full Stack Developer - G2i Talent Pool",
+   "company": "G2i",
+   "location": "Remote — Worldwide",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/g2i/jobs/full-stack-developer-g2i-talent-pool",
+   "postedAt": "2026-10-28T09:03:38.000Z",
+   "expiresAt": "2026-12-27T09:03:38.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_g2i-jobs-backend-developer-g2i-talent-po",
+   "title": "Backend Developer - G2i Talent Pool",
+   "company": "G2i",
+   "location": "Remote — Worldwide",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "JavaScript"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/g2i/jobs/backend-developer-g2i-talent-pool",
+   "postedAt": "2026-10-28T09:03:22.000Z",
+   "expiresAt": "2026-12-27T09:03:22.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_centralreach-jobs-senior-sales-engineer-",
+   "title": "Senior Sales Engineer, Data Products",
+   "company": "CentralReach",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$125K–$160K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/centralreach/jobs/senior-sales-engineer-data-products",
+   "postedAt": "2026-10-28T09:02:30.000Z",
+   "expiresAt": "2026-12-27T09:02:29.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-python-s",
+   "title": "Python Software Architect",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Python",
+    "AI/ML"
+   ],
+   "salary": "$100K–$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/python-software-architect-1963654223",
+   "postedAt": "2026-10-28T09:02:04.000Z",
+   "expiresAt": "2026-12-27T09:02:04.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_jewish-federation-of-detroit-jobs-dynami",
+   "title": "Dynamics 365 CRM Technical Lead",
+   "company": "Jewish Federation of Detroit",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/jewish-federation-of-detroit/jobs/dynamics-365-crm-technical-lead",
+   "postedAt": "2026-10-28T09:01:17.000Z",
+   "expiresAt": "2026-12-27T09:01:16.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-go-appli",
+   "title": "Go Applications Engineer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Go",
+    "AI/ML"
+   ],
+   "salary": "$130K–$145K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/go-applications-engineer",
+   "postedAt": "2026-10-28T08:59:31.000Z",
+   "expiresAt": "2026-12-27T08:59:29.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_istari-digital-jobs-sr-security-engineer",
+   "title": "Sr. Security Engineer",
+   "company": "Istari Digital",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Security"
+   ],
+   "salary": "$135K–$220K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/istari-digital/jobs/sr-security-engineer",
+   "postedAt": "2026-10-28T08:58:40.000Z",
+   "expiresAt": "2026-12-27T08:58:39.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bugcrowd-jobs-senior-full-stack-engineer",
+   "title": "Senior Full Stack Engineer",
+   "company": "Bugcrowd",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "React",
+    "Node.js",
+    "AI/ML",
+    "Security"
+   ],
+   "salary": "$140K–$176K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bugcrowd/jobs/senior-full-stack-engineer",
+   "postedAt": "2026-10-28T08:58:35.000Z",
+   "expiresAt": "2026-12-27T08:58:34.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-coupa-ap",
+   "title": "Coupa API Developer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$90K–$110K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/coupa-api-developer-5313816617",
+   "postedAt": "2026-10-28T08:57:44.000Z",
+   "expiresAt": "2026-12-27T08:57:42.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_new-york-life-insurance-co-jobs-senior-a",
+   "title": "Senior Associate - Workload Automation Engineer",
+   "company": "New York Life Insurance Co",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "DevOps"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/new-york-life-insurance-co/jobs/senior-associate-workload-automation-engineer",
+   "postedAt": "2026-10-28T08:55:31.000Z",
+   "expiresAt": "2026-12-27T08:55:30.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-cybersec",
+   "title": "Cybersecurity Engineer – Applications",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "Security"
+   ],
+   "salary": "$100K–$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/cybersecurity-engineer-applications-706191557",
+   "postedAt": "2026-10-28T08:55:16.000Z",
+   "expiresAt": "2026-12-27T08:55:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_chainguard-jobs-enterprise-sales-enginee",
+   "title": "Enterprise Sales Engineer - Philadelphia",
+   "company": "Chainguard",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "$140K–$165K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/chainguard/jobs/enterprise-sales-engineer-philadelphia",
+   "postedAt": "2026-10-28T08:54:58.000Z",
+   "expiresAt": "2026-12-27T08:54:56.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_serverpod-jobs-senior-infrastructure-eng",
+   "title": "Senior Infrastructure Engineer",
+   "company": "Serverpod",
+   "location": "Remote — Sweden",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "DevOps"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/serverpod/jobs/senior-infrastructure-engineer",
+   "postedAt": "2026-10-28T08:54:53.000Z",
+   "expiresAt": "2026-12-27T08:54:52.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_upwind-security-jobs-pre-sales-engineer-",
+   "title": "Pre-Sales Engineer- France",
+   "company": "Upwind Security",
+   "location": "Remote — France",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Security"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/upwind-security/jobs/pre-sales-engineer-france",
+   "postedAt": "2026-10-28T08:54:46.000Z",
+   "expiresAt": "2026-12-27T08:54:45.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_decisionpoint-corporation-jobs-cloud-sys",
+   "title": "Cloud / System Engineer (Journeyman)",
+   "company": "DecisionPoint Corporation",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "DevOps"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/decisionpoint-corporation/jobs/cloud-system-engineer-journeyman",
+   "postedAt": "2026-10-28T08:54:44.000Z",
+   "expiresAt": "2026-12-27T08:54:41.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_lockheed-martin-corporation-jobs-softwar",
+   "title": "Software Engineer Stf - Enterprise IT",
+   "company": "Lockheed Martin Corporation",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "DevOps"
+   ],
+   "salary": "$109K–$280K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/lockheed-martin-corporation/jobs/software-engineer-stf-enterprise-it",
+   "postedAt": "2026-10-28T08:53:39.000Z",
+   "expiresAt": "2026-12-27T08:53:37.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_affirm-jobs-senior-software-engineer-bac",
+   "title": "Senior Software Engineer, Backend (AI Platform)",
+   "company": "Affirm",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$173K–$255K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/affirm/jobs/senior-software-engineer-backend-ai-platform-1344848622",
+   "postedAt": "2026-10-28T08:53:28.000Z",
+   "expiresAt": "2026-12-27T08:53:27.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_net-at-work-llc-jobs-ai-productivity-lea",
+   "title": "AI Productivity Lead - Sales",
+   "company": "Net at Work, LLC",
+   "location": "Remote — United States",
+   "type": "Contract",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$0K–$0K/hourly",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/net-at-work-llc/jobs/ai-productivity-lead-sales",
+   "postedAt": "2026-10-28T08:53:01.000Z",
+   "expiresAt": "2026-12-27T08:52:59.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_decisionpoint-corporation-jobs-senior-da",
+   "title": "Senior Database Administrator PN041",
+   "company": "DecisionPoint Corporation",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SQL"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/decisionpoint-corporation/jobs/senior-database-administrator-pn041",
+   "postedAt": "2026-10-28T08:51:58.000Z",
+   "expiresAt": "2026-12-27T08:51:57.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_g2i-jobs-tech-talent-pool-engineers-data",
+   "title": "Tech Talent Pool: Engineers, Data and AI/ML",
+   "company": "G2i",
+   "location": "Remote — Worldwide",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/g2i/jobs/tech-talent-pool-engineers-data-and-ai-ml",
+   "postedAt": "2026-10-28T08:51:25.000Z",
+   "expiresAt": "2026-12-27T08:51:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_g2i-jobs-ai-engineer-llm-engineer-g2i-ta",
+   "title": "AI Engineer / LLM Engineer - G2i Talent Pool",
+   "company": "G2i",
+   "location": "Remote — Worldwide",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/g2i/jobs/ai-engineer-llm-engineer-g2i-talent-pool",
+   "postedAt": "2026-10-28T08:48:38.000Z",
+   "expiresAt": "2026-12-27T08:48:38.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_hyre-jobs-ai-automation-engineer",
+   "title": "AI Automation Engineer",
+   "company": "Hyre",
+   "location": "Remote — Mexico",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/hyre/jobs/ai-automation-engineer",
+   "postedAt": "2026-10-28T08:48:08.000Z",
+   "expiresAt": "2026-12-27T08:48:07.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_knowmad-mood-jobs-tech-lead-java-arquite",
+   "title": "Tech Lead | Java, Arquitectura Hexagonal, SDD | Remoto",
+   "company": "knowmad mood",
+   "location": "Remote — Spain",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Java"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/knowmad-mood/jobs/tech-lead-java-arquitectura-hexagonal-sdd-remoto",
+   "postedAt": "2026-10-28T08:31:25.000Z",
+   "expiresAt": "2026-12-27T08:31:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_atomic-hr-jobs-quality-engineer-qa-remot",
+   "title": "Quality Engineer, QA | Remote | 🇺🇸 US Startup Helping Frontline Workers 💙",
+   "company": "Atomic HR",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "QA"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/atomic-hr/jobs/quality-engineer-qa-remote-us-startup-helping-frontline-workers",
+   "postedAt": "2026-10-28T08:31:20.000Z",
+   "expiresAt": "2026-12-27T08:31:19.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_vcluster-labs-jobs-revenue-operations-en",
+   "title": "Revenue Operations Engineer",
+   "company": "vCluster Labs",
+   "location": "Remote — United Kingdom",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "GBP 75K–GBP 95K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/vcluster-labs/jobs/revenue-operations-engineer",
+   "postedAt": "2026-10-28T08:29:58.000Z",
+   "expiresAt": "2026-12-27T08:29:57.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_productiv-team-jobs-backend-developer-26",
+   "title": "Backend Developer",
+   "company": "Productiv Team",
+   "location": "Remote — Brazil",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Node.js"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/productiv-team/jobs/backend-developer-2689844360",
+   "postedAt": "2026-10-28T08:26:18.000Z",
+   "expiresAt": "2026-12-27T08:26:17.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-qa-engin",
+   "title": "QA Engineer – Automation",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "QA"
+   ],
+   "salary": "$115K–$130K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/qa-engineer-automation-2653076919",
+   "postedAt": "2026-10-28T08:24:41.000Z",
+   "expiresAt": "2026-12-27T08:24:40.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_rtx-jobs-senior-integration-automation-e",
+   "title": "Senior Integration & Automation Engineer",
+   "company": "RTX",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$132K–$252K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/rtx/jobs/senior-integration-automation-engineer",
+   "postedAt": "2026-10-28T08:23:52.000Z",
+   "expiresAt": "2026-12-27T08:23:50.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_nvidia-jobs-solutions-architect-ncp-devo",
+   "title": "Solutions Architect - NCP DevOps",
+   "company": "NVIDIA",
+   "location": "Remote — Australia",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "DevOps"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/nvidia/jobs/solutions-architect-ncp-devops",
+   "postedAt": "2026-10-28T08:23:29.000Z",
+   "expiresAt": "2026-12-27T08:23:27.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_administrateur-systemes-reseaux-cloud-f-",
+   "title": "Administrateur Systèmes, Réseaux & Cloud (F/H)",
+   "company": "Valsoft Corp",
+   "location": "Nantes, France",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/valsoft-corp/administrateur-systemes-reseaux-cloud-f-h-nantes-46821",
+   "postedAt": "2026-10-28T08:20:16.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_jobsity-jobs-go-backend-engineer",
+   "title": "Go BackEnd Engineer",
+   "company": "Jobsity",
+   "location": "Remote — Colombia",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Go"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/jobsity/jobs/go-backend-engineer",
+   "postedAt": "2026-10-28T08:17:56.000Z",
+   "expiresAt": "2026-12-27T08:17:55.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-data-engineer-uddingston-297287",
+   "title": "Senior Data Engineer",
+   "company": "OLR Holdings Ltd trading as DFYNE",
+   "location": "Uddingston",
+   "type": "Contract",
+   "exp": "Senior",
+   "tech": [
+    "Data"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/olr-holdings-ltd-trading-as-dfyne/senior-data-engineer-uddingston-297287",
+   "postedAt": "2026-10-28T08:10:42.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-ai-syste",
+   "title": "AI Systems Performance Specialist",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$130K–$180K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/ai-systems-performance-specialist-2539381385",
+   "postedAt": "2026-10-28T08:09:40.000Z",
+   "expiresAt": "2026-12-27T08:09:39.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_mozilla-jobs-sr-data-analyst",
+   "title": "Sr Data Analyst",
+   "company": "Mozilla",
+   "location": "Remote — Canada",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "CAD 93K–CAD 125K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/mozilla/jobs/sr-data-analyst",
+   "postedAt": "2026-10-28T08:09:37.000Z",
+   "expiresAt": "2026-12-27T08:09:35.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-conversa",
+   "title": "Conversational AI Engineer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$130K–$180K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/conversational-ai-engineer-6372675198",
+   "postedAt": "2026-10-28T08:07:33.000Z",
+   "expiresAt": "2026-12-27T08:07:32.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_tyto-athene-jobs-senior-cloud-security-e",
+   "title": "Senior Cloud Security Engineer (AWS & GCP)",
+   "company": "Tyto Athene",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AWS",
+    "GCP",
+    "Security"
+   ],
+   "salary": "$135K–$160K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/tyto-athene/jobs/senior-cloud-security-engineer-aws-gcp",
+   "postedAt": "2026-10-28T08:06:35.000Z",
+   "expiresAt": "2026-12-27T08:06:35.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_periferia-it-jobs-desarrollador-a-full-s",
+   "title": "Desarrollador/a Full Stack Senior",
+   "company": "Periferia IT",
+   "location": "Remote — Colombia",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Angular",
+    "Node.js"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/periferia-it/jobs/desarrollador-a-full-stack-senior",
+   "postedAt": "2026-10-28T08:06:27.000Z",
+   "expiresAt": "2026-12-27T08:06:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_dentsu-international-jobs-generative-ai-",
+   "title": "Generative AI Engineer",
+   "company": "dentsu international",
+   "location": "Remote — Spain",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/dentsu-international/jobs/generative-ai-engineer",
+   "postedAt": "2026-10-28T08:05:50.000Z",
+   "expiresAt": "2026-12-27T08:05:49.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_ra-jobs-salesforce-developer-remote",
+   "title": "Salesforce Developer Remote",
+   "company": "RA",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Salesforce"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/ra/jobs/salesforce-developer-remote",
+   "postedAt": "2026-10-28T08:05:10.000Z",
+   "expiresAt": "2026-12-27T08:05:08.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_caci-international-inc-jobs-senior-softw",
+   "title": "Senior Software Engineer",
+   "company": "CACI International Inc",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$82K–$172K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/caci-international-inc/jobs/senior-software-engineer",
+   "postedAt": "2026-10-28T08:04:11.000Z",
+   "expiresAt": "2026-12-27T08:04:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-staff-ap",
+   "title": "Staff Applications Engineer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$150K–$190K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/staff-applications-engineer-5933673632",
+   "postedAt": "2026-10-28T08:01:51.000Z",
+   "expiresAt": "2026-12-27T08:01:48.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_urban-ridge-supplies-jobs-data-engineer-",
+   "title": "Data Engineer (FP&A)",
+   "company": "Urban Ridge Supplies",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Data"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/urban-ridge-supplies/jobs/data-engineer-fp-a",
+   "postedAt": "2026-10-28T07:57:50.000Z",
+   "expiresAt": "2026-12-27T07:57:49.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_mckesson-jobs-sr-power-bi-intelligence-a",
+   "title": "Sr. Power BI Intelligence Analyst",
+   "company": "McKesson",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$114K–$190K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/mckesson/jobs/sr-power-bi-intelligence-analyst",
+   "postedAt": "2026-10-28T07:54:45.000Z",
+   "expiresAt": "2026-12-27T07:54:43.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_sci-serviclients-jobs-consultor-a-tecnic",
+   "title": "Consultor/a Técnico Senior Java | Sector Público | Teletrabajo",
+   "company": "SCI Serviclients",
+   "location": "Remote — Spain",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Java"
+   ],
+   "salary": "EUR 35K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/sci-serviclients/jobs/consultor-a-tecnico-senior-java-sector-publico-teletrabajo",
+   "postedAt": "2026-10-28T07:54:40.000Z",
+   "expiresAt": "2026-12-27T07:54:38.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_makpar-jobs-ml-engineer",
+   "title": "ML Engineer",
+   "company": "Makpar",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/makpar/jobs/ml-engineer",
+   "postedAt": "2026-10-28T07:54:26.000Z",
+   "expiresAt": "2026-12-27T07:54:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_alcor-jobs-java-staff-software-engineer-",
+   "title": "Java Staff Software Engineer (2nd position)",
+   "company": "Alcor",
+   "location": "Remote — Colombia",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Java"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/alcor/jobs/java-staff-software-engineer-2nd-position",
+   "postedAt": "2026-10-28T07:54:18.000Z",
+   "expiresAt": "2026-12-27T07:54:18.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_highlevel-jobs-senior-sde-full-stack-fro",
+   "title": "Senior SDE (Full Stack - Frontend Heavy ) (Special Projects)",
+   "company": "HighLevel",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "React",
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/highlevel/jobs/senior-sde-full-stack-frontend-heavy-special-projects",
+   "postedAt": "2026-10-28T07:53:34.000Z",
+   "expiresAt": "2026-12-27T07:53:33.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_ness-usa-inc-jobs-senior-qa-engineer-t11",
+   "title": "Senior QA Engineer (T11)",
+   "company": "Ness USA, Inc.",
+   "location": "Remote — Romania",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "QA"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/ness-usa-inc/jobs/senior-qa-engineer-t11",
+   "postedAt": "2026-10-28T07:49:28.000Z",
+   "expiresAt": "2026-12-27T07:49:27.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_home-depot-u-s-a-inc-jobs-software-engin",
+   "title": "Software Engineer II, Supply Chain Sourcing Core",
+   "company": "HOME DEPOT U.S.A., INC.",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "$90K–$240K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/home-depot-u-s-a-inc/jobs/software-engineer-ii-supply-chain-sourcing-core-7273022367",
+   "postedAt": "2026-10-28T07:48:24.000Z",
+   "expiresAt": "2026-12-27T07:48:20.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-boomi-mi",
+   "title": "Boomi Middleware Engineer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$100K–$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/boomi-middleware-engineer-4101099980",
+   "postedAt": "2026-10-28T07:46:59.000Z",
+   "expiresAt": "2026-12-27T07:46:57.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_peraton-jobs-okta-iam-identity-integrati",
+   "title": "Okta IAM / Identity Integration Engineer",
+   "company": "Peraton",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Security"
+   ],
+   "salary": "$66K–$106K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/peraton/jobs/okta-iam-identity-integration-engineer",
+   "postedAt": "2026-10-28T07:40:06.000Z",
+   "expiresAt": "2026-12-27T07:40:04.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_productiv-team-jobs-senior-full-stack-en",
+   "title": "Senior Full-Stack Engineer (Agentic Development Platform)",
+   "company": "Productiv Team",
+   "location": "Remote — Poland",
+   "type": "Contract",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/productiv-team/jobs/senior-full-stack-engineer-agentic-development-platform",
+   "postedAt": "2026-10-28T07:36:04.000Z",
+   "expiresAt": "2026-12-27T07:36:04.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_knowmad-mood-jobs-technical-lead-java-sd",
+   "title": "Technical Lead Java + SDD (Remoto)",
+   "company": "knowmad mood",
+   "location": "Remote — Spain",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Java"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/knowmad-mood/jobs/technical-lead-java-sdd-remoto",
+   "postedAt": "2026-10-28T07:31:25.000Z",
+   "expiresAt": "2026-12-27T07:31:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_tlnt-bridge-recruiting-jobs-software-eng",
+   "title": "Software Engineer, External Integrations & Data",
+   "company": "TLNT Bridge Recruiting",
+   "location": "Remote — Canada",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "CAD 150K–CAD 180K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/tlnt-bridge-recruiting/jobs/software-engineer-external-integrations-data",
+   "postedAt": "2026-10-28T07:30:41.000Z",
+   "expiresAt": "2026-12-27T07:30:40.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_blackhawk-network-jobs-platform-engineer",
+   "title": "Platform Engineer I",
+   "company": "Blackhawk Network",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "DevOps"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/blackhawk-network/jobs/platform-engineer-i",
+   "postedAt": "2026-10-28T07:28:38.000Z",
+   "expiresAt": "2026-12-27T07:28:37.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_luza-group-jobs-especialista-de-ti-otc-s",
+   "title": "Especialista de TI – OTC | Salesforce e SAP SD",
+   "company": "LUZA Group",
+   "location": "Remote — Brazil",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "Salesforce",
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/luza-group/jobs/especialista-de-ti-otc-salesforce-e-sap-sd",
+   "postedAt": "2026-10-28T07:28:35.000Z",
+   "expiresAt": "2026-12-27T07:28:34.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_avalon-healthcare-solutions-jobs-softwar",
+   "title": "Software Engineer I",
+   "company": "Avalon Healthcare Solutions",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/avalon-healthcare-solutions/jobs/software-engineer-i",
+   "postedAt": "2026-10-28T07:18:04.000Z",
+   "expiresAt": "2026-12-27T07:18:03.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_belden-inc-jobs-sap-integration-architec",
+   "title": "SAP Integration Architect - Integration Suite/CPI (US Remote) (Richmond, IN, US,",
+   "company": "Belden, Inc",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "$101K–$152K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/belden-inc/jobs/sap-integration-architect-integration-suite-cpi-us-remote-richmond-in-us",
+   "postedAt": "2026-10-28T07:16:17.000Z",
+   "expiresAt": "2026-12-27T07:16:16.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_general-dynamics-information-technology-",
+   "title": "Senior Software Engineer",
+   "company": "General Dynamics Information Technology",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$143K–$190K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/general-dynamics-information-technology/jobs/senior-software-engineer",
+   "postedAt": "2026-10-28T07:14:50.000Z",
+   "expiresAt": "2026-12-27T07:14:49.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_alimentiv-jobs-gcp-computer-system-valid",
+   "title": "GCP - Computer System Validation Specialist (12 month limited-term)",
+   "company": "Alimentiv",
+   "location": "Remote — Canada",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "GCP",
+    "QA"
+   ],
+   "salary": "CAD 69K–CAD 115K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/alimentiv/jobs/gcp-computer-system-validation-specialist-12-month-limited-term",
+   "postedAt": "2026-10-28T07:13:26.000Z",
+   "expiresAt": "2026-12-27T07:13:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_icf-jobs-salesforce-developer-remote-usa",
+   "title": "Salesforce Developer - Remote (USA)",
+   "company": "ICF",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Salesforce"
+   ],
+   "salary": "$99K–$168K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/icf/jobs/salesforce-developer-remote-usa",
+   "postedAt": "2026-10-28T07:12:52.000Z",
+   "expiresAt": "2026-12-27T07:12:49.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-mechanical-engineer-451339",
+   "title": "Senior Mechanical Engineer",
+   "company": "Cambridgeconsultantslimited",
+   "location": "Remote",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/cambridgeconsultantslimited/senior-mechanical-engineer-451339",
+   "postedAt": "2026-10-28T06:55:22.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_ai-edge-deployment-engineer-berlin-18167",
+   "title": "AI Edge Deployment Engineer",
+   "company": "Almetra",
+   "location": "Onsite Berlin",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/almetra/ai-edge-deployment-engineer-berlin-181670",
+   "postedAt": "2026-10-28T06:40:17.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_mechanical-analyses-engineer-munich-1040",
+   "title": "Mechanical Analyses Engineer",
+   "company": "The Exploration Company",
+   "location": "Munich, Germany",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/the-exploration-company/mechanical-analyses-engineer-munich-10409",
+   "postedAt": "2026-10-28T06:40:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_front-end-engineer-london-382196",
+   "title": "Front-end Engineer",
+   "company": "Comand Ai",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/comand-ai/front-end-engineer-london-382196",
+   "postedAt": "2026-10-28T06:40:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_fullstack-engineer-paris-15296",
+   "title": "Fullstack Engineer",
+   "company": "Comand Ai",
+   "location": "Paris",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/comand-ai/fullstack-engineer-paris-15296",
+   "postedAt": "2026-10-28T06:40:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_field-cto-uk-london-288826",
+   "title": "Field CTO, UK",
+   "company": "Mistral.ai",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/mistralai/field-cto-uk-london-288826",
+   "postedAt": "2026-10-28T06:40:14.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_architect-sap-s-4hana-integration-heidel",
+   "title": "Architect SAP S/4HANA Integration (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/architect-sap-s-4hana-integration-heidelberg-238562",
+   "postedAt": "2026-10-28T06:31:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-seeker-systems-engineer-eo-ir-rad",
+   "title": "Senior Seeker Systems Engineer (EO/IR & Radar) (f/m/d)",
+   "company": "TYTAN Technologies GmbH",
+   "location": "Munich, Bayern, Germany",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/tytan-technologies-gmbh/senior-seeker-systems-engineer-eo-ir-radar-munich-279419",
+   "postedAt": "2026-10-28T06:31:21.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_sci-serviclients-jobs-data-scientist-mlo",
+   "title": "Data Scientist / MLOps Engineer | Teletrabajo",
+   "company": "SCI Serviclients",
+   "location": "Remote — Spain",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "EUR 53K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/sci-serviclients/jobs/data-scientist-mlops-engineer-teletrabajo",
+   "postedAt": "2026-10-28T06:27:30.000Z",
+   "expiresAt": "2026-12-27T06:27:28.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_step-jobs-senior-machine-learning-engine",
+   "title": "Senior Machine Learning Engineer",
+   "company": "Step",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/step/jobs/senior-machine-learning-engineer",
+   "postedAt": "2026-10-28T06:25:24.000Z",
+   "expiresAt": "2026-12-27T06:25:23.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_humana-jobs-lead-full-stack-engineer",
+   "title": "Lead Full Stack Engineer",
+   "company": "Humana",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$129K–$178K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/humana/jobs/lead-full-stack-engineer",
+   "postedAt": "2026-10-28T06:23:50.000Z",
+   "expiresAt": "2026-12-27T06:23:50.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_purdue-university-jobs-full-stack-develo",
+   "title": "Full Stack Developer (REMOTE, IN, US)",
+   "company": "Purdue University",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Python",
+    "JavaScript",
+    "React",
+    "Node.js"
+   ],
+   "salary": "$60K–$67K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/purdue-university/jobs/full-stack-developer-remote-in-us",
+   "postedAt": "2026-10-28T06:16:18.000Z",
+   "expiresAt": "2026-12-27T06:16:17.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_brown-brown-insurance-jobs-senior-data-s",
+   "title": "Senior Data Scientist",
+   "company": "Brown & Brown Insurance",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$75K–$110K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/brown-brown-insurance/jobs/senior-data-scientist",
+   "postedAt": "2026-10-28T06:13:06.000Z",
+   "expiresAt": "2026-12-27T06:13:05.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bcd-travel-jobs-manager-ai-solutions-eng",
+   "title": "Manager, AI Solutions Engineer, People & Culture (IN, Delhi, Virtual, India, APA",
+   "company": "BCD Travel",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bcd-travel/jobs/manager-ai-solutions-engineer-people-culture-in-delhi-virtual-india-apa",
+   "postedAt": "2026-10-28T06:10:46.000Z",
+   "expiresAt": "2026-12-27T06:10:44.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-adobe-ex",
+   "title": "Adobe Experience Manager Developer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Java",
+    "AI/ML"
+   ],
+   "salary": "$100K–$110K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/adobe-experience-manager-developer-7451169819",
+   "postedAt": "2026-10-28T06:09:48.000Z",
+   "expiresAt": "2026-12-27T06:09:46.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_vicara-jobs-full-stack-developer",
+   "title": "Full Stack Developer",
+   "company": "Vicara",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "JavaScript"
+   ],
+   "salary": "INR 1000K–INR 1600K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/vicara/jobs/full-stack-developer",
+   "postedAt": "2026-10-28T06:06:50.000Z",
+   "expiresAt": "2026-12-27T06:06:48.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_highmark-health-jobs-summer-2027-provide",
+   "title": "Summer 2027 Provider Delivery Software Engineer enGen Undergraduate Intern",
+   "company": "Highmark Health",
+   "location": "Remote — United States",
+   "type": "Internship",
+   "exp": "Junior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/highmark-health/jobs/summer-2027-provider-delivery-software-engineer-engen-undergraduate-intern",
+   "postedAt": "2026-10-28T06:06:20.000Z",
+   "expiresAt": "2026-12-27T06:06:19.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_melita-group-jobs-salesforce-administrat",
+   "title": "SalesForce Administrator",
+   "company": "Melita Group",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Salesforce"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/melita-group/jobs/salesforce-administrator",
+   "postedAt": "2026-10-28T06:05:53.000Z",
+   "expiresAt": "2026-12-27T06:05:52.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_ci-t-jobs-job-32452-mid-level-android-de",
+   "title": "[Job - 32452] Mid-Level Android Developer, Brazil",
+   "company": "CI&T",
+   "location": "Remote — Brazil",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "Android"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/ci-t/jobs/job-32452-mid-level-android-developer-brazil",
+   "postedAt": "2026-10-28T06:05:29.000Z",
+   "expiresAt": "2026-12-27T06:05:27.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_shipup-jobs-full-stack-engineer-ruby-on-",
+   "title": "Full Stack Engineer (Ruby on Rails)",
+   "company": "Shipup",
+   "location": "Remote — Bulgaria",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Vue",
+    "Ruby"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/shipup/jobs/full-stack-engineer-ruby-on-rails",
+   "postedAt": "2026-10-28T06:04:03.000Z",
+   "expiresAt": "2026-12-27T06:04:01.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_sephora-jobs-intern-technology-ai-platfo",
+   "title": "Intern, Technology, AI Platform Infrastructure (Remote, Remote, US, USA_520000)",
+   "company": "Sephora",
+   "location": "Remote — United States",
+   "type": "Internship",
+   "exp": "Junior",
+   "tech": [
+    "DevOps",
+    "AI/ML"
+   ],
+   "salary": "$0K/hourly",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/sephora/jobs/intern-technology-ai-platform-infrastructure-remote-remote-us-usa_520000",
+   "postedAt": "2026-10-28T06:03:32.000Z",
+   "expiresAt": "2026-12-27T06:03:31.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_altisource-jobs-senior-software-engineer",
+   "title": "Senior Software Engineer",
+   "company": "Altisource",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "React"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/altisource/jobs/senior-software-engineer",
+   "postedAt": "2026-10-28T06:00:48.000Z",
+   "expiresAt": "2026-12-27T06:00:47.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_lively-jobs-sr-software-engineer-backend",
+   "title": "Sr. Software Engineer (Backend) - Portugal",
+   "company": "Lively",
+   "location": "Remote — Portugal",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Java",
+    "AWS",
+    "Android"
+   ],
+   "salary": "EUR 80K–EUR 90K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/lively/jobs/sr-software-engineer-backend-portugal",
+   "postedAt": "2026-10-28T05:59:35.000Z",
+   "expiresAt": "2026-12-27T05:59:32.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_home-depot-u-s-a-inc-jobs-software-engin",
+   "title": "Software Engineer, Backend & Distributed Systems",
+   "company": "HOME DEPOT U.S.A., INC.",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "$50K–$130K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/home-depot-u-s-a-inc/jobs/software-engineer-backend-distributed-systems",
+   "postedAt": "2026-10-28T05:52:40.000Z",
+   "expiresAt": "2026-12-27T05:52:39.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_global-channel-management-inc-jobs-remot",
+   "title": "Remote Biomedical Knowledge Systems Engineer",
+   "company": "Global Channel Management, Inc.",
+   "location": "Remote — United States",
+   "type": "Part-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/global-channel-management-inc/jobs/remote-biomedical-knowledge-systems-engineer-1422890719",
+   "postedAt": "2026-10-28T05:50:44.000Z",
+   "expiresAt": "2026-12-27T05:50:42.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-lead-sof",
+   "title": "Lead Software Architect",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$175K–$200K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/lead-software-architect-6092819457",
+   "postedAt": "2026-10-28T05:02:42.000Z",
+   "expiresAt": "2026-12-27T05:02:40.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_capital-one-national-association-jobs-se",
+   "title": "Senior Staff Full-stack Engineer - Global Payment Network (Remote - Eligible)",
+   "company": "Capital One National Association",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "React",
+    "Node.js"
+   ],
+   "salary": "$286K–$327K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/capital-one-national-association/jobs/senior-staff-full-stack-engineer-global-payment-network-remote-eligible",
+   "postedAt": "2026-10-28T04:39:02.000Z",
+   "expiresAt": "2026-12-27T04:38:58.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_contentstack-jobs-sr-business-intelligen",
+   "title": "Sr. Business Intelligence Data Architect",
+   "company": "Contentstack",
+   "location": "Remote — Netherlands",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/contentstack/jobs/sr-business-intelligence-data-architect",
+   "postedAt": "2026-10-28T04:10:28.000Z",
+   "expiresAt": "2026-12-27T04:10:23.000Z",
+   "live": true
+  },
   {
    "id": "live_Arbeitnow_senior-forward-deployed-engineer-technic",
    "title": "Senior Forward Deployed Engineer (Technical Data Architect)",
@@ -228,6 +2656,23 @@
    "live": true
   },
   {
+   "id": "live_Himalayas_shipup-jobs-senior-full-stack-engineer-r",
+   "title": "Senior Full Stack Engineer (Ruby on Rails)",
+   "company": "Shipup",
+   "location": "Remote — Bulgaria",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Ruby"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/shipup/jobs/senior-full-stack-engineer-ruby-on-rails",
+   "postedAt": "2026-10-28T03:48:12.000Z",
+   "expiresAt": "2026-12-27T03:48:10.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_revenue-operations-engineer-united-kingd",
    "title": "Revenue Operations Engineer",
    "company": "Vclusterlabs",
@@ -332,6 +2777,62 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.ch/jobs/companies/rotzinger-group/field-engineer-altendorf-230096",
    "postedAt": "2026-10-28T03:31:20.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Jobicy_154108",
+   "title": "Engineering Manager - Feegow (100% Remote within Brazil)",
+   "company": "Docplanner",
+   "location": "Remote — Brazil",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Jobicy",
+   "url": "https://jobicy.com/jobs/154108-engineering-manager-feegow-100-remote-within-brazil",
+   "postedAt": "2026-10-28T03:30:14.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Jobicy_154107",
+   "title": "Algorithms Engineer",
+   "company": "QuinStreet",
+   "location": "Remote — USA",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Jobicy",
+   "url": "https://jobicy.com/jobs/154107-algorithms-engineer",
+   "postedAt": "2026-10-28T03:30:13.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Jobicy_151860",
+   "title": "Senior Software Engineer, Product Engineering - UK",
+   "company": "Ashby",
+   "location": "Remote — UK",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Jobicy",
+   "url": "https://jobicy.com/jobs/151860-senior-software-engineer-product-engineering-uk",
+   "postedAt": "2026-10-28T03:30:08.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Jobicy_151859",
+   "title": "Staff Software Engineer, Product Engineering - UK",
+   "company": "Ashby",
+   "location": "Remote — UK",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Jobicy",
+   "url": "https://jobicy.com/jobs/151859-staff-software-engineer-product-engineering-uk",
+   "postedAt": "2026-10-28T03:30:06.000Z",
    "live": true
   },
   {
@@ -510,6 +3011,279 @@
    "live": true
   },
   {
+   "id": "live_Jobicy_147495",
+   "title": "Applied Data Scientist / Machine Learning Engineer (Decision Intelligence)",
+   "company": "WorkWave",
+   "location": "Remote — USA",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Jobicy",
+   "url": "https://jobicy.com/jobs/147495-applied-data-scientist-machine-learning-engineer-decision-intelligence",
+   "postedAt": "2026-10-28T03:25:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Jobicy_151856",
+   "title": "Staff Software Engineer, Product Engineering - EU",
+   "company": "Ashby",
+   "location": "Remote — Europe",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Jobicy",
+   "url": "https://jobicy.com/jobs/151856-staff-software-engineer-product-engineering-eu-2",
+   "postedAt": "2026-10-28T03:19:30.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Jobicy_151853",
+   "title": "Senior Software Engineer, Product Engineering - EU",
+   "company": "Ashby",
+   "location": "Remote — Europe",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Jobicy",
+   "url": "https://jobicy.com/jobs/151853-senior-software-engineer-product-engineering-eu-2",
+   "postedAt": "2026-10-28T03:19:29.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Jobicy_151824",
+   "title": "Senior Full Stack Product Engineer (TypeScript)",
+   "company": "Maze",
+   "location": "Remote — Canada, Ireland, Netherlands, Portugal, Spain, UK",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "TypeScript",
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Jobicy",
+   "url": "https://jobicy.com/jobs/151824-senior-full-stack-product-engineer-typescript",
+   "postedAt": "2026-10-28T03:19:22.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Jobicy_151789",
+   "title": "Backend Engineer",
+   "company": "Dispatch",
+   "location": "Remote — USA",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Jobicy",
+   "url": "https://jobicy.com/jobs/151789-backend-engineer",
+   "postedAt": "2026-10-28T03:15:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_haven-holidays-jobs-senior-data-scientis",
+   "title": "Senior Data Scientist",
+   "company": "Haven Holidays",
+   "location": "Remote — United Kingdom",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/haven-holidays/jobs/senior-data-scientist",
+   "postedAt": "2026-10-28T03:01:21.000Z",
+   "expiresAt": "2026-12-27T03:01:20.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-servicen",
+   "title": "ServiceNow Solutions Developer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "ServiceNow"
+   ],
+   "salary": "$100K–$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/servicenow-solutions-developer-5289204256",
+   "postedAt": "2026-10-28T03:00:45.000Z",
+   "expiresAt": "2026-12-27T03:00:43.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-sap-cpi-",
+   "title": "SAP CPI Consultant",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "$120K–$165K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/sap-cpi-consultant-6431080179",
+   "postedAt": "2026-10-28T02:19:33.000Z",
+   "expiresAt": "2026-12-27T02:19:32.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_coalfire-jobs-security-engineer-conmon",
+   "title": "Security Engineer (ConMon)",
+   "company": "Coalfire",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Security"
+   ],
+   "salary": "$80K–$134K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/coalfire/jobs/security-engineer-conmon",
+   "postedAt": "2026-10-28T02:17:05.000Z",
+   "expiresAt": "2026-12-27T02:17:02.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_dxc-technology-jobs-associate-manager-so",
+   "title": "Associate Manager Software Engineering",
+   "company": "DXC Technology",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Junior",
+   "tech": [
+    "Java",
+    "DevOps"
+   ],
+   "salary": "$84K–$157K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/dxc-technology/jobs/associate-manager-software-engineering",
+   "postedAt": "2026-10-28T01:53:23.000Z",
+   "expiresAt": "2026-12-27T01:53:22.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_consensus-cloud-solutions-inc-jobs-senio",
+   "title": "Senior Engineer - Clarity",
+   "company": "Consensus Cloud Solutions, Inc.",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$140K–$198K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/consensus-cloud-solutions-inc/jobs/senior-engineer-clarity",
+   "postedAt": "2026-10-28T01:52:58.000Z",
+   "expiresAt": "2026-12-27T01:52:57.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_cxt-software-jobs-ai-native-vp-of-softwa",
+   "title": "AI-Native VP of Software Engineering (OTE $150,000/year USD), CXT Software",
+   "company": "CXT Software",
+   "location": "Remote — Argentina, Brazil, Chile +",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/cxt-software/jobs/ai-native-vp-of-software-engineering-ote-150-000-year-usd-cxt-software-9709596529",
+   "postedAt": "2026-10-28T01:51:54.000Z",
+   "expiresAt": "2026-12-27T01:51:53.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_republic-services-jobs-senior-applicatio",
+   "title": "Senior Application Programmer Analyst",
+   "company": "Republic Services",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/republic-services/jobs/senior-application-programmer-analyst-4577543461",
+   "postedAt": "2026-10-28T01:27:19.000Z",
+   "expiresAt": "2026-12-27T01:27:18.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_avalon-healthcare-solutions-jobs-softwar",
+   "title": "Software Engineer III",
+   "company": "Avalon Healthcare Solutions",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/avalon-healthcare-solutions/jobs/software-engineer-iii",
+   "postedAt": "2026-10-28T01:19:09.000Z",
+   "expiresAt": "2026-12-27T01:19:08.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_software-mind-jobs-mso-go-developer-priv",
+   "title": "[MSO] Go Developer (Private Cloud)",
+   "company": "Software Mind",
+   "location": "Remote — Poland",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Go",
+    "Kubernetes"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/software-mind/jobs/mso-go-developer-private-cloud",
+   "postedAt": "2026-10-28T01:13:37.000Z",
+   "expiresAt": "2026-12-27T01:13:35.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_ci-t-jobs-job-32363-senior-frontend-deve",
+   "title": "[Job-32363] Senior Frontend Developer (React), Brazil",
+   "company": "CI&T",
+   "location": "Remote — Brazil",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "React",
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/ci-t/jobs/job-32363-senior-frontend-developer-react-brazil",
+   "postedAt": "2026-10-28T00:59:20.000Z",
+   "expiresAt": "2026-12-27T00:59:18.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_nvidia-jobs-manufacturing-test-engineer-",
+   "title": "Manufacturing Test Engineer, Tesla",
+   "company": "NVIDIA",
+   "location": "Remote — Vietnam",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/nvidia/jobs/manufacturing-test-engineer-tesla",
+   "postedAt": "2026-10-28T00:58:11.000Z",
+   "expiresAt": "2026-12-27T00:58:09.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_senior-cloud-native-consultant-84942",
    "title": "Senior Cloud Native Consultant",
    "company": "Controlplane",
@@ -543,22 +3317,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_staff-backend-developer-threat-intellige",
-   "title": "Staff Backend Developer - Threat Intelligence",
-   "company": "zscaler",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/zscaler/staff-backend-developer-threat-intelligence-403073",
-   "postedAt": "2026-10-28T00:55:19.000Z",
-   "live": true
-  },
-  {
    "id": "live_Arbeitnow_lead-ai-engineer-ml-llm-ops-agentic-ai-4",
    "title": "Lead AI Engineer - ML/LLM Ops & Agentic AI",
    "company": "shifttechnology",
@@ -572,6 +3330,22 @@
    "salary": "",
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.fr/jobs/companies/shifttechnology/lead-ai-engineer-ml-llm-ops-agentic-ai-479819",
+   "postedAt": "2026-10-28T00:55:19.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_staff-backend-developer-threat-intellige",
+   "title": "Staff Backend Developer - Threat Intelligence",
+   "company": "zscaler",
+   "location": "Remote",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/zscaler/staff-backend-developer-threat-intelligence-403073",
    "postedAt": "2026-10-28T00:55:19.000Z",
    "live": true
   },
@@ -604,6 +3378,24 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.com/jobs/companies/planetlabs/senior-director-of-engineering-civil-government-and-commercial-berlin-79646",
    "postedAt": "2026-10-28T00:55:18.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_harris-jobs-sr-it-cyber-defense-analyst",
+   "title": "Sr IT Cyber Defense Analyst",
+   "company": "Harris",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML",
+    "Security"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/harris/jobs/sr-it-cyber-defense-analyst",
+   "postedAt": "2026-10-28T00:48:13.000Z",
+   "expiresAt": "2026-12-27T00:48:12.000Z",
    "live": true
   },
   {
@@ -717,22 +3509,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_remote-senior-sap-ams-support-consultant",
-   "title": "Senior SAP AMS Support Consultant (SAP SD, SAP MM, SAP PP)",
-   "company": "The Config Team",
-   "location": "Remote job (Remote)",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/the-config-team/remote-senior-sap-ams-support-consultant-sap-sd-sap-mm-sap-pp-uk-361712",
-   "postedAt": "2026-10-28T00:31:44.000Z",
-   "live": true
-  },
-  {
    "id": "live_Arbeitnow_chief-information-security-officer-naard",
    "title": "Chief Information Security Officer",
    "company": "Ockto",
@@ -745,6 +3521,22 @@
    "salary": "",
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.nl/jobs/companies/ockto/chief-information-security-officer-naarden-26308",
+   "postedAt": "2026-10-28T00:31:44.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-senior-sap-ams-support-consultant",
+   "title": "Senior SAP AMS Support Consultant (SAP SD, SAP MM, SAP PP)",
+   "company": "The Config Team",
+   "location": "Remote job (Remote)",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/the-config-team/remote-senior-sap-ams-support-consultant-sap-sd-sap-mm-sap-pp-uk-361712",
    "postedAt": "2026-10-28T00:31:44.000Z",
    "live": true
   },
@@ -765,6 +3557,192 @@
    "live": true
   },
   {
+   "id": "live_Himalayas_icorepioneer-jobs-laravel-developer",
+   "title": "Laravel Developer",
+   "company": "iCore",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "PHP"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/icorepioneer/jobs/laravel-developer",
+   "postedAt": "2026-10-28T00:25:13.000Z",
+   "expiresAt": "2026-12-27T00:25:12.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_neuraflash-jobs-aws-technical-architect",
+   "title": "AWS Technical Architect",
+   "company": "NeuraFlash",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Salesforce",
+    "AWS",
+    "AI/ML"
+   ],
+   "salary": "$87K–$266K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/neuraflash/jobs/aws-technical-architect",
+   "postedAt": "2026-10-28T00:16:54.000Z",
+   "expiresAt": "2026-12-27T00:16:52.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_valis-jobs-software-engineer",
+   "title": "Software Engineer",
+   "company": "VALIS",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "$125K–$155K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/valis/jobs/software-engineer",
+   "postedAt": "2026-10-28T00:14:25.000Z",
+   "expiresAt": "2026-12-27T00:14:23.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_general-dynamics-information-technology-",
+   "title": "CyberSecurity Engineer",
+   "company": "General Dynamics Information Technology",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Security"
+   ],
+   "salary": "$94K–$127K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/general-dynamics-information-technology/jobs/cybersecurity-engineer",
+   "postedAt": "2026-10-28T00:14:16.000Z",
+   "expiresAt": "2026-12-27T00:14:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_ness-usa-inc-jobs-senior-qa-engineer",
+   "title": "Senior QA Engineer",
+   "company": "Ness USA, Inc.",
+   "location": "Remote — Romania",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "QA"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/ness-usa-inc/jobs/senior-qa-engineer",
+   "postedAt": "2026-10-28T00:09:09.000Z",
+   "expiresAt": "2026-12-27T00:09:07.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_harman-international-jobs-distinguished-",
+   "title": "Distinguished Engineer",
+   "company": "HARMAN International",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "$200K–$293K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/harman-international/jobs/distinguished-engineer",
+   "postedAt": "2026-10-27T23:42:26.000Z",
+   "expiresAt": "2026-12-26T23:42:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_step-jobs-lead-design-engineer",
+   "title": "Lead Design Engineer",
+   "company": "Step",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/step/jobs/lead-design-engineer",
+   "postedAt": "2026-10-27T23:33:41.000Z",
+   "expiresAt": "2026-12-26T23:33:39.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_itrex-group-jobs-react-native-engineer",
+   "title": "React Native Engineer",
+   "company": "ITRex Group",
+   "location": "Remote — Poland",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "React",
+    "React Native",
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/itrex-group/jobs/react-native-engineer",
+   "postedAt": "2026-10-27T23:32:27.000Z",
+   "expiresAt": "2026-12-26T23:32:26.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-lead-sal",
+   "title": "Lead Salesforce Architect",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Salesforce",
+    "AI/ML"
+   ],
+   "salary": "$175K–$200K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/lead-salesforce-architect-1938157869",
+   "postedAt": "2026-10-27T23:30:54.000Z",
+   "expiresAt": "2026-12-26T23:30:52.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_addverve-jobs-technical-ai-developer",
+   "title": "Technical AI Developer",
+   "company": "Verve",
+   "location": "Remote — United Kingdom",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/addverve/jobs/technical-ai-developer",
+   "postedAt": "2026-10-27T23:19:12.000Z",
+   "expiresAt": "2026-12-26T23:19:10.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_alcor-jobs-senior-frontend-engineer-reac",
+   "title": "Senior Frontend Engineer (React + Chrome Extension)",
+   "company": "Alcor",
+   "location": "Remote — Poland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "React"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/alcor/jobs/senior-frontend-engineer-react-chrome-extension",
+   "postedAt": "2026-10-27T23:18:53.000Z",
+   "expiresAt": "2026-12-26T23:18:52.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_senior-integrated-operations-engineer-lo",
    "title": "Senior Integrated Operations Engineer",
    "company": "Rocket Lab Corporation",
@@ -776,6 +3754,59 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.co.uk/jobs/companies/rocket-lab-corporation/senior-integrated-operations-engineer-london-70391",
    "postedAt": "2026-10-27T22:45:27.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_zenbusiness-jobs-senior-software-enginee",
+   "title": "Senior Software Engineer, Developer Platform & AI Tooling",
+   "company": "ZenBusiness",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "DevOps",
+    "AI/ML"
+   ],
+   "salary": "$125K–$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/zenbusiness/jobs/senior-software-engineer-developer-platform-ai-tooling",
+   "postedAt": "2026-10-27T22:32:43.000Z",
+   "expiresAt": "2026-12-26T22:32:40.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_tista-science-and-technology-corporation",
+   "title": "Full Stack Developer",
+   "company": "TISTA Science and Technology Corporation",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "JavaScript"
+   ],
+   "salary": "$86K–$98K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/tista-science-and-technology-corporation/jobs/full-stack-developer",
+   "postedAt": "2026-10-27T22:17:42.000Z",
+   "expiresAt": "2026-12-26T22:17:41.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-java-app",
+   "title": "Java Application Architect",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Java",
+    "AI/ML"
+   ],
+   "salary": "$100K–$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/java-application-architect-5879694441",
+   "postedAt": "2026-10-27T22:12:25.000Z",
+   "expiresAt": "2026-12-26T22:12:24.000Z",
    "live": true
   },
   {
@@ -841,20 +3872,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_senior-solution-engineer-france-paris-29",
-   "title": "Senior Solution Engineer - France (f/m/d)",
-   "company": "contentful",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/contentful/senior-solution-engineer-france-paris-295903",
-   "postedAt": "2026-10-27T21:55:17.000Z",
-   "live": true
-  },
-  {
    "id": "live_Arbeitnow_senior-data-analyst-marketplace-456869",
    "title": "Senior Data Analyst - Marketplace",
    "company": "prolific",
@@ -867,6 +3884,20 @@
    "salary": "",
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.co.uk/jobs/companies/prolific/senior-data-analyst-marketplace-456869",
+   "postedAt": "2026-10-27T21:55:17.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-solution-engineer-france-paris-29",
+   "title": "Senior Solution Engineer - France (f/m/d)",
+   "company": "contentful",
+   "location": "Paris",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/contentful/senior-solution-engineer-france-paris-295903",
    "postedAt": "2026-10-27T21:55:17.000Z",
    "live": true
   },
@@ -1011,6 +4042,73 @@
    "live": true
   },
   {
+   "id": "live_Himalayas_accenture-jobs-technical-commerce-ai-con",
+   "title": "Technical Commerce & AI Consultant | Agentic Commerce",
+   "company": "Accenture",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/accenture/jobs/technical-commerce-ai-consultant-agentic-commerce",
+   "postedAt": "2026-10-27T21:25:47.000Z",
+   "expiresAt": "2026-12-26T21:25:45.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_quality-digital-jobs-especialista-de-des",
+   "title": "Especialista de Desenvolvimento Mobile Flutter",
+   "company": "Quality Digital",
+   "location": "Remote — Brazil",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Android",
+    "Flutter"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/quality-digital/jobs/especialista-de-desenvolvimento-mobile-flutter",
+   "postedAt": "2026-10-27T20:56:06.000Z",
+   "expiresAt": "2026-12-26T20:56:05.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_lumiere-systems-jobs-senior-php-engineer",
+   "title": "Senior PHP Engineer",
+   "company": "Lumiere Systems",
+   "location": "Remote — Brazil",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "PHP"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/lumiere-systems/jobs/senior-php-engineer-273473223",
+   "postedAt": "2026-10-27T20:48:25.000Z",
+   "expiresAt": "2026-12-26T20:48:23.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_blue-cross-nc-jobs-senior-developer",
+   "title": "Senior Developer",
+   "company": "Blue Cross NC",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$108K–$173K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/blue-cross-nc/jobs/senior-developer",
+   "postedAt": "2026-10-27T20:41:47.000Z",
+   "expiresAt": "2026-12-26T20:41:46.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_product-engineering-intern-vertical-ai-s",
    "title": "Product Engineering Intern - Vertical AI Startup",
    "company": "MeisterPfad",
@@ -1027,6 +4125,73 @@
    "live": true
   },
   {
+   "id": "live_Himalayas_ci-t-jobs-job-32452-mid-level-qa-enginee",
+   "title": "[Job - 32452] Mid-Level QA Engineer, Brazil",
+   "company": "CI&T",
+   "location": "Remote — Brazil",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML",
+    "QA"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/ci-t/jobs/job-32452-mid-level-qa-engineer-brazil",
+   "postedAt": "2026-10-27T20:16:01.000Z",
+   "expiresAt": "2026-12-26T20:16:00.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_cxt-software-jobs-ai-native-vp-of-softwa",
+   "title": "AI-Native VP of Software Engineering (OTE $150,000/year USD), @CXT Software",
+   "company": "CXT Software",
+   "location": "Remote — Canada",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/cxt-software/jobs/ai-native-vp-of-software-engineering-ote-150-000-year-usd-cxt-software",
+   "postedAt": "2026-10-27T20:10:06.000Z",
+   "expiresAt": "2026-12-26T20:10:05.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_tbibank-jobs-banking-app-technical-lead",
+   "title": "Banking App Technical Lead",
+   "company": "tbi bank",
+   "location": "Remote — Bulgaria",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/tbibank/jobs/banking-app-technical-lead",
+   "postedAt": "2026-10-27T20:09:01.000Z",
+   "expiresAt": "2026-12-26T20:09:00.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_vrinda-international-jobs-duck-creek-qa-",
+   "title": "Duck Creek QA Analyst (Cloud Migration)",
+   "company": "Vrinda International",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "QA"
+   ],
+   "salary": "INR 1600K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/vrinda-international/jobs/duck-creek-qa-analyst-cloud-migration",
+   "postedAt": "2026-10-27T20:05:34.000Z",
+   "expiresAt": "2026-12-26T20:05:32.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_it-system-engineer-80-100-st-gallen-1615",
    "title": "IT System Engineer (w/m/d), 80–100 %",
    "company": "Dukers",
@@ -1038,6 +4203,89 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.ch/jobs/companies/dukers/it-system-engineer-80-100-st-gallen-161513",
    "postedAt": "2026-10-27T20:00:39.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_aaa-life-insurance-company-jobs-software",
+   "title": "Software Development Engineer in Test (SDET)",
+   "company": "AAA Life Insurance Company",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "QA"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/aaa-life-insurance-company/jobs/software-development-engineer-in-test-sdet",
+   "postedAt": "2026-10-27T19:41:44.000Z",
+   "expiresAt": "2026-12-26T19:41:43.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_olxgroup-jobs-software-engineer",
+   "title": "Software Engineer",
+   "company": "OLX",
+   "location": "Remote — South Africa",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    ".NET"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/olxgroup/jobs/software-engineer",
+   "postedAt": "2026-10-27T19:11:05.000Z",
+   "expiresAt": "2026-12-26T19:11:03.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_amerisourcebergen-jobs-lead-engineer-ful",
+   "title": "Lead Engineer, Full-Stack Engineering",
+   "company": "AmerisourceBergen",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "React",
+    "Angular",
+    "Node.js"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/amerisourcebergen/jobs/lead-engineer-full-stack-engineering",
+   "postedAt": "2026-10-27T19:09:51.000Z",
+   "expiresAt": "2026-12-26T19:09:50.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_in-tandem-jobs-staff-software-engineer",
+   "title": "Staff+ Software Engineer",
+   "company": "In Tandem",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$150K–$200K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/in-tandem/jobs/staff-software-engineer",
+   "postedAt": "2026-10-27T19:07:04.000Z",
+   "expiresAt": "2026-12-26T19:07:02.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_dickssportinggoods-jobs-ecommerce-experi",
+   "title": "eCommerce Experience Manager, Mobile App and Loyalty",
+   "company": "DICK'S Sporting Goods",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "$83K–$138K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/dickssportinggoods/jobs/ecommerce-experience-manager-mobile-app-and-loyalty",
+   "postedAt": "2026-10-27T18:57:11.000Z",
+   "expiresAt": "2026-12-26T18:57:09.000Z",
    "live": true
   },
   {
@@ -1310,6 +4558,23 @@
    "live": true
   },
   {
+   "id": "live_Himalayas_michaels-energy-jobs-software-developer",
+   "title": "Software Developer",
+   "company": "Michaels Energy",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Python"
+   ],
+   "salary": "$110K–$125K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/michaels-energy/jobs/software-developer",
+   "postedAt": "2026-10-27T18:51:58.000Z",
+   "expiresAt": "2026-12-26T18:51:57.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_3d-packaging-engineer-delft-146296",
    "title": "3D Packaging Engineer",
    "company": "Quantware",
@@ -1351,22 +4616,6 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.nl/jobs/companies/rentman/interim-qa-specialist-utrecht-458492",
    "postedAt": "2026-10-27T18:40:39.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_machine-learning-engineer-paris-39300",
-   "title": "Machine Learning Engineer",
-   "company": "Linkup",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/linkup/machine-learning-engineer-paris-39300",
-   "postedAt": "2026-10-27T18:40:38.000Z",
    "live": true
   },
   {
@@ -1488,6 +4737,22 @@
    "live": true
   },
   {
+   "id": "live_Arbeitnow_machine-learning-engineer-paris-39300",
+   "title": "Machine Learning Engineer",
+   "company": "Linkup",
+   "location": "Paris",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/linkup/machine-learning-engineer-paris-39300",
+   "postedAt": "2026-10-27T18:40:38.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_senior-fullstack-engineer-zurich-83613",
    "title": "Senior Fullstack Engineer",
    "company": "BLP Digital AG",
@@ -1560,6 +4825,23 @@
    "live": true
   },
   {
+   "id": "live_Arbeitnow_ai-workflows-engineer-switzerland-lausan",
+   "title": "AI Workflows Engineer - Switzerland",
+   "company": "Neuralconcept",
+   "location": "Lausanne",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Python",
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.ch/jobs/companies/neuralconcept/ai-workflows-engineer-switzerland-lausanne-161326",
+   "postedAt": "2026-10-27T18:40:34.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_working-student-ai-software-engineer-lan",
    "title": "Working Student AI Software Engineer, LangChain (all genders)",
    "company": "Thorit",
@@ -1608,23 +4890,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_ai-workflows-engineer-switzerland-lausan",
-   "title": "AI Workflows Engineer - Switzerland",
-   "company": "Neuralconcept",
-   "location": "Lausanne",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "Python",
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.ch/jobs/companies/neuralconcept/ai-workflows-engineer-switzerland-lausanne-161326",
-   "postedAt": "2026-10-27T18:40:34.000Z",
-   "live": true
-  },
-  {
    "id": "live_Arbeitnow_product-engineer-design-engineering-know",
    "title": "Product Engineer | Design Engineering Knowledge",
    "company": "Neuralconcept",
@@ -1668,6 +4933,23 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.com/jobs/companies/makersite-gmbh/remote-senior-site-reliability-engineer-sre-berlin-347745",
    "postedAt": "2026-10-27T18:31:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_decisionpoint-corporation-jobs-database-",
+   "title": "Database and Application Support Engineer (Journeyman)",
+   "company": "DecisionPoint Corporation",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "SQL"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/decisionpoint-corporation/jobs/database-and-application-support-engineer-journeyman",
+   "postedAt": "2026-10-27T18:29:57.000Z",
+   "expiresAt": "2026-12-26T18:29:55.000Z",
    "live": true
   },
   {
@@ -1720,6 +5002,40 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.com/jobs/companies/rockstardevelopers-gmbh/fullstack-entwickler-java-angular-mid-level-stuttgart-350219",
    "postedAt": "2026-10-27T18:17:34.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_xperteez-technology-jobs-machine-learnin",
+   "title": "🌎Machine Learning Researcher (MSc. or PhD), Remote- Contract",
+   "company": "Xperteez Technology",
+   "location": "Remote — Worldwide",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$0K–$0K/hourly",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/xperteez-technology/jobs/machine-learning-researcher-msc-or-phd-remote-contract",
+   "postedAt": "2026-10-27T18:15:46.000Z",
+   "expiresAt": "2026-12-26T18:15:44.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_neo4j-jobs-senior-solutions-engineer-bfs",
+   "title": "Senior Solutions Engineer - BFSI",
+   "company": "Neo4j",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/neo4j/jobs/senior-solutions-engineer-bfsi",
+   "postedAt": "2026-10-27T18:03:57.000Z",
+   "expiresAt": "2026-12-26T18:03:55.000Z",
    "live": true
   },
   {
@@ -1785,6 +5101,79 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.com/jobs/companies/easybill-gmbh/freelancer-senior-mobile-engineer-react-native-expo-typescript-berlin-359332",
    "postedAt": "2026-10-27T17:31:03.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-oracle-c",
+   "title": "Oracle Cloud Integration Engineer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$100K–$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/oracle-cloud-integration-engineer-6604896071",
+   "postedAt": "2026-10-27T16:57:18.000Z",
+   "expiresAt": "2026-12-26T16:57:17.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_zoftify-travel-software-development-jobs",
+   "title": "Full Stack Developer (React + Node.js)",
+   "company": "Zoftify — Travel Software Development",
+   "location": "Remote — Worldwide",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "JavaScript",
+    "React",
+    "Node.js"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/zoftify-travel-software-development/jobs/full-stack-developer-react-node-js",
+   "postedAt": "2026-10-27T16:46:29.000Z",
+   "expiresAt": "2026-12-26T16:46:29.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-senior-j",
+   "title": "Senior Java Full Stack Developer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Java",
+    "React",
+    "Angular",
+    "AI/ML"
+   ],
+   "salary": "$100K–$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/senior-java-full-stack-developer-3988634580",
+   "postedAt": "2026-10-27T16:30:23.000Z",
+   "expiresAt": "2026-12-26T16:30:21.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_bright-vision-technologies-jobs-sitecore",
+   "title": "Sitecore CMS Developer",
+   "company": "Bright Vision Technologies",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "$95K–$130K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/sitecore-cms-developer-6060563944",
+   "postedAt": "2026-10-27T16:30:17.000Z",
+   "expiresAt": "2026-12-26T16:30:16.000Z",
    "live": true
   },
   {
@@ -1901,6 +5290,71 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.co.uk/jobs/companies/nmcareers/server-infrastructure-engineer-unannounced-project-london-374515",
    "postedAt": "2026-10-27T15:55:21.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_trase-systems-jobs-director-production-a",
+   "title": "Director, Production and Infrastructure Engineering",
+   "company": "Trase Systems",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "DevOps",
+    "AI/ML"
+   ],
+   "salary": "$240K–$290K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/trase-systems/jobs/director-production-and-infrastructure-engineering",
+   "postedAt": "2026-10-27T15:54:10.000Z",
+   "expiresAt": "2026-12-26T15:54:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_sotheby-s-institute-of-art-jobs-front-en",
+   "title": "Front-End Developer",
+   "company": "Sotheby's Institute of Art",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "React"
+   ],
+   "salary": "$85K–$100K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/sotheby-s-institute-of-art/jobs/front-end-developer",
+   "postedAt": "2026-10-27T15:48:42.000Z",
+   "expiresAt": "2026-12-26T15:48:41.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_argano-jobs-principal-consultant-oracle-",
+   "title": "Principal Consultant - Oracle Cloud EPM FCC/ARC - Managed Services",
+   "company": "Argano",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/argano/jobs/principal-consultant-oracle-cloud-epm-fcc-arc-managed-services",
+   "postedAt": "2026-10-27T15:48:21.000Z",
+   "expiresAt": "2026-12-26T15:48:20.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_nttdata-jobs-data-analyst-remote-up-in",
+   "title": "Data Analyst (Remote, UP, IN)",
+   "company": "NTT DATA",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/nttdata/jobs/data-analyst-remote-up-in",
+   "postedAt": "2026-10-27T15:41:00.000Z",
+   "expiresAt": "2026-12-26T15:40:59.000Z",
    "live": true
   },
   {
@@ -2301,6 +5755,23 @@
    "live": true
   },
   {
+   "id": "live_Himalayas_icorepioneer-jobs-asp-net-developer",
+   "title": "ASP.NET Developer",
+   "company": "iCore",
+   "location": "Remote — India",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    ".NET"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/icorepioneer/jobs/asp-net-developer",
+   "postedAt": "2026-10-27T15:25:30.000Z",
+   "expiresAt": "2026-12-26T15:25:29.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_ai-research-scientist-scientific-evaluat",
    "title": "AI Research Scientist – Scientific Evaluation (ML/AI)",
    "company": "Lightly AG",
@@ -2353,6 +5824,41 @@
    "live": true
   },
   {
+   "id": "live_Himalayas_qualysoft-jobs-java-qa-automation-engine",
+   "title": "Java QA Automation Engineer - Banking",
+   "company": "Qualysoft",
+   "location": "Remote — Romania",
+   "type": "Contract",
+   "exp": "Mid",
+   "tech": [
+    "Java",
+    "QA"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/qualysoft/jobs/java-qa-automation-engineer-banking",
+   "postedAt": "2026-10-27T14:28:06.000Z",
+   "expiresAt": "2026-12-26T14:28:05.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_avalon-healthcare-solutions-jobs-quality",
+   "title": "Quality Assurance Engineer III",
+   "company": "Avalon Healthcare Solutions",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "QA"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/avalon-healthcare-solutions/jobs/quality-assurance-engineer-iii",
+   "postedAt": "2026-10-27T14:27:26.000Z",
+   "expiresAt": "2026-12-26T14:27:25.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_senior-hardware-devops-engineer-linux-ba",
    "title": "Senior Hardware DevOps Engineer (Linux & Bare Metal)",
    "company": "Exotec",
@@ -2366,6 +5872,21 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.fr/jobs/companies/exotec/senior-hardware-devops-engineer-linux-bare-metal-lille-394212",
    "postedAt": "2026-10-27T14:20:20.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_natera-jobs-senior-software-engineer-por",
+   "title": "Senior Software Engineer, Portal Application",
+   "company": "Natera",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$126K–$157K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/natera/jobs/senior-software-engineer-portal-application",
+   "postedAt": "2026-10-27T14:17:51.000Z",
+   "expiresAt": "2026-12-26T14:17:49.000Z",
    "live": true
   },
   {
@@ -2415,6 +5936,23 @@
    "live": true
   },
   {
+   "id": "live_Himalayas_lean-tech-jobs-lead-fullstack-developer",
+   "title": "Lead Fullstack Developer",
+   "company": "Lean Tech",
+   "location": "Remote — Colombia",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "React"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/lean-tech/jobs/lead-fullstack-developer",
+   "postedAt": "2026-10-27T14:05:57.000Z",
+   "expiresAt": "2026-12-26T14:05:57.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_sap-koordinator-schnittstellen-berechtig",
    "title": "SAP Koordinator (m/w/d) – Schnittstellen, Berechtigungen & Dienstleistersteuerung",
    "company": "Karriereweg GmbH",
@@ -2444,6 +5982,38 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.com/jobs/companies/sapplier-gmbh/sap-pp-inhouse-berater-dortmund-453358",
    "postedAt": "2026-10-27T14:01:10.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_smart-working-jobs-gtm-engineer-remote-f",
+   "title": "GTM Engineer (Remote, Full Time) [HR220]",
+   "company": "Smart Working",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/smart-working/jobs/gtm-engineer-remote-full-time-hr220",
+   "postedAt": "2026-10-27T13:58:45.000Z",
+   "expiresAt": "2026-12-26T13:58:44.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_granicus-jobs-automation-engineer-1-tech",
+   "title": "Automation Engineer 1 - Technical Support",
+   "company": "Granicus",
+   "location": "Remote — Armenia, Australia, Canada +",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/granicus/jobs/automation-engineer-1-technical-support-6458363834",
+   "postedAt": "2026-10-27T13:39:57.000Z",
+   "expiresAt": "2026-12-26T13:39:55.000Z",
    "live": true
   },
   {
@@ -2586,6 +6156,21 @@
    "live": true
   },
   {
+   "id": "live_Himalayas_sca-health-jobs-lead-applications-develo",
+   "title": "Lead Applications Developer",
+   "company": "SCA Health",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "$135K–$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/sca-health/jobs/lead-applications-developer",
+   "postedAt": "2026-10-27T13:18:08.000Z",
+   "expiresAt": "2026-12-26T13:18:07.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_founder-ceo-vico-lead-mit-sap-fokus-berl",
    "title": "Founder & CEO (Vico Lead) mit SAP-Fokus",
    "company": "Vicoland",
@@ -2599,6 +6184,21 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.com/jobs/companies/vicoland/founder-ceo-vico-lead-mit-sap-fokus-berlin-421083",
    "postedAt": "2026-10-27T13:17:44.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_soum-jobs-backend-software-engineer",
+   "title": "Backend Software Engineer",
+   "company": "Soum",
+   "location": "Remote — Egypt, Uzbekistan",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/soum/jobs/backend-software-engineer",
+   "postedAt": "2026-10-27T12:57:52.000Z",
+   "expiresAt": "2026-12-26T12:57:50.000Z",
    "live": true
   },
   {
@@ -2927,6 +6527,56 @@
    "live": true
   },
   {
+   "id": "live_Himalayas_lifelancer-jobs-looking-for-full-stack-s",
+   "title": "Looking for Full Stack Software Engineer",
+   "company": "Lifelancer",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/lifelancer/jobs/looking-for-full-stack-software-engineer",
+   "postedAt": "2026-10-27T12:30:16.000Z",
+   "expiresAt": "2026-12-26T12:30:14.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_icf-jobs-automated-test-engineer-manager",
+   "title": "Automated Test Engineer, Manager (Remote US)",
+   "company": "ICF",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "QA"
+   ],
+   "salary": "$108K–$184K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/icf/jobs/automated-test-engineer-manager-remote-us",
+   "postedAt": "2026-10-27T12:06:41.000Z",
+   "expiresAt": "2026-12-26T12:06:38.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_the-cool-company-jobs-full-stack-enginee",
+   "title": "Full Stack Engineer",
+   "company": "The COOL Company",
+   "location": "Remote — India, United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "JavaScript",
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/the-cool-company/jobs/full-stack-engineer",
+   "postedAt": "2026-10-27T11:33:34.000Z",
+   "expiresAt": "2026-12-26T11:33:32.000Z",
+   "live": true
+  },
+  {
    "id": "live_Arbeitnow_senior-ai-security-engineer-berlin-42517",
    "title": "Senior AI Security Engineer",
    "company": "Clariness GmbH",
@@ -2941,6 +6591,73 @@
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.com/jobs/companies/clariness-gmbh/senior-ai-security-engineer-berlin-425179",
    "postedAt": "2026-10-27T11:31:02.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_tista-science-and-technology-corporation",
+   "title": "Test Automation Engineer",
+   "company": "TISTA Science and Technology Corporation",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "QA"
+   ],
+   "salary": "$86K–$96K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/tista-science-and-technology-corporation/jobs/test-automation-engineer",
+   "postedAt": "2026-10-27T11:22:31.000Z",
+   "expiresAt": "2026-12-26T11:22:29.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_teamsnap-jobs-senior-fullstack-engineer-",
+   "title": "Senior Fullstack Engineer (BE-leaning)",
+   "company": "TeamSnap",
+   "location": "Remote — United States",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "React",
+    "Node.js"
+   ],
+   "salary": "$150K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/teamsnap/jobs/senior-fullstack-engineer-be-leaning",
+   "postedAt": "2026-10-27T11:04:11.000Z",
+   "expiresAt": "2026-12-26T11:04:10.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_alkira-inc-jobs-software-engineer-backen",
+   "title": "Software Engineer - Backend Engineer (India)",
+   "company": "Alkira, Inc.",
+   "location": "Remote — India",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/alkira-inc/jobs/software-engineer-backend-engineer-india-1883162452",
+   "postedAt": "2026-10-27T10:55:19.000Z",
+   "expiresAt": "2026-12-26T10:55:19.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Himalayas_nortal-jobs-1601-senior-data-platform-an",
+   "title": "(1601) Senior Data Platform and Automation Engineer",
+   "company": "Nortal",
+   "location": "Remote — Worldwide",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/nortal/jobs/1601-senior-data-platform-and-automation-engineer",
+   "postedAt": "2026-10-27T10:55:07.000Z",
+   "expiresAt": "2026-12-26T10:55:06.000Z",
    "live": true
   },
   {
@@ -3133,131 +6850,18 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_senior-data-engineer-united-kingdom-8291",
-   "title": "Senior Data Engineer",
-   "company": "Midnite",
-   "location": "United Kingdom",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Data"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/midnite/senior-data-engineer-united-kingdom-82919",
-   "postedAt": "2026-10-27T09:40:14.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_administrateur-systemes-reseaux-cloud-co",
-   "title": "Administrateur Systèmes, Réseaux & Cloud Confirmé F/H",
-   "company": "Mismo",
-   "location": "La Chapelle sur Erdre, Pays de la Loire, France",
+   "id": "live_Himalayas_cardinal-health-jobs-genesys-cloud-cx-en",
+   "title": "Genesys Cloud CX Engineer",
+   "company": "Cardinal Health",
+   "location": "Remote — United States",
    "type": "Full-time",
    "exp": "Mid",
    "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/mismo/administrateur-systemes-reseaux-cloud-confirme-f-h-la-chapelle-sur-erdre-97874",
-   "postedAt": "2026-10-27T09:31:14.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_ai-platform-engineer-eindhoven-61852",
-   "title": "AI platform engineer",
-   "company": "Itility B.V.",
-   "location": "Eindhoven, Noord-Brabant, Netherlands",
-   "type": "Contract",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/itility-bv/ai-platform-engineer-eindhoven-61852",
-   "postedAt": "2026-10-27T09:31:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_agentic-ai-software-engineer-munich-1111",
-   "title": "Agentic AI Software Engineer",
-   "company": "Machine Learning Reply",
-   "location": "Munich, Bayern, Germany",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/machine-learning-reply/agentic-ai-software-engineer-munich-111140",
-   "postedAt": "2026-10-27T09:31:11.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_machine-learning-consultant-munich-34720",
-   "title": "Machine Learning Consultant (m/w/d)",
-   "company": "Machine Learning Reply",
-   "location": "Munich, Bayern, Germany",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML",
-    "QA"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/machine-learning-reply/machine-learning-consultant-munich-347203",
-   "postedAt": "2026-10-27T09:31:11.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_remote-senior-ai-ml-engineer-berlin-4607",
-   "title": "Senior AI/ML Engineer (m/w/d)",
-   "company": "Recare Deutschland GmbH",
-   "location": "Remote job (Remote)",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/recare-deutschland-gmbh/remote-senior-ai-ml-engineer-berlin-460742",
-   "postedAt": "2026-10-27T09:31:11.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_devops-engineer-fur-linux-und-kubernetes",
-   "title": "DevOps Engineer (m/w/d) für Linux- und Kubernetes-basierte OSS-Infrastrukturen",
-   "company": "Biz Factory GmbH",
-   "location": "Berlin (Remote)",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "DevOps",
-    "Kubernetes"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/biz-factory-gmbh/devops-engineer-fur-linux-und-kubernetes-basierte-oss-infrastrukturen-berlin-446339",
-   "postedAt": "2026-10-27T09:30:48.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_principal-consultant-sap-btp-cap-cloud-n",
-   "title": "Principal Consultant SAP BTP & CAP Cloud Native (m/w/d)",
-   "company": "Gunter Arlt Unternehmensberatung",
-   "location": "Frankfurt am Main",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/gunter-arlt-unternehmensberatung/principal-consultant-sap-btp-cap-cloud-native-frankfurt-am-main-334078",
-   "postedAt": "2026-10-27T09:30:48.000Z",
+   "salary": "$96K–$138K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/cardinal-health/jobs/genesys-cloud-cx-engineer",
+   "postedAt": "2026-10-27T09:36:52.000Z",
+   "expiresAt": "2026-12-26T09:36:50.000Z",
    "live": true
   },
   {
@@ -3277,147 +6881,50 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_sap-sd-consultant-berlin-217889",
-   "title": "SAP SD Consultant (m/w/d)",
-   "company": "Pertemps ERP",
-   "location": "Berlin",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/pertemps-erp/sap-sd-consultant-berlin-217889",
-   "postedAt": "2026-10-27T09:01:22.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-sap-sd-consultant-frankfurt-am-ma",
-   "title": "Senior SAP SD Consultant",
-   "company": "Pertemps ERP",
-   "location": "Frankfurt am Main",
+   "id": "live_Himalayas_mercury-jobs-senior-engineering-manager-",
+   "title": "Senior Engineering Manager - GTM",
+   "company": "Mercury",
+   "location": "Remote — Canada",
    "type": "Full-time",
    "exp": "Senior",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/pertemps-erp/senior-sap-sd-consultant-frankfurt-am-main-30813",
-   "postedAt": "2026-10-27T09:01:22.000Z",
+   "tech": [],
+   "salary": "$239K–$299K",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/mercury/jobs/senior-engineering-manager-gtm",
+   "postedAt": "2026-10-27T09:11:41.000Z",
+   "expiresAt": "2026-12-26T09:11:40.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_sap-plm-consultant-stuttgart-260741",
-   "title": "SAP PLM Consultant",
-   "company": "Pertemps ERP",
-   "location": "Stuttgart",
+   "id": "live_Himalayas_zact-jobs-application-support-engineer-1",
+   "title": "Application Support Engineer",
+   "company": "Zact",
+   "location": "Remote — India",
    "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/pertemps-erp/sap-plm-consultant-stuttgart-260741",
-   "postedAt": "2026-10-27T09:01:22.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_sap-bi-analytics-architect-hamburg-49822",
-   "title": "SAP BI / Analytics Architect (m/w/d)",
-   "company": "Pertemps ERP",
-   "location": "Hamburg",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/pertemps-erp/sap-bi-analytics-architect-hamburg-498226",
-   "postedAt": "2026-10-27T09:01:22.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_sap-gts-consultant-cologne-67058",
-   "title": "SAP GTS Consultant (m/w/d)",
-   "company": "Pertemps ERP",
-   "location": "Cologne",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/pertemps-erp/sap-gts-consultant-cologne-67058",
-   "postedAt": "2026-10-27T09:01:21.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_werkstudentin-ai-solution-architecture-k",
-   "title": "Werkstudent:in AI Solution Architecture & KI-Produktentwicklung (m/w/d)",
-   "company": "MERENTIS GmbH",
-   "location": "Bremen",
-   "type": "Internship",
-   "exp": "Junior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/merentis-gmbh/werkstudentin-ai-solution-architecture-ki-produktentwicklung-bremen-360176",
-   "postedAt": "2026-10-27T09:01:21.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_sap-inhouse-consultant-co-stuttgart-2283",
-   "title": "SAP Inhouse Consultant CO (m/f/d)",
-   "company": "Pertemps ERP",
-   "location": "Stuttgart",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/pertemps-erp/sap-inhouse-consultant-co-stuttgart-228381",
-   "postedAt": "2026-10-27T09:01:21.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_desktop-support-engineer-mac-os-paris-19",
-   "title": "Desktop Support Engineer-Mac OS",
-   "company": "H-Tech Supports",
-   "location": "Paris",
-   "type": "Freelance",
    "exp": "Mid",
    "tech": [],
    "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/h-tech-supports/desktop-support-engineer-mac-os-paris-198551",
-   "postedAt": "2026-10-27T09:01:20.000Z",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/zact/jobs/application-support-engineer-162028118",
+   "postedAt": "2026-10-27T09:08:18.000Z",
+   "expiresAt": "2026-12-26T09:08:17.000Z",
    "live": true
   },
   {
-   "id": "live_Arbeitnow_gcp-cloud-architect-network-berlin-49011",
-   "title": "GCP Cloud Architect (Network) (m/w/d)",
-   "company": "adconova GmbH",
-   "location": "Berlin (Remote)",
-   "type": "Full-time",
-   "exp": "Senior",
+   "id": "live_Himalayas_icorepioneer-jobs-react-js-developer",
+   "title": "React JS Developer",
+   "company": "iCore",
+   "location": "Remote — India",
+   "type": "Contract",
+   "exp": "Mid",
    "tech": [
-    "GCP",
-    "DevOps",
-    "AI/ML"
+    "React"
    ],
    "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/adconova-gmbh/gcp-cloud-architect-network-berlin-49011",
-   "postedAt": "2026-10-27T09:01:20.000Z",
+   "source": "Himalayas",
+   "url": "https://himalayas.app/companies/icorepioneer/jobs/react-js-developer",
+   "postedAt": "2026-10-27T09:07:17.000Z",
+   "expiresAt": "2026-12-26T09:07:15.000Z",
    "live": true
   },
   {
@@ -3556,21 +7063,6 @@
    "live": true
   },
   {
-   "id": "live_Himalayas_tista-science-and-technology-corporation",
-   "title": "Release Train Engineer / Release Manager",
-   "company": "TISTA Science and Technology Corporation",
-   "location": "Remote — United States",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "$116K–$126K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/tista-science-and-technology-corporation/jobs/release-train-engineer-release-manager",
-   "postedAt": "2026-10-27T08:51:51.000Z",
-   "expiresAt": "2026-12-26T08:51:50.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_outsourcedin-jobs-it-manager-support-inf",
    "title": "IT Manager Support - Infrastructure & Systems",
    "company": "OutsourcedIn",
@@ -3652,20 +7144,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_remote-senior-data-architect-3-month-pro",
-   "title": "Senior Data Architect (3 month project)",
-   "company": "Intetics 2",
-   "location": "France (Remote)",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/intetics-2/remote-senior-data-architect-3-month-project-france-46823",
-   "postedAt": "2026-10-27T08:20:07.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_ripio-jobs-ai-automation-engineer",
    "title": "AI Automation Engineer",
    "company": "Ripio",
@@ -3715,36 +7193,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_sap-hcm-consultant-tm-om-pa-london-47820",
-   "title": "SAP HCM Consultant (TM, OM & PA)",
-   "company": "Market Cloud",
-   "location": "London (Remote)",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/market-cloud/sap-hcm-consultant-tm-om-pa-london-47820",
-   "postedAt": "2026-10-27T08:00:55.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_system-administrator-it-supporter-opfiko",
-   "title": "System Administrator / IT Supporter (m/w/d)",
-   "company": "Gehrig Group AG",
-   "location": "Opfikon",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.ch/jobs/companies/gehrig-group-ag/system-administrator-it-supporter-opfikon-33539",
-   "postedAt": "2026-10-27T08:00:54.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_vetsource-jobs-senior-technical-lead-ent",
    "title": "Senior Technical Lead, Enterprise Application Integrations",
    "company": "Vetsource",
@@ -3757,23 +7205,6 @@
    "url": "https://himalayas.app/companies/vetsource/jobs/senior-technical-lead-enterprise-application-integrations",
    "postedAt": "2026-10-27T07:48:23.000Z",
    "expiresAt": "2026-12-26T07:48:22.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_sap-concur-consultant-module-security-be",
-   "title": "SAP Concur Consultant – Module Security",
-   "company": "Market Cloud",
-   "location": "Berlin (Remote)",
-   "type": "Contract",
-   "exp": "Mid",
-   "tech": [
-    "SAP",
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/market-cloud/sap-concur-consultant-module-security-berlin-72072",
-   "postedAt": "2026-10-27T07:30:40.000Z",
    "live": true
   },
   {
@@ -3810,20 +7241,6 @@
    "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/sap-database-engineer-8385754407",
    "postedAt": "2026-10-27T07:02:22.000Z",
    "expiresAt": "2026-12-26T07:02:21.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-mlops-engineer-buyer-amsterdam-45",
-   "title": "Senior MLOps Engineer, Buyer",
-   "company": "Vinteden",
-   "location": "Amsterdam",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/vinteden/senior-mlops-engineer-buyer-amsterdam-451225",
-   "postedAt": "2026-10-27T06:55:18.000Z",
    "live": true
   },
   {
@@ -3955,54 +7372,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_ai-engineer-nijverdal-61682",
-   "title": "AI Engineer",
-   "company": "12Build",
-   "location": "Nijverdal, Overijssel, Nederland",
-   "type": "Contract",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/12build/ai-engineer-nijverdal-61682",
-   "postedAt": "2026-10-27T06:31:12.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_data-engineer-nijverdal-284068",
-   "title": "Data Engineer",
-   "company": "12Build",
-   "location": "Nijverdal, Overijssel, Nederland",
-   "type": "Contract",
-   "exp": "Mid",
-   "tech": [
-    "Data"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/12build/data-engineer-nijverdal-284068",
-   "postedAt": "2026-10-27T06:31:12.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_full-stack-developer-onboarding-enableme",
-   "title": "Full Stack Developer (Onboarding & Enablement)",
-   "company": "CM.com",
-   "location": "Breda, Noord-Brabant, Netherlands",
-   "type": "Contract",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/cmcom/full-stack-developer-onboarding-enablement-breda-468093",
-   "postedAt": "2026-10-27T06:31:09.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_webengage-jobs-software-engineer-java",
    "title": "Software Engineer (Java)",
    "company": "WebEngage",
@@ -4032,25 +7401,6 @@
    "url": "https://himalayas.app/companies/webengage/jobs/senior-solutions-engineer",
    "postedAt": "2026-10-27T06:30:47.000Z",
    "expiresAt": "2026-12-26T06:30:47.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-fullstack-entwickler-php-symfony-",
-   "title": "Senior Fullstack-Entwickler (m/w/d) – PHP/Symfony & React",
-   "company": "MRP My Recruitment Partners",
-   "location": "Berlin",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "React",
-    "PHP",
-    "DevOps",
-    "SQL"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/mrp-my-recruitment-partners/senior-fullstack-entwickler-php-symfony-react-berlin-340319",
-   "postedAt": "2026-10-27T06:30:43.000Z",
    "live": true
   },
   {
@@ -4568,23 +7918,6 @@
    "live": true
   },
   {
-   "id": "live_Himalayas_general-dynamics-information-technology-",
-   "title": "ServiceNow Developer / Administrator",
-   "company": "General Dynamics Information Technology",
-   "location": "Remote — United States",
-   "type": "Contract",
-   "exp": "Mid",
-   "tech": [
-    "ServiceNow"
-   ],
-   "salary": "$98K–$121K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/general-dynamics-information-technology/jobs/servicenow-developer-administrator",
-   "postedAt": "2026-10-27T04:38:30.000Z",
-   "expiresAt": "2026-12-26T04:38:29.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_rdt-jobs-especialista-en-integridad-de-p",
    "title": "Especialista en Integridad de Producto (PLM / eBOM / SAP)",
    "company": "RDT",
@@ -4713,34 +8046,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_site-reliability-engineer-storage-geneva",
-   "title": "Site Reliability Engineer - Storage",
-   "company": "Proton",
-   "location": "Geneva, Switzerland, Paris",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/proton/site-reliability-engineer-storage-geneva-switzerland-paris-348402",
-   "postedAt": "2026-10-27T03:55:20.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-engineering-manager-geneva-switze",
-   "title": "Senior Engineering Manager",
-   "company": "Proton",
-   "location": "Geneva, Switzerland, Paris",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/proton/senior-engineering-manager-geneva-switzerland-paris-112049",
-   "postedAt": "2026-10-27T03:55:20.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_prometeo-talent-jobs-machine-learning-an",
    "title": "Machine Learning Analyst | 100% Remote | LATAM",
    "company": "Prometeo Talent",
@@ -4755,21 +8060,6 @@
    "url": "https://himalayas.app/companies/prometeo-talent/jobs/machine-learning-analyst-100-remote-latam",
    "postedAt": "2026-10-27T03:55:01.000Z",
    "expiresAt": "2026-12-26T03:54:59.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Himalayas_tista-science-and-technology-corporation",
-   "title": "Solutions Architect (Cloud / Data)",
-   "company": "TISTA Science and Technology Corporation",
-   "location": "Remote — United States",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "$96K–$106K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/tista-science-and-technology-corporation/jobs/solutions-architect-cloud-data",
-   "postedAt": "2026-10-27T03:52:35.000Z",
-   "expiresAt": "2026-12-26T03:52:33.000Z",
    "live": true
   },
   {
@@ -4805,67 +8095,6 @@
    "live": true
   },
   {
-   "id": "live_Himalayas_tista-science-and-technology-corporation",
-   "title": "DevOps Engineer",
-   "company": "TISTA Science and Technology Corporation",
-   "location": "Remote — United States",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "DevOps"
-   ],
-   "salary": "$96K–$116K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/tista-science-and-technology-corporation/jobs/devops-engineer",
-   "postedAt": "2026-10-27T03:51:07.000Z",
-   "expiresAt": "2026-12-26T03:51:06.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_engineering-manager-control-low-level-so",
-   "title": "Engineering Manager – Control & Low-Level Software (m/f/d)",
-   "company": "RobCo",
-   "location": "Munich",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/robco/engineering-manager-control-low-level-software-munich-260369",
-   "postedAt": "2026-10-27T03:40:15.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_research-software-engineering-intern-mun",
-   "title": "Research Software Engineering Intern (f/m/d)",
-   "company": "Quantumdiamonds",
-   "location": "Munich HQ",
-   "type": "Internship",
-   "exp": "Junior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/quantumdiamonds/research-software-engineering-intern-munich-222265",
-   "postedAt": "2026-10-27T03:40:14.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_robotics-engineer-london-342155",
-   "title": "Robotics Engineer",
-   "company": "Xyz Reality",
-   "location": "London Office",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/xyz-reality/robotics-engineer-london-342155",
-   "postedAt": "2026-10-27T03:40:14.000Z",
-   "live": true
-  },
-  {
    "id": "live_Jobicy_151770",
    "title": "ChatGPT Performance Engineer",
    "company": "OpenAI",
@@ -4896,50 +8125,6 @@
    "url": "https://himalayas.app/companies/ema/jobs/solutions-engineer",
    "postedAt": "2026-10-27T03:34:38.000Z",
    "expiresAt": "2026-12-26T03:34:37.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_remote-customs-ai-integration-automation",
-   "title": "Customs AI Integration & Automation Engineer (France)",
-   "company": "Customs Support Group",
-   "location": "Remote job (Remote)",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/customs-support-group/remote-customs-ai-integration-automation-engineer-france-lyon-474730",
-   "postedAt": "2026-10-27T03:31:21.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_medior-software-engineer-veghel-165934",
-   "title": "Medior Software Engineer",
-   "company": "BAS Group",
-   "location": "Veghel, Noord-Brabant, Nederland",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/bas-group/medior-software-engineer-veghel-165934",
-   "postedAt": "2026-10-27T03:31:19.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-software-engineer-veghel-94378",
-   "title": "Senior Software Engineer",
-   "company": "BAS Group",
-   "location": "Veghel, Noord-Brabant, Nederland",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/bas-group/senior-software-engineer-veghel-94378",
-   "postedAt": "2026-10-27T03:31:19.000Z",
    "live": true
   },
   {
@@ -5293,21 +8478,6 @@
    "live": true
   },
   {
-   "id": "live_Himalayas_tista-science-and-technology-corporation",
-   "title": "Integration Lead Engineer",
-   "company": "TISTA Science and Technology Corporation",
-   "location": "Remote — United States",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "$126K–$141K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/tista-science-and-technology-corporation/jobs/integration-lead-engineer",
-   "postedAt": "2026-10-27T02:21:15.000Z",
-   "expiresAt": "2026-12-26T02:21:14.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_peraton-jobs-senior-site-reliability-eng",
    "title": "Senior Site Reliability Engineer",
    "company": "Peraton",
@@ -5496,23 +8666,6 @@
    "live": true
   },
   {
-   "id": "live_Himalayas_tista-science-and-technology-corporation",
-   "title": "Technical Lead",
-   "company": "TISTA Science and Technology Corporation",
-   "location": "Remote — United States",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "DevOps"
-   ],
-   "salary": "$106K–$126K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/tista-science-and-technology-corporation/jobs/technical-lead",
-   "postedAt": "2026-10-27T02:04:59.000Z",
-   "expiresAt": "2026-12-26T02:04:58.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_enlyte-group-llc-jobs-senior-data-scient",
    "title": "Senior Data Scientist",
    "company": "Enlyte Group, LLC",
@@ -5672,23 +8825,6 @@
    "url": "https://himalayas.app/companies/ram-health/jobs/application-programmer-analyst-developer-entry-level-remote",
    "postedAt": "2026-10-27T01:47:08.000Z",
    "expiresAt": "2026-12-26T01:47:07.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Himalayas_tista-science-and-technology-corporation",
-   "title": "Cloud/Cyber Solution Lead",
-   "company": "TISTA Science and Technology Corporation",
-   "location": "Remote — United States",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "$111K–$126K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/tista-science-and-technology-corporation/jobs/cloud-cyber-solution-lead",
-   "postedAt": "2026-10-27T01:45:58.000Z",
-   "expiresAt": "2026-12-26T01:45:57.000Z",
    "live": true
   },
   {
@@ -6164,24 +9300,6 @@
    "live": true
   },
   {
-   "id": "live_Himalayas_tista-science-and-technology-corporation",
-   "title": "DevSecOps Engineer / Security Specialist",
-   "company": "TISTA Science and Technology Corporation",
-   "location": "Remote — United States",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "DevOps",
-    "Security"
-   ],
-   "salary": "$96K–$126K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/tista-science-and-technology-corporation/jobs/devsecops-engineer-security-specialist",
-   "postedAt": "2026-10-27T00:12:27.000Z",
-   "expiresAt": "2026-12-26T00:12:25.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_pm-consulting-jobs-senior-back-end-engin",
    "title": "Senior Back-end Engineer",
    "company": "PM Consulting",
@@ -6327,23 +9445,6 @@
    "url": "https://himalayas.app/companies/gartner/jobs/executive-partner-artificial-intelligence-advisory-ai-strategist",
    "postedAt": "2026-10-26T23:53:55.000Z",
    "expiresAt": "2026-12-25T23:53:53.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Himalayas_bright-vision-technologies-jobs-sitecore",
-   "title": "Sitecore Application Developer",
-   "company": "Bright Vision Technologies",
-   "location": "Remote — United States",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "$100K–$150K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/sitecore-application-developer",
-   "postedAt": "2026-10-26T23:52:05.000Z",
-   "expiresAt": "2026-12-25T23:52:04.000Z",
    "live": true
   },
   {
@@ -7211,6 +10312,22 @@
    "live": true
   },
   {
+   "id": "live_Remotive_2091134",
+   "title": "Head of Engineering",
+   "company": "Lemon.io",
+   "location": "Worldwide",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Remotive",
+   "url": "https://remotive.com/remote-jobs/software-development/head-of-engineering-2091134",
+   "postedAt": "2026-10-26T12:20:09.000Z",
+   "live": true
+  },
+  {
    "id": "live_Himalayas_lotusflare-inc-jobs-director-sales-dno-c",
    "title": "Director, Sales - DNO Cloud",
    "company": "LotusFlare, Inc.",
@@ -7607,24 +10724,6 @@
    "live": true
   },
   {
-   "id": "live_Himalayas_bright-vision-technologies-jobs-servicen",
-   "title": "ServiceNow Platform Architect",
-   "company": "Bright Vision Technologies",
-   "location": "Remote — United States",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML",
-    "ServiceNow"
-   ],
-   "salary": "$100K–$150K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/servicenow-platform-architect-7657364528",
-   "postedAt": "2026-10-26T08:14:45.000Z",
-   "expiresAt": "2026-12-25T08:14:44.000Z",
-   "live": true
-  },
-  {
    "id": "live_RemoteOK_1137572",
    "title": "Senior Software Engineer LATAM",
    "company": "Wagmo",
@@ -7640,24 +10739,6 @@
    "source": "Remote OK",
    "url": "https://remoteOK.com/remote-jobs/remote-senior-software-engineer-latam-wagmo-1137572",
    "postedAt": "2026-10-26T08:00:06+00:00",
-   "live": true
-  },
-  {
-   "id": "live_Himalayas_bright-vision-technologies-jobs-salesfor",
-   "title": "Salesforce Platform Architect",
-   "company": "Bright Vision Technologies",
-   "location": "Remote — United States",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Salesforce",
-    "AI/ML"
-   ],
-   "salary": "$175K–$200K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/salesforce-platform-architect-6402697817",
-   "postedAt": "2026-10-26T07:48:53.000Z",
-   "expiresAt": "2026-12-25T07:48:52.000Z",
    "live": true
   },
   {
@@ -7882,25 +10963,6 @@
    "source": "Jobicy",
    "url": "https://jobicy.com/jobs/157045-systems-architect-apac",
    "postedAt": "2026-10-26T05:01:54.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Himalayas_acklen-avenue-jobs-talent-database-sr-fu",
-   "title": "Talent Database - Sr. Full Stack Developer - Philippines Only",
-   "company": "Acklen Avenue",
-   "location": "Remote — Philippines",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "React",
-    "Node.js",
-    "PHP"
-   ],
-   "salary": "",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/acklen-avenue/jobs/talent-database-sr-full-stack-developer-philippines-only",
-   "postedAt": "2026-10-26T04:59:33.000Z",
-   "expiresAt": "2026-12-25T04:59:32.000Z",
    "live": true
   },
   {
@@ -8453,23 +11515,6 @@
    "url": "https://himalayas.app/companies/ledgebrook/jobs/director-of-engineering",
    "postedAt": "2026-10-26T04:05:50.000Z",
    "expiresAt": "2026-12-25T04:05:49.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Himalayas_bright-vision-technologies-jobs-systems-",
-   "title": "Systems Architect",
-   "company": "Bright Vision Technologies",
-   "location": "Remote — United States",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "$150K–$170K",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/bright-vision-technologies/jobs/systems-architect-9348731080",
-   "postedAt": "2026-10-26T04:05:11.000Z",
-   "expiresAt": "2026-12-25T04:05:10.000Z",
    "live": true
   },
   {
@@ -10458,23 +13503,6 @@
    "source": "Jobicy",
    "url": "https://jobicy.com/jobs/157008-senior-software-engineer-17",
    "postedAt": "2026-10-25T17:44:52.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Himalayas_xperteez-technology-jobs-mechanical-engi",
-   "title": "🌎Mechanical Engineering Expert (MSc. or PhD), Remote- Contract",
-   "company": "Xperteez Technology",
-   "location": "Remote — Worldwide",
-   "type": "Contract",
-   "exp": "Mid",
-   "tech": [
-    "Python"
-   ],
-   "salary": "$0K–$0K/hourly",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/xperteez-technology/jobs/mechanical-engineering-expert-msc-or-phd-remote-contract",
-   "postedAt": "2026-10-25T17:42:01.000Z",
-   "expiresAt": "2026-12-24T17:42:00.000Z",
    "live": true
   },
   {
@@ -12995,23 +16023,6 @@
    "live": true
   },
   {
-   "id": "live_Himalayas_zoftify-travel-software-development-jobs",
-   "title": "Quality Assurance Engineer",
-   "company": "Zoftify — Travel Software Development",
-   "location": "Remote — Worldwide",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "QA"
-   ],
-   "salary": "",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/zoftify-travel-software-development/jobs/quality-assurance-engineer",
-   "postedAt": "2026-10-25T06:56:35.000Z",
-   "expiresAt": "2026-12-24T06:56:34.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_rajyug-it-solutions-pvt-ltd-jobs-react-j",
    "title": "React JS Developer",
    "company": "Rajyug IT Solutions Pvt Ltd",
@@ -13677,23 +16688,6 @@
    "live": true
   },
   {
-   "id": "live_Himalayas_photon-interactive-uk-limited-jobs-qa-en",
-   "title": "QA Engineer_Offshore",
-   "company": "Photon Interactive UK Limited",
-   "location": "Remote — India",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "QA"
-   ],
-   "salary": "",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/photon-interactive-uk-limited/jobs/qa-engineer_offshore",
-   "postedAt": "2026-10-25T03:21:19.000Z",
-   "expiresAt": "2026-12-24T03:21:18.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_elvoro-jobs-full-stack-web-developer-nex",
    "title": "Full-Stack Web Developer (Next.js) – Elvoro Ltd",
    "company": "Elvoro",
@@ -14214,23 +17208,6 @@
    "url": "https://himalayas.app/companies/photon-interactive-uk-limited/jobs/fullatack-developer-offshore",
    "postedAt": "2026-10-24T21:13:22.000Z",
    "expiresAt": "2026-12-23T21:13:20.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Himalayas_photon-interactive-uk-limited-jobs-qa-en",
-   "title": "QA Engineer Offshore",
-   "company": "Photon Interactive UK Limited",
-   "location": "Remote — India",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "QA"
-   ],
-   "salary": "",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/photon-interactive-uk-limited/jobs/qa-engineer-offshore-5741373047",
-   "postedAt": "2026-10-24T21:11:48.000Z",
-   "expiresAt": "2026-12-23T21:11:46.000Z",
    "live": true
   },
   {
@@ -15177,23 +18154,6 @@
    "url": "https://himalayas.app/companies/centrum-ai/jobs/senior-software-engineer-go-remote-5471136185",
    "postedAt": "2026-10-23T12:06:14.000Z",
    "expiresAt": "2026-12-22T12:06:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Himalayas_paralucent-jobs-business-analyst-sap-fin",
-   "title": "Business Analyst (SAP Finance) - India - Remote (PL5346)",
-   "company": "Paralucent",
-   "location": "Remote — India",
-   "type": "Contract",
-   "exp": "Mid",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Himalayas",
-   "url": "https://himalayas.app/companies/paralucent/jobs/business-analyst-sap-finance-india-remote-pl5346",
-   "postedAt": "2026-10-23T10:48:40.000Z",
-   "expiresAt": "2026-12-22T10:48:39.000Z",
    "live": true
   },
   {
