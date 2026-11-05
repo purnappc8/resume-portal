@@ -120,6 +120,13 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 body.locked .lock-note{display:flex;}
 body.locked .needs-signin::before{content:'🔒 ';}
 .print-block{display:none;}
+/* Signed-out: the preview carries a watermark, and hides while the window isn't in focus
+   (screenshot tools like Snipping Tool take focus first) or right after PrintScreen */
+.preview-a4{position:relative;}
+body.locked .preview-a4::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='220'%3E%3Ctext x='50%25' y='50%25' fill='rgba(11,46,89,0.13)' font-family='Segoe UI,Arial,sans-serif' font-size='22' font-weight='700' text-anchor='middle' transform='rotate(-28 180 110)'%3EPREVIEW · Sign in to download%3C/text%3E%3C/svg%3E");}
+body.locked.shield #resume{filter:blur(9px);}
+body.locked.shield .preview-a4::before{content:'🔒 Preview hidden — sign in to download your resume';position:absolute;top:40%;left:0;right:0;text-align:center;z-index:3;font-weight:800;color:#0b2e59;font-size:1rem;padding:0 20px;}
 .dl-busy{opacity:.6;pointer-events:none;}
 
 /* ── Print: the browser's own Print / Save as PDF never outputs the resume text.
@@ -752,6 +759,23 @@ function printResume() {
     if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === 'p' || e.key === 'P')) { e.preventDefault(); printResume(); }
   });
   window.addEventListener('storage', e => { if (e.key === 'ttp_session') paintLock(); });
+
+  // Screenshot deterrents (signed-out only — signed-in users can simply download)
+  const shield = on => document.body.classList.toggle('shield', on);
+  window.addEventListener('blur', () => shield(true));
+  window.addEventListener('focus', () => shield(false));
+  document.addEventListener('visibilitychange', () => shield(document.hidden));
+  document.addEventListener('keyup', e => {
+    if (e.key === 'PrintScreen' && !signedIn()) {
+      shield(true);
+      try { navigator.clipboard.writeText('Sign in to TechTalent Portal to download your resume.'); } catch {}
+      toast('Screenshots of the preview are disabled — sign in to download your resume.');
+      setTimeout(() => shield(false), 2500);
+    }
+  });
+  document.addEventListener('keydown', e => {   // Win+Shift+S / Cmd+Shift+3/4/5
+    if (e.shiftKey && (e.metaKey || e.key === 'Meta') && /^[sS345]$/.test(e.key)) shield(true);
+  });
 })();
 
 // ── Init ──────────────────────────────────────────────────────────────────
