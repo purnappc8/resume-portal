@@ -113,14 +113,24 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 .r-entry-desc{font-size:.87rem;color:#333;white-space:pre-line;}
 .r-entry-desc ul{padding-left:18px;}
 
-/* ── Print ── */
+/* ── Protection: the preview can't be selected, copied or dragged ── */
+#resume{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
+.lock-note{display:none;align-items:center;gap:10px;flex-wrap:wrap;background:#fff8e1;border:1px solid #ffe08a;color:#6d4c00;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.88rem;}
+.lock-note a{color:#0b2e59;font-weight:800;}
+body.locked .lock-note{display:flex;}
+body.locked .needs-signin::before{content:'🔒 ';}
+.print-block{display:none;}
+.dl-busy{opacity:.6;pointer-events:none;}
+
+/* ── Print: the browser's own Print / Save as PDF never outputs the resume text.
+      Signed-in users download a protected PDF with the button instead. ── */
 @media print{
-  .topnav,.builder,.preview-wrap>.preview-header,.action-bar{display:none!important;}
+  body *{display:none!important;}
+  body .print-block,body .print-block *{display:block!important;}
   body{background:#fff;}
-  .page-wrap{display:block;}
-  .preview-wrap{padding:0;background:#fff;}
-  .preview-a4{box-shadow:none;max-width:100%;}
-  #resume{padding:20mm 18mm;}
+  .print-block{font-family:'Segoe UI',Arial,sans-serif;text-align:center;padding:60mm 20mm;color:#0b2e59;}
+  .print-block h1{font-size:20pt;margin-bottom:8pt;}
+  .print-block p{font-size:12pt;color:#444;}
 }
 
 /* Preview header */
@@ -251,8 +261,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 
     <!-- Actions -->
     <div class="action-bar">
-      <button class="btn-primary" onclick="window.print()">⬇ Download PDF</button>
-      <button class="btn-green" onclick="saveToProfile()">☁ Save to My Profile</button>
+      <button class="btn-primary needs-signin" id="dlBtn" onclick="downloadPdf()">⬇ Download PDF</button>
+      <button class="btn-green needs-signin" onclick="saveToProfile()">☁ Save to My Profile</button>
       <a class="btn-adv" href="https://resume.dhruvantasystems.com/" target="_blank" rel="noopener">✨ Advanced Resume Builder ↗</a>
       <button class="btn-outline" onclick="clearAll()">✕ Start Over</button>
     </div>
@@ -263,10 +273,10 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
     <div class="preview-header">
       <h3>Live Preview</h3>
       <div class="preview-btns">
-        <button class="pbtn pbtn-outline" onclick="copyText()">Copy Text</button>
-        <button class="pbtn pbtn-solid" onclick="window.print()">Print / PDF</button>
+        <button class="pbtn pbtn-solid needs-signin" onclick="printResume()">Print / PDF</button>
       </div>
     </div>
+    <div class="lock-note" role="note">🔒 <span>Free to build and preview. <a href="login.html?next=resume-builder.html" onclick="autosave()">Sign in</a> to download, print or save your resume — your work here is kept.</span></div>
     <div class="preview-a4">
       <div id="resume">
         <!-- rendered here by JS -->
@@ -277,6 +287,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 </div>
 
 <div class="toast" id="toast"></div>
+<div class="print-block"><h1>TechTalent Portal</h1><p>To print or save this resume, sign in and use the “Download PDF” button in the Resume Builder.</p></div>
 
 <script>
 // ── State ──────────────────────────────────────────────────────────────────
@@ -509,7 +520,7 @@ async function saveToProfile() {
   if (!name) { toast('Please enter your name first.'); return; }
   let user;
   try { user = JSON.parse(sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session') || 'null'); } catch {}
-  if (!user) { toast('Sign in first to save your profile.'); setTimeout(() => location.href='login.html?next=resume-builder.html', 1500); return; }
+  if (!signedIn()) { askSignIn('save your profile'); return; }
 
   const profile = {
     id:       user.id || 'usr_' + Date.now().toString(36),
@@ -644,12 +655,107 @@ function clearAll() {
   try { localStorage.removeItem('ttp_builder_draft'); } catch {}
   render();
 }
-function copyText() {
-  const text = document.getElementById('resume').innerText;
-  navigator.clipboard.writeText(text).then(() => toast('Resume text copied!')).catch(() => toast('Copy failed — use Ctrl+A on the preview.'));
+// ── Sign-in lock + protected PDF ───────────────────────────────────────────
+function signedIn() {
+  try { const u = JSON.parse(sessionStorage.getItem('ttp_session') || localStorage.getItem('ttp_session') || 'null');
+        return !!(u && u.token && (!u.expiresAt || Date.parse(u.expiresAt) > Date.now())); } catch { return false; }
+}
+function askSignIn(what) {
+  autosave();   // keep everything they've typed
+  toast(`Sign in to ${what}. Your resume is saved — it'll be here when you're back.`);
+  setTimeout(() => { location.href = 'login.html?next=resume-builder.html'; }, 1600);
+}
+function paintLock() { document.body.classList.toggle('locked', !signedIn()); }
+
+const LIBS = [
+  'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
+];
+let libsReady = null;
+function loadLibs() {
+  if (libsReady) return libsReady;
+  libsReady = Promise.all(LIBS.map(src => new Promise((ok, bad) => {
+    const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => bad(new Error(src)); document.head.appendChild(s);
+  }))).catch(e => { libsReady = null; throw e; });
+  return libsReady;
+}
+// The PDF is built from a picture of the resume, so it holds no editable text:
+// copy-paste and PDF-to-Word converters don't get a usable document.
+async function buildPdf() {
+  if (!get('f-name')) { toast('Add your name first.'); return null; }
+  await loadLibs();
+  const el = document.getElementById('resume');
+  const canvas = await html2canvas(el, { scale: 2.5, backgroundColor: '#ffffff', useCORS: true, logging: false,
+    onclone: doc => {   // html2canvas ignores white-space:pre-line, so turn line breaks into <br>
+      doc.querySelectorAll('#resume .r-entry-desc').forEach(box => {
+        const walker = doc.createTreeWalker(box, NodeFilter.SHOW_TEXT), nodes = [];
+        while (walker.nextNode()) if (walker.currentNode.nodeValue.includes('\n')) nodes.push(walker.currentNode);
+        nodes.forEach(t => {
+          const frag = doc.createDocumentFragment();
+          t.nodeValue.split('\n').forEach((part, i) => { if (i) frag.appendChild(doc.createElement('br')); frag.appendChild(doc.createTextNode(part)); });
+          t.replaceWith(frag);
+        });
+      });
+    } });
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ unit: 'mm', format: 'a4', compress: true });
+  const pw = 210, ph = 297, imgH = canvas.height * pw / canvas.width;
+  const pageCanvasH = Math.floor(canvas.width * ph / pw);       // source pixels per A4 page
+  for (let y = 0, page = 0; y < canvas.height; y += pageCanvasH, page++) {
+    const slice = document.createElement('canvas');
+    slice.width = canvas.width; slice.height = Math.min(pageCanvasH, canvas.height - y);
+    slice.getContext('2d').drawImage(canvas, 0, y, canvas.width, slice.height, 0, 0, canvas.width, slice.height);
+    if (page) pdf.addPage();
+    pdf.addImage(slice.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, pw, slice.height * pw / canvas.width);
+  }
+  pdf.setProperties({ title: get('f-name') + ' — Resume', creator: 'TechTalent Portal' });
+  return pdf;
+}
+async function withBusy(fn) {
+  const b = document.getElementById('dlBtn'); b.classList.add('dl-busy');
+  try { await fn(); } catch { toast("Couldn't create the PDF — check your connection and try again."); }
+  finally { b.classList.remove('dl-busy'); }
+}
+function downloadPdf() {
+  if (!signedIn()) return askSignIn('download your resume');
+  withBusy(async () => {
+    const pdf = await buildPdf(); if (!pdf) return;
+    pdf.save((get('f-name') || 'resume').replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '_') + '_Resume.pdf');
+    toast('✅ PDF downloaded.');
+  });
+}
+function printResume() {
+  if (!signedIn()) return askSignIn('print your resume');
+  withBusy(async () => {
+    const pdf = await buildPdf(); if (!pdf) return;
+    pdf.autoPrint();
+    const url = pdf.output('bloburl'), w = window.open(url, '_blank');
+    if (!w) { pdf.save('Resume.pdf'); toast('Pop-up blocked — downloaded the PDF instead.'); }
+  });
 }
 
+// Block copying, dragging, right-click and the browser's print shortcut on the preview
+(function protect() {
+  const r = document.getElementById('resume');
+  ['copy', 'cut', 'dragstart', 'contextmenu', 'selectstart'].forEach(ev => r.addEventListener(ev, e => e.preventDefault()));
+  // Any copy whose selection touches the preview (e.g. Ctrl+A) copies nothing from it
+  document.addEventListener('copy', e => {
+    const sel = document.getSelection();
+    if (sel && sel.rangeCount && sel.containsNode(r, true)) {
+      e.preventDefault();
+      const clone = sel.getRangeAt(0).cloneContents(), box = document.createElement('div');
+      box.appendChild(clone); box.querySelectorAll('#resume').forEach(n => n.remove());
+      if (e.clipboardData) e.clipboardData.setData('text/plain', box.innerText.trim());
+    }
+  });
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === 'p' || e.key === 'P')) { e.preventDefault(); printResume(); }
+  });
+  window.addEventListener('storage', e => { if (e.key === 'ttp_session') paintLock(); });
+})();
+
 // ── Init ──────────────────────────────────────────────────────────────────
+paintLock();
 restoreDraft();
 autoFillFromProfile();
 if (!get('f-name') && !state.exp.length) render(); // show empty state
