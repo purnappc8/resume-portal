@@ -83,6 +83,11 @@ export default {
       if (m === 'POST' && p === '/candidate/visibility') return json(await candidateVisibility(request, await body(request), env), 200, cors);
       if (m === 'POST' && p === '/candidate/delete') return json(await candidateDelete(request, env), 200, cors);
       if (m === 'POST' && p === '/candidate/logout') return json(await candidateLogout(request, env), 200, cors);
+      // ── Share links ──
+      if (m === 'GET' && p === '/candidate/shares') return json(await listShares(request, env), 200, cors);
+      if (m === 'POST' && p === '/candidate/shares') return json(await createShare(request, await body(request), env), 200, cors);
+      if (m === 'POST' && p === '/candidate/shares/revoke') return json(await revokeShare(request, await body(request), env), 200, cors);
+      if (m === 'GET' && /^\/shared\/[a-f0-9]{40}$/.test(p)) return json(await openShare(p.split('/')[2], env), 200, cors);
       // ── Recruiter → candidate messages ──
       if (m === 'POST' && p === '/messages') return json(await sendCandidateMessage(request, await body(request, 8000), env, site), 200, cors);
       if (m === 'POST' && p === '/join') return json(await join(await body(request), env, url), 200, cors);
@@ -392,12 +397,63 @@ async function candidateVisibility(request, b, env) {
 async function candidateDelete(request, env) {
   const c = await candidateUser(request, env);
   await env.DB.batch([
+    env.DB.prepare('DELETE FROM shares WHERE candidate_id = ?').bind(c.id),
     env.DB.prepare('DELETE FROM messages WHERE candidate_id = ?').bind(c.id),
     env.DB.prepare('DELETE FROM tokens WHERE ref_id = ?').bind(c.id),
     env.DB.prepare('DELETE FROM candidates WHERE id = ?').bind(c.id)
   ]);
   return { ok: true };
 }
+// ── Share links: a candidate shares their profile privately, with expiry and revoke ──
+const SHARE_DAYS = [1, 7, 30, 90], MAX_ACTIVE_SHARES = 25;
+function shareView(s) {
+  const now = iso();
+  return {
+    id: s.id, label: s.label, token: s.token, showEmail: !!s.show_email,
+    createdAt: s.created_at, expiresAt: s.expires_at, views: s.views, lastViewedAt: s.last_viewed_at,
+    status: s.revoked_at ? 'revoked' : s.expires_at <= now ? 'expired' : 'active'
+  };
+}
+async function listShares(request, env) {
+  const c = await candidateUser(request, env);
+  const r = await env.DB.prepare('SELECT * FROM shares WHERE candidate_id = ? ORDER BY created_at DESC LIMIT 100').bind(c.id).all();
+  return { ok: true, canShare: c.status !== 'pending', shares: (r.results || []).map(shareView) };
+}
+async function createShare(request, b, env) {
+  const c = await candidateUser(request, env);
+  if (c.status === 'pending') fail('Confirm your profile from the email we sent you before sharing it.', 'not_confirmed', 409);
+  const label = text(b.label, 2, 60, 'Who it’s for');
+  const days = parseInt(b.days, 10);
+  if (!SHARE_DAYS.includes(days)) fail('Choose how long the link should work.', 'bad_days');
+  const now = iso();
+  const active = await env.DB.prepare('SELECT COUNT(*) AS n FROM shares WHERE candidate_id = ? AND revoked_at IS NULL AND expires_at > ?').bind(c.id, now).first();
+  if ((active && active.n) >= MAX_ACTIVE_SHARES) fail(`You can have up to ${MAX_ACTIVE_SHARES} active links. Turn off one you no longer need first.`, 'too_many', 429);
+  const s = { id: id('shr'), candidate_id: c.id, token: hex(20), label, show_email: b.showEmail ? 1 : 0,
+              expires_at: new Date(Date.now() + days * DAY).toISOString(), created_at: now, revoked_at: null, views: 0, last_viewed_at: null };
+  await env.DB.prepare('INSERT INTO shares (id,candidate_id,token,label,show_email,expires_at,created_at,views) VALUES (?,?,?,?,?,?,?,0)')
+    .bind(s.id, s.candidate_id, s.token, s.label, s.show_email, s.expires_at, s.created_at).run();
+  return { ok: true, share: shareView(s) };
+}
+async function revokeShare(request, b, env) {
+  const c = await candidateUser(request, env);
+  const r = await env.DB.prepare('UPDATE shares SET revoked_at = COALESCE(revoked_at, ?) WHERE id = ? AND candidate_id = ?').bind(iso(), String(b.id || ''), c.id).run();
+  if (!r.meta || !r.meta.changes) fail('Link not found.', 'not_found', 404);
+  return { ok: true };
+}
+async function openShare(token, env) {
+  const now = iso();
+  const row = await env.DB.prepare("SELECT s.*, c.profile_json, c.email, c.verified_at, c.updated_at AS cand_updated FROM shares s JOIN candidates c ON c.id = s.candidate_id WHERE s.token = ? AND c.status IN ('active','hidden')").bind(token).first();
+  // Same answer for unknown, revoked and expired links — nothing to learn by guessing
+  if (!row || row.revoked_at || row.expires_at <= now) fail('This link has expired or been turned off by the candidate.', 'share_gone', 404);
+  await env.DB.prepare('UPDATE shares SET views = views + 1, last_viewed_at = ? WHERE id = ?').bind(now, row.id).run();
+  return {
+    ok: true,
+    profile: { ...JSON.parse(row.profile_json || '{}'), verified: !!row.verified_at, updatedAt: row.cand_updated },
+    email: row.show_email ? row.email : null,
+    expiresAt: row.expires_at
+  };
+}
+
 async function candidateLogout(request, env) {
   const t = bearer(request);
   if (t) await env.DB.prepare("UPDATE tokens SET used_at = ? WHERE token_hash = ? AND kind = 'cand_session'").bind(iso(), await sha256(t)).run();

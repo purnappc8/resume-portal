@@ -36,6 +36,22 @@ h1{font-size:1.45rem;color:var(--blue);margin-bottom:4px;}
 .msg{margin-top:12px;font-size:.88rem;padding:10px 12px;border-radius:8px;background:var(--light);color:var(--blue);}
 .msg.err{background:#fdecea;color:var(--red);}
 [hidden]{display:none !important;}
+.share-grid{display:grid;grid-template-columns:1fr 160px;gap:12px;margin-bottom:10px;}
+@media(max-width:560px){.share-grid{grid-template-columns:1fr;}}
+.share-grid label{font-size:.85rem;font-weight:700;color:var(--blue);display:flex;flex-direction:column;gap:5px;}
+.share-grid input,.share-grid select{font:inherit;font-weight:400;border:1px solid var(--border);border-radius:8px;padding:10px 12px;min-height:44px;background:#fff;color:var(--text);}
+.share-grid input:focus,.share-grid select:focus{outline:2px solid var(--accent);outline-offset:1px;}
+.check{display:flex;align-items:center;gap:8px;font-size:.88rem;margin:4px 0 12px;cursor:pointer;min-height:32px;}
+.check input{width:18px;height:18px;}
+.share-list{margin-top:14px;display:flex;flex-direction:column;gap:10px;}
+.share{border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;}
+.share.off{background:#fafafa;opacity:.75;}
+.share .who{font-weight:700;}
+.share .meta{font-size:.8rem;color:var(--muted);}
+.share .acts{display:flex;gap:8px;flex-wrap:wrap;}
+.share .acts .btn{min-height:40px;padding:7px 12px;font-size:.84rem;}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;border-radius:10px;padding:1px 8px;margin-left:6px;vertical-align:middle;}
+.tag.active{background:#e6f4ea;color:var(--green);} .tag.expired{background:#eee;color:#666;} .tag.revoked{background:#fdecea;color:var(--red);}
 .loading{color:var(--muted);padding:30px 0;text-align:center;}
 </style>
 <script src="site.js" defer></script>
@@ -78,6 +94,26 @@ h1{font-size:1.45rem;color:var(--blue);margin-bottom:4px;}
         <div><b>Replies</b><p>When you reply to a recruiter's message, your reply goes from your own email to the recruiter's company — so they only see your email if you choose to reply.</p></div>
       </div>
       <div id="visMsg" class="msg" hidden role="status"></div>
+    </div>
+
+    <div class="card" id="shareCard">
+      <h2>Share my profile</h2>
+      <p class="note" style="margin-bottom:12px">Create a private link for a specific recruiter or company. Only people with the link can open it — it works even while your profile is hidden from Browse Talent — and you can turn it off at any time.</p>
+      <div id="shareBlocked" class="msg" hidden>Confirm your profile from the email we sent you, then you can share it.</div>
+      <form id="shareForm" onsubmit="createShare(event)" novalidate>
+        <div class="share-grid">
+          <label>Who is it for?
+            <input id="shLabel" maxlength="60" placeholder="e.g. Infosys – Ravi (recruiter)" autocomplete="off" required>
+          </label>
+          <label>Link works for
+            <select id="shDays"><option value="1">1 day</option><option value="7" selected>7 days</option><option value="30">30 days</option><option value="90">90 days</option></select>
+          </label>
+        </div>
+        <label class="check"><input type="checkbox" id="shEmail"> Show my email address on this link</label>
+        <button type="submit" class="btn primary" id="shBtn">🔗 Create share link</button>
+      </form>
+      <div id="shMsg" class="msg" hidden role="status"></div>
+      <div id="shareList" class="share-list"></div>
     </div>
 
     <div class="card">
@@ -161,6 +197,65 @@ async function deleteProfile() {
   btn.disabled = false; note('delMsg', "Couldn't delete right now. Please try again in a moment.");
 }
 
+// ── Share links ──
+const SITE = location.href.replace(/[^/]*([?#].*)?$/, '');
+const shareUrl = s => `${SITE}shared.html#t=${s.token}`;
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const when = d => new Date(d).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+let shares = [];
+async function api(path, opts = {}) {
+  const r = await fetch(API + path, { ...opts, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + sess().token, ...(opts.headers || {}) } });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(d.error || "Couldn't do that right now. Please try again.");
+  return d;
+}
+function paintShares() {
+  const box = $('shareList');
+  if (!shares.length) { box.innerHTML = '<p class="note">No share links yet.</p>'; return; }
+  box.innerHTML = shares.map(s => `
+    <div class="share ${s.status === 'active' ? '' : 'off'}">
+      <div>
+        <div class="who">${esc(s.label)}<span class="tag ${s.status}">${s.status === 'active' ? 'Active' : s.status === 'expired' ? 'Expired' : 'Turned off'}</span></div>
+        <div class="meta">${s.status === 'active' ? 'Works until ' + when(s.expiresAt) : 'Created ' + when(s.createdAt)} · Opened ${s.views} time${s.views === 1 ? '' : 's'}${s.lastViewedAt ? ' · last ' + when(s.lastViewedAt) : ''} · Email ${s.showEmail ? 'shown' : 'hidden'}</div>
+      </div>
+      ${s.status === 'active' ? `<div class="acts">
+        <button type="button" class="btn" onclick="copyShare('${s.id}')">📋 Copy link</button>
+        <a class="btn" href="${esc(shareUrl(s))}" target="_blank" rel="noopener">Preview</a>
+        <button type="button" class="btn danger" onclick="revokeShare('${s.id}')">Turn off</button>
+      </div>` : ''}
+    </div>`).join('');
+}
+async function loadShares() {
+  try { const d = await api('/candidate/shares'); shares = d.shares; $('shareForm').hidden = !d.canShare; $('shareBlocked').hidden = d.canShare; paintShares(); }
+  catch (e) { $('shareList').innerHTML = `<p class="note">${esc(e.message)}</p>`; }
+}
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); return true; }
+  catch { const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); const ok = document.execCommand('copy'); a.remove(); return ok; }
+}
+async function copyShare(idv) {
+  const s = shares.find(x => x.id === idv); if (!s) return;
+  note('shMsg', (await copyText(shareUrl(s))) ? `✓ Link for “${s.label}” copied. Paste it in an email or WhatsApp to them.` : 'Copy this link: ' + shareUrl(s));
+}
+async function createShare(e) {
+  e.preventDefault();
+  const label = $('shLabel').value.trim();
+  if (label.length < 2) { note('shMsg', 'Enter who the link is for (e.g. the company or recruiter’s name).'); $('shLabel').focus(); return; }
+  const btn = $('shBtn'); btn.disabled = true; note('shMsg', '');
+  try {
+    const d = await api('/candidate/shares', { method: 'POST', body: JSON.stringify({ label, days: +$('shDays').value, showEmail: $('shEmail').checked }) });
+    shares.unshift(d.share); paintShares(); $('shLabel').value = ''; $('shEmail').checked = false;
+    note('shMsg', (await copyText(shareUrl(d.share))) ? `✓ Link created and copied for “${d.share.label}”. Paste it in an email or WhatsApp to them.` : '✓ Link created. Use “Copy link” below to share it.');
+  } catch (err) { note('shMsg', err.message); }
+  btn.disabled = false;
+}
+async function revokeShare(idv) {
+  const s = shares.find(x => x.id === idv);
+  if (!s || !confirm(`Turn off the link for “${s.label}”? Anyone who has it won't be able to open your profile any more.`)) return;
+  try { await api('/candidate/shares/revoke', { method: 'POST', body: JSON.stringify({ id: idv }) }); s.status = 'revoked'; paintShares(); note('shMsg', `✓ Link for “${s.label}” turned off.`); }
+  catch (err) { note('shMsg', err.message); }
+}
+
 (async function init() {
   const s = sess();
   if (!s) { location.replace('login.html?next=account.html'); return; }
@@ -180,7 +275,7 @@ async function deleteProfile() {
         $('cEmail').textContent = d.me.email;
         $('cViewLink').href = 'profile.html?id=' + encodeURIComponent(d.me.id);
         paintVisibility(d.me.status);
-        show('candView'); return;
+        show('candView'); loadShares(); return;
       }
     } catch {}
   }

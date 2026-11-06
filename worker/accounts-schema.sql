@@ -66,3 +66,19 @@ CREATE TABLE IF NOT EXISTS messages (
 );
 CREATE INDEX IF NOT EXISTS idx_messages_candidate ON messages(candidate_id, created_at);
 CREATE INDEX IF NOT EXISTS idx_messages_recruiter ON messages(recruiter_id, created_at);
+
+-- Private share links a candidate creates for a specific recruiter/company.
+-- They work even while the profile is hidden from Browse Talent.
+CREATE TABLE IF NOT EXISTS shares (
+  id             TEXT PRIMARY KEY,
+  candidate_id   TEXT NOT NULL REFERENCES candidates(id),
+  token          TEXT NOT NULL UNIQUE,          -- random, unguessable; kept so the owner can copy the link again
+  label          TEXT NOT NULL,                 -- the candidate's own note, e.g. "Infosys – Ravi"
+  show_email     INTEGER NOT NULL DEFAULT 0,
+  expires_at     TEXT NOT NULL,
+  created_at     TEXT NOT NULL,
+  revoked_at     TEXT,
+  views          INTEGER NOT NULL DEFAULT 0,
+  last_viewed_at TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_shares_candidate ON shares(candidate_id, created_at);
