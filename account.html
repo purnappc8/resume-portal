@@ -226,7 +226,11 @@ function paintShares() {
     </div>`).join('');
 }
 async function loadShares() {
-  try { const d = await api('/candidate/shares'); shares = d.shares; $('shareForm').hidden = !d.canShare; $('shareBlocked').hidden = d.canShare; paintShares(); }
+  try {
+    const r = await fetch(API + '/candidate/shares', { headers: { Authorization: 'Bearer ' + sess().token } });
+    if (r.status === 404) { $('shareCard').hidden = true; return; }   // sharing not switched on in the service yet
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || "Couldn't load your share links. Please refresh."); shares = d.shares; $('shareForm').hidden = !d.canShare; $('shareBlocked').hidden = d.canShare; paintShares(); }
   catch (e) { $('shareList').innerHTML = `<p class="note">${esc(e.message)}</p>`; }
 }
 async function copyText(t) {
