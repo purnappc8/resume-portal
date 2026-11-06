@@ -140,8 +140,23 @@ footer a{color:rgba(255,255,255,.9);}
 .pf-group label{font-size:.82rem;font-weight:700;color:var(--blue);}
 .pf-group input,.pf-group textarea{padding:8px 10px;border:1px solid var(--border);border-radius:7px;font-size:.88rem;font-family:inherit;background:var(--bg);}
 .pf-group textarea{resize:vertical;min-height:70px;}
+
+/* Near-you banner */
+.near-you-banner{background:linear-gradient(90deg,#0b2e59,#1565c0);color:#fff;border-radius:10px;padding:12px 18px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:.93rem;}
+.near-you-banner strong{font-size:1rem;}
+.near-you-banner button{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:6px;padding:5px 12px;cursor:pointer;font-size:.82rem;white-space:nowrap;}
+.near-you-banner button:hover{background:rgba(255,255,255,.3);}
+.near-you-section{margin-bottom:20px;}
+.near-you-section h3{font-size:.88rem;text-transform:uppercase;letter-spacing:.5px;color:var(--blue);margin-bottom:10px;padding-left:4px;}
+/* Location filter row */
+.loc-detect-row{margin-top:6px;display:flex;flex-direction:column;gap:6px;}
+.btn-detect-loc{background:var(--accent);color:#fff;border:none;border-radius:7px;padding:7px 12px;font-size:.82rem;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:6px;}
+.btn-detect-loc:hover{background:#0d47a1;}
+.loc-detected{font-size:.8rem;color:var(--green);font-weight:600;padding:4px 0;}
+
 </style>
 <script src="site.js" defer></script>
+<script src="location.js"></script>
 </head>
 <body>
 
@@ -228,6 +243,11 @@ footer a{color:rgba(255,255,255,.9);}
       <div class="gs-group" id="gsFreelance"><span class="gs-label">Freelance</span></div>
       <p class="gs-note">Opens the site's own search results in a new tab. Uses your keywords, technology, job type and location filters.</p>
     </section>
+    <!-- Near You jobs strip -->
+    <div id="nearYouSection" class="near-you-section" style="display:none">
+      <h3>📍 Recommended Near You</h3>
+      <div id="nearYouList"></div>
+    </div>
     <div class="results-header">
       <h2 id="resultsCount">Loading jobs…</h2>
     </div>
@@ -910,6 +930,149 @@ function showAiToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { el.style.display = 'none'; }, 5000);
 }
+
+
+// ── Location-aware features ─────────────────────────────────────────────────
+let userLocation = null;  // { city, state, country, countryCode, lat, lng }
+
+// Called by location.js via event when geolocation resolves
+document.addEventListener('ttp:location-ready', (e) => {
+  userLocation = e.detail;
+  updateLocationUI();
+  renderNearYouSection();
+});
+
+// Also check if location was already loaded (page cached/fast)
+(function(){
+  const cached = (() => { try { return JSON.parse(localStorage.getItem('ttp_user_location') || 'null'); } catch { return null; } })();
+  if (cached && cached.lat) { userLocation = cached; updateLocationUI(); renderNearYouSection(); }
+})();
+
+function updateLocationUI() {
+  if (!userLocation || !userLocation.city) return;
+  const label = document.getElementById('locDetectedLabel');
+  const nearMeLabel = document.getElementById('nearMeLabel');
+  if (label) {
+    label.textContent = '📍 ' + [userLocation.city, userLocation.countryCode].filter(Boolean).join(', ');
+    label.style.display = '';
+  }
+  if (nearMeLabel) nearMeLabel.style.display = '';
+}
+
+function detectMyLocation() {
+  const btn = document.querySelector('.btn-detect-loc');
+  if (btn) { btn.textContent = '📍 Detecting…'; btn.disabled = true; }
+  if (window.ttpCollectLocation) {
+    window.ttpCollectLocation().then(loc => {
+      if (btn) { btn.textContent = '📍 Use My Location'; btn.disabled = false; }
+      if (loc) {
+        userLocation = loc;
+        updateLocationUI();
+        renderNearYouSection();
+        renderJobs();
+      } else {
+        if (btn) btn.textContent = '📍 Location unavailable';
+      }
+    });
+  }
+}
+
+// Match a job location string against user's city/state/country
+function jobMatchesUserLocation(j) {
+  if (!userLocation || !j.location) return false;
+  const jloc = j.location.toLowerCase();
+  const city  = (userLocation.city || '').toLowerCase();
+  const state = (userLocation.state || '').toLowerCase();
+  const cc    = (userLocation.countryCode || '').toLowerCase();
+  const country = (userLocation.country || '').toLowerCase();
+  if (jloc.includes('remote')) return true; // remote always matches
+  if (city && jloc.includes(city)) return true;
+  if (state && jloc.includes(state)) return true;
+  if (cc === 'in' && (jloc.includes('india') || jloc.includes(' in'))) return true;
+  if (cc === 'us' && (jloc.includes('united states') || jloc.includes(' us') || jloc.includes(' usa'))) return true;
+  if (country && jloc.includes(country)) return true;
+  return false;
+}
+
+function renderNearYouSection() {
+  const sec  = document.getElementById('nearYouSection');
+  const list = document.getElementById('nearYouList');
+  if (!sec || !list || !userLocation || !jobs.length) return;
+
+  const nearby = jobs.filter(j => jobMatchesUserLocation(j)).slice(0, 6);
+  if (!nearby.length) { sec.style.display = 'none'; return; }
+
+  sec.style.display = '';
+  const E = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  list.innerHTML = nearby.map(j => {
+    const s = (window.SRC_STYLE && window.SRC_STYLE[j.source]) || { bg: '#607d8b', label: '?' };
+    return `<div class="job-card" style="border-left:4px solid var(--accent);margin-bottom:10px">
+      <span class="source-badge" style="background:${s.bg};color:#fff">${E(j.source)}</span>
+      <div class="job-top">
+        <div class="job-logo" style="background:${s.bg}">${E(s.label)}</div>
+        <div class="job-info">
+          <div class="job-title">${E(j.title)}</div>
+          <div class="company-row">${E(j.company)} · <span class="job-loc">📍 ${E(j.location)}</span></div>
+        </div>
+      </div>
+      <div class="job-footer">
+        ${j.applyUrl || j.url ? `<a href="${E(j.applyUrl||j.url)}" target="_blank" rel="noopener" class="btn-apply">Apply Now →</a>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Hook renderJobs to also filter "Near Me" checkbox
+const _origRenderJobs = renderJobs;
+function renderJobs() {
+  _origRenderJobs();
+  // Apply "Near Me" extra filter on top
+  const nearMe = document.getElementById('cb-nearme');
+  if (!nearMe || !nearMe.checked || !userLocation) return;
+  const list = document.getElementById('jobList');
+  if (!list) return;
+  // Re-filter the DOM (simpler than patching the full pipeline)
+  // We actually need to re-run from data — patch the filter instead
+}
+
+// Patch: add near-me filter into renderJobs pipeline
+// We override the existing renderJobs after it's defined
+setTimeout(() => {
+  const orig = window.renderJobs;
+  if (!orig) return;
+  window.renderJobs = function() {
+    // Run original
+    orig();
+    // Now apply near-me on top of rendered results (re-render subset)
+    const nearMe = document.getElementById('cb-nearme');
+    if (!nearMe || !nearMe.checked || !userLocation) return;
+    // Re-filter jobs array and re-render
+    const q     = document.getElementById('jobSearch')?.value.toLowerCase() || '';
+    const tech  = document.getElementById('techFilter')?.value.toLowerCase() || '';
+    const type  = document.getElementById('typeFilter')?.value.toLowerCase() || '';
+    const level = document.getElementById('expFilter')?.value.toLowerCase() || '';
+    const E = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const filtered = jobs.filter(j => {
+      if (!jobMatchesUserLocation(j)) return false;
+      const blob = `${j.title} ${j.company} ${(j.tech||[]).join(' ')}`.toLowerCase();
+      if (q && !blob.includes(q)) return false;
+      if (tech && !(j.tech||[]).join(' ').toLowerCase().includes(tech.split('/')[0].trim())) return false;
+      if (type && !(j.type||'').toLowerCase().includes(type)) return false;
+      if (level && !(j.exp||'').toLowerCase().includes(level)) return false;
+      return true;
+    });
+    const list = document.getElementById('jobList');
+    const count = document.getElementById('resultsCount');
+    if (count) count.textContent = `${filtered.length} job${filtered.length!==1?'s':''} near ${userLocation.city||'you'}`;
+    if (filtered.length === 0) {
+      list.innerHTML = `<div class="empty-state" style="text-align:center;padding:40px;background:#fff;border:1px dashed var(--border);border-radius:12px">
+        <div style="font-size:2rem;margin-bottom:8px">📍</div>
+        <p style="font-size:1.05rem;font-weight:700;color:var(--blue)">No jobs found near ${E(userLocation.city||'you')}</p>
+        <p style="color:var(--muted);font-size:.9rem;margin-top:6px">Try unchecking "Jobs Near Me" to see all results.</p>
+      </div>`;
+    }
+  };
+}, 200);
 
 updateNav();
 loadJobs();

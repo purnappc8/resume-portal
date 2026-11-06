@@ -150,7 +150,46 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, safe);
   }
 
-  // -- GET /jobs: merge portal-posted + live aggregated jobs
+  // -- POST /location/log  (save user location visit for ML data)
+  if (req.method === 'POST' && url === '/location/log') {
+    let body = '';
+    req.on('data', d => { body += d; });
+    req.on('end', () => {
+      try {
+        const entry = JSON.parse(body);
+        if (!entry.lat || !entry.lng) return json(res, 400, { error: 'lat/lng required' });
+        const logs = readJson('location_logs.json', []);
+        logs.push({ ...entry, serverTs: new Date().toISOString() });
+        if (logs.length > 10000) logs.splice(0, logs.length - 10000);
+        writeJson('location_logs.json', logs);
+        return json(res, 200, { ok: true });
+      } catch (e) { return json(res, 400, { error: 'Invalid JSON' }); }
+    });
+    return;
+  }
+
+  // -- GET /location/stats  (city visitor counts for analytics)
+  if (req.method === 'GET' && url === '/location/stats') {
+    const logs = readJson('location_logs.json', []);
+    const cities = {};
+    logs.forEach(l => {
+      const key = l.city ? (l.city + (l.countryCode ? ', ' + l.countryCode : '')) : null;
+      if (key) cities[key] = (cities[key] || 0) + 1;
+    });
+    return json(res, 200, { cities, total: logs.length });
+  }
+
+  // -- GET /profiles/:id  (single profile lookup by id)
+  if (req.method === 'GET' && url.startsWith('/profiles/')) {
+    const pid = decodeURIComponent(url.slice('/profiles/'.length));
+    const profiles = readJson('profiles.json', []);
+    const found = profiles.find(p => p.id === pid);
+    if (!found) return json(res, 404, { error: 'Profile not found' });
+    const { pass, ...safe } = found;
+    return json(res, 200, safe);
+  }
+
+    // -- GET /jobs: merge portal-posted + live aggregated jobs
   if (req.method === 'GET' && url === '/jobs') {
     const portalJobs = readJson('jobs.json', []);
     const liveJobs   = readCache(DATA_DIR);
