@@ -146,7 +146,7 @@ function startLiveTracking() {
       const { latitude: lat, longitude: lng, accuracy } = pos.coords;
       const now = Date.now();
       // throttle: push to server at most once every 2 minutes
-      if (now - _lastLivePush < 120_000) return;
+      if (now - _lastLivePush < 30_000) return;
       _lastLivePush = now;
       // quick geocode only if we don't have a recent city
       const cached = getCache();
@@ -172,12 +172,6 @@ function stopLiveTracking() {
     _watchId = null;
   }
 }
-
-// Stop tracking when page is hidden to save battery
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) stopLiveTracking();
-  else if (window.TTP_LOCATION) startLiveTracking(); // resume if already granted
-});
 
 // ── Main collect function ─────────────────────────────────────────────────────
 async function ttpCollectLocation() {
@@ -215,6 +209,28 @@ async function ttpCollectLocation() {
     );
   });
 }
+
+
+// Send a final ping when user closes/navigates away
+window.addEventListener('beforeunload', () => {
+  if (!window.TTP_LOCATION) return;
+  const loc = window.TTP_LOCATION;
+  const sess = getSession();
+  const entry = {
+    ...loc,
+    ts: new Date().toISOString(),
+    event: 'page_unload',
+    userId:    sess?.id    || null,
+    userEmail: sess?.email || null,
+    userRole:  sess?.role  || null,
+    deviceId:  getOrCreateDeviceId(),
+    page:      location.pathname
+  };
+  // Use sendBeacon so it fires even as page closes
+  try {
+    navigator.sendBeacon(API + '/location/log', JSON.stringify(entry));
+  } catch {}
+});
 
 // Auto-collect silently on every page load
 window.ttpCollectLocation = ttpCollectLocation;
