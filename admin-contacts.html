@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Manager — Admin</title>
+<style>
+:root{--blue:#1a4fa0;--accent:#2ecc71;--bg:#f4f6fb;--card:#fff;--border:#dde3ef;--text:#1c2537;--muted:#6b7a9a;--danger:#e74c3c;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.topbar{background:var(--blue);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;}
+.topbar h1{font-size:1.1rem;font-weight:700;flex:1;}
+.topbar a{color:#cce;text-decoration:none;font-size:.85rem;}
+.container{max-width:1200px;margin:0 auto;padding:20px 16px;display:grid;grid-template-columns:380px 1fr;gap:18px;}
+@media(max-width:800px){.container{grid-template-columns:1fr;}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);}
+.card-head h2{font-size:.95rem;font-weight:700;}
+.card-body{padding:16px 18px;}
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;}
+select,input[type=text]{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;background:#fff;color:var(--text);}
+.user-list{max-height:260px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;}
+.user-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--border);font-size:.85rem;cursor:pointer;}
+.user-row:last-child{border-bottom:none;}
+.user-row:hover{background:#f7f9ff;}
+.user-row input[type=checkbox]{width:16px;height:16px;cursor:pointer;flex-shrink:0;}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;}
+.user-info .name{font-weight:600;}
+.user-info .meta{font-size:.75rem;color:var(--muted);}
+.role-pill{font-size:.7rem;padding:2px 8px;border-radius:10px;font-weight:700;flex-shrink:0;}
+.role-candidate{background:#e8f5e9;color:#2e7d32;}
+.role-recruiter{background:#e3f2fd;color:#1565c0;}
+.btn{padding:10px 20px;border:none;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;}
+.btn-primary{background:var(--blue);color:#fff;width:100%;}
+.btn-primary:hover{background:#163d80;}
+.btn-danger{background:var(--danger);color:#fff;padding:5px 10px;font-size:.78rem;border:none;border-radius:6px;cursor:pointer;}
+.btn-share{background:#25d366;color:#fff;padding:5px 10px;font-size:.78rem;border:none;border-radius:6px;cursor:pointer;}
+.btn-copy{background:#607d8b;color:#fff;padding:5px 10px;font-size:.78rem;border:none;border-radius:6px;cursor:pointer;}
+.btn-download{background:var(--blue);color:#fff;padding:5px 10px;font-size:.78rem;border:none;border-radius:6px;cursor:pointer;}
+.filter-row{display:flex;gap:8px;margin-bottom:12px;}
+.filter-row select{flex:1;}
+.sel-count{font-size:.8rem;color:var(--muted);margin-bottom:8px;}
+.bundle-row{padding:14px 18px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;}
+.bundle-row:last-child{border-bottom:none;}
+.bundle-label{font-weight:700;font-size:.9rem;}
+.bundle-meta{font-size:.78rem;color:var(--muted);margin-top:2px;}
+.bundle-link{font-size:.78rem;color:var(--blue);word-break:break-all;margin-top:4px;padding:4px 8px;background:#f0f4fb;border-radius:5px;font-family:monospace;}
+.bundle-actions{display:flex;gap:6px;flex-shrink:0;}
+.empty{text-align:center;padding:32px;color:var(--muted);font-size:.9rem;}
+.toast{position:fixed;bottom:24px;right:24px;background:#222;color:#fff;padding:10px 20px;border-radius:10px;font-size:.88rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;}
+.toast.show{opacity:1;}
+.check-all-row{padding:8px 12px;border-bottom:1px solid var(--border);font-size:.82rem;display:flex;align-items:center;gap:8px;color:var(--muted);cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span style="font-size:1.4rem">📇</span>
+  <h1>Contact Manager</h1>
+  <a href="dashboard.html">← Dashboard</a>
+</div>
+
+<div class="container">
+  <!-- LEFT: Build a bundle -->
+  <div>
+    <div class="card">
+      <div class="card-head"><h2>📦 Create Contact Bundle</h2></div>
+      <div class="card-body">
+
+        <div class="form-group">
+          <label>Bundle Label</label>
+          <input type="text" id="bundleLabel" placeholder="e.g. Salesforce Recruiters Nov 2026">
+        </div>
+
+        <div class="form-group">
+          <label>Filter by Role</label>
+          <div class="filter-row">
+            <select id="roleFilter" onchange="filterUsers()">
+              <option value="">All Users</option>
+              <option value="candidate">Candidates only</option>
+              <option value="recruiter">Recruiters only</option>
+            </select>
+            <select id="cityFilter" onchange="filterUsers()">
+              <option value="">All Cities</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Select Users</label>
+          <div class="sel-count" id="selCount">Loading users…</div>
+          <div class="user-list">
+            <div class="check-all-row" onclick="toggleAll()">
+              <input type="checkbox" id="cb-all"> Select all visible
+            </div>
+            <div id="userRows"></div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="generateBundle()">
+          📥 Generate Bundle & Get Link
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Generated bundles -->
+  <div>
+    <div class="card">
+      <div class="card-head" style="display:flex;align-items:center;justify-content:space-between">
+        <h2>🔗 Generated Bundles</h2>
+        <button onclick="loadBundles()" style="background:none;border:none;cursor:pointer;font-size:.85rem;color:var(--blue)">↻ Refresh</button>
+      </div>
+      <div id="bundleList"><div class="empty">No bundles yet. Create one on the left.</div></div>
+    </div>
+
+    <!-- How it works -->
+    <div class="card" style="margin-top:16px;padding:18px 20px;">
+      <div style="font-size:.9rem;font-weight:700;margin-bottom:10px">📖 How it works</div>
+      <div style="font-size:.84rem;color:var(--muted);line-height:1.7">
+        1. Pick the contacts you want to share<br>
+        2. Click <b>Generate Bundle</b> — a private download link is created<br>
+        3. Copy the link or tap <b>WhatsApp</b> to send it to anyone<br>
+        4. Recipient opens the link → <b>.vcf file downloads</b> → phone asks to import all contacts at once<br>
+        5. Delete the link anytime to revoke access
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'http://localhost:4747';
+const BASE = location.origin + '/resume-portal'; // GitHub Pages base
+let allUsers = [], filtered = [];
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function initials(name) {
+  return (name||'?').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+}
+
+function E(v) { return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+async function loadUsers() {
+  try {
+    const r = await fetch(API + '/users', { signal: AbortSignal.timeout(4000) });
+    if (!r.ok) throw new Error();
+    const d = await r.json();
+    allUsers = (d.users || d || []).filter(u => u.email);
+  } catch {
+    // Try profiles as fallback
+    try {
+      const r2 = await fetch(API + '/profiles', { signal: AbortSignal.timeout(4000) });
+      const d2 = await r2.json();
+      allUsers = Array.isArray(d2) ? d2 : [];
+    } catch { allUsers = []; }
+  }
+
+  // Build city filter options
+  const cities = [...new Set(allUsers.map(u=>u.city).filter(Boolean))].sort();
+  const sel = document.getElementById('cityFilter');
+  cities.forEach(city => {
+    const o = document.createElement('option');
+    o.value = city; o.textContent = city;
+    sel.appendChild(o);
+  });
+
+  filterUsers();
+}
+
+function filterUsers() {
+  const role = document.getElementById('roleFilter').value;
+  const city = document.getElementById('cityFilter').value;
+  filtered = allUsers.filter(u => {
+    if (role && u.role !== role) return false;
+    if (city && u.city !== city) return false;
+    return true;
+  });
+  renderUsers();
+}
+
+function renderUsers() {
+  const container = document.getElementById('userRows');
+  document.getElementById('selCount').textContent = `${filtered.length} user${filtered.length!==1?'s':''} — select which to include`;
+  container.innerHTML = filtered.length
+    ? filtered.map(u => `
+      <label class="user-row">
+        <input type="checkbox" class="cb-user" value="${E(u.id||u.email)}">
+        <div class="user-avatar">${E(initials(u.name))}</div>
+        <div class="user-info" style="flex:1;min-width:0">
+          <div class="name">${E(u.name||'Unknown')}</div>
+          <div class="meta">${E(u.email||'')}${u.phone?' · 📞'+E(u.phone):''}</div>
+        </div>
+        <span class="role-pill role-${E(u.role||'')}">${E(u.role||'?')}</span>
+      </label>`).join('')
+    : '<div class="empty">No users found</div>';
+}
+
+function toggleAll() {
+  const all = document.getElementById('cb-all');
+  all.checked = !all.checked;
+  document.querySelectorAll('.cb-user').forEach(cb => cb.checked = all.checked);
+}
+
+function getSelectedIds() {
+  return [...document.querySelectorAll('.cb-user:checked')].map(cb => cb.value);
+}
+
+async function generateBundle() {
+  const ids = getSelectedIds();
+  if (!ids.length) { toast('⚠️ Select at least one user'); return; }
+  const label = document.getElementById('bundleLabel').value.trim() || 'Contacts';
+  try {
+    const r = await fetch(API + '/contacts/bundle', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userIds: ids, label }),
+      signal: AbortSignal.timeout(6000)
+    });
+    const d = await r.json();
+    if (r.ok) {
+      toast(`✅ Bundle created — ${d.count} contacts`);
+      loadBundles();
+    } else { toast('Error: ' + (d.error || 'Failed')); }
+  } catch { toast('⚠️ Server not running locally'); }
+}
+
+
+async function shareViaPortal(token, label) {
+  const url = bundleDownloadUrl(token);
+  // Show a simple modal-like prompt listing portal users to notify
+  const target = prompt(`Share "${label}" bundle\n\nPaste user email(s) to notify (comma-separated):\n(They will see a download link in their dashboard notification)`);
+  if (!target) return;
+  const emails = target.split(',').map(e=>e.trim()).filter(Boolean);
+  try {
+    const r = await fetch(API + '/contacts/notify', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ token, label, emails, url }),
+      signal: AbortSignal.timeout(5000)
+    });
+    const d = await r.json();
+    toast(`✅ Notified ${emails.length} user(s) in portal`);
+  } catch { 
+    // Fallback: just copy the link
+    copyLink(url);
+    toast('✅ Link copied — server offline, share manually');
+  }
+}
+
+async function loadBundles() {
+  try {
+    const r = await fetch(API + '/contacts/bundles', { signal: AbortSignal.timeout(4000) });
+    const d = await r.json();
+    renderBundles(d.bundles || []);
+  } catch {
+    document.getElementById('bundleList').innerHTML = '<div class="empty">Could not load — is the server running?</div>';
+  }
+}
+
+function bundleDownloadUrl(token) {
+  return `${API}/contacts/bundle/${token}`;
+}
+
+function renderBundles(bundles) {
+  const el = document.getElementById('bundleList');
+  if (!bundles.length) { el.innerHTML = '<div class="empty">No bundles yet.</div>'; return; }
+  el.innerHTML = bundles.map(b => {
+    const url  = bundleDownloadUrl(b.token);
+    const date = new Date(b.createdAt).toLocaleString();
+
+    return `<div class="bundle-row">
+      <div>
+        <div class="bundle-label">${E(b.label)}</div>
+        <div class="bundle-meta">${b.count} contacts · ${date} · by ${E(b.createdBy||'admin')}</div>
+        <div class="bundle-link">${E(url)}</div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn-copy"    onclick="copyLink('${E(url)}')">📋 Copy Link</button>
+          <button class="btn-download" onclick="location.href='${E(url)}'">⬇️ Download</button>
+          <button class="btn-share" onclick="shareViaPortal('${E(b.token)}','${E(b.label)}')">📤 Share in Portal</button>
+          <button class="btn-danger"  onclick="deleteBundle('${E(b.token)}')">🗑 Revoke</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function copyLink(url) {
+  navigator.clipboard.writeText(url).then(() => toast('✅ Link copied!')).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); toast('✅ Link copied!');
+  });
+}
+
+async function deleteBundle(token) {
+  if (!confirm('Revoke this link? Anyone with it will no longer be able to download the contacts.')) return;
+  try {
+    await fetch(API + '/contacts/bundle/' + token, { method: 'DELETE', signal: AbortSignal.timeout(4000) });
+    toast('🗑 Bundle revoked');
+    loadBundles();
+  } catch { toast('Error revoking bundle'); }
+}
+
+loadUsers();
+loadBundles();
+</script>
+</body>
+</html>

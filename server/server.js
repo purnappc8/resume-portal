@@ -212,6 +212,129 @@ const server = http.createServer(async (req, res) => {
   }
 
 
+
+
+  // -- POST /contacts/notify  (admin: notify portal users of a bundle link)
+  if (req.method === 'POST' && url === '/contacts/notify') {
+    return readBody(req, res, (body) => {
+      const { token, label, emails, url: bundleUrl } = body;
+      const notifs = readJson('notifications.json', []);
+      const ts = new Date().toISOString();
+      (emails || []).forEach(email => {
+        notifs.push({
+          id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+          to: email, type: 'contact_bundle',
+          message: `📇 Admin shared a contact bundle: "${label||'Contacts'}"`,
+          downloadUrl: bundleUrl, token, ts, read: false
+        });
+      });
+      // cap at 2000
+      if (notifs.length > 2000) notifs.splice(0, notifs.length - 2000);
+      writeJson('notifications.json', notifs);
+      return json(res, 200, { ok: true, notified: (emails||[]).length });
+    });
+  }
+
+  // -- GET /notifications  (user: get their notifications by email)
+  if (req.method === 'GET' && url.startsWith('/notifications')) {
+    const email = new URL('http://x' + url).searchParams.get('email') || '';
+    const notifs = readJson('notifications.json', []);
+    const mine = notifs.filter(n => n.to === email && !n.read);
+    return json(res, 200, { notifications: mine });
+  }
+
+  // -- POST /notifications/read  (mark notifications as read)
+  if (req.method === 'POST' && url === '/notifications/read') {
+    return readBody(req, res, (body) => {
+      const { ids } = body;
+      const notifs = readJson('notifications.json', []);
+      notifs.forEach(n => { if ((ids||[]).includes(n.id)) n.read = true; });
+      writeJson('notifications.json', notifs);
+      return json(res, 200, { ok: true });
+    });
+  }
+
+  // -- GET /users  (admin: list all users without passwords)
+  if (req.method === 'GET' && url === '/users') {
+    const users = readJson('users.json', []);
+    const safe = users.map(({ pass, pwd, password, ...u }) => u);
+    return json(res, 200, { users: safe });
+  }
+
+  // -- POST /contacts/bundle  (admin: generate a .vcf bundle + shareable token)
+  if (req.method === 'POST' && url === '/contacts/bundle') {
+    return readBody(req, res, (body) => {
+      const { userIds, role, label } = body;  // filter by ids OR role
+      const users = readJson('users.json', []);
+      let subset = users;
+      if (userIds && userIds.length) subset = users.filter(u => userIds.includes(u.id));
+      else if (role) subset = users.filter(u => u.role === role);
+      // Build vCard string
+      const vcf = subset.map(u => {
+        const name  = (u.name || '').trim();
+        const parts = name.split(' ');
+        const first = parts[0] || '';
+        const last  = parts.slice(1).join(' ') || '';
+        const phone = (u.phone || '').replace(/\s/g, '');
+        const lines = [
+          'BEGIN:VCARD',
+          'VERSION:3.0',
+          `FN:${name}`,
+          `N:${last};${first};;;`,
+          `EMAIL:${u.email || ''}`,
+          phone ? `TEL;TYPE=CELL:${phone}` : '',
+          u.role ? `ORG:TechTalent Portal (${u.role})` : '',
+          u.city ? `ADR:;;${u.city};;;${u.country || ''};;` : '',
+          `NOTE:Role: ${u.role || ''} | Joined: ${(u.createdAt||'').slice(0,10)}`,
+          'END:VCARD'
+        ].filter(Boolean);
+        return lines.join('\r\n');
+      }).join('\r\n\r\n');
+
+      // Save bundle with a random token
+      const token = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+      const bundles = readJson('contact_bundles.json', {});
+      bundles[token] = {
+        token, label: label || 'Contacts', count: subset.length,
+        createdAt: new Date().toISOString(), vcf,
+        createdBy: body.adminEmail || 'admin'
+      };
+      writeJson('contact_bundles.json', bundles);
+      return json(res, 200, { token, count: subset.length, label: label || 'Contacts' });
+    });
+  }
+
+  // -- GET /contacts/bundle/:token  (anyone with link downloads the .vcf)
+  if (req.method === 'GET' && url.startsWith('/contacts/bundle/')) {
+    const token = url.slice('/contacts/bundle/'.length);
+    const bundles = readJson('contact_bundles.json', {});
+    const b = bundles[token];
+    if (!b) return json(res, 404, { error: 'Bundle not found or expired' });
+    const filename = (b.label || 'contacts').replace(/[^a-z0-9]/gi, '_') + '.vcf';
+    res.writeHead(200, {
+      'Content-Type': 'text/vcard; charset=utf-8',
+      'Content-Disposition': `attachment; filename="${filename}"`,
+      'Access-Control-Allow-Origin': '*'
+    });
+    return res.end(b.vcf);
+  }
+
+  // -- GET /contacts/bundles  (admin: list all generated bundles)
+  if (req.method === 'GET' && url === '/contacts/bundles') {
+    const bundles = readJson('contact_bundles.json', {});
+    const list = Object.values(bundles).map(({ vcf: _, ...meta }) => meta)
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    return json(res, 200, { bundles: list });
+  }
+
+  // -- DELETE /contacts/bundle/:token  (admin: revoke a bundle link)
+  if (req.method === 'DELETE' && url.startsWith('/contacts/bundle/')) {
+    const token = url.slice('/contacts/bundle/'.length);
+    const bundles = readJson('contact_bundles.json', {});
+    if (bundles[token]) { delete bundles[token]; writeJson('contact_bundles.json', bundles); }
+    return json(res, 200, { ok: true });
+  }
+
   // -- GET /check-phone  (is this number already registered?)
   if (req.method === 'GET' && url.startsWith('/check-phone')) {
     const phone = new URL('http://x' + url).searchParams.get('phone') || '';
