@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Location & Device Tracker — Admin</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+  --blue:#1a4fa0; --accent:#2ecc71; --bg:#f4f6fb; --card:#fff;
+  --border:#dde3ef; --text:#1c2537; --muted:#6b7a9a; --danger:#e74c3c;
+  --gold:#f39c12;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.topbar{background:var(--blue);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;}
+.topbar a{color:#cce;text-decoration:none;font-size:.85rem;}
+.topbar h1{font-size:1.1rem;font-weight:700;flex:1;}
+.badge{background:rgba(255,255,255,.18);border-radius:20px;padding:2px 10px;font-size:.8rem;}
+.container{max-width:1400px;margin:0 auto;padding:20px 16px;}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;}
+.stat-card .val{font-size:2rem;font-weight:800;color:var(--blue);}
+.stat-card .label{font-size:.82rem;color:var(--muted);margin-top:2px;}
+.two-col{display:grid;grid-template-columns:1fr 380px;gap:16px;margin-bottom:20px;}
+@media(max-width:900px){.two-col{grid-template-columns:1fr;}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-head h2{font-size:.95rem;font-weight:700;}
+#map{height:420px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 1.4s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.refresh-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:5px 12px;font-size:.8rem;cursor:pointer;}
+/* City list */
+.city-list{max-height:380px;overflow-y:auto;}
+.city-row{display:flex;align-items:center;gap:10px;padding:9px 18px;border-bottom:1px solid var(--border);font-size:.87rem;}
+.city-row:last-child{border-bottom:none;}
+.city-bar-wrap{flex:1;height:6px;background:#edf0f7;border-radius:3px;overflow:hidden;}
+.city-bar{height:100%;background:var(--blue);border-radius:3px;transition:width .4s;}
+.city-count{font-size:.82rem;color:var(--muted);min-width:30px;text-align:right;}
+/* Log table */
+.log-table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:.82rem;}
+th{background:#f0f4fb;font-weight:700;padding:9px 12px;text-align:left;border-bottom:2px solid var(--border);white-space:nowrap;}
+td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:hover td{background:#f7f9ff;}
+.role-badge{font-size:.72rem;padding:2px 7px;border-radius:10px;font-weight:600;}
+.role-candidate{background:#e8f5e9;color:#2e7d32;}
+.role-recruiter{background:#e3f2fd;color:#1565c0;}
+/* Devices */
+.device-row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 18px;border-bottom:1px solid var(--border);}
+.device-icon{width:38px;height:38px;border-radius:10px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.device-info .name{font-weight:700;font-size:.88rem;}
+.device-info .meta{font-size:.78rem;color:var(--muted);margin-top:2px;}
+.device-visits{font-size:.82rem;color:var(--muted);text-align:right;}
+.device-visits .num{font-size:1.1rem;font-weight:800;color:var(--blue);display:block;}
+.empty{text-align:center;padding:40px;color:var(--muted);}
+/* tabs */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:16px;}
+.tab{padding:8px 20px;font-size:.88rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span style="font-size:1.5rem">🗺️</span>
+  <h1>Location & Device Tracker</h1>
+  <span class="badge"><span class="live-dot"></span> Live</span>
+  <a href="dashboard.html">← Dashboard</a>
+</div>
+
+<div class="container">
+  <!-- Stats row -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="val" id="statTotal">–</div><div class="label">Total Location Pings</div></div>
+    <div class="stat-card"><div class="val" id="statCities">–</div><div class="label">Unique Cities</div></div>
+    <div class="stat-card"><div class="val" id="statDevices">–</div><div class="label">Registered Devices</div></div>
+    <div class="stat-card"><div class="val" id="statToday">–</div><div class="label">Pings Today</div></div>
+    <div class="stat-card"><div class="val" id="statUsers">–</div><div class="label">Unique Users Tracked</div></div>
+  </div>
+
+  <!-- Map + City list -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-head">
+        <h2>🌍 Live Visitor Map</h2>
+        <button class="refresh-btn" onclick="loadAll()">↻ Refresh</button>
+      </div>
+      <div id="map"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>📍 Top Cities</h2></div>
+      <div class="city-list" id="cityList"><div class="empty">Loading…</div></div>
+    </div>
+  </div>
+
+  <!-- Tabs: Recent Logs / Devices -->
+  <div class="card">
+    <div style="padding:14px 18px 0">
+      <div class="tabs">
+        <div class="tab active" id="tabLogs" onclick="switchTab('logs')">📋 Recent Location Logs</div>
+        <div class="tab" id="tabDevices" onclick="switchTab('devices')">📱 Registered Devices</div>
+      </div>
+    </div>
+    <div id="paneLogs">
+      <div class="log-table-wrap" style="padding:0 0 4px">
+        <table>
+          <thead><tr>
+            <th>#</th><th>Time</th><th>User</th><th>Role</th>
+            <th>City</th><th>Country</th><th>Lat</th><th>Lng</th><th>Page</th>
+          </tr></thead>
+          <tbody id="logTbody"><tr><td colspan="9" class="empty">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="paneDevices" style="display:none">
+      <div id="deviceList"><div class="empty">Loading…</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:4747';
+let map, markersLayer;
+let allLogs = [], allDevices = [], cityStats = {};
+
+function initMap() {
+  map = L.map('map').setView([20, 0], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18
+  }).addTo(map);
+  markersLayer = L.layerGroup().addTo(map);
+}
+
+function markerColor(role) {
+  if (role === 'recruiter') return '#1a4fa0';
+  if (role === 'candidate') return '#2ecc71';
+  return '#f39c12';
+}
+
+function renderMap(entries) {
+  markersLayer.clearLayers();
+  entries.forEach(e => {
+    if (!e.lat || !e.lng) return;
+    const col = markerColor(e.userRole);
+    const icon = L.divIcon({
+      html: `<div style="width:12px;height:12px;border-radius:50%;background:${col};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)"></div>`,
+      className: '', iconSize: [12, 12], iconAnchor: [6, 6]
+    });
+    const time = new Date(e.ts || e.visitedAt).toLocaleString();
+    L.marker([e.lat, e.lng], { icon })
+      .bindPopup(`<b>${e.city || 'Unknown'}</b>, ${e.country || ''}<br>
+        User: ${e.userEmail || 'anonymous'} (${e.userRole || '?'})<br>
+        Page: ${e.page || ''}<br>
+        <small>${time}</small>`)
+      .addTo(markersLayer);
+  });
+}
+
+function renderCities(stats) {
+  const sorted = Object.entries(stats).sort((a,b)=>b[1]-a[1]).slice(0,20);
+  const max = sorted[0]?.[1] || 1;
+  const E = v => String(v).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  document.getElementById('cityList').innerHTML = sorted.length
+    ? sorted.map(([city,count]) => `
+        <div class="city-row">
+          <span style="min-width:120px;font-weight:600">${E(city)}</span>
+          <div class="city-bar-wrap"><div class="city-bar" style="width:${Math.round(count/max*100)}%"></div></div>
+          <span class="city-count">${count}</span>
+        </div>`).join('')
+    : '<div class="empty">No city data yet</div>';
+}
+
+function renderLogs(entries) {
+  const E = v => String(v||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const tbody = document.getElementById('logTbody');
+  const rows = [...entries].reverse().slice(0, 300);
+  tbody.innerHTML = rows.length
+    ? rows.map((e,i) => `<tr>
+        <td>${rows.length-i}</td>
+        <td style="white-space:nowrap">${new Date(e.ts||e.visitedAt||'').toLocaleString()}</td>
+        <td>${E(e.userEmail||'anon')}</td>
+        <td><span class="role-badge role-${E(e.userRole||'')}">${E(e.userRole||'–')}</span></td>
+        <td>${E(e.city||'–')}</td>
+        <td>${E(e.country||'–')}</td>
+        <td>${e.lat ? parseFloat(e.lat).toFixed(4) : '–'}</td>
+        <td>${e.lng ? parseFloat(e.lng).toFixed(4) : '–'}</td>
+        <td>${E((e.page||'').replace(/^\/|\.html$/g,''))}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="9" class="empty">No logs yet</td></tr>';
+}
+
+function deviceIcon(ua) {
+  if (/android|iphone|ipad|mobile/i.test(ua)) return '📱';
+  if (/mac/i.test(ua)) return '🍎';
+  if (/windows/i.test(ua)) return '🪟';
+  return '💻';
+}
+
+function renderDevices(devices) {
+  const E = v => String(v||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const list = document.getElementById('deviceList');
+  const sorted = [...devices].sort((a,b)=>new Date(b.lastSeen)-new Date(a.lastSeen));
+  list.innerHTML = sorted.length
+    ? sorted.map(d => `
+      <div class="device-row">
+        <div class="device-icon">${deviceIcon(d.ua||'')}</div>
+        <div class="device-info">
+          <div class="name">${E(d.city||'Unknown city')}, ${E(d.country||'')}</div>
+          <div class="meta">${E(d.userEmail||'anonymous')} · ${E(d.timezone||'')} · ${E(d.screen||'')}</div>
+          <div class="meta" style="font-size:.74rem;color:#aaa;margin-top:2px">${E((d.ua||'').slice(0,80))}</div>
+          <div class="meta">First: ${new Date(d.firstSeen||'').toLocaleString()} · Last: ${new Date(d.lastSeen||'').toLocaleString()}</div>
+        </div>
+        <div class="device-visits"><span class="num">${d.visits||0}</span> visits</div>
+      </div>`).join('')
+    : '<div class="empty">No devices registered yet. Location permission must be granted on the main site.</div>';
+}
+
+function updateStats(entries, devices) {
+  const today = new Date().toISOString().slice(0,10);
+  const todayCount = entries.filter(e => (e.ts||e.visitedAt||'').slice(0,10) === today).length;
+  const uniqueUsers = new Set(entries.map(e=>e.userEmail).filter(Boolean)).size;
+  document.getElementById('statTotal').textContent   = entries.length;
+  document.getElementById('statCities').textContent  = Object.keys(cityStats).length;
+  document.getElementById('statDevices').textContent = devices.length;
+  document.getElementById('statToday').textContent   = todayCount;
+  document.getElementById('statUsers').textContent   = uniqueUsers;
+}
+
+async function loadAll() {
+  try {
+    // Load location live data
+    const lr = await fetch(API + '/location/live?limit=1000');
+    if (lr.ok) {
+      const ld = await lr.json();
+      allLogs = ld.entries || [];
+    }
+
+    // Load city stats
+    const sr = await fetch(API + '/location/stats');
+    if (sr.ok) {
+      const sd = await sr.json();
+      cityStats = sd.cities || {};
+    } else {
+      // Build from logs locally
+      cityStats = {};
+      allLogs.forEach(e => { if (e.city) cityStats[e.city] = (cityStats[e.city]||0)+1; });
+    }
+
+    // Load devices
+    const dr = await fetch(API + '/devices');
+    if (dr.ok) {
+      const dd = await dr.json();
+      allDevices = dd.devices || [];
+    }
+
+    renderMap(allLogs);
+    renderCities(cityStats);
+    renderLogs(allLogs);
+    renderDevices(allDevices);
+    updateStats(allLogs, allDevices);
+  } catch (err) {
+    console.warn('Could not reach local server:', err.message);
+    document.getElementById('cityList').innerHTML =
+      '<div class="empty">⚠️ Local server not running.<br>Start it with <code>node server.js</code> in the server folder.</div>';
+  }
+}
+
+function switchTab(tab) {
+  document.getElementById('paneLogs').style.display    = tab === 'logs'    ? '' : 'none';
+  document.getElementById('paneDevices').style.display = tab === 'devices' ? '' : 'none';
+  document.getElementById('tabLogs').classList.toggle('active',    tab === 'logs');
+  document.getElementById('tabDevices').classList.toggle('active', tab === 'devices');
+}
+
+// Auto-refresh every 30 seconds
+initMap();
+loadAll();
+setInterval(loadAll, 30000);
+</script>
+</body>
+</html>

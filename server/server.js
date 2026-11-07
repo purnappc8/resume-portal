@@ -179,6 +179,44 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, { cities, total: logs.length });
   }
 
+  // -- POST /device/register  (fingerprint + location on first grant)
+  if (req.method === 'POST' && url === '/device/register') {
+    return readBody(req, res, (body) => {
+      const devices = readJson('devices.json', {});
+      const { deviceId, userId, userEmail, userRole, ua, platform, screen,
+              timezone, lang, lat, lng, city, state, country, countryCode } = body;
+      if (!deviceId) return json(res, 400, { error: 'deviceId required' });
+      devices[deviceId] = {
+        ...(devices[deviceId] || {}),
+        deviceId, userId, userEmail, userRole,
+        ua, platform, screen, timezone, lang,
+        firstSeen: devices[deviceId]?.firstSeen || new Date().toISOString(),
+        lastSeen:  new Date().toISOString(),
+        lastLat: lat, lastLng: lng,
+        city, state, country, countryCode,
+        visits: (devices[deviceId]?.visits || 0) + 1
+      };
+      writeJson('devices.json', devices);
+      return json(res, 200, { ok: true });
+    });
+  }
+
+  // -- GET /location/live  (last N entries with coords for live map)
+  if (req.method === 'GET' && url.startsWith('/location/live')) {
+    const qs    = new URL('http://x' + url).searchParams;
+    const limit = Math.min(parseInt(qs.get('limit') || '200'), 1000);
+    const logs  = readJson('location_logs.json', []);
+    const withCoords = logs.filter(e => e.lat && e.lng);
+    return json(res, 200, { entries: withCoords.slice(-limit), total: withCoords.length });
+  }
+
+  // -- GET /devices  (all registered devices)
+  if (req.method === 'GET' && url === '/devices') {
+    const devices = readJson('devices.json', {});
+    return json(res, 200, { devices: Object.values(devices) });
+  }
+
+
   // -- GET /profiles/:id  (single profile lookup by id)
   if (req.method === 'GET' && url.startsWith('/profiles/')) {
     const pid = decodeURIComponent(url.slice('/profiles/'.length));
