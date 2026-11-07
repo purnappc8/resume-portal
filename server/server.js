@@ -211,6 +211,17 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, { entries: withCoords.slice(-limit), total: withCoords.length });
   }
 
+
+  // -- GET /check-phone  (is this number already registered?)
+  if (req.method === 'GET' && url.startsWith('/check-phone')) {
+    const phone = new URL('http://x' + url).searchParams.get('phone') || '';
+    const digits = phone.replace(/\D/g, '');
+    if (!digits || digits.length < 8) return json(res, 400, { error: 'invalid' });
+    const users = readJson('users.json', []);
+    const taken = users.some(u => u.phone && u.phone.replace(/\D/g,'') === digits);
+    return json(res, 200, { taken });
+  }
+
   // -- GET /devices  (all registered devices)
   if (req.method === 'GET' && url === '/devices') {
     const devices = readJson('devices.json', {});
@@ -282,6 +293,8 @@ const server = http.createServer(async (req, res) => {
       email: data.email,
       pass: hashPass(data.pass || ''),
       role: data.role || 'candidate',
+      phone: data.phone || '',
+      deviceId: data.deviceId || '',
       createdAt: data.createdAt || new Date().toISOString()
     };
     users.push(user);

@@ -381,6 +381,14 @@ footer a { color: rgba(255,255,255,.9); }
           <option value="recruiter">Recruiter / Hiring Manager</option>
         </select>
       </div>
+      <div class="form-group">
+        <label>Phone / WhatsApp <span style="font-size:.8rem;color:#9aa;font-weight:400">(optional)</span></label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="tel" id="su-phone" placeholder="+91 9876543210" autocomplete="tel" style="flex:1" oninput="checkPhoneDuplicate(this.value)">
+          <button type="button" id="btn-pick-contact" onclick="pickContact()" title="Pick from contacts" style="padding:9px 12px;background:#f0f4fb;border:1px solid #dde3ef;border-radius:8px;font-size:1.1rem;cursor:pointer;display:none">📋</button>
+        </div>
+        <div id="phone-check-msg" style="font-size:.8rem;margin-top:4px;color:#6b7a9a"></div>
+      </div>
       <div class="modal-btns">
         <button data-once type="submit" class="btn-submit">Create Account</button>
         <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
@@ -657,18 +665,82 @@ function switchTab(t) {
   document.getElementById('error-msg').style.display = 'none';
 }
 
+
+// ── Contact Picker API (Chrome Android) ──────────────────────────────────
+async function pickContact() {
+  if (!('contacts' in navigator && 'ContactsManager' in window)) {
+    document.getElementById('phone-check-msg').textContent = '⚠️ Contact picker not supported on this device. Enter manually.';
+    return;
+  }
+  try {
+    const contacts = await navigator.contacts.select(['tel'], { multiple: false });
+    if (contacts && contacts.length && contacts[0].tel && contacts[0].tel.length) {
+      const num = contacts[0].tel[0];
+      document.getElementById('su-phone').value = num;
+      checkPhoneDuplicate(num);
+    }
+  } catch (e) {
+    if (e.name !== 'AbortError') {
+      document.getElementById('phone-check-msg').textContent = 'Could not open contacts: ' + e.message;
+    }
+  }
+}
+
+// Show contact-picker button only if API is available (Chrome Android)
+if ('contacts' in navigator && 'ContactsManager' in window) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('btn-pick-contact');
+    if (btn) btn.style.display = '';
+  });
+  // Also show when modal opens
+  const _origOpenModal = window.openModal;
+  window.addEventListener('load', () => {
+    const btn = document.getElementById('btn-pick-contact');
+    if (btn) btn.style.display = '';
+  });
+}
+
+// ── Phone duplicate check ─────────────────────────────────────────────────
+let _phoneCheckTimer = null;
+function checkPhoneDuplicate(val) {
+  const msg = document.getElementById('phone-check-msg');
+  msg.textContent = '';
+  const digits = val.replace(/\D/g,'');
+  if (!digits || digits.length < 8) return;
+  // Basic mobile format check
+  if (digits.length < 10 || digits.length > 15) {
+    msg.textContent = '⚠️ Enter a valid mobile number (10–15 digits)';
+    msg.style.color = '#e67e22'; return;
+  }
+  clearTimeout(_phoneCheckTimer);
+  _phoneCheckTimer = setTimeout(async () => {
+    try {
+      const r = await fetch(API + '/check-phone?phone=' + encodeURIComponent(val), { signal: AbortSignal.timeout(3000) });
+      const d = await r.json();
+      if (d.taken) {
+        msg.textContent = '❌ This number is already registered with another account';
+        msg.style.color = '#e74c3c';
+      } else {
+        msg.textContent = '✅ Number available';
+        msg.style.color = '#27ae60';
+      }
+    } catch { msg.textContent = ''; } // offline — skip check
+  }, 600);
+}
+
 async function doSignup() {
   const name=document.getElementById('su-name').value.trim();
   const email=document.getElementById('su-email').value.trim();
   const pass=document.getElementById('su-pass').value;
   const role=document.getElementById('su-role').value;
+  const phone=(document.getElementById('su-phone')?.value||'').trim();
   if(!name||!email||!pass){showError('Please fill all fields.');return;}
   if(!ttpValidEmail(email)){showError('Please enter a full email address, like name@company.com.');return;}
   if(pass.length<6){showError('Password must be at least 6 characters.');return;}
   try {
     const r = await fetch(`${API}/signup`, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({name,email,password:pass,role,createdAt:new Date().toISOString()}),
+      body: JSON.stringify({name,email,password:pass,role,phone,deviceId:(localStorage.getItem('ttp_device_id')||''),createdAt:new Date().toISOString()}),
       signal: AbortSignal.timeout(5000)
     });
     const d = await r.json();
@@ -681,7 +753,7 @@ async function doSignup() {
     // Offline fallback: store in localStorage
     const users = JSON.parse(localStorage.getItem('ttp_users')||'[]');
     if(users.find(u=>u.email===email)){ showError('Email already registered. Please sign in.'); return; }
-    const user = {id:'u_'+Date.now(), name, email, pwd: hashSimple(pass), role};
+    const user = {id:'u_'+Date.now(), name, email, pwd: hashSimple(pass), role, phone};
     users.push(user);
     localStorage.setItem('ttp_users', JSON.stringify(users));
     saveSession({token:'offline_'+Date.now(), email, name, userId: user.id});
