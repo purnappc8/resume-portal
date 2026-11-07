@@ -763,7 +763,9 @@ const server = http.createServer(async (req, res) => {
           '.svg':'image/svg+xml','.ico':'image/x-icon','.webp':'image/webp',
           '.woff':'font/woff','.woff2':'font/woff2','.ttf':'font/ttf'
         };
-        res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+        // Root path (/) has no extension but serves index.html — must use text/html
+        const mime = (url === '/') ? 'text/html' : (MIME[ext] || 'application/octet-stream');
+        res.writeHead(200, { 'Content-Type': mime });
         return fs.createReadStream(resolved).pipe(res);
       }
     }
