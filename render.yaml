@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ttp-server
+    runtime: node
+    rootDir: server
+    buildCommand: ""
+    startCommand: node server.js
+    envVars:
+      - key: PORTAL_URL
+        value: https://purnappc8.github.io/resume-portal
+      - key: DATA_DIR
+        value: /tmp/ttp-data
+    autoDeploy: true

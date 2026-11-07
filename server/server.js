@@ -22,8 +22,8 @@ if (fs.existsSync(envFile)) {
 }
 
 // â”€â”€ Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const PORT     = 4747;
-const DATA_DIR = process.env.DATA_DIR || path.join('E:\\', 'ResumePortal', 'data');
+const PORT     = process.env.PORT || 4747;
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, '..', 'data');
 const PDF_DIR  = path.join(DATA_DIR, 'pdfs');
 const STATIC_DIR = path.join(__dirname, '..'); // E:\ResumePortal\
 
@@ -771,7 +771,7 @@ const server = http.createServer(async (req, res) => {
   json(res, 404, { error: 'Not found' });
 });
 
-server.listen(PORT, '127.0.0.1', () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log('\n====================================================');
   console.log('   TechTalent Portal -- Local Storage Server      ');
   console.log(`   Running at: http://localhost:${PORT}             `);
