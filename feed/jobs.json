@@ -1,41 +1,1168 @@
 {
- "updatedAt": "2026-11-07T17:45:57.368Z",
+ "updatedAt": "2026-11-07T21:57:18.004Z",
  "refreshEveryHours": 3,
  "attribution": "Jobs from Remote OK (remoteok.com), Remotive (remotive.com), Arbeitnow (arbeitnow.com), Himalayas (himalayas.app) and Jobicy (jobicy.com). Each job links to its original listing.",
  "sources": {
   "Remote OK": {
    "status": "ok",
-   "fetchedAt": "2026-11-07T17:45:57.368Z",
+   "fetchedAt": "2026-11-07T21:57:18.004Z",
    "count": 25,
    "scanned": 99
   },
   "Remotive": {
-   "status": "ok",
+   "status": "reused",
    "fetchedAt": "2026-11-07T17:45:57.368Z",
-   "count": 20,
-   "scanned": 48
+   "count": 5,
+   "scanned": 48,
+   "note": "fetched at most every 5.5 h (source's request)"
   },
   "Arbeitnow": {
    "status": "ok",
-   "fetchedAt": "2026-11-07T17:45:57.368Z",
+   "fetchedAt": "2026-11-07T21:57:18.004Z",
    "count": 225,
    "scanned": 900
   },
   "Himalayas": {
    "status": "reused",
    "fetchedAt": "2026-11-07T10:23:50.779Z",
-   "count": 1084,
+   "count": 1080,
    "scanned": 1240,
    "note": "fetched at most every 23 h (source's request)"
   },
   "Jobicy": {
-   "status": "ok",
+   "status": "reused",
    "fetchedAt": "2026-11-07T17:45:57.368Z",
-   "count": 225,
-   "scanned": 150
+   "count": 180,
+   "scanned": 150,
+   "note": "fetched at most every 5.5 h (source's request)"
   }
  },
  "jobs": [
+  {
+   "id": "live_Arbeitnow_ingenieure-developpement-logiciel-backen",
+   "title": "Ingénieur(e) développement logiciel - Backend - Sécurité - Login (f/m/d)",
+   "company": "Decathlontechnology",
+   "location": "Lille, Upline, Nord",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/decathlontechnology/ingenieure-developpement-logiciel-backend-securite-login-lille-upline-nord-164028",
+   "postedAt": "2026-11-07T18:55:28.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_software-engineer-regulatory-reporting-l",
+   "title": "Software Engineer, Regulatory Reporting",
+   "company": "Clearstreet",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/clearstreet/software-engineer-regulatory-reporting-london-311470",
+   "postedAt": "2026-11-07T18:55:26.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_applied-ai-scientist-simulation-reinforc",
+   "title": "Applied AI Scientist, Simulation & Reinforcement Learning",
+   "company": "locusrobotics",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/locusrobotics/applied-ai-scientist-simulation-reinforcement-learning-london-315174",
+   "postedAt": "2026-11-07T18:55:24.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-analytics-engineer-finance-426148",
+   "title": "Senior Analytics Engineer - Finance",
+   "company": "mewssystems",
+   "location": "Remote",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/mewssystems/senior-analytics-engineer-finance-426148",
+   "postedAt": "2026-11-07T18:55:23.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_data-analyst-london-72888",
+   "title": "Data Analyst",
+   "company": "Cclfg",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/cclfg/data-analyst-london-72888",
+   "postedAt": "2026-11-07T18:55:22.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_head-of-exchange-infrastructure-london-2",
+   "title": "Head of Exchange Infrastructure",
+   "company": "Kraken",
+   "location": "United Kingdom",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/kraken/head-of-exchange-infrastructure-london-201950",
+   "postedAt": "2026-11-07T18:40:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_software-engineering-lead-generative-ai-",
+   "title": "Software Engineering, Lead – Generative AI (Image & Audio)",
+   "company": "G2",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/g2/software-engineering-lead-generative-ai-image-audio-london-118637",
+   "postedAt": "2026-11-07T18:40:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_head-of-engineering-london-272666",
+   "title": "Head of Engineering",
+   "company": "Radiant",
+   "location": "London",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/radiant/head-of-engineering-london-272666",
+   "postedAt": "2026-11-07T18:40:14.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-product-manager-agent-platform-11",
+   "title": "Product Manager, Agent Platform",
+   "company": "Siena",
+   "location": "Remote (Remote)",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/siena/remote-product-manager-agent-platform-11837",
+   "postedAt": "2026-11-07T18:40:14.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-solutions-engineer-europe-united-",
+   "title": "Senior Solutions Engineer (Europe)",
+   "company": "Coder",
+   "location": "United Kingdom",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/coder/senior-solutions-engineer-europe-united-kingdom-3170",
+   "postedAt": "2026-11-07T18:40:13.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-software-engineer-multiple-teams-",
+   "title": "Senior Software Engineer (Multiple Teams, Europe)",
+   "company": "Coder",
+   "location": "United Kingdom",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/coder/senior-software-engineer-multiple-teams-europe-united-kingdom-449437",
+   "postedAt": "2026-11-07T18:40:13.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_staff-software-engineer-agentic-engineer",
+   "title": "Staff Software Engineer (Agentic Engineering)",
+   "company": "Coder",
+   "location": "United Kingdom",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/coder/staff-software-engineer-agentic-engineering-united-kingdom-233689",
+   "postedAt": "2026-11-07T18:40:13.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_software-engineering-manager-agentic-eng",
+   "title": "Software Engineering Manager (Agentic Engineering)",
+   "company": "Coder",
+   "location": "United Kingdom",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/coder/software-engineering-manager-agentic-engineering-united-kingdom-115199",
+   "postedAt": "2026-11-07T18:40:13.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_forward-deployed-engineer-infrastructure",
+   "title": "Forward Deployed Engineer - Infrastructure",
+   "company": "Thought Machine",
+   "location": "United Kingdom, London",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/thought-machine/forward-deployed-engineer-infrastructure-london-297500",
+   "postedAt": "2026-11-07T18:40:12.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-senior-consultant-sap-sd-s-4hana-",
+   "title": "Senior Consultant SAP SD (m/w/d) S/4HANA Sales",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Homeoffice (Remote)",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/remote-senior-consultant-sap-sd-s-4hana-sales-heidelberg-314625",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-senior-consultant-sap-fi-co-s-4ha",
+   "title": "Senior Consultant SAP FI/CO (m/w/d) S/4HANA Finance",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Homeoffice (Remote)",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/remote-senior-consultant-sap-fi-co-s-4hana-finance-heidelberg-33807",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-fi-co-application-",
+   "title": "Senior Consultant SAP FI/CO Application Management (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-fi-co-application-management-heidelberg-316272",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-manager-sap-fi-co-s-4hana-finance",
+   "title": "(Senior) Manager SAP FI/CO (m/w/d) – S/4HANA Finance",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-manager-sap-fi-co-s-4hana-finance-heidelberg-208671",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-data-transformatio",
+   "title": "Senior Consultant SAP Data Transformation & Migration (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-data-transformation-migration-heidelberg-420112",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-gts-heidelberg-990",
+   "title": "(Senior Consultant) SAP GTS (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-gts-heidelberg-99032",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-analytics-cloud-sa",
+   "title": "Senior Consultant SAP Analytics Cloud/ SAP Business Data Cloud (m/w/d) SAP BDC",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-analytics-cloud-sap-business-data-cloud-sap-bdc-heidelberg-337823",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-mdg-master-data-go",
+   "title": "(Senior) Consultant SAP MDG (m/w/d) Master Data Governance",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-mdg-master-data-governance-heidelberg-295751",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-authorizations-ber",
+   "title": "(Senior) Consultant SAP Authorizations / Berechtigungen (m/w/d) in Voll- oder Teilzeit",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Freiburg im Breisgau, Baden-Württemberg, Deutschland",
+   "type": "Part-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-authorizations-berechtigungen-in-voll-oder-teilzeit-freiburg-im-breisgau-166904",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-solution-architect-sap-mdm-heidel",
+   "title": "(Senior) Solution Architect SAP MDM (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-solution-architect-sap-mdm-heidelberg-475029",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_entwickler-sap-global-trade-services-gts",
+   "title": "Entwickler SAP Global Trade Services (GTS) (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/entwickler-sap-global-trade-services-gts-heidelberg-486577",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-basis-technology-h",
+   "title": "Senior Consultant SAP Basis Technology (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-basis-technology-heidelberg-177131",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-treasury-risk-mana",
+   "title": "(Senior) Consultant (m/w/d) SAP Treasury & Risk Management",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-treasury-risk-management-heidelberg-129293",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-s-4hana-public-clo",
+   "title": "(Senior) Consultant SAP S/4HANA Public Cloud Finance (w/m/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-s-4hana-public-cloud-finance-heidelberg-294468",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-manager-sap-s-4hana-controlling-s",
+   "title": "(Senior) Manager – SAP S/4HANA Controlling (SAP CO) (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-manager-sap-s-4hana-controlling-sap-co-heidelberg-136705",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-solution-architect-sap-datasphere",
+   "title": "(Senior) Solution Architect (m/w/d) SAP Datasphere/ SAP Business Data Cloud",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-solution-architect-sap-datasphere-sap-business-data-cloud-heidelberg-27213",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-cloud-und-process-",
+   "title": "Senior Consultant SAP Cloud und Process Integration (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-cloud-und-process-integration-heidelberg-422433",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-architect-sap-business",
+   "title": "Senior Consultant / Architect SAP Business Technology Platform (SAP BTP) (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-architect-sap-business-technology-platform-sap-btp-heidelberg-330247",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_digital-architect-cloud-heidelberg-20228",
+   "title": "Digital Architect Cloud (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/digital-architect-cloud-heidelberg-202284",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_sap-technical-consultant-solution-archit",
+   "title": "SAP Technical Consultant / Solution Architect (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/sap-technical-consultant-solution-architect-heidelberg-389228",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-abap-entwickler-heidelberg-352182",
+   "title": "(Senior) ABAP Entwickler (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-abap-entwickler-heidelberg-352182",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_salesforce-crm-senior-consultant-heidelb",
+   "title": "Salesforce CRM (Senior) Consultant (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Salesforce"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/salesforce-crm-senior-consultant-heidelberg-413666",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-ewm-fur-applicatio",
+   "title": "(Senior) Consultant SAP EWM für Application Management Support (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-ewm-fur-application-management-support-heidelberg-481505",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-bi-im-application-",
+   "title": "(Senior) Consultant SAP BI (m/w/d) im Application Management Support",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-bi-im-application-management-support-heidelberg-15246",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-senior-consultant-sap-successfact",
+   "title": "(Senior) Consultant SAP SuccessFactors – Employee Central (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Homeoffice (Remote)",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/remote-senior-consultant-sap-successfactors-employee-central-munchen-59655",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-security-heidelber",
+   "title": "Senior Consultant SAP Security (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP",
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-security-heidelberg-168262",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-global-e-invoicing-sap",
+   "title": "(Senior) Consultant Global E-invoicing SAP FI (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-global-e-invoicing-sap-fi-heidelberg-8973",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-principal-consultant-sap-ibp-supp",
+   "title": "Senior / Principal Consultant SAP IBP (m/w/d) Supply Chain Planning",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-principal-consultant-sap-ibp-supply-chain-planning-heidelberg-474344",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-pp-ds-supply-chain",
+   "title": "(Senior) Consultant SAP PP/DS (m/w/d) Supply Chain Planning",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-pp-ds-supply-chain-planning-heidelberg-478461",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-dm-digital-manufac",
+   "title": "Senior Consultant SAP DM (m/w/d) Digital Manufacturing",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-dm-digital-manufacturing-heidelberg-156232",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_werkstudent-sap-beratung-heidelberg-3056",
+   "title": "Werkstudent - SAP Beratung (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Internship",
+   "exp": "Junior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/werkstudent-sap-beratung-heidelberg-305608",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-mm-s-4hana-sourcin",
+   "title": "Senior Consultant SAP MM - S/4HANA Sourcing and Procurement (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-mm-s-4hana-sourcing-and-procurement-heidelberg-440178",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-pp-s-4hana-manufac",
+   "title": "Senior Consultant SAP PP - S/4HANA Manufacturing (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-pp-s-4hana-manufacturing-heidelberg-81955",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-ppm-cpm-ps-heidelb",
+   "title": "Senior Consultant SAP PPM/CPM/PS (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-ppm-cpm-ps-heidelberg-443624",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-plm-heidelberg-280",
+   "title": "(Senior) Consultant SAP PLM (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-plm-heidelberg-280613",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-qm-heidelberg-3286",
+   "title": "Senior Consultant SAP QM (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-qm-heidelberg-328676",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-solution-architect-sap-dm-dortmun",
+   "title": "Solution Architect SAP DM (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Homeoffice (Remote)",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/remote-solution-architect-sap-dm-dortmund-441100",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-pp-ps-pm-im-applic",
+   "title": "(Senior) Consultant SAP PP/PS/PM im Application Management Support (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-pp-ps-pm-im-application-management-support-heidelberg-448106",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-le-mm-im-applicati",
+   "title": "(Senior) Consultant SAP LE/MM im Application Management Support (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-le-mm-im-application-management-support-heidelberg-341544",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-senior-consultant-sap-s-4hana-ser",
+   "title": "Senior Consultant SAP S/4HANA Service (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Homeoffice (Remote)",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/remote-senior-consultant-sap-s-4hana-service-heidelberg-289247",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-consultant-sap-system-performance",
+   "title": "(Senior) Consultant SAP System Performance Optimisation (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-system-performance-optimisation-heidelberg-19051",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-sap-hcm-payroll-consultant-all-ge",
+   "title": "(Senior) SAP HCM Payroll Consultant (all genders)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-sap-hcm-payroll-consultant-all-genders-heidelberg-245181",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-senior-sap-successfactors-consult",
+   "title": "(Senior) SAP SuccessFactors Consultant – Onboarding (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Homeoffice (Remote)",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/remote-senior-sap-successfactors-consultant-onboarding-heidelberg-493027",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-sap-hcm-allrounder-heidelberg-340",
+   "title": "(Senior) SAP HCM Allrounder (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-sap-hcm-allrounder-heidelberg-340562",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-abap-hcm-developer-heidelberg-158",
+   "title": "(Senior) ABAP HCM Developer (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-abap-hcm-developer-heidelberg-158676",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-cloud-integration-specialist-heid",
+   "title": "(Senior) Cloud Integration Specialist (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-cloud-integration-specialist-heidelberg-487189",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-sap-successfactors-consultant-lea",
+   "title": "(Senior) SAP SuccessFactors Consultant – Learning (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-sap-successfactors-consultant-learning-heidelberg-228032",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-sap-successfactors-consultant-com",
+   "title": "(Senior) SAP SuccessFactors Consultant – Compensation / Performance & Goals (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-sap-successfactors-consultant-compensation-performance-goals-heidelberg-190820",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-sap-successfactors-consultant-all",
+   "title": "(Senior) SAP SuccessFactors Consultant (all genders) - Employee Central (EC) Payroll (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-sap-successfactors-consultant-all-genders-employee-central-ec-payroll-heidelberg-239662",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-sap-successfactors-consultant-emp",
+   "title": "(Senior) SAP SuccessFactors Consultant – Employee Central mit Schwerpunkt Integration (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-sap-successfactors-consultant-employee-central-mit-schwerpunkt-integration-heidelberg-261734",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_solution-architect-sap-successfactors-he",
+   "title": "Solution Architect SAP SuccessFactors (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/solution-architect-sap-successfactors-heidelberg-36144",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_sap-transformation-architect-heidelberg-",
+   "title": "SAP Transformation Architect (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/sap-transformation-architect-heidelberg-299164",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_sap-successfactors-consultant-compensati",
+   "title": "SAP SuccessFactors Consultant – Compensation / Performance & Goals (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/sap-successfactors-consultant-compensation-performance-goals-heidelberg-17066",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_werkstudent-ai-manager-support-heidelber",
+   "title": "Werkstudent - AI Manager Support (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Internship",
+   "exp": "Junior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/werkstudent-ai-manager-support-heidelberg-113667",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-ai-engineer-bautzen-494293",
+   "title": "(Senior) AI Engineer (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Bautzen, Sachsen, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-ai-engineer-bautzen-494293",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-sap-smartrecruiters-consultant-he",
+   "title": "(Senior) SAP SmartRecruiters Consultant (m/w/d)",
+   "company": "cbs Corporate Business Solutions GmbH",
+   "location": "Heidelberg, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "SAP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-sap-smartrecruiters-consultant-heidelberg-235164",
+   "postedAt": "2026-11-07T18:31:09.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_principal-consultant-strategic-infrastru",
+   "title": "Principal Consultant - Strategic Infrastructure Advisory",
+   "company": "dss+",
+   "location": "London, Greater London, United Kingdom",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/dss/principal-consultant-strategic-infrastructure-advisory-london-87143",
+   "postedAt": "2026-11-07T18:31:06.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-chief-information-security-office",
+   "title": "Chief Information Security Officer",
+   "company": "Decentralized Masters",
+   "location": "Berlin, Germany (Remote)",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/decentralized-masters/remote-chief-information-security-officer-berlin-162086",
+   "postedAt": "2026-11-07T18:20:14.000Z",
+   "live": true
+  },
   {
    "id": "live_Arbeitnow_principal-penetration-tester-290553",
    "title": "Principal Penetration Tester",
@@ -374,10 +1501,42 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_applied-ai-engineer-germany-316718",
+   "id": "live_Arbeitnow_staff-product-engineer-ai-native-paris-l",
+   "title": "Staff Product Engineer - AI Native",
+   "company": "DiliTrust",
+   "location": "Paris - La Défense",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/dilitrust/staff-product-engineer-ai-native-paris-la-defense-305877",
+   "postedAt": "2026-11-07T12:08:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_ingenieur-logiciel-senior-php-symfony-pa",
+   "title": "Ingénieur Logiciel Senior (PHP Symfony)",
+   "company": "DiliTrust",
+   "location": "Paris - La Défense",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "PHP"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/dilitrust/ingenieur-logiciel-senior-php-symfony-paris-la-defense-255665",
+   "postedAt": "2026-11-07T12:08:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_applied-ai-engineer-france-143113",
    "title": "Applied AI Engineer",
    "company": "Jobgether",
-   "location": "Germany",
+   "location": "France",
    "type": "Full-time",
    "exp": "Mid",
    "tech": [
@@ -385,7 +1544,7 @@
    ],
    "salary": "",
    "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/jobgether/applied-ai-engineer-germany-316718",
+   "url": "https://www.arbeitnow.fr/jobs/companies/jobgether/applied-ai-engineer-france-143113",
    "postedAt": "2026-11-07T12:08:25.000Z",
    "live": true
   },
@@ -446,38 +1605,6 @@
    "salary": "",
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.co.uk/jobs/companies/hypersonica/senior-quality-engineer-london-86128",
-   "postedAt": "2026-11-07T12:08:25.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_staff-product-engineer-ai-native-paris-l",
-   "title": "Staff Product Engineer - AI Native",
-   "company": "DiliTrust",
-   "location": "Paris - La Défense",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/dilitrust/staff-product-engineer-ai-native-paris-la-defense-305877",
-   "postedAt": "2026-11-07T12:08:25.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_ingenieur-logiciel-senior-php-symfony-pa",
-   "title": "Ingénieur Logiciel Senior (PHP Symfony)",
-   "company": "DiliTrust",
-   "location": "Paris - La Défense",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "PHP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/dilitrust/ingenieur-logiciel-senior-php-symfony-paris-la-defense-255665",
    "postedAt": "2026-11-07T12:08:25.000Z",
    "live": true
   },
@@ -3068,62 +4195,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_senior-network-operations-engineer-brist",
-   "title": "Senior Network Operations Engineer",
-   "company": "Graphcore",
-   "location": "Bristol",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/graphcore/senior-network-operations-engineer-bristol-471735",
-   "postedAt": "2026-11-07T03:55:16.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-platform-engineer-london-406010",
-   "title": "Senior Platform Engineer",
-   "company": "Fanaticsfbg",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/fanaticsfbg/senior-platform-engineer-london-406010",
-   "postedAt": "2026-11-07T03:55:16.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_engineer-i-field-service-217403",
-   "title": "Engineer I, Field Service",
-   "company": "Asm",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/asm/engineer-i-field-service-217403",
-   "postedAt": "2026-11-07T03:55:15.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-engineer-i-total-product-support-",
-   "title": "Senior Engineer I, Total Product Support",
-   "company": "Asm",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/asm/senior-engineer-i-total-product-support-370673",
-   "postedAt": "2026-11-07T03:55:15.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_danaher-jobs-senior-d365-f-o-developer",
    "title": "Senior D365 F&O Developer",
    "company": "Danaher",
@@ -3254,189 +4325,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_forward-deployed-engineer-ml-london-3652",
-   "title": "Forward Deployed Engineer - ML (London)",
-   "company": "Modal",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/modal/forward-deployed-engineer-ml-london-365284",
-   "postedAt": "2026-11-07T03:40:29.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_lead-simulation-engineer-london-467798",
-   "title": "Lead Simulation Engineer",
-   "company": "Fundamentalxr",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/fundamentalxr/lead-simulation-engineer-london-467798",
-   "postedAt": "2026-11-07T03:40:29.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_it-operations-engineer-germany-142785",
-   "title": "IT Operations Engineer",
-   "company": "Stealthrocketrystartup",
-   "location": "Germany",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "DevOps",
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/stealthrocketrystartup/it-operations-engineer-germany-142785",
-   "postedAt": "2026-11-07T03:40:27.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_remote-middle-senior-staff-site-reliabil",
-   "title": "Middle/Senior/Staff Site Reliability Engineer (K8s)",
-   "company": "Npv",
-   "location": "Remote (Remote)",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Kubernetes"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/npv/remote-middle-senior-staff-site-reliability-engineer-k8s-1859",
-   "postedAt": "2026-11-07T03:40:27.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-security-engineer-bristol-304983",
-   "title": "Senior Security Engineer",
-   "company": "Kaluza",
-   "location": "Bristol, UK",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/kaluza/senior-security-engineer-bristol-304983",
-   "postedAt": "2026-11-07T03:40:27.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_field-service-engineer-london-33455",
-   "title": "Field Service Engineer",
-   "company": "Neko Health",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/neko-health/field-service-engineer-london-33455",
-   "postedAt": "2026-11-07T03:40:27.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_solutions-architect-voice-london-315075",
-   "title": "Solutions Architect, Voice - London",
-   "company": "Decagon",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/decagon/solutions-architect-voice-london-315075",
-   "postedAt": "2026-11-07T03:40:27.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_c-developer-london-51918",
-   "title": "C++ Developer",
-   "company": "Npv",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/npv/c-developer-london-51918",
-   "postedAt": "2026-11-07T03:40:26.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-fullstack-engineer-f-m-aachen-413",
-   "title": "(Senior) Fullstack Engineer (F/M/*)",
-   "company": "Amber",
-   "location": "Aachen",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/amber/senior-fullstack-engineer-f-m-aachen-413975",
-   "postedAt": "2026-11-07T03:40:24.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_technical-program-manager-ai-ml-berlin-9",
-   "title": "Technical Program Manager (AI/ML)",
-   "company": "Cuspai",
-   "location": "Berlin, DE",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/cuspai/technical-program-manager-ai-ml-berlin-93452",
-   "postedAt": "2026-11-07T03:40:24.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_engineer-i-it-engineering-london-313818",
-   "title": "Engineer I, IT Engineering",
-   "company": "Checkout.com",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/checkoutcom/engineer-i-it-engineering-london-313818",
-   "postedAt": "2026-11-07T03:40:24.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_scientific-software-engineer-lab-integra",
-   "title": "Scientific Software Engineer (Lab Integration)",
-   "company": "Cuspai",
-   "location": "London, UK",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/cuspai/scientific-software-engineer-lab-integration-london-33388",
-   "postedAt": "2026-11-07T03:40:24.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_sparq-jobs-contractor-senior-identity-so",
    "title": "(Contractor) Senior Identity Solutions Engineer",
    "company": "Sparq",
@@ -3483,124 +4371,6 @@
    "url": "https://himalayas.app/companies/twtspain/jobs/senior-infrastructure-security-engineer-remote-from-eu-international-mission",
    "postedAt": "2026-11-07T03:36:06.000Z",
    "expiresAt": "2027-01-06T03:36:05.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_software-lead-engineer-nts-eindhoven-291",
-   "title": "Software Lead Engineer | NTS Eindhoven",
-   "company": "NTS",
-   "location": "Eindhoven, Noord-Brabant, Netherlands",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/nts/software-lead-engineer-nts-eindhoven-291937",
-   "postedAt": "2026-11-07T03:31:36.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_junior-ai-consultant-utrecht-183828",
-   "title": "Junior AI consultant",
-   "company": "IG&H",
-   "location": "Utrecht, Utrecht, Nederland",
-   "type": "Full-time",
-   "exp": "Junior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/igh/junior-ai-consultant-utrecht-183828",
-   "postedAt": "2026-11-07T03:31:35.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-mobile-security-developer-contrac",
-   "title": "Senior Mobile Security Developer - Contract (Inside IR35)",
-   "company": "Waracle",
-   "location": "London, England, United Kingdom",
-   "type": "Contract",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/waracle/senior-mobile-security-developer-contract-inside-ir35-london-221848",
-   "postedAt": "2026-11-07T03:31:35.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-control-systems-engineer-vehicle-",
-   "title": "Senior Control Systems Engineer – Vehicle Dynamics & Abstraction (m/f/d)",
-   "company": "Quantum-Systems GmbH",
-   "location": "Gilching, Bayern, Germany",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-control-systems-engineer-vehicle-dynamics-abstraction-gilching-32929",
-   "postedAt": "2026-11-07T03:31:34.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-payload-integration-engineer-ugv-",
-   "title": "Senior Payload Integration Engineer - UGV Platforms (m/f/d)",
-   "company": "Quantum-Systems GmbH",
-   "location": "München, Bayern, Germany",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-payload-integration-engineer-ugv-platforms-munchen-430503",
-   "postedAt": "2026-11-07T03:31:34.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-frontend-developer-in-aircraft-do",
-   "title": "Senior Frontend Developer in Aircraft Domain (m/f/d)",
-   "company": "Quantum-Systems GmbH",
-   "location": "Gilching, Bayern, Germany",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-frontend-developer-in-aircraft-domain-gilching-156154",
-   "postedAt": "2026-11-07T03:31:34.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-project-manager-converged-securit",
-   "title": "Senior Project Manager (m/f/d) – Converged Security and Workforce Management",
-   "company": "Primion Technology GmbH",
-   "location": "Frankfurt, Hessen, Germany",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/primion-technology-gmbh/senior-project-manager-converged-security-and-workforce-management-frankfurt-258765",
-   "postedAt": "2026-11-07T03:31:30.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_remote-senior-solution-architect-munchen",
-   "title": "Senior Solution Architect (m/w/d)",
-   "company": "qinX",
-   "location": "Homeoffice (Remote)",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/qinx/remote-senior-solution-architect-munchen-414114",
-   "postedAt": "2026-11-07T03:31:30.000Z",
    "live": true
   },
   {
@@ -4354,20 +5124,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_junior-people-data-analyst-manchester-42",
-   "title": "Junior People Data Analyst",
-   "company": "Thgingenuity",
-   "location": "Manchester",
-   "type": "Full-time",
-   "exp": "Junior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/thgingenuity/junior-people-data-analyst-manchester-424349",
-   "postedAt": "2026-11-07T00:55:16.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_zaden-technologies-jobs-senior-devsecops",
    "title": "Senior DevSecOps / IaC Engineer",
    "company": "Zaden Technologies",
@@ -4467,217 +5223,6 @@
    "url": "https://himalayas.app/companies/european-dynamics/jobs/qa-engineer-automation-manual-remote-thessaloniki",
    "postedAt": "2026-11-07T00:47:07.000Z",
    "expiresAt": "2027-01-06T00:47:06.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-staff-software-engineer-data-plat",
-   "title": "Senior/Staff Software Engineer, Data Platform",
-   "company": "Evervault",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/evervault/senior-staff-software-engineer-data-platform-london-249277",
-   "postedAt": "2026-11-07T00:40:15.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_forward-deployed-engineer-sap-berlin-wit",
-   "title": "Forward Deployed Engineer – SAP (m/f/d)",
-   "company": "Qorelo",
-   "location": "Berlin, with travel across DACH",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML",
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/qorelo/forward-deployed-engineer-sap-berlin-with-travel-across-dach-336462",
-   "postedAt": "2026-11-07T00:40:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_software-engineer-intern-paris-73703",
-   "title": "Software Engineer Intern",
-   "company": "Backmarket",
-   "location": "Paris",
-   "type": "Internship",
-   "exp": "Junior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/backmarket/software-engineer-intern-paris-73703",
-   "postedAt": "2026-11-07T00:40:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_machine-learning-researcher-london-43958",
-   "title": "Machine Learning Researcher",
-   "company": "Neuphonic",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/neuphonic/machine-learning-researcher-london-439589",
-   "postedAt": "2026-11-07T00:40:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_infrastructure-platform-engineer-london-",
-   "title": "Infrastructure / Platform Engineer (London)",
-   "company": "Neuphonic",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/neuphonic/infrastructure-platform-engineer-london-128650",
-   "postedAt": "2026-11-07T00:40:13.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_remote-senior-solutions-architect-german",
-   "title": "Senior Solutions Architect (German speaking)",
-   "company": "Sanity",
-   "location": "Remote in Germany",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/sanity/remote-senior-solutions-architect-german-speaking-290951",
-   "postedAt": "2026-11-07T00:40:12.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_security-engineer-berlin-346208",
-   "title": "Security Engineer",
-   "company": "Augustus",
-   "location": "Berlin",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/augustus/security-engineer-berlin-346208",
-   "postedAt": "2026-11-07T00:40:12.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_engineering-fellowship-berlin-184454",
-   "title": "Engineering Fellowship",
-   "company": "Augustus",
-   "location": "Berlin",
-   "type": "Internship",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/augustus/engineering-fellowship-berlin-184454",
-   "postedAt": "2026-11-07T00:40:12.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-manager-solution-engineering-emea",
-   "title": "Senior Manager, Solution Engineering EMEA",
-   "company": "Sanity",
-   "location": "London, UK",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/sanity/senior-manager-solution-engineering-emea-london-uk-244125",
-   "postedAt": "2026-11-07T00:40:12.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_growth-engineer-fullstack-frontend-focus",
-   "title": "Growth Engineer (Fullstack, Frontend-Focused)",
-   "company": "Pennylane SAS",
-   "location": "All France (remote)",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/pennylane-sas/growth-engineer-fullstack-frontend-focused-paris-299551",
-   "postedAt": "2026-11-07T00:40:11.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-electronics-engineer-pcb-design-b",
-   "title": "Senior Electronics Engineer — PCB Design & Bring-Up",
-   "company": "Fiducial",
-   "location": "Delft",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/fiducial/senior-electronics-engineer-pcb-design-bring-up-delft-192235",
-   "postedAt": "2026-11-07T00:40:11.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-application-security-engineer-par",
-   "title": "Senior Application Security Engineer",
-   "company": "Pennylane SAS",
-   "location": "All France (remote)",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/pennylane-sas/senior-application-security-engineer-paris-101660",
-   "postedAt": "2026-11-07T00:40:11.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_software-engineer-intern-trading-london-",
-   "title": "Software Engineer Intern, Trading",
-   "company": "Talos Trading",
-   "location": "London",
-   "type": "Internship",
-   "exp": "Junior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/talos-trading/software-engineer-intern-trading-london-475763",
-   "postedAt": "2026-11-07T00:40:11.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_software-engineer-intern-infrastructure-",
-   "title": "Software Engineer Intern, Infrastructure",
-   "company": "Talos Trading",
-   "location": "London",
-   "type": "Internship",
-   "exp": "Junior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/talos-trading/software-engineer-intern-infrastructure-london-357239",
-   "postedAt": "2026-11-07T00:40:11.000Z",
    "live": true
   },
   {
@@ -5019,175 +5564,6 @@
    "url": "https://himalayas.app/companies/varicent/jobs/senior-software-development-engineer-in-test",
    "postedAt": "2026-11-07T00:09:32.000Z",
    "expiresAt": "2027-01-06T00:09:31.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_data-engineer-b-bordeaux-253658",
-   "title": "Data Engineer (F/H/NB)",
-   "company": "SFEIR",
-   "location": "Bordeaux",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "Data"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/sfeir/data-engineer-b-bordeaux-253658",
-   "postedAt": "2026-11-07T00:08:44.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_full-stack-software-engineer-paris-33542",
-   "title": "Full Stack Software Engineer",
-   "company": "Infinit",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/infinit/full-stack-software-engineer-paris-335424",
-   "postedAt": "2026-11-07T00:08:43.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_forward-deployed-engineer-intern-paris-f",
-   "title": "Forward Deployed Engineer Intern",
-   "company": "Brevo",
-   "location": "Paris, France",
-   "type": "Internship",
-   "exp": "Junior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/brevo/forward-deployed-engineer-intern-paris-france-144151",
-   "postedAt": "2026-11-07T00:08:43.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_engineering-manager-geneva-293562",
-   "title": "Engineering Manager",
-   "company": "Sonarsource",
-   "location": "Geneva",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "ServiceNow"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.ch/jobs/companies/sonarsource/engineering-manager-geneva-293562",
-   "postedAt": "2026-11-07T00:08:41.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_software-engineering-intern-internal-dev",
-   "title": "Software Engineering Intern - Internal Developer Platform",
-   "company": "Tomtom",
-   "location": "Amsterdam, The Netherlands",
-   "type": "Internship",
-   "exp": "Junior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/tomtom/software-engineering-intern-internal-developer-platform-amsterdam-the-netherlands-91789",
-   "postedAt": "2026-11-07T00:08:41.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_software-engineering-intern-ai-platform-",
-   "title": "Software Engineering Intern - AI Platform Excellence",
-   "company": "Tomtom",
-   "location": "Amsterdam, The Netherlands",
-   "type": "Internship",
-   "exp": "Junior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/tomtom/software-engineering-intern-ai-platform-excellence-amsterdam-the-netherlands-231363",
-   "postedAt": "2026-11-07T00:08:41.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-ai-engineer-amsterdam-the-netherl",
-   "title": "Senior AI Engineer",
-   "company": "Tomtom",
-   "location": "Amsterdam, The Netherlands",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/tomtom/senior-ai-engineer-amsterdam-the-netherlands-4381",
-   "postedAt": "2026-11-07T00:08:41.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_platform-software-engineer-amsterdam-the",
-   "title": "Platform Software Engineer",
-   "company": "Tomtom",
-   "location": "Amsterdam, The Netherlands",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML",
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/tomtom/platform-software-engineer-amsterdam-the-netherlands-313114",
-   "postedAt": "2026-11-07T00:08:41.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_move-to-new-zealand-technical-strategist",
-   "title": "Move to New Zealand - Technical Strategist (Solution Architect)",
-   "company": "Propellerhead",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/propellerhead/move-to-new-zealand-technical-strategist-solution-architect-paris-169110",
-   "postedAt": "2026-11-07T00:08:39.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_move-to-new-zealand-systems-reliability-",
-   "title": "Move to New Zealand - Systems Reliability Engineer",
-   "company": "Propellerhead",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/propellerhead/move-to-new-zealand-systems-reliability-engineer-paris-106723",
-   "postedAt": "2026-11-07T00:08:39.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-solutions-engineer-stuttgart-1846",
-   "title": "(Senior) Solutions Engineer (f/m/d)",
-   "company": "Markt Pilot",
-   "location": "Stuttgart",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/markt-pilot/senior-solutions-engineer-stuttgart-184642",
-   "postedAt": "2026-11-07T00:08:38.000Z",
    "live": true
   },
   {
@@ -6211,116 +6587,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_senior-consulting-engineer-411545",
-   "title": "Senior Consulting Engineer",
-   "company": "Rti",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/rti/senior-consulting-engineer-411545",
-   "postedAt": "2026-11-06T21:55:18.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-java-engineer-security-elasticsea",
-   "title": "Senior Java Engineer - Security - Elasticsearch",
-   "company": "Elastic",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Java",
-    "AI/ML",
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/elastic/senior-java-engineer-security-elasticsearch-77299",
-   "postedAt": "2026-11-06T21:55:18.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-software-engineer-364223",
-   "title": "Senior Software Engineer",
-   "company": "Redwoodsoftware",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/redwoodsoftware/senior-software-engineer-364223",
-   "postedAt": "2026-11-06T21:55:17.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_principle-software-engineer-87856",
-   "title": "Principle Software Engineer",
-   "company": "Redwoodsoftware",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/redwoodsoftware/principle-software-engineer-87856",
-   "postedAt": "2026-11-06T21:55:17.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_system-engineer-system-architecture-cont",
-   "title": "System Engineer - System Architecture - Contra",
-   "company": "helsing",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/helsing/system-engineer-system-architecture-contra-london-299918",
-   "postedAt": "2026-11-06T21:55:16.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-solutions-engineer-emea-london-17",
-   "title": "Senior Solutions Engineer - EMEA",
-   "company": "Launchdarkly",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/launchdarkly/senior-solutions-engineer-emea-london-170897",
-   "postedAt": "2026-11-06T21:55:16.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_technical-director-fire-engineering-lond",
-   "title": "Technical Director, Fire Engineering",
-   "company": "Jensenhughes",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/jensenhughes/technical-director-fire-engineering-london-364534",
-   "postedAt": "2026-11-06T21:55:16.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_bright-vision-technologies-jobs-react-de",
    "title": "React Developer",
    "company": "Bright Vision Technologies",
@@ -6339,105 +6605,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_devsecops-engineer-final-year-internship",
-   "title": "DevSecOps Engineer - Final year Internship - Stage PFE",
-   "company": "Escape",
-   "location": "Paris Office",
-   "type": "Internship",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/escape/devsecops-engineer-final-year-internship-stage-pfe-paris-489079",
-   "postedAt": "2026-11-06T21:40:16.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_junior-full-stack-engineer-ai-security-p",
-   "title": "Junior Full Stack Engineer | AI & Security",
-   "company": "Escape",
-   "location": "Paris Office",
-   "type": "Full-time",
-   "exp": "Junior",
-   "tech": [
-    "AI/ML",
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/escape/junior-full-stack-engineer-ai-security-paris-269013",
-   "postedAt": "2026-11-06T21:40:16.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-full-stack-engineer-ai-security-p",
-   "title": "Senior Full Stack Engineer | AI & Security",
-   "company": "Escape",
-   "location": "Paris Office",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML",
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/escape/senior-full-stack-engineer-ai-security-paris-264565",
-   "postedAt": "2026-11-06T21:40:16.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-research-engineer-cybersecurity-a",
-   "title": "Senior Research Engineer | Cybersecurity AI AppSec",
-   "company": "Escape",
-   "location": "Paris Office",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML",
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/escape/senior-research-engineer-cybersecurity-ai-appsec-paris-234130",
-   "postedAt": "2026-11-06T21:40:16.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_deployment-strategist-sap-erp-specialist",
-   "title": "Deployment Strategist - SAP & ERP Specialist",
-   "company": "Conduct",
-   "location": "London, UK",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/conduct/deployment-strategist-sap-erp-specialist-london-233820",
-   "postedAt": "2026-11-06T21:40:15.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_labour-ai-specialist-london-264709",
-   "title": "Labour AI Specialist",
-   "company": "Sona",
-   "location": "London",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.co.uk/jobs/companies/sona/labour-ai-specialist-london-264709",
-   "postedAt": "2026-11-06T21:40:14.000Z",
-   "live": true
-  },
-  {
    "id": "live_Himalayas_databricks-jobs-solutions-architect-reta",
    "title": "Solutions Architect - Retail",
    "company": "Databricks",
@@ -6450,144 +6617,6 @@
    "url": "https://himalayas.app/companies/databricks/jobs/solutions-architect-retail-4968046289",
    "postedAt": "2026-11-06T21:38:16.000Z",
    "expiresAt": "2027-01-05T21:38:15.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_ingenieur-systemes-reseaux-et-cloud-h-f-",
-   "title": "Ingénieur Systèmes, Réseaux et Cloud (H/F)",
-   "company": "RH Partners",
-   "location": "BORDEAUX, Nouvelle-Aquitaine, France",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/rh-partners/ingenieur-systemes-reseaux-et-cloud-h-f-bordeaux-79244",
-   "postedAt": "2026-11-06T21:31:27.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_remote-senior-network-engineer-bonn-1091",
-   "title": "Senior Network Engineer (m/w/d)",
-   "company": "virtual7 GmbH",
-   "location": "Homeoffice (Remote)",
-   "type": "Freelance",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/virtual7-gmbh/remote-senior-network-engineer-bonn-109175",
-   "postedAt": "2026-11-06T21:31:24.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_remote-senior-cloud-software-engineer-bo",
-   "title": "Senior Cloud Software Engineer (m/w/d)",
-   "company": "virtual7 GmbH",
-   "location": "Homeoffice (Remote)",
-   "type": "Freelance",
-   "exp": "Senior",
-   "tech": [
-    "Security"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/virtual7-gmbh/remote-senior-cloud-software-engineer-bonn-61518",
-   "postedAt": "2026-11-06T21:31:24.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_remote-ai-solution-architect-nurnberg-mi",
-   "title": "AI Solution Architect (m/w/d)",
-   "company": "virtual7 GmbH",
-   "location": "Homeoffice (Remote)",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/virtual7-gmbh/remote-ai-solution-architect-nurnberg-mittelfranken-338337",
-   "postedAt": "2026-11-06T21:31:24.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_remote-senior-oracle-data-engineer-karls",
-   "title": "Senior Oracle Data Engineer (m/w/d)",
-   "company": "virtual7 GmbH",
-   "location": "Homeoffice (Remote)",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "Data"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/virtual7-gmbh/remote-senior-oracle-data-engineer-karlsruhe-457351",
-   "postedAt": "2026-11-06T21:31:24.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_remote-software-engineer-ai-assisted-dev",
-   "title": "Software Engineer – AI-Assisted Development (m/w/d)",
-   "company": "DocCheck AG",
-   "location": "Homeoffice (Remote)",
-   "type": "Contract",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.ch/jobs/companies/doccheck-ag/remote-software-engineer-ai-assisted-development-basel-371528",
-   "postedAt": "2026-11-06T21:31:23.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_manager-customer-data-engineering-change",
-   "title": "Manager Customer Data Engineering – Change & IT Customer Services",
-   "company": "Athora Netherlands",
-   "location": "Amsterdam, Noord-Holland, Nederland",
-   "type": "Contract",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/athora-netherlands/manager-customer-data-engineering-change-it-customer-services-amsterdam-6959",
-   "postedAt": "2026-11-06T21:31:23.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-frontend-engineer-technical-lead-",
-   "title": "Senior Frontend Engineer / Technical Lead",
-   "company": "Athora Netherlands",
-   "location": "Amsterdam, Noord-Holland, Nederland",
-   "type": "Contract",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.nl/jobs/companies/athora-netherlands/senior-frontend-engineer-technical-lead-amsterdam-166994",
-   "postedAt": "2026-11-06T21:31:23.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-fullstack-entwickler-hamburg-5491",
-   "title": "Senior Fullstack Entwickler (m/w/d)",
-   "company": "Cordes Consulting GmbH",
-   "location": "Hamburg, Hamburg, Deutschland",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/cordes-consulting-gmbh/senior-fullstack-entwickler-hamburg-54916",
-   "postedAt": "2026-11-06T21:31:22.000Z",
    "live": true
   },
   {
