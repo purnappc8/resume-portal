@@ -80,6 +80,12 @@ tr:hover td{background:#f7f9ff;}
     <div class="stat-card"><div class="val" id="statUsers">–</div><div class="label">Unique Users Tracked</div></div>
   </div>
 
+  <!-- Device type breakdown -->
+  <div class="card" style="margin-bottom:16px;padding:16px 20px">
+    <div style="font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:12px">📱 DEVICE BREAKDOWN</div>
+    <div id="deviceBreakdown" style="display:flex;flex-wrap:wrap;gap:10px"></div>
+  </div>
+
   <!-- Map + City list -->
   <div class="two-col">
     <div class="card">
@@ -108,7 +114,7 @@ tr:hover td{background:#f7f9ff;}
         <table>
           <thead><tr>
             <th>#</th><th>Time</th><th>User</th><th>Role</th>
-            <th>City</th><th>Country</th><th>Lat</th><th>Lng</th><th>Page</th>
+            <th>City</th><th>Country</th><th>Lat</th><th>Lng</th><th>Device</th><th>OS</th><th>Page</th>
           </tr></thead>
           <tbody id="logTbody"><tr><td colspan="9" class="empty">Loading…</td></tr></tbody>
         </table>
@@ -140,6 +146,32 @@ function markerColor(role) {
   return '#f39c12';
 }
 
+function renderDeviceBreakdown(entries, devices) {
+  const counts = {};
+  // Count from logs (most recent data)
+  entries.forEach(e => {
+    const t = e.deviceType || 'desktop';
+    counts[t] = (counts[t]||0) + 1;
+  });
+  // Also from devices
+  devices.forEach(d => {
+    const t = d.deviceType || 'desktop';
+    if (!counts[t]) counts[t] = 0; // ensure it shows
+  });
+  const total = Object.values(counts).reduce((a,b)=>a+b,0) || 1;
+  const colors = { mobile:'#2ecc71', tablet:'#f39c12', desktop:'#1a4fa0', 'smart-tv':'#9b59b6' };
+  const icons  = { mobile:'📱', tablet:'📟', desktop:'💻', 'smart-tv':'📺' };
+  const el = document.getElementById('deviceBreakdown');
+  el.innerHTML = Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([type,n]) => `
+    <div style="display:flex;align-items:center;gap:10px;background:#f4f6fb;border-radius:12px;padding:10px 18px;min-width:160px">
+      <span style="font-size:1.6rem">${icons[type]||'💻'}</span>
+      <div>
+        <div style="font-size:1.4rem;font-weight:800;color:${colors[type]||'#607d8b'}">${n}</div>
+        <div style="font-size:.8rem;text-transform:capitalize;color:#6b7a9a">${type} · ${Math.round(n/total*100)}%</div>
+      </div>
+    </div>`).join('');
+}
+
 function renderMap(entries) {
   markersLayer.clearLayers();
   entries.forEach(e => {
@@ -153,6 +185,7 @@ function renderMap(entries) {
     L.marker([e.lat, e.lng], { icon })
       .bindPopup(`<b>${e.city || 'Unknown'}</b>, ${e.country || ''}<br>
         User: ${e.userEmail || 'anonymous'} (${e.userRole || '?'})<br>
+        Device: ${e.deviceType || 'desktop'} · ${e.os || ''} · ${e.browser || ''}<br>
         Page: ${e.page || ''}<br>
         <small>${time}</small>`)
       .addTo(markersLayer);
@@ -187,15 +220,18 @@ function renderLogs(entries) {
         <td>${E(e.country||'–')}</td>
         <td>${e.lat ? parseFloat(e.lat).toFixed(4) : '–'}</td>
         <td>${e.lng ? parseFloat(e.lng).toFixed(4) : '–'}</td>
-        <td>${E((e.page||'').replace(/^\/|\.html$/g,''))}</td>
+        <td>${E(e.deviceType||'–')}</td><td>${E(e.os||'–')}</td><td>${E((e.page||'').replace(/^\/|\.html$/g,''))}</td>
       </tr>`).join('')
     : '<tr><td colspan="9" class="empty">No logs yet</td></tr>';
 }
 
-function deviceIcon(ua) {
-  if (/android|iphone|ipad|mobile/i.test(ua)) return '📱';
-  if (/mac/i.test(ua)) return '🍎';
-  if (/windows/i.test(ua)) return '🪟';
+function deviceIcon(type, ua) {
+  if (type === 'mobile')   return '📱';
+  if (type === 'tablet')   return '📟';
+  if (type === 'smart-tv') return '📺';
+  if (/mac/i.test(ua||'')) return '🍎';
+  if (/windows/i.test(ua||'')) return '🪟';
+  if (/linux/i.test(ua||'')) return '🐧';
   return '💻';
 }
 
@@ -206,10 +242,11 @@ function renderDevices(devices) {
   list.innerHTML = sorted.length
     ? sorted.map(d => `
       <div class="device-row">
-        <div class="device-icon">${deviceIcon(d.ua||'')}</div>
+        <div class="device-icon">${deviceIcon(d.deviceType||'desktop', d.ua||'')}</div>
         <div class="device-info">
           <div class="name">${E(d.city||'Unknown city')}, ${E(d.country||'')}</div>
-          <div class="meta">${E(d.userEmail||'anonymous')} · ${E(d.timezone||'')} · ${E(d.screen||'')}</div>
+          <div class="meta">${E(d.userEmail||'anonymous')} · <b>${E(d.deviceType||'desktop')}</b> · ${E(d.os||'')} · ${E(d.browser||'')}
+          </div><div class="meta">${E(d.timezone||'')} · ${E(d.screen||'')}</div>
           <div class="meta" style="font-size:.74rem;color:#aaa;margin-top:2px">${E((d.ua||'').slice(0,80))}</div>
           <div class="meta">First: ${new Date(d.firstSeen||'').toLocaleString()} · Last: ${new Date(d.lastSeen||'').toLocaleString()}</div>
         </div>
@@ -260,6 +297,7 @@ async function loadAll() {
     renderCities(cityStats);
     renderLogs(allLogs);
     renderDevices(allDevices);
+    renderDeviceBreakdown(allLogs, allDevices);
     updateStats(allLogs, allDevices);
   } catch (err) {
     console.warn('Could not reach local server:', err.message);

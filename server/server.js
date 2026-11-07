@@ -184,12 +184,13 @@ const server = http.createServer(async (req, res) => {
     return readBody(req, res, (body) => {
       const devices = readJson('devices.json', {});
       const { deviceId, userId, userEmail, userRole, ua, platform, screen,
-              timezone, lang, lat, lng, city, state, country, countryCode } = body;
+              timezone, lang, deviceType, os, browser, lat, lng, city, state, country, countryCode } = body;
       if (!deviceId) return json(res, 400, { error: 'deviceId required' });
       devices[deviceId] = {
         ...(devices[deviceId] || {}),
         deviceId, userId, userEmail, userRole,
         ua, platform, screen, timezone, lang,
+        deviceType, os, browser,
         firstSeen: devices[deviceId]?.firstSeen || new Date().toISOString(),
         lastSeen:  new Date().toISOString(),
         lastLat: lat, lastLng: lng,

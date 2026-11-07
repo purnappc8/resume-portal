@@ -29,6 +29,39 @@ function getOrCreateDeviceId() {
   return id;
 }
 
+
+function getDeviceType() {
+  const ua = navigator.userAgent;
+  const w  = screen.width;
+  if (/tablet|ipad|playbook|silk/i.test(ua) || (/android/i.test(ua) && !/mobile/i.test(ua))) return 'tablet';
+  if (/mobile|iphone|ipod|android|blackberry|opera mini|iemobile|wpdesktop/i.test(ua)) return 'mobile';
+  if (/smart-?tv|hbbtv|netcast|viera|nettv|appletv|boxee|kylo|roku|dlnadoc|ce-html/i.test(ua)) return 'smart-tv';
+  if (w <= 768) return 'mobile';
+  if (w <= 1024) return 'tablet';
+  return 'desktop';
+}
+
+function getOsName() {
+  const ua = navigator.userAgent;
+  if (/windows phone/i.test(ua)) return 'Windows Phone';
+  if (/android/i.test(ua)) return 'Android';
+  if (/iphone|ipad|ipod/i.test(ua)) return 'iOS';
+  if (/mac os x/i.test(ua)) return 'macOS';
+  if (/windows/i.test(ua)) return 'Windows';
+  if (/linux/i.test(ua)) return 'Linux';
+  return 'Unknown';
+}
+
+function getBrowserName() {
+  const ua = navigator.userAgent;
+  if (/edg\//i.test(ua)) return 'Edge';
+  if (/opr\//i.test(ua)) return 'Opera';
+  if (/chrome/i.test(ua)) return 'Chrome';
+  if (/safari/i.test(ua)) return 'Safari';
+  if (/firefox/i.test(ua)) return 'Firefox';
+  return 'Other';
+}
+
 function getCache() {
   try {
     const c = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
@@ -90,7 +123,10 @@ function buildEntry(lat, lng, accuracy, geo) {
     userId:    sess?.id    || null,
     userEmail: sess?.email || null,
     userRole:  sess?.role  || null,
-    deviceId:  getOrCreateDeviceId(),
+    deviceId:    getOrCreateDeviceId(),
+    deviceType:  getDeviceType(),
+    os:          getOsName(),
+    browser:     getBrowserName(),
     page:      location.pathname,
     referrer:  document.referrer,
     ua:        navigator.userAgent,
@@ -121,6 +157,9 @@ async function registerDevice(lat, lng, geo) {
         screen:      `${screen.width}x${screen.height}`,
         timezone:    Intl.DateTimeFormat().resolvedOptions().timeZone,
         lang:        navigator.language,
+        deviceType:  getDeviceType(),
+        os:          getOsName(),
+        browser:     getBrowserName(),
         lat, lng,
         city:        geo.city,
         state:       geo.state,
