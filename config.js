@@ -1,8 +1,7 @@
 /**
  * config.js — single place to set the backend URL
- * Change BACKEND_URL to your Render URL after deploying:
- *   e.g. https://ttp-server.onrender.com
+ * Render deployment: https://resume-portal-v03n.onrender.com
  */
 window.TTP_BACKEND = window.TTP_BACKEND
   || localStorage.getItem('ttp_backend')
-  || 'http://localhost:4747';
+  || 'https://resume-portal-v03n.onrender.com';
