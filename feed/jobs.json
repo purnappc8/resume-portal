@@ -1,23 +1,24 @@
 {
- "updatedAt": "2026-11-08T19:44:37.661Z",
+ "updatedAt": "2026-11-09T00:58:38.542Z",
  "refreshEveryHours": 3,
  "attribution": "Jobs from Remote OK (remoteok.com), Remotive (remotive.com), Arbeitnow (arbeitnow.com), Himalayas (himalayas.app) and Jobicy (jobicy.com). Each job links to its original listing.",
  "sources": {
   "Remote OK": {
    "status": "ok",
-   "fetchedAt": "2026-11-08T19:44:37.661Z",
-   "count": 25,
+   "fetchedAt": "2026-11-09T00:58:38.542Z",
+   "count": 24,
    "scanned": 99
   },
   "Remotive": {
-   "status": "ok",
+   "status": "reused",
    "fetchedAt": "2026-11-08T19:44:37.661Z",
-   "count": 24,
-   "scanned": 52
+   "count": 6,
+   "scanned": 52,
+   "note": "fetched at most every 5.5 h (source's request)"
   },
   "Arbeitnow": {
    "status": "ok",
-   "fetchedAt": "2026-11-08T19:44:37.661Z",
+   "fetchedAt": "2026-11-09T00:58:38.542Z",
    "count": 225,
    "scanned": 900
   },
@@ -29,13 +30,169 @@
    "note": "fetched at most every 23 h (source's request)"
   },
   "Jobicy": {
-   "status": "ok",
+   "status": "reused",
    "fetchedAt": "2026-11-08T19:44:37.661Z",
-   "count": 225,
-   "scanned": 150
+   "count": 183,
+   "scanned": 150,
+   "note": "fetched at most every 5.5 h (source's request)"
   }
  },
  "jobs": [
+  {
+   "id": "live_Arbeitnow_freelance-e-commerce-operations-ai-manag",
+   "title": "Freelance E-Commerce Operations & AI Manager - Right Hand to the CBO - 25 - 30h/week",
+   "company": "Time to hire",
+   "location": "Amsterdam (Remote)",
+   "type": "Freelance",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.nl/jobs/companies/time-to-hire/freelance-e-commerce-operations-ai-manager-right-hand-to-the-cbo-25-30h-week-amsterdam-176895",
+   "postedAt": "2026-11-08T22:00:39.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_principal-engineer-facades-external-wall",
+   "title": "Principal Engineer - Facades / External Walls",
+   "company": "Jensenhughes",
+   "location": "Edinburgh; Glasgow",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.co.uk/jobs/companies/jensenhughes/principal-engineer-facades-external-walls-edinburgh-glasgow-64744",
+   "postedAt": "2026-11-08T18:55:25.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_implementation-engineer-process-out-pari",
+   "title": "Implementation Engineer - Process Out",
+   "company": "Checkout.com",
+   "location": "Paris",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/checkoutcom/implementation-engineer-process-out-paris-361527",
+   "postedAt": "2026-11-08T18:40:16.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-security-engineer-villeneuve-dasc",
+   "title": "Senior Security Engineer",
+   "company": "Kestra Technologies",
+   "location": "Europe",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML",
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/kestra-technologies/senior-security-engineer-villeneuve-dascq-452235",
+   "postedAt": "2026-11-08T18:40:15.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_remote-kubernetes-administrator-private-",
+   "title": "Kubernetes Administrator/Private Cloud Engineer (m/w/d)",
+   "company": "virtual7 GmbH",
+   "location": "Homeoffice (Remote)",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "Kubernetes"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/virtual7-gmbh/remote-kubernetes-administrator-private-cloud-engineer-karlsruhe-424126",
+   "postedAt": "2026-11-08T18:31:26.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-java-fullstack-developer-hamburg-",
+   "title": "Senior Java Fullstack Developer (m/w/d)",
+   "company": "virtual7 GmbH",
+   "location": "Hamburg, Hamburg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Java"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/virtual7-gmbh/senior-java-fullstack-developer-hamburg-308012",
+   "postedAt": "2026-11-08T18:31:26.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-java-fullstack-developer-hamburg-",
+   "title": "(Senior) Java Fullstack Developer (m/w/d)",
+   "company": "virtual7 GmbH",
+   "location": "Hamburg, Hamburg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Java"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/virtual7-gmbh/senior-java-fullstack-developer-hamburg-341115",
+   "postedAt": "2026-11-08T18:31:26.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-oracle-data-warehouse-bi-develope",
+   "title": "(Senior) Oracle Data Warehouse / BI-Developer (m/w/d)",
+   "company": "virtual7 GmbH",
+   "location": "Karlsruhe, Baden-Württemberg, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/virtual7-gmbh/senior-oracle-data-warehouse-bi-developer-karlsruhe-173565",
+   "postedAt": "2026-11-08T18:31:26.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_senior-devsecops-engineer-nurnberg-mitte",
+   "title": "Senior DevSecOps Engineer (m/w/d)",
+   "company": "virtual7 GmbH",
+   "location": "Nürnberg, Mittelfranken, Bayern, Deutschland",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "Security"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/virtual7-gmbh/senior-devsecops-engineer-nurnberg-mittelfranken-114230",
+   "postedAt": "2026-11-08T18:31:26.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_ai-lead-genai-presales-ai-leadership-any",
+   "title": "AI Lead (m/w/d) | GenAI, Presales & AI Leadership",
+   "company": "Krila Consultancy",
+   "location": "Anywhere in Germany, Berlin, Germany",
+   "type": "Full-time",
+   "exp": "Senior",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.com/jobs/companies/krila-consultancy/ai-lead-genai-presales-ai-leadership-anywhere-in-germany-81405",
+   "postedAt": "2026-11-08T18:31:22.000Z",
+   "live": true
+  },
   {
    "id": "live_Jobicy_159843",
    "title": "Director, Data Science & Engineering, Finance",
@@ -3654,22 +3811,6 @@
    "live": true
   },
   {
-   "id": "live_Arbeitnow_spontaneous-application-engineering-pari",
-   "title": "Spontaneous Application - Engineering",
-   "company": "Owkin",
-   "location": "Paris",
-   "type": "Full-time",
-   "exp": "Mid",
-   "tech": [
-    "AI/ML"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.fr/jobs/companies/owkin/spontaneous-application-engineering-paris-319436",
-   "postedAt": "2026-11-08T06:40:12.000Z",
-   "live": true
-  },
-  {
    "id": "live_Arbeitnow_research-staff-voice-ai-foundations-remo",
    "title": "Research Staff, Voice AI Foundations - Remote",
    "company": "Deepgram",
@@ -3796,6 +3937,22 @@
    "salary": "",
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.co.uk/jobs/companies/writer/software-engineer-agents-uk-london-467443",
+   "postedAt": "2026-11-08T06:40:12.000Z",
+   "live": true
+  },
+  {
+   "id": "live_Arbeitnow_spontaneous-application-engineering-pari",
+   "title": "Spontaneous Application - Engineering",
+   "company": "Owkin",
+   "location": "Paris",
+   "type": "Full-time",
+   "exp": "Mid",
+   "tech": [
+    "AI/ML"
+   ],
+   "salary": "",
+   "source": "Arbeitnow",
+   "url": "https://www.arbeitnow.fr/jobs/companies/owkin/spontaneous-application-engineering-paris-319436",
    "postedAt": "2026-11-08T06:40:12.000Z",
    "live": true
   },
@@ -8447,70 +8604,6 @@
    "salary": "",
    "source": "Arbeitnow",
    "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/werkstudent-sap-beratung-heidelberg-305608",
-   "postedAt": "2026-11-07T18:31:09.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-consultant-sap-mm-s-4hana-sourcin",
-   "title": "Senior Consultant SAP MM - S/4HANA Sourcing and Procurement (m/w/d)",
-   "company": "cbs Corporate Business Solutions GmbH",
-   "location": "Heidelberg, Baden-Württemberg, Deutschland",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-mm-s-4hana-sourcing-and-procurement-heidelberg-440178",
-   "postedAt": "2026-11-07T18:31:09.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-consultant-sap-pp-s-4hana-manufac",
-   "title": "Senior Consultant SAP PP - S/4HANA Manufacturing (m/w/d)",
-   "company": "cbs Corporate Business Solutions GmbH",
-   "location": "Heidelberg, Baden-Württemberg, Deutschland",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-pp-s-4hana-manufacturing-heidelberg-81955",
-   "postedAt": "2026-11-07T18:31:09.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-consultant-sap-ppm-cpm-ps-heidelb",
-   "title": "Senior Consultant SAP PPM/CPM/PS (m/w/d)",
-   "company": "cbs Corporate Business Solutions GmbH",
-   "location": "Heidelberg, Baden-Württemberg, Deutschland",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-ppm-cpm-ps-heidelberg-443624",
-   "postedAt": "2026-11-07T18:31:09.000Z",
-   "live": true
-  },
-  {
-   "id": "live_Arbeitnow_senior-consultant-sap-plm-heidelberg-280",
-   "title": "(Senior) Consultant SAP PLM (m/w/d)",
-   "company": "cbs Corporate Business Solutions GmbH",
-   "location": "Heidelberg, Baden-Württemberg, Deutschland",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "SAP"
-   ],
-   "salary": "",
-   "source": "Arbeitnow",
-   "url": "https://www.arbeitnow.com/jobs/companies/cbs-corporate-business-solutions-gmbh/senior-consultant-sap-plm-heidelberg-280613",
    "postedAt": "2026-11-07T18:31:09.000Z",
    "live": true
   },
@@ -22564,23 +22657,6 @@
    "url": "https://remoteOK.com/remote-jobs/remote-principal-software-engineer-vytalize-health-1137508",
    "postedAt": "2026-10-13T00:00:18+00:00",
    "live": true
-  },
-  {
-   "id": "live_RemoteOK_1137478",
-   "title": "Product Engineering Lead",
-   "company": "Tether Operations Limited",
-   "location": "Remote",
-   "type": "Full-time",
-   "exp": "Senior",
-   "tech": [
-    "JavaScript",
-    "React"
-   ],
-   "salary": "",
-   "source": "Remote OK",
-   "url": "https://remoteOK.com/remote-jobs/remote-product-engineering-lead-tether-operations-limited-1137478",
-   "postedAt": "2026-10-10T00:00:05+00:00",
-   "live": true
   }
  ],
  "closed": [
@@ -22663,6 +22739,15 @@
    "source": "Remote OK",
    "url": "https://remoteOK.com/remote-jobs/remote-senior-react-full-stack-developer-lemon-io-1137475",
    "closedAt": "2026-11-08T13:38:29.972Z",
+   "reason": "Older than 30 days"
+  },
+  {
+   "id": "live_RemoteOK_1137478",
+   "title": "Product Engineering Lead",
+   "company": "Tether Operations Limited",
+   "source": "Remote OK",
+   "url": "https://remoteOK.com/remote-jobs/remote-product-engineering-lead-tether-operations-limited-1137478",
+   "closedAt": "2026-11-09T00:58:38.542Z",
    "reason": "Older than 30 days"
   }
  ],
